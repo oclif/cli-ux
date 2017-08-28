@@ -1,0 +1,14 @@
+{
+  "name": "cli-ux",
+  "description": "set of CLI output utilities",
+  "version": "0.0.0",
+  "author": "Jeff Dickey",
+  "bugs": "https://github.com/jdxcode/cli-ux/issues",
+  "homepage": "https://github.com/jdxcode/cli-ux",
+  "keywords": [
+    "cli"
+  ],
+  "license": "ISC",
+  "main": "lib/index.js",
+  "repository": "jdxcode/cli-ux"
+}
