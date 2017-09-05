@@ -1,0 +1,11 @@
+[ignore]
+<PROJECT_ROOT>/lib/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+unsafe.enable_getters_and_setters=true

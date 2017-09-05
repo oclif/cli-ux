@@ -1,4 +1,4 @@
-module.exports = async function action (msg, fn = (() => {}), done = 'done') {
+exports.action = async function action (msg, fn = (() => {}), done = 'done') {
   process.stderr.write(`${msg}...`)
   try {
     await fn()
