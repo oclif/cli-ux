@@ -1,3 +1,3 @@
-import ux from '../src'
+import ux from "../src";
 
-ux.warn('this is a warning')
+ux.warn("this is a warning");
