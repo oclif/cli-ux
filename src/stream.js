@@ -4,14 +4,6 @@ const util = require('util')
 const stripAnsi = require('strip-ansi')
 const path = require('path')
 
-function logToFile (msg: string, logfile: string) {
-  try {
-    const fs = require('fs-extra')
-    fs.mkdirpSync(path.dirname(logfile))
-    fs.appendFileSync(logfile, stripAnsi(msg))
-  } catch (err) { console.error(err) }
-}
-
 type Options = {
   mock?: boolean,
   displayTimestamps?: boolean
@@ -25,6 +17,14 @@ class StreamOutput {
   mock: boolean
 
   static startOfLine: boolean
+
+  static logToFile (msg: string, logfile: string) {
+    try {
+      const fs = require('fs-extra')
+      fs.mkdirpSync(path.dirname(logfile))
+      fs.appendFileSync(logfile, stripAnsi(msg))
+    } catch (err) { console.error(err) }
+  }
 
   constructor (stream: stream$Writable, options: Options = {}) {
     this.stream = stream
@@ -64,7 +64,4 @@ class StreamOutput {
 
 StreamOutput.startOfLine = true
 
-module.exports = {
-  StreamOutput,
-  logToFile
-}
+module.exports = StreamOutput

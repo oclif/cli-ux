@@ -20,8 +20,9 @@
     "flow-bin": "^0.54.0",
     "flow-copy-source": "^1.2.1",
     "husky": "^0.14.3",
-    "jest": "^21.0.1",
-    "lint-staged": "^4.1.0"
+    "jest": "^21.0.2",
+    "lint-staged": "^4.1.0",
+    "rimraf": "^2.6.1"
   },
   "files": [
     "lib"
