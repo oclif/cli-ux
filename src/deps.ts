@@ -1,10 +1,11 @@
 import * as moment from 'moment'
+import stripAnsi = require('strip-ansi')
 
 export const deps = {
   get moment(): typeof moment {
     return fetch('moment')
   },
-  get stripAnsi(): any {
+  get stripAnsi(): typeof stripAnsi {
     return fetch('strip-ansi')
   },
 }
