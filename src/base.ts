@@ -2,21 +2,26 @@
 
 import StreamOutput from './stream'
 
-interface BaseOptions {
+interface IBaseOptions {
   stdout: StreamOutput
   stderr: StreamOutput
-  debug?: boolean
+  debug: boolean
   errlog?: string
 }
 
 export default abstract class Base {
-  options: BaseOptions
-  stdout: StreamOutput
-  stderr: StreamOutput
+  public stdout: StreamOutput
+  public stderr: StreamOutput
+  protected options: IBaseOptions
 
-  constructor (options: BaseOptions) {
-    this.options = options
-    this.stdout = options.stdout
-    this.stderr = options.stderr
+  constructor(options: Partial<IBaseOptions> = {}) {
+    this.options = {
+      debug: !!options.debug,
+      stderr: new StreamOutput(),
+      stdout: new StreamOutput(),
+      ...options,
+    }
+    this.stdout = this.options.stdout
+    this.stderr = this.options.stderr
   }
 }

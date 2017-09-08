@@ -1,23 +1,23 @@
 // @flow
 
-import * as util from 'util'
 import * as chalk from 'chalk'
+import * as util from 'util'
 
 import Base from './base'
 import StreamOutput from './stream'
 
 const arrow = process.platform === 'win32' ? '!' : '▸'
 
-function bangify (msg: string, c: string): string {
-  let lines = msg.split('\n')
+function bangify(msg: string, c: string): string {
+  const lines = msg.split('\n')
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i]
+    const line = lines[i]
     lines[i] = ' ' + c + line.substr(2, line.length)
   }
   return lines.join('\n')
 }
 
-function getErrorMessage (err: any): string {
+function getErrorMessage(err: any): string {
   let message
   if (err.body) {
     // API error
@@ -36,39 +36,44 @@ function getErrorMessage (err: any): string {
   return message || util.inspect(err)
 }
 
-function wrap (msg: string): string {
+function wrap(msg: string): string {
   const linewrap = require('@heroku/linewrap')
-  const {errtermwidth} = require('./screen')
-  return linewrap(6,
-    errtermwidth, {
-      skipScheme: 'ansi-color',
-      skip: /^\$ .*$/
-    })(msg)
+  const { errtermwidth } = require('./screen')
+  return linewrap(6, errtermwidth, {
+    skip: /^\$ .*$/,
+    skipScheme: 'ansi-color',
+  })(msg)
 }
 
-type WarnOptions = {
+interface IWarnOptions {
   prefix?: string
 }
 
 export default class Errors extends Base {
-  logError (err: Error | string) {
-    if (!this.options.errlog) return
-    StreamOutput.logToFile(util.inspect(err) + '\n', this.options.errlog)
-  }
-
-  warn (err: Error | string, options: WarnOptions = {}) {
+  public warn(err: Error | string, options: IWarnOptions = {}) {
     // this.action.pause(() => {
     try {
-      let prefix = options.prefix ? `${options.prefix} ` : ''
+      const prefix = options.prefix ? `${options.prefix} ` : ''
       err = typeof err === 'string' ? new Error(err) : err
       this.logError(err)
-      if (this.options.debug) this.stderr.write(`WARNING: ${prefix}`) && this.stderr.log(err.stack || util.inspect(err))
-      else this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), chalk.yellow(arrow)))
+      if (this.options.debug) {
+        this.stderr.write(`WARNING: ${prefix}`)
+        this.stderr.log(err.stack || util.inspect(err))
+      } else {
+        this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), chalk.yellow(arrow)))
+      }
     } catch (e) {
-      console.error('error displaying warning')
-      console.error(e)
-      console.error(err)
+      console.error('error displaying warning') // tslint:disable-line:no-console
+      console.error(e) // tslint:disable-line:no-console
+      console.error(err) // tslint:disable-line:no-console
     }
     // }, this.color.bold.yellow('!'))
+  }
+
+  private logError(err: Error | string) {
+    if (!this.options.errlog) {
+      return
+    }
+    StreamOutput.logToFile(util.inspect(err) + '\n', this.options.errlog)
   }
 }

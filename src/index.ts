@@ -1,53 +1,48 @@
 // @flow
 
-import StreamOutput from "./stream";
-import Errors from "./errors";
+import Errors from './errors'
+import StreamOutput from './stream'
 
-type Options = {
-  errlog?: string;
-  mock?: boolean;
-  debug?: boolean;
-};
+interface IOptions {
+  errlog?: string
+  mock?: boolean
+  debug?: boolean
+}
 
 export default class CLIUX {
-  options: Options;
-  _stdout: StreamOutput;
-  _stderr: StreamOutput;
-  _errors: Errors;
+  private stdoutStream: StreamOutput
+  private stderrStream: StreamOutput
+  private errors: Errors
 
-  constructor(options: Options = {}) {
-    this.options = options;
-    let streamOptions = {
-      mock: this.options.mock
-    };
-    this._stdout = new StreamOutput(process.stdout, streamOptions);
-    this._stderr = new StreamOutput(process.stderr, streamOptions);
-    let depOpts = {
-      stdout: this._stdout,
-      stderr: this._stderr,
-      debug: !!options.debug
-    };
-    this._errors = new Errors(depOpts);
+  constructor(readonly options: IOptions = {}) {
+    this.stdoutStream = new StreamOutput(this.options.mock ? undefined : process.stdout)
+    this.stdoutStream = new StreamOutput(this.options.mock ? undefined : process.stderr)
+    const depOpts = {
+      debug: !!options.debug,
+      stderr: this.stdoutStream,
+      stdout: this.stdoutStream,
+    }
+    this.errors = new Errors(depOpts)
   }
 
   get stderr(): string {
-    const output = this._stderr.output;
-    if (!output) throw new Error("not mocking stderr");
-    return output;
+    const output = this.stderrStream.output
+    if (!output) {
+      throw new Error('not mocking stderr')
+    }
+    return output
   }
 
   get stdout(): string {
-    const output = this._stdout.output;
-    if (!output) throw new Error("not mocking stdout");
-    return output;
+    const output = this.stdoutStream.output
+    if (!output) {
+      throw new Error('not mocking stdout')
+    }
+    return output
   }
 
-  action(msg: string, fn: Function) {
-    return require("./action")(msg, fn);
-  }
-
-  warn(err: Error | string, options: { prefix?: string } = {}) {
-    return this._errors.warn(err, options);
+  public warn(err: Error | string, options: { prefix?: string } = {}) {
+    return this.errors.warn(err, options)
   }
 
   // get CLIUX (): Class<CLIUX> {

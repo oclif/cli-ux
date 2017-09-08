@@ -5,7 +5,9 @@
   "author": "Jeff Dickey",
   "bugs": "https://github.com/jdxcode/cli-ux/issues",
   "dependencies": {
+    "@types/fs-extra": "^4.0.2",
     "chalk": "^2.1.0",
+    "fs-extra": "^4.0.1",
     "moment": "^2.18.1",
     "strip-ansi": "^4.0.0"
   },
@@ -36,6 +38,7 @@
     },
     "testRegex": "\\.test\\.ts$",
     "moduleFileExtensions": [
+      "js",
       "ts"
     ]
   },
@@ -51,13 +54,10 @@
     ]
   },
   "main": "./lib/index.js",
-  "prettier": {
-    "printWidth": 120
-  },
   "repository": "jdxcode/cli-ux",
   "scripts": {
     "precommit": "lint-staged",
-    "test": "jest && tslint --project ."
+    "test": "tsc --noEmit && jest && tslint --project ."
   },
   "types": "./lib/index.d.ts"
 }

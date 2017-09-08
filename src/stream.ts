@@ -1,58 +1,58 @@
 // @flow
 
-import * as util from 'util'
+import * as fs from 'fs-extra'
 import * as path from 'path'
-import stripAnsi = require('strip-ansi')
+import * as util from 'util'
+import deps from './deps'
 
-type Options = {
-  mock?: boolean,
+interface IOptions {
   displayTimestamps?: boolean
 }
 
 export default class StreamOutput {
-  output: string
-  stream: any
-  logfile: string
-  displayTimestamps: boolean
-  mock: boolean
-
-  static startOfLine = false
-
-  static logToFile (msg: string, logfile: string) {
+  public static logToFile(msg: string, logfile: string) {
     try {
-      const fs = require('fs-extra')
       fs.mkdirpSync(path.dirname(logfile))
-      fs.appendFileSync(logfile, stripAnsi(msg))
-    } catch (err) { console.error(err) }
+      fs.appendFileSync(logfile, deps.stripAnsi(msg))
+    } catch (err) {
+      // tslint:disable-next-line:no-console
+      console.error(err)
+    }
   }
 
-  constructor (stream: any, options: Options = {}) {
-    this.stream = stream
-    this.displayTimestamps = !!options.displayTimestamps
-    this.mock = !!options.mock
-    if (this.mock) this.output = ''
-  }
+  private static startOfLine = false
 
-  write (msg: string, options: {log?: boolean} = {}) {
+  public output = ''
+  private logfile: string
+  private displayTimestamps: boolean
+  private mock: boolean
+
+  constructor(readonly stream?: NodeJS.WriteStream, readonly options: IOptions = {}) {}
+
+  public write(msg: string, options: { log?: boolean } = {}) {
     // const log = options.log !== false
     // if (log) this.writeLogFile(msg, this.constructor.startOfLine)
     // conditionally show timestamp if configured to display
-    if (StreamOutput.startOfLine && this.displayTimestamps) msg = this.timestamp(msg)
-    if (this.mock) this.output += stripAnsi(msg)
-    else this.stream.write(msg)
+    if (StreamOutput.startOfLine && this.displayTimestamps) {
+      msg = this.timestamp(msg)
+    }
+    if (this.stream) {
+      this.stream.write(msg)
+    } else {
+      this.output += deps.stripAnsi(msg)
+    }
     StreamOutput.startOfLine = msg.endsWith('\n')
   }
 
-  timestamp (msg: string): string {
-    const moment = require('moment')
-    return `[${moment().format()}] ${msg}`
-  }
-
-  log (data: string, ...args: any[]) {
+  public log(data: string, ...args: any[]) {
     let msg = data ? util.format(data, ...args) : ''
     msg += '\n'
     this.write(msg)
     // this.out.action.pause(() => this.write(msg))
+  }
+
+  private timestamp(msg: string): string {
+    return `[${deps.moment().format()}] ${msg}`
   }
 
   // writeLogFile (msg: string, withTimestamp: boolean) {
@@ -61,5 +61,3 @@ export default class StreamOutput {
   //   logToFile(msg, this.logfile)
   // }
 }
-
-StreamOutput.startOfLine = true
