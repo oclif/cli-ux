@@ -22,6 +22,7 @@
     "lint-staged": "^4.1.0",
     "prettier": "^1.6.1",
     "rimraf": "^2.6.1",
+    "std-mocks": "^1.0.1",
     "ts-jest": "^21.0.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
@@ -48,12 +49,10 @@
   "license": "ISC",
   "lint-staged": {
     "**/*.ts": [
-      "jest --bail --findRelatedTests"
-    ],
-    "**/*.ts": [
       "prettier --write",
       "tslint --fix",
-      "git add"
+      "git add",
+      "jest --bail --findRelatedTests"
     ]
   },
   "main": "./lib/index.js",

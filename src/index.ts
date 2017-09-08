@@ -19,7 +19,7 @@ export class CLIUX {
     this.stderrStream = new StreamOutput(this.options.mock ? undefined : process.stderr)
     const depOpts = {
       debug: !!options.debug,
-      stderr: this.stdoutStream,
+      stderr: this.stderrStream,
       stdout: this.stdoutStream,
     }
     this.errors = new Errors(depOpts)
