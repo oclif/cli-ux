@@ -12,36 +12,51 @@
   "devDependencies": {
     "@heroku/linewrap": "^1.0.0",
     "@types/chalk": "^0.4.31",
+    "@types/jest": "^20.0.8",
     "@types/node": "^8.0.27",
     "@types/strip-ansi": "^3.0.0",
-    "eslint": "^4.6.1",
-    "eslint-plugin-jest": "^21.0.0",
     "husky": "^0.14.3",
     "jest": "^21.0.2",
     "lint-staged": "^4.1.0",
     "prettier": "^1.6.1",
     "rimraf": "^2.6.1",
+    "ts-jest": "^21.0.0",
     "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "tslint-config-prettier": "^1.5.0",
     "typescript": "^2.5.2"
   },
   "files": [
     "lib"
   ],
   "homepage": "https://github.com/jdxcode/cli-ux",
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts"
+    ]
+  },
   "keywords": [
     "cli"
   ],
   "license": "ISC",
   "lint-staged": {
-    "src/**/*.js": [
-      "eslint --fix",
+    "src/**/*.ts": [
+      "prettier --write",
+      "tslint --fix",
       "git add"
     ]
   },
   "main": "./lib/index.js",
+  "prettier": {
+    "printWidth": 120
+  },
   "repository": "jdxcode/cli-ux",
   "scripts": {
-    "test": "jest && eslint ."
+    "test": "jest && tslint --project ."
   },
   "types": "./lib/index.d.ts"
 }

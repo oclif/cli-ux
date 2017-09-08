@@ -1,6 +1,0 @@
-{
-  "presets": ["flow"],
-  "plugins": [
-    "syntax-object-rest-spread"
-  ]
-}
