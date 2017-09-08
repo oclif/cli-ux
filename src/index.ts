@@ -9,7 +9,7 @@ export interface IOptions {
   debug?: boolean
 }
 
-export class CLIUX {
+export class CLI {
   private stdoutStream: StreamOutput
   private stderrStream: StreamOutput
   private errors: Errors
@@ -50,4 +50,4 @@ export class CLIUX {
   }
 }
 
-export const cli = new CLIUX()
+export const cli = new CLI()

@@ -1,4 +1,4 @@
-import { cli } from '.'
+import { cli, CLI } from '.'
 
 import * as stdMocks from 'std-mocks'
 
@@ -16,4 +16,10 @@ describe('with mocked stderr', () => {
     const { stderr } = stdMocks.flush()
     expect(stderr[0]).toContain('oh no!')
   })
+})
+
+test('can be instantiated', () => {
+  const newCLI = new CLI({ mock: true })
+  newCLI.warn('foo')
+  expect(newCLI.stderr).toContain('foo')
 })

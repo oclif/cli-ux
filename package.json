@@ -61,7 +61,8 @@
     "precommit": "lint-staged",
     "prepare": "rimraf lib && tsc",
     "pretest": "tsc --sourcemap",
-    "test": "tslint --type-check --project . && jest"
+    "test": "jest",
+    "posttest": "tslint --project ."
   },
   "types": "./lib/index.d.ts"
 }
