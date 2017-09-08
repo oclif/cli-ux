@@ -47,11 +47,11 @@
   ],
   "license": "ISC",
   "lint-staged": {
-    "**/*.test.ts": "jest",
     "**/*.ts": [
       "prettier --write",
       "tslint --fix",
-      "git add"
+      "git add",
+      "jest --bail --findRelatedTests"
     ]
   },
   "main": "./lib/index.js",
