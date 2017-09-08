@@ -56,6 +56,7 @@
   },
   "repository": "jdxcode/cli-ux",
   "scripts": {
+    "precommit": "lint-staged",
     "test": "jest && tslint --project ."
   },
   "types": "./lib/index.d.ts"
