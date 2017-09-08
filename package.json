@@ -34,6 +34,9 @@
   ],
   "homepage": "https://github.com/jdxcode/cli-ux",
   "jest": {
+    "coverageReporters": [
+      "json"
+    ],
     "transform": {
       "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
@@ -58,11 +61,11 @@
   "main": "./lib/index.js",
   "repository": "jdxcode/cli-ux",
   "scripts": {
+    "posttest": "tslint --project .",
     "precommit": "lint-staged",
     "prepare": "rimraf lib && tsc",
     "pretest": "tsc --sourcemap",
-    "test": "jest",
-    "posttest": "tslint --project ."
+    "test": "jest"
   },
   "types": "./lib/index.d.ts"
 }
