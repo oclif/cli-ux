@@ -21,7 +21,6 @@
     "jest": "^21.0.2",
     "lint-staged": "^4.1.0",
     "prettier": "^1.6.1",
-    "remap-istanbul": "^0.9.5",
     "rimraf": "^2.6.1",
     "std-mocks": "^1.0.1",
     "ts-jest": "^21.0.0",
@@ -59,9 +58,9 @@
   "main": "./lib/index.js",
   "repository": "jdxcode/cli-ux",
   "scripts": {
-    "coverage": "rm -rf coverage/clover.xml coverage/lcov* && cat coverage/coverage-final.json | remap-istanbul --output coverage/coverage-final.json && curl -s https://codecov.io/bash | bash",
     "precommit": "lint-staged",
     "prepare": "rimraf lib && tsc",
+    "pretest": "tsc --sourcemap",
     "test": "tslint --type-check --project . && jest"
   },
   "types": "./lib/index.d.ts"
