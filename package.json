@@ -48,10 +48,12 @@
   "license": "ISC",
   "lint-staged": {
     "**/*.ts": [
+      "jest --bail --findRelatedTests"
+    ],
+    "**/*.ts": [
       "prettier --write",
       "tslint --fix",
-      "git add",
-      "jest --bail --findRelatedTests"
+      "git add"
     ]
   },
   "main": "./lib/index.js",
@@ -59,7 +61,7 @@
   "scripts": {
     "precommit": "lint-staged",
     "prepare": "rimraf lib && tsc",
-    "test": "tsc --noEmit && jest && tslint --project ."
+    "test": "tslint --type-check --project . && jest"
   },
   "types": "./lib/index.d.ts"
 }
