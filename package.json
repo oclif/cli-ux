@@ -47,7 +47,7 @@
     "copy-flow": "flow-copy-source -v -i '**/*.test.js' src lib",
     "precommit": "lint-staged",
     "prepare": "npm run build && npm run copy-flow",
-    "test": "eslint . && flow"
+    "test": "jest && eslint . && flow"
   },
   "dependencies": {
     "@heroku/linewrap": "^1.0.0",

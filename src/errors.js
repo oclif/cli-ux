@@ -1,7 +1,5 @@
 // @flow
 
-import type BaseOptions from './base'
-
 const util = require('util')
 const deps = require('./deps')
 
@@ -49,21 +47,9 @@ type WarnOptions = {
   prefix?: string
 }
 
-type ConstructorOptions = BaseOptions
-// type ConstructorOptions = BaseOptions & {
-//   errlog?: string
-// }
-
 class Errors extends deps.Base {
-  options: ConstructorOptions
-
-  constructor (options: ConstructorOptions) {
-    super(options)
-    this.options = options
-  }
-
   logError (err: Error | string) {
-    const errlog = this.options.errlog
+    const errlog = this.errlog
     if (!errlog) return
     deps.StreamOutput.logToFile(util.inspect(err) + '\n', errlog)
   }
@@ -74,7 +60,7 @@ class Errors extends deps.Base {
       let prefix = options.prefix ? `${options.prefix} ` : ''
       err = typeof err === 'string' ? new Error(err) : err
       this.logError(err)
-      if (this.options.debug) this.stderr.write(`WARNING: ${prefix}`) && this.stderr.log(err.stack || util.inspect(err))
+      if (this.debug) this.stderr.write(`WARNING: ${prefix}`) && this.stderr.log(err.stack || util.inspect(err))
       else this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), deps.chalk.yellow(arrow)))
     } catch (e) {
       console.error('error displaying warning')
