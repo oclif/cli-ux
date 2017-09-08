@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: /cli
     docker:
-      - image: node:8
+      - image: node:6
     steps:
       - checkout
       - restore_cache:
