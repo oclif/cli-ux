@@ -1,22 +1,22 @@
 // @flow
 
-import Errors from './errors'
-import StreamOutput from './stream'
+import { Errors } from './errors'
+import { StreamOutput } from './stream'
 
-interface IOptions {
+export interface IOptions {
   errlog?: string
   mock?: boolean
   debug?: boolean
 }
 
-export default class CLIUX {
+export class CLIUX {
   private stdoutStream: StreamOutput
   private stderrStream: StreamOutput
   private errors: Errors
 
   constructor(readonly options: IOptions = {}) {
     this.stdoutStream = new StreamOutput(this.options.mock ? undefined : process.stdout)
-    this.stdoutStream = new StreamOutput(this.options.mock ? undefined : process.stderr)
+    this.stderrStream = new StreamOutput(this.options.mock ? undefined : process.stderr)
     const depOpts = {
       debug: !!options.debug,
       stderr: this.stdoutStream,
@@ -41,11 +41,13 @@ export default class CLIUX {
     return output
   }
 
-  public warn(err: Error | string, options: { prefix?: string } = {}) {
-    return this.errors.warn(err, options)
-  }
-
-  // get CLIUX (): Class<CLIUX> {
-  //   return CLIUX
+  // public warn(err: Error | string, options: { prefix?: string } = {}) {
+  //   return this.errors.warn(err, options)
   // }
+
+  get warn() {
+    return this.errors.warn.bind(this.errors)
+  }
 }
+
+export const cli = new CLIUX()

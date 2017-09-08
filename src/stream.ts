@@ -3,13 +3,13 @@
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as util from 'util'
-import deps from './deps'
+import { deps } from './deps'
 
-interface IOptions {
+export interface IOptions {
   displayTimestamps?: boolean
 }
 
-export default class StreamOutput {
+export class StreamOutput {
   public static logToFile(msg: string, logfile: string) {
     try {
       fs.mkdirpSync(path.dirname(logfile))

@@ -1,15 +1,15 @@
 // @flow
 
-import StreamOutput from './stream'
+import { StreamOutput } from './stream'
 
-interface IBaseOptions {
+export interface IBaseOptions {
   stdout: StreamOutput
   stderr: StreamOutput
   debug: boolean
   errlog?: string
 }
 
-export default abstract class Base {
+export abstract class Base {
   public stdout: StreamOutput
   public stderr: StreamOutput
   protected options: IBaseOptions

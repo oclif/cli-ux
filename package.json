@@ -57,6 +57,7 @@
   "repository": "jdxcode/cli-ux",
   "scripts": {
     "precommit": "lint-staged",
+    "prepare": "rimraf lib && tsc",
     "test": "tsc --noEmit && jest && tslint --project ."
   },
   "types": "./lib/index.d.ts"

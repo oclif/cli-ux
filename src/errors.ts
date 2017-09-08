@@ -3,8 +3,8 @@
 import * as chalk from 'chalk'
 import * as util from 'util'
 
-import Base from './base'
-import StreamOutput from './stream'
+import { Base } from './base'
+import { StreamOutput } from './stream'
 
 const arrow = process.platform === 'win32' ? '!' : '▸'
 
@@ -45,11 +45,11 @@ function wrap(msg: string): string {
   })(msg)
 }
 
-interface IWarnOptions {
+export interface IWarnOptions {
   prefix?: string
 }
 
-export default class Errors extends Base {
+export class Errors extends Base {
   public warn(err: Error | string, options: IWarnOptions = {}) {
     // this.action.pause(() => {
     try {

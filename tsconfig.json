@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "declaration": true,
     "module": "commonjs",
     "outDir": "./lib",
+    "pretty": true,
     "strict": true,
-    "pretty": true
+    "target": "es2016"
   },
   "include": [
     "./src/**/*"

@@ -1,6 +1,6 @@
 import * as moment from 'moment'
 
-export default {
+export const deps = {
   get moment(): typeof moment {
     return fetch('moment')
   },
