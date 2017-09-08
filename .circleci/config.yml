@@ -13,9 +13,9 @@ jobs:
             - v0-yarn-{{ .Branch }}
             - v0-yarn-master
       - run: yarn
-      - run: {command: "npx jest --coverage", when: always}
-      - run: {command: "npx eslint .", when: always}
-      - run: {command: "npx flow check", when: always}
+      - run: {command: "./node_modules/.bin/tsc", when: always}
+      - run: {command: "./node_modules/.bin/tslint --project .", when: always}
+      - run: {command: "./node_modules/.bin/jest --coverage", when: always}
       - run: {command: "bash <(curl -s https://codecov.io/bash)"}
       - save_cache:
           key: v0-yarn-{{ .Branch }}-{{checksum "yarn.lock"}}
