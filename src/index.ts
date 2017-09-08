@@ -15,7 +15,7 @@ export class CLIUX {
   private errors: Errors
 
   constructor(readonly options: IOptions = {}) {
-    // this.stdoutStream = new StreamOutput(this.options.mock ? undefined : process.stdout)
+    this.stdoutStream = new StreamOutput(this.options.mock ? undefined : process.stdout)
     this.stderrStream = new StreamOutput(this.options.mock ? undefined : process.stderr)
     const depOpts = {
       debug: !!options.debug,
