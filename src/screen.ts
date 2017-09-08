@@ -8,7 +8,9 @@ function termwidth (stream: any): number {
   return width
 }
 
+const columns: number | null = (global as any)['columns']
+
 module.exports = {
-  stdtermwidth: global.columns || termwidth(process.stdout),
-  errtermwidth: global.columns || termwidth(process.stderr)
+  stdtermwidth: columns || termwidth(process.stdout),
+  errtermwidth: columns || termwidth(process.stderr)
 }

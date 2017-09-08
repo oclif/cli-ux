@@ -1,14 +1,15 @@
 {
+  "plugins": [
+    "prettier",
+    "jest"
+  ],
   "extends": [
-    "plugin:flowtype/recommended",
-    "plugin:jest/recommended",
-    "standard"
+    "plugin:jest/recommended"
   ],
   "env": {
     "jest": true
   },
-  "plugins": [
-    "flowtype",
-    "jest"
-  ]
+  "rules": {
+    "prettier/prettier": "error"
+  }
 }

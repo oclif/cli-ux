@@ -4,25 +4,25 @@
   "version": "0.0.0",
   "author": "Jeff Dickey",
   "bugs": "https://github.com/jdxcode/cli-ux/issues",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "moment": "^2.18.1",
+    "strip-ansi": "^4.0.0"
+  },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
-    "babel-preset-flow": "^6.23.0",
+    "@heroku/linewrap": "^1.0.0",
+    "@types/chalk": "^0.4.31",
+    "@types/node": "^8.0.27",
+    "@types/strip-ansi": "^3.0.0",
     "eslint": "^4.6.1",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-flowtype": "^2.35.1",
-    "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jest": "^21.0.0",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "flow-bin": "^0.54.0",
-    "flow-copy-source": "^1.2.1",
     "husky": "^0.14.3",
     "jest": "^21.0.2",
     "lint-staged": "^4.1.0",
-    "rimraf": "^2.6.1"
+    "prettier": "^1.6.1",
+    "rimraf": "^2.6.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.2"
   },
   "files": [
     "lib"
@@ -38,21 +38,10 @@
       "git add"
     ]
   },
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
   "repository": "jdxcode/cli-ux",
   "scripts": {
-    "build": "babel src -d lib --ignore '*.test.js'",
-    "clean": "rimraf lib",
-    "prepublish": "npm run clean",
-    "copy-flow": "flow-copy-source -v -i '**/*.test.js' src lib",
-    "precommit": "lint-staged",
-    "prepare": "npm run build && npm run copy-flow",
-    "test": "jest && eslint . && flow"
+    "test": "jest && eslint ."
   },
-  "dependencies": {
-    "@heroku/linewrap": "^1.0.0",
-    "chalk": "^2.1.0",
-    "moment": "^2.18.1",
-    "strip-ansi": "^4.0.0"
-  }
+  "types": "./lib/index.d.ts"
 }

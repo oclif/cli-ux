@@ -1,22 +1,22 @@
 // @flow
 
-const util = require('util')
-const stripAnsi = require('strip-ansi')
-const path = require('path')
+import * as util from 'util'
+import * as path from 'path'
+import stripAnsi = require('strip-ansi')
 
 type Options = {
   mock?: boolean,
   displayTimestamps?: boolean
 }
 
-class StreamOutput {
+export default class StreamOutput {
   output: string
-  stream: stream$Writable
-  logfile: ?string
+  stream: any
+  logfile: string
   displayTimestamps: boolean
   mock: boolean
 
-  static startOfLine: boolean
+  static startOfLine = false
 
   static logToFile (msg: string, logfile: string) {
     try {
@@ -26,7 +26,7 @@ class StreamOutput {
     } catch (err) { console.error(err) }
   }
 
-  constructor (stream: stream$Writable, options: Options = {}) {
+  constructor (stream: any, options: Options = {}) {
     this.stream = stream
     this.displayTimestamps = !!options.displayTimestamps
     this.mock = !!options.mock
@@ -37,10 +37,10 @@ class StreamOutput {
     // const log = options.log !== false
     // if (log) this.writeLogFile(msg, this.constructor.startOfLine)
     // conditionally show timestamp if configured to display
-    if (this.constructor.startOfLine && this.displayTimestamps) msg = this.timestamp(msg)
+    if (StreamOutput.startOfLine && this.displayTimestamps) msg = this.timestamp(msg)
     if (this.mock) this.output += stripAnsi(msg)
     else this.stream.write(msg)
-    this.constructor.startOfLine = msg.endsWith('\n')
+    StreamOutput.startOfLine = msg.endsWith('\n')
   }
 
   timestamp (msg: string): string {
@@ -63,5 +63,3 @@ class StreamOutput {
 }
 
 StreamOutput.startOfLine = true
-
-module.exports = StreamOutput

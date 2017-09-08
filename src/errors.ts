@@ -1,7 +1,10 @@
 // @flow
 
-const util = require('util')
-const deps = require('./deps')
+import * as util from 'util'
+import * as chalk from 'chalk'
+
+import Base from './base'
+import StreamOutput from './stream'
 
 const arrow = process.platform === 'win32' ? '!' : '▸'
 
@@ -14,7 +17,7 @@ function bangify (msg: string, c: string): string {
   return lines.join('\n')
 }
 
-function getErrorMessage (err: Error): string {
+function getErrorMessage (err: any): string {
   let message
   if (err.body) {
     // API error
@@ -47,11 +50,10 @@ type WarnOptions = {
   prefix?: string
 }
 
-class Errors extends deps.Base {
+export default class Errors extends Base {
   logError (err: Error | string) {
-    const errlog = this.errlog
-    if (!errlog) return
-    deps.StreamOutput.logToFile(util.inspect(err) + '\n', errlog)
+    if (!this.options.errlog) return
+    StreamOutput.logToFile(util.inspect(err) + '\n', this.options.errlog)
   }
 
   warn (err: Error | string, options: WarnOptions = {}) {
@@ -60,8 +62,8 @@ class Errors extends deps.Base {
       let prefix = options.prefix ? `${options.prefix} ` : ''
       err = typeof err === 'string' ? new Error(err) : err
       this.logError(err)
-      if (this.debug) this.stderr.write(`WARNING: ${prefix}`) && this.stderr.log(err.stack || util.inspect(err))
-      else this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), deps.chalk.yellow(arrow)))
+      if (this.options.debug) this.stderr.write(`WARNING: ${prefix}`) && this.stderr.log(err.stack || util.inspect(err))
+      else this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), chalk.yellow(arrow)))
     } catch (e) {
       console.error('error displaying warning')
       console.error(e)
@@ -70,5 +72,3 @@ class Errors extends deps.Base {
     // }, this.color.bold.yellow('!'))
   }
 }
-
-module.exports = Errors

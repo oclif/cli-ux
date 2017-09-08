@@ -1,7 +1,7 @@
 // @flow
 
-const StreamOutput = require('./stream')
-const deps = require('./deps')
+import StreamOutput from './stream'
+import Errors from './errors'
 
 type Options = {
   errlog?: string,
@@ -9,24 +9,21 @@ type Options = {
   debug?: boolean
 }
 
-class CLIUX {
+export default class CLIUX {
   options: Options
   _stdout: StreamOutput
   _stderr: StreamOutput
-  _errors: deps.Errors
+  _errors: Errors
 
   constructor (options: Options = {}) {
     this.options = options
     let streamOptions = {
       mock: this.options.mock
     }
-    this._stdout = new deps.StreamOutput(process.stdout, streamOptions)
-    this._stderr = new deps.StreamOutput(process.stderr, streamOptions)
+    this._stdout = new StreamOutput(process.stdout, streamOptions)
+    this._stderr = new StreamOutput(process.stderr, streamOptions)
     let depOpts = {stdout: this._stdout, stderr: this._stderr, debug: !!options.debug}
-    this._errors = new deps.Errors(depOpts)
-    // ...depOpts
-    // // errlog: options.errlog
-    // })
+    this._errors = new Errors(depOpts)
   }
 
   get stderr (): string {
@@ -49,9 +46,7 @@ class CLIUX {
     return this._errors.warn(err, options)
   }
 
-  get CLIUX (): Class<CLIUX> {
-    return CLIUX
-  }
+  // get CLIUX (): Class<CLIUX> {
+  //   return CLIUX
+  // }
 }
-
-module.exports = new CLIUX()
