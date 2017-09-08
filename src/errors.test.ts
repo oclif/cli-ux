@@ -1,10 +1,9 @@
-import Error from './errors'
-import StreamOutput from './stream'
+import { Errors } from './errors'
 
-let errors: Error
+let errors: Errors
 
 beforeEach(() => {
-  errors = new Error()
+  errors = new Errors()
 })
 
 test('shows a warning', () => {

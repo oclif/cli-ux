@@ -47,8 +47,8 @@
   ],
   "license": "ISC",
   "lint-staged": {
+    "**/*.test.ts": "jest",
     "**/*.ts": [
-      "jest",
       "prettier --write",
       "tslint --fix",
       "git add"
