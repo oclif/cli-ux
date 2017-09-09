@@ -1,5 +1,3 @@
-// @flow
-
 function termwidth(stream: any): number {
   if (!stream.isTTY) {
     return 80

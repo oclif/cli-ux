@@ -1,5 +1,3 @@
-// @flow
-
 import { StreamOutput } from './stream'
 
 export interface IBaseOptions {

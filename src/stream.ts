@@ -1,5 +1,3 @@
-// @flow
-
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as util from 'util'

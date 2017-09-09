@@ -1,5 +1,3 @@
-// @flow
-
 import * as chalk from 'chalk'
 import * as util from 'util'
 

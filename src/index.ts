@@ -1,5 +1,3 @@
-// @flow
-
 import { Errors } from './errors'
 import { StreamOutput } from './stream'
 
