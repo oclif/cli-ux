@@ -21,6 +21,7 @@
     "jest": "^21.0.2",
     "lint-staged": "^4.1.0",
     "prettier": "^1.6.1",
+    "remap-istanbul": "^0.9.5",
     "rimraf": "^2.6.1",
     "std-mocks": "^1.0.1",
     "ts-jest": "^21.0.0",
@@ -63,6 +64,7 @@
   "scripts": {
     "posttest": "tslint --project .",
     "precommit": "lint-staged",
+    "coverage": "cat coverage/coverage-final.json | remap-istanbul -o coverage/coverage-final.json && curl -s https://codecov.io/bash | bash",
     "prepare": "rimraf lib && tsc",
     "pretest": "tsc --sourcemap",
     "test": "jest"
