@@ -87,7 +87,6 @@ export class Errors extends Base {
       console.error(e)
       console.error(err)
     }
-    // }, this.color.bold.yellow('!'))
   }
 
   public exit(code: number = 0) {
