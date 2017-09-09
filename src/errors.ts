@@ -50,6 +50,7 @@ export interface IWarnOptions {
 
 export class Errors extends Base {
   public error(err: Error | string, exitCode: number | false = 1) {
+    if (this.options.mock && typeof err !== 'string' && exitCode !== false) throw err
     try {
       if (typeof err === 'string') {
         err = new Error(err)
