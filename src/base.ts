@@ -4,6 +4,7 @@ export interface IBaseOptions {
   stdout: StreamOutput
   stderr: StreamOutput
   debug: boolean
+  mock: boolean
   errlog?: string
 }
 
@@ -15,6 +16,7 @@ export abstract class Base {
   constructor(options: Partial<IBaseOptions> = {}) {
     this.options = {
       debug: !!options.debug,
+      mock: !!options.mock,
       stderr: new StreamOutput(),
       stdout: new StreamOutput(),
       ...options,

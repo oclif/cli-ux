@@ -1,5 +1,10 @@
-import { Errors } from './errors'
+import { ActionBase, shouldDisplaySpinner } from './action/base'
+import { SpinnerAction } from './action/spinner'
+import { SimpleAction } from './action/simple'
+import { Errors, IWarnOptions } from './errors'
+import { Prompt, IPromptOptions } from './prompt'
 import { StreamOutput } from './stream'
+import { deps } from './deps'
 
 export interface IOptions {
   errlog?: string
@@ -8,19 +13,24 @@ export interface IOptions {
 }
 
 export class CLI {
+  public action: ActionBase
   private stdoutStream: StreamOutput
   private stderrStream: StreamOutput
-  private errors: Errors
+  private errorsDep: Errors
+  private promptDep: Prompt
 
   constructor(readonly options: IOptions = {}) {
     this.stdoutStream = new StreamOutput(this.options.mock ? undefined : process.stdout)
     this.stderrStream = new StreamOutput(this.options.mock ? undefined : process.stderr)
     const depOpts = {
       debug: !!options.debug,
+      mock: !!options.mock,
       stderr: this.stderrStream,
       stdout: this.stdoutStream,
     }
-    this.errors = new Errors(depOpts)
+    this.errorsDep = new Errors(depOpts)
+    this.promptDep = new Prompt(depOpts)
+    this.action = shouldDisplaySpinner(depOpts) ? new SpinnerAction(depOpts) : new SimpleAction(depOpts)
   }
 
   get stderr(): string {
@@ -39,12 +49,28 @@ export class CLI {
     return output
   }
 
-  // public warn(err: Error | string, options: { prefix?: string } = {}) {
-  //   return this.errors.warn(err, options)
-  // }
+  public prompt(name: string, options: IPromptOptions = {}) {
+    return this.action.pauseAsync(() => {
+      return this.promptDep.prompt(name, options)
+    }, deps.chalk.cyan('?'))
+  }
 
-  get warn() {
-    return this.errors.warn.bind(this.errors)
+  public log(data: string, ...args: any[]) {
+    this.action.pause(() => {
+      return this.stdoutStream.log(data, ...args)
+    })
+  }
+
+  public warn(err: Error | string, options: IWarnOptions = {}) {
+    this.action.pause(() => {
+      return this.errorsDep.warn(err, options)
+    }, deps.chalk.bold.yellow('!'))
+  }
+
+  public error(err: Error | string, exitCode: number | false = 1) {
+    this.action.pause(() => {
+      return this.errorsDep.error(err, exitCode)
+    }, deps.chalk.bold.red('!'))
   }
 }
 

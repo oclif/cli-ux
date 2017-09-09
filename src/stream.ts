@@ -13,15 +13,14 @@ export class StreamOutput {
       fs.mkdirpSync(path.dirname(logfile))
       fs.appendFileSync(logfile, deps.stripAnsi(msg))
     } catch (err) {
-      // tslint:disable-next-line:no-console
       console.error(err)
     }
   }
 
   private static startOfLine = false
 
+  public logfile: string | undefined
   public output = ''
-  private logfile: string
   private displayTimestamps: boolean
   private mock: boolean
 
@@ -46,16 +45,17 @@ export class StreamOutput {
     let msg = data ? util.format(data, ...args) : ''
     msg += '\n'
     this.write(msg)
-    // this.out.action.pause(() => this.write(msg))
+  }
+
+  public writeLogFile(msg: string, withTimestamp: boolean) {
+    if (!this.logfile) {
+      return
+    }
+    msg = withTimestamp ? this.timestamp(msg) : msg
+    StreamOutput.logToFile(msg, this.logfile)
   }
 
   private timestamp(msg: string): string {
     return `[${deps.moment().format()}] ${msg}`
   }
-
-  // writeLogFile (msg: string, withTimestamp: boolean) {
-  //   if (!this.logfile) return
-  //   msg = withTimestamp ? this.timestamp(msg) : msg
-  //   logToFile(msg, this.logfile)
-  // }
 }

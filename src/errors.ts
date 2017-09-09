@@ -1,7 +1,8 @@
-import * as chalk from 'chalk'
 import * as util from 'util'
+import { deps } from './deps'
 
 import { Base } from './base'
+import { ExitError } from './exit_error'
 import { StreamOutput } from './stream'
 
 const arrow = process.platform === 'win32' ? '!' : '▸'
@@ -48,8 +49,28 @@ export interface IWarnOptions {
 }
 
 export class Errors extends Base {
+  public error(err: Error | string, exitCode: number | false = 1) {
+    try {
+      if (typeof err === 'string') {
+        err = new Error(err)
+      }
+      this.logError(err)
+      if (this.options.debug) {
+        this.stderr.log(err.stack || util.inspect(err))
+      } else {
+        this.stderr.log(bangify(wrap(getErrorMessage(err)), deps.chalk.red(arrow)))
+      }
+    } catch (e) {
+      console.error('error displaying error')
+      console.error(e)
+      console.error(err)
+    }
+    if (exitCode !== false) {
+      this.exit(exitCode)
+    }
+  }
+
   public warn(err: Error | string, options: IWarnOptions = {}) {
-    // this.action.pause(() => {
     try {
       const prefix = options.prefix ? `${options.prefix} ` : ''
       err = typeof err === 'string' ? new Error(err) : err
@@ -58,14 +79,25 @@ export class Errors extends Base {
         this.stderr.write(`WARNING: ${prefix}`)
         this.stderr.log(err.stack || util.inspect(err))
       } else {
-        this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), chalk.yellow(arrow)))
+        this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), deps.chalk.yellow(arrow)))
       }
     } catch (e) {
-      console.error('error displaying warning') // tslint:disable-line:no-console
-      console.error(e) // tslint:disable-line:no-console
-      console.error(err) // tslint:disable-line:no-console
+      console.error('error displaying warning')
+      console.error(e)
+      console.error(err)
     }
     // }, this.color.bold.yellow('!'))
+  }
+
+  public exit(code: number = 0) {
+    if (this.options.debug) {
+      console.error(`Exiting with code: ${code}`)
+    }
+    if (this.options.mock) {
+      throw new ExitError(code, this.stdout.output, this.stderr.output)
+    } else {
+      process.exit(code)
+    }
   }
 
   private logError(err: Error | string) {

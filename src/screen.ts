@@ -12,10 +12,7 @@ function termwidth(stream: any): number {
   return width
 }
 
-// tslint:disable-next-line
 const columns: number | null = (global as any)['columns']
 
-module.exports = {
-  errtermwidth: columns || termwidth(process.stderr),
-  stdtermwidth: columns || termwidth(process.stdout),
-}
+export const errtermwidth = columns || termwidth(process.stderr)
+export const stdtermwidth = columns || termwidth(process.stdout)

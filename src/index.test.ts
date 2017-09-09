@@ -18,6 +18,22 @@ describe('with mocked stderr', () => {
   })
 })
 
+describe('with mocked stdout', () => {
+  beforeEach(() => {
+    stdMocks.use({ stdout: true })
+  })
+
+  afterEach(() => {
+    stdMocks.restore()
+  })
+
+  test('outputs to stdout', () => {
+    cli.log('yay!')
+    const { stdout } = stdMocks.flush()
+    expect(stdout[0]).toEqual('yay!\n')
+  })
+})
+
 test('can be instantiated', () => {
   const newCLI = new CLI({ mock: true })
   newCLI.warn('foo')

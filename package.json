@@ -6,28 +6,32 @@
   "bugs": "https://github.com/jdxcode/cli-ux/issues",
   "dependencies": {
     "@types/fs-extra": "^4.0.2",
+    "ansi-escapes": "^3.0.0",
+    "ansi-styles": "^3.2.0",
     "chalk": "^2.1.0",
     "fs-extra": "^4.0.1",
     "moment": "^2.18.1",
-    "strip-ansi": "^4.0.0"
+    "password-prompt": "^1.0.3",
+    "strip-ansi": "^4.0.0",
+    "supports-color": "^4.4.0"
   },
   "devDependencies": {
     "@heroku/linewrap": "^1.0.0",
+    "@types/ansi-styles": "^2.0.30",
     "@types/chalk": "^0.4.31",
     "@types/jest": "^20.0.8",
-    "@types/node": "^8.0.27",
+    "@types/node": "^8.0.28",
     "@types/strip-ansi": "^3.0.0",
+    "@types/supports-color": "^3.1.0",
     "husky": "^0.14.3",
     "jest": "^21.0.2",
-    "lint-staged": "^4.1.0",
+    "lint-staged": "^4.1.3",
     "prettier": "^1.6.1",
     "remap-istanbul": "^0.9.5",
     "rimraf": "^2.6.1",
     "std-mocks": "^1.0.1",
     "ts-jest": "^21.0.0",
     "ts-node": "^3.3.0",
-    "tslint": "^5.7.0",
-    "tslint-config-prettier": "^1.5.0",
     "typescript": "^2.5.2"
   },
   "files": [
@@ -54,7 +58,6 @@
   "lint-staged": {
     "**/*.ts": [
       "prettier --write",
-      "tslint --fix",
       "git add",
       "jest --bail --findRelatedTests"
     ]
@@ -62,9 +65,8 @@
   "main": "./lib/index.js",
   "repository": "jdxcode/cli-ux",
   "scripts": {
-    "posttest": "tslint --project .",
-    "precommit": "lint-staged",
     "coverage": "cat coverage/coverage-final.json | remap-istanbul -o coverage/coverage-final.json && curl -s https://codecov.io/bash | bash",
+    "precommit": "lint-staged",
     "prepare": "rimraf lib && tsc",
     "pretest": "tsc --sourcemap",
     "test": "jest"
