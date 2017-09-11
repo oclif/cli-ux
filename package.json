@@ -5,6 +5,7 @@
   "author": "Jeff Dickey",
   "bugs": "https://github.com/jdxcode/cli-ux/issues",
   "dependencies": {
+    "@heroku/linewrap": "^1.0.0",
     "ansi-escapes": "^3.0.0",
     "ansi-styles": "^3.2.0",
     "cardinal": "^1.0.0",
@@ -24,7 +25,6 @@
     "supports-color": "^4.4.0"
   },
   "devDependencies": {
-    "@heroku/linewrap": "^1.0.0",
     "@types/ansi-styles": "^2.0.30",
     "@types/chalk": "^0.4.31",
     "@types/fs-extra": "^4.0.2",
