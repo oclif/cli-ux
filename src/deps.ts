@@ -1,5 +1,3 @@
-import maxBy = require('lodash.maxby')
-import padEnd = require('lodash.padend')
 import ansiStyles = require('ansi-styles')
 import chalk = require('chalk')
 import * as moment from 'moment'
@@ -14,12 +12,6 @@ export const deps = {
   },
   get chalk(): typeof chalk {
     return fetch('chalk')
-  },
-  get maxBy(): typeof maxBy {
-    return fetch('lodash.maxby')
-  },
-  get padEnd(): typeof padEnd {
-    return fetch('lodash.padend')
   },
   get linewrap(): any {
     return fetch('@heroku/linewrap')

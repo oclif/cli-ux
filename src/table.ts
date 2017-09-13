@@ -1,5 +1,6 @@
 import { StreamOutput } from './stream'
 import { deps } from './deps'
+import _ from 'ts-lodash'
 
 export type TableColumn = {
   key: string
@@ -42,13 +43,6 @@ export type TableOptions = {
  *
  */
 export function table(stream: StreamOutput, data: any[], inputOptions: Partial<TableOptions> = {}) {
-  const ary = require('lodash.ary')
-  const get = require('lodash.get')
-  const identity = require('lodash.identity')
-  const partial = require('lodash.partial')
-  const property = require('lodash.property')
-  const result = require('lodash.result')
-
   const options: TableOptions = {
     ...inputOptions,
     columns: (inputOptions.columns || []).map(c => ({
@@ -60,12 +54,12 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
 
       get: function(row: any) {
         let value
-        let path = result(this, 'key')
+        let path = _.result(this, 'key')
 
         if (!path) {
           value = row
         } else {
-          value = get(row, path)
+          value = _.get(row, path)
         }
 
         return this.format(value, row)
@@ -74,13 +68,13 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
     })),
     colSep: '  ',
     after: () => {},
-    headerAnsi: identity,
+    headerAnsi: _.identity,
     printLine: (s: any) => stream.log(s),
     printRow: function(cells: any[]) {
       this.printLine((cells.join(this.colSep) as any).trimRight())
     },
     printHeader: function(cells: any[]) {
-      this.printRow(cells.map(ary(this.headerAnsi, 1)))
+      this.printRow(cells.map(_.ary(this.headerAnsi, 1)))
       this.printRow(cells.map(hdr => hdr.replace(/./g, '─')))
     },
   }
@@ -89,7 +83,7 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
 
   function calcWidth(cell: any) {
     let lines = deps.stripAnsi(cell).split(/[\r\n]+/)
-    let lineLengths = lines.map(property('length'))
+    let lineLengths = lines.map(_.property('length'))
     return Math.max.apply(Math, lineLengths)
   }
 
@@ -112,7 +106,7 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
       for (let col of columns) {
         let cell = col.get(row)
 
-        col.width = Math.max(result(col, 'label').length, col.width || 0, calcWidth(cell))
+        col.width = Math.max((<string>_.result(col, 'label')).length, col.width || 0, calcWidth(cell))
 
         row.height = Math.max(row.height || 0, cell.split(/[\r\n]+/).length)
       }
@@ -121,7 +115,7 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
     if (options.printHeader) {
       options.printHeader(
         columns.map(function(col) {
-          let label = result(col, 'label')
+          let label = _.result(col, 'label') as string
           return pad(label, col.width || label.length)
         }),
       )
@@ -135,7 +129,7 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
 
     for (let row of data) {
       for (let i = 0; i < (row.height || 0); i++) {
-        let cells = columns.map(partial(getNthLineOfCell, i, row))
+        let cells = columns.map(_.partial(getNthLineOfCell, i, row))
         options.printRow(cells)
       }
       options.after(row, options)
