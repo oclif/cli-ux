@@ -62,7 +62,7 @@ describe('with mocked cli', () => {
     cli = new CLI({ mock: true })
   })
 
-  test('exit', () => {
+  test.only('exit', () => {
     expect.assertions(1)
     try {
       cli.exit(1)

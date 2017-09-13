@@ -5,13 +5,13 @@ import { Base } from './base'
 import { ExitError } from './exit_error'
 import { StreamOutput } from './stream'
 
-const arrow = process.platform === 'win32' ? '!' : '▸'
+const arrow = process.platform === 'win32' ? ' !' : ' ▸'
 
 function bangify(msg: string, c: string): string {
   const lines = msg.split('\n')
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
-    lines[i] = ' ' + c + line.substr(2, line.length)
+    lines[i] = c + line.substr(2, line.length)
   }
   return lines.join('\n')
 }
@@ -44,49 +44,59 @@ function wrap(msg: string): string {
   })(msg)
 }
 
-export interface IWarnOptions {
-  prefix?: string
+export interface IErrorOptions {
+  exitCode?: number | false
+  severity: 'warn' | 'fatal' | 'error'
+  context?: string
 }
 
 export class Errors extends Base {
-  public error(err: Error | string, exitCode: number | false = 1) {
-    if (this.options.mock && typeof err !== 'string' && exitCode !== false) throw err
+  public handleUnhandleds() {
+    process.on('unhandledRejection', (reason, p) => {
+      this.fatal(reason, { context: 'Promise unhandledRejection' })
+    })
+    process.on('uncaughtException', error => {
+      this.fatal(error, { context: 'Error uncaughtException' })
+    })
+  }
+
+  public error(err: Error | string, options: Partial<IErrorOptions> & { exitCode: false }): void
+  public error(err: Error | string, options?: Partial<IErrorOptions>): never
+  public error(err: Error | string, options?: any): any {
+    options = options || {}
+    if (options.exitCode === undefined) options.exitCode = 1
+    if (options.severity !== 'warn' && this.options.mock && typeof err !== 'string' && options.exitCode !== false)
+      throw err
     try {
-      if (typeof err === 'string') {
-        err = new Error(err)
-      }
+      if (typeof err === 'string') err = new Error(err)
+      const prefix = options.context ? `${options.context}: ` : ''
       this.logError(err)
       if (this.options.debug) {
+        this.stderr.write(`${options.severity.toUpperCase()}: ${prefix}`)
         this.stderr.log(err.stack || util.inspect(err))
       } else {
-        this.stderr.log(bangify(wrap(getErrorMessage(err)), deps.chalk.red(arrow)))
+        let bang = deps.chalk.red(arrow)
+        if (options.severity === 'fatal') bang = deps.chalk.bgRed.bold.white(' FATAL ')
+        if (options.severity === 'warn') bang = deps.chalk.yellow(arrow)
+        this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), bang))
       }
     } catch (e) {
       console.error('error displaying error')
       console.error(e)
       console.error(err)
     }
-    if (exitCode !== false) {
-      this.exit(exitCode)
-    }
+    if (options.exitCode !== false) this.exit(options.exitCode)
   }
 
-  public warn(err: Error | string, options: IWarnOptions = {}) {
-    try {
-      const prefix = options.prefix ? `${options.prefix} ` : ''
-      err = typeof err === 'string' ? new Error(err) : err
-      this.logError(err)
-      if (this.options.debug) {
-        this.stderr.write(`WARNING: ${prefix}`)
-        this.stderr.log(err.stack || util.inspect(err))
-      } else {
-        this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), deps.chalk.yellow(arrow)))
-      }
-    } catch (e) {
-      console.error('error displaying warning')
-      console.error(e)
-      console.error(err)
-    }
+  public fatal(err: Error | string, options: Partial<IErrorOptions> = {}) {
+    options.severity = 'fatal'
+    this.error(err, options)
+  }
+
+  public warn(err: Error | string, options: Partial<IErrorOptions> = {}) {
+    options.exitCode = false
+    options.severity = 'warn'
+    this.error(err, options)
   }
 
   public exit(code: number = 0) {
@@ -96,14 +106,12 @@ export class Errors extends Base {
     if (this.options.mock) {
       throw new ExitError(code, this.stdout.output, this.stderr.output)
     } else {
-      process.exit(code)
+      // process.exit(code)
     }
   }
 
   private logError(err: Error | string) {
-    if (!this.options.errlog) {
-      return
-    }
+    if (!this.options.errlog) return
     StreamOutput.logToFile(util.inspect(err) + '\n', this.options.errlog)
   }
 }

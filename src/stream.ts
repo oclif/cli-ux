@@ -27,8 +27,8 @@ export class StreamOutput {
   constructor(readonly stream?: NodeJS.WriteStream, readonly options: IOptions = {}) {}
 
   public write(msg: string, options: { log?: boolean } = {}) {
-    // const log = options.log !== false
-    // if (log) this.writeLogFile(msg, this.constructor.startOfLine)
+    const log = options.log !== false
+    if (log) this.writeLogFile(msg, StreamOutput.startOfLine)
     // conditionally show timestamp if configured to display
     if (StreamOutput.startOfLine && this.displayTimestamps) {
       msg = this.timestamp(msg)

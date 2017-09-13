@@ -1,11 +1,13 @@
 import { ActionBase, shouldDisplaySpinner } from './action/base'
 import { SpinnerAction } from './action/spinner'
 import { SimpleAction } from './action/simple'
-import { Errors, IWarnOptions } from './errors'
+import { Errors, IErrorOptions } from './errors'
 import { Prompt, IPromptOptions } from './prompt'
 import { StreamOutput } from './stream'
 import { deps } from './deps'
 import { table, TableOptions } from './table'
+
+const debug = require('debug')('cli-ux')
 
 export interface IOptions {
   errlog?: string
@@ -17,27 +19,27 @@ export class CLI {
   public action: ActionBase
   public stdout: StreamOutput
   public stderr: StreamOutput
-  private errorsDep: Errors
-  private promptDep: Prompt
+  private _errors: Errors
+  private _prompt: Prompt
 
   constructor(readonly options: IOptions = {}) {
     this.stdout = new StreamOutput(this.options.mock ? undefined : process.stdout)
     this.stderr = new StreamOutput(this.options.mock ? undefined : process.stderr)
     const depOpts = {
-      debug: !!options.debug,
+      debug: options.debug || (options.debug === undefined && debug.enabled),
       mock: !!options.mock,
       stderr: this.stderr,
       stdout: this.stdout,
     }
-    this.errorsDep = new Errors(depOpts)
-    this.promptDep = new Prompt(depOpts)
+    this._errors = new Errors(depOpts)
+    this._prompt = new Prompt(depOpts)
     this.action = shouldDisplaySpinner(depOpts) ? new SpinnerAction(depOpts) : new SimpleAction(depOpts)
     if (this.options.mock || !process.stderr.isTTY || !process.stdout.isTTY) deps.chalk.enabled = false
   }
 
   public prompt(name: string, options: IPromptOptions = {}) {
     return this.action.pauseAsync(() => {
-      return this.promptDep.prompt(name, options)
+      return this._prompt.prompt(name, options)
     }, deps.chalk.cyan('?'))
   }
 
@@ -47,20 +49,20 @@ export class CLI {
     })
   }
 
-  public warn(err: Error | string, options: IWarnOptions = {}) {
+  public warn(err: Error | string, options: Partial<IErrorOptions> = {}) {
     this.action.pause(() => {
-      return this.errorsDep.warn(err, options)
+      return this._errors.warn(err, options)
     }, deps.chalk.bold.yellow('!'))
   }
 
-  public error(err: Error | string, exitCode: number | false = 1) {
+  public error(err: Error | string, options: Partial<IErrorOptions> = {}) {
     this.action.pause(() => {
-      return this.errorsDep.error(err, exitCode)
+      return this._errors.error(err, options)
     }, deps.chalk.bold.red('!'))
   }
 
   public exit(code: number = 1) {
-    this.errorsDep.exit(code)
+    this._errors.exit(code)
   }
 
   public table(data: any[], options: Partial<TableOptions>) {
@@ -116,6 +118,16 @@ export class CLI {
     }
   }
 
+  /**
+   * puts in a handler for process.on('uncaughtException') and process.on('unhandledRejection')
+   */
+  public handleUnhandleds() {
+    this._errors.handleUnhandleds()
+  }
+
+  /**
+   * cleanup any outstanding output like actions that need to be stopped
+   */
   public done() {
     this.action.stop()
   }
