@@ -42,7 +42,7 @@ export class StreamOutput {
     StreamOutput.startOfLine = msg.endsWith('\n')
   }
 
-  public log(data: string, ...args: any[]) {
+  public log(data?: string, ...args: any[]) {
     let msg = data ? util.format(data, ...args) : ''
     msg += '\n'
     this.write(msg)
