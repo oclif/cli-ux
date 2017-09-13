@@ -40,6 +40,10 @@ export class ActionBase extends Base {
     delete this.task
   }
 
+  get running(): boolean {
+    return !!this.task
+  }
+
   get status(): string | undefined {
     return this.task ? this.task.status : undefined
   }
