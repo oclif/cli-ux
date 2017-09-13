@@ -64,6 +64,7 @@ export class Errors extends Base {
   public error(err: Error | string, options?: Partial<IErrorOptions>): never
   public error(err: Error | string, options?: any): any {
     options = options || {}
+    if (!options.severity) options.severity = 'error'
     if (options.exitCode === undefined) options.exitCode = 1
     if (options.severity !== 'warn' && this.options.mock && typeof err !== 'string' && options.exitCode !== false)
       throw err
