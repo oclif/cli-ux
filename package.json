@@ -16,7 +16,7 @@
     "password-prompt": "^1.0.3",
     "strip-ansi": "^4.0.0",
     "supports-color": "^4.4.0",
-    "ts-lodash": "^4.0.3"
+    "ts-lodash": "^4.0.4"
   },
   "devDependencies": {
     "@types/ansi-styles": "^2.0.30",

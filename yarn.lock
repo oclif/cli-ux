@@ -3340,9 +3340,9 @@ ts-jest@^21.0.0:
     source-map-support "^0.4.4"
     yargs "^8.0.1"
 
-ts-lodash@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/ts-lodash/-/ts-lodash-4.0.3.tgz#70627145e3680c9ec47d0143f531a9c0a78f041d"
+ts-lodash@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/ts-lodash/-/ts-lodash-4.0.4.tgz#082700585b9f34a4b2abb0a6ada75cfd26deb2bd"
 
 ts-node@^3.3.0:
   version "3.3.0"
