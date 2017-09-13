@@ -43,7 +43,7 @@ export class CLI {
     }, deps.chalk.cyan('?'))
   }
 
-  public log(data: string, ...args: any[]) {
+  public log(data?: string, ...args: any[]) {
     this.action.pause(() => {
       return this.stdout.log(data, ...args)
     })
