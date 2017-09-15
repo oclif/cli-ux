@@ -8,6 +8,8 @@ async function run() {
   await wait()
   cli.log('1 log')
   await wait()
+  cli.action.status = 'a wild status appeared!'
+  await wait()
   cli.log('2 log')
   await wait()
   cli.log('3 log')
