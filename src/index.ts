@@ -1,11 +1,9 @@
-import { ActionBase, shouldDisplaySpinner } from './action/base'
-import { SpinnerAction } from './action/spinner'
-import { SimpleAction } from './action/simple'
-import { Errors, IErrorOptions } from './errors'
-import { Prompt, IPromptOptions } from './prompt'
-import { StreamOutput } from './stream'
 import { deps } from './deps'
-import { table, TableOptions } from './table'
+import { StreamOutput } from './stream'
+import { Prompt, IPromptOptions } from './prompt'
+import { Errors, IErrorOptions } from './errors'
+import { ActionBase } from './action/base'
+import { TableOptions } from './table'
 
 const debug = require('debug')('cli-ux')
 
@@ -13,33 +11,48 @@ export interface IOptions {
   errlog?: string
   mock?: boolean
   debug?: boolean
+  action?: ActionBase
 }
 
 export class CLI {
-  public action: ActionBase
   public stdout: StreamOutput
   public stderr: StreamOutput
-  private _errors: Errors
-  private _prompt: Prompt
 
   constructor(readonly options: IOptions = {}) {
-    this.stdout = new StreamOutput(this.options.mock ? undefined : process.stdout)
-    this.stderr = new StreamOutput(this.options.mock ? undefined : process.stderr)
-    const depOpts = {
-      debug: options.debug || (options.debug === undefined && debug.enabled),
-      mock: !!options.mock,
-      stderr: this.stderr,
-      stdout: this.stdout,
+    this.stdout = new deps.StreamOutput(this.options.mock ? undefined : process.stdout)
+    this.stderr = new deps.StreamOutput(this.options.mock ? undefined : process.stderr)
+    if (this.options.mock) deps.chalk.enabled = false
+  }
+
+  private _prompt: Prompt
+  public get Prompt() {
+    if (!this._prompt) {
+      this._prompt = new deps.Prompt(this._depOpts)
     }
-    this._errors = new Errors(depOpts)
-    this._prompt = new Prompt(depOpts)
-    this.action = shouldDisplaySpinner(depOpts) ? new SpinnerAction(depOpts) : new SimpleAction(depOpts)
-    if (this.options.mock || !process.stderr.isTTY || !process.stdout.isTTY) deps.chalk.enabled = false
+    return this._prompt
+  }
+
+  private _errors: Errors
+  public get Errors() {
+    if (!this._errors) {
+      this._errors = new deps.Errors(this._depOpts)
+    }
+    return this._errors
+  }
+
+  private _action: ActionBase
+  public get action() {
+    if (!this._action) {
+      this._action = deps.shouldDisplaySpinner(this._depOpts)
+        ? new deps.SpinnerAction(this._depOpts)
+        : new deps.SimpleAction(this._depOpts)
+    }
+    return this._action
   }
 
   public prompt(name: string, options: IPromptOptions = {}) {
     return this.action.pauseAsync(() => {
-      return this._prompt.prompt(name, options)
+      return this.Prompt.prompt(name, options)
     }, deps.chalk.cyan('?'))
   }
 
@@ -51,18 +64,18 @@ export class CLI {
 
   public warn(err: Error | string, options: Partial<IErrorOptions> = {}) {
     this.action.pause(() => {
-      return this._errors.warn(err, options)
+      return this.Errors.warn(err, options)
     }, deps.chalk.bold.yellow('!'))
   }
 
   public error(err: Error | string, options: Partial<IErrorOptions> = {}) {
     this.action.pause(() => {
-      return this._errors.error(err, options)
+      return this.Errors.error(err, options)
     }, deps.chalk.bold.red('!'))
   }
 
   public exit(code: number = 1) {
-    this._errors.exit(code)
+    this.Errors.exit(code)
   }
 
   public table(data: any[], options: Partial<TableOptions>) {
@@ -122,7 +135,7 @@ export class CLI {
    * puts in a handler for process.on('uncaughtException') and process.on('unhandledRejection')
    */
   public handleUnhandleds() {
-    this._errors.handleUnhandleds()
+    this.Errors.handleUnhandleds()
   }
 
   /**
@@ -130,6 +143,15 @@ export class CLI {
    */
   public done() {
     this.action.stop()
+  }
+
+  private get _depOpts() {
+    return {
+      debug: this.options.debug || (this.options.debug === undefined && debug.enabled),
+      mock: !!this.options.mock,
+      stderr: this.stderr,
+      stdout: this.stdout,
+    }
   }
 }
 

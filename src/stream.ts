@@ -1,4 +1,3 @@
-import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as util from 'util'
 import { deps } from './deps'
@@ -10,8 +9,8 @@ export interface IOptions {
 export class StreamOutput {
   public static logToFile(msg: string, logfile: string) {
     try {
-      fs.mkdirpSync(path.dirname(logfile))
-      fs.appendFileSync(logfile, deps.stripAnsi(msg))
+      deps.fs.mkdirpSync(path.dirname(logfile))
+      deps.fs.appendFileSync(logfile, deps.stripAnsi(msg))
     } catch (err) {
       console.error(err)
     }

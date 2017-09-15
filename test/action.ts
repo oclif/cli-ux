@@ -1,10 +1,7 @@
-import { SimpleAction } from '../src/action/simple'
-import { ActionBase } from '../src/action/base'
-import { SpinnerAction } from '../src/action/spinner'
-import { StreamOutput } from '../src/stream'
-import { cli } from '../src'
+import { CLI } from '../src'
 
 const wait = (ms = 400) => new Promise(resolve => setTimeout(resolve, ms))
+let cli = new CLI()
 
 async function run() {
   cli.action.start('x foo')
@@ -34,11 +31,10 @@ async function run() {
 }
 
 async function main() {
-  let stdout = new StreamOutput(process.stdout)
-  let stderr = new StreamOutput(process.stderr)
-  cli.action = new SimpleAction({ stdout, stderr })
+  cli = new CLI()
   await run()
-  cli.action = new SpinnerAction({ stdout, stderr })
+  process.env.TERM = 'dumb'
+  cli = new CLI()
   await run()
   cli.action.start('7 error out')
   await wait()
