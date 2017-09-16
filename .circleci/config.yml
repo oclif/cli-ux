@@ -13,7 +13,7 @@ jobs:
             - v0-yarn-{{ .Branch }}
             - v0-yarn-master
       - run: yarn
-      - run: yarn test -- --coverage
+      - run: yarn test --coverage
       - run: yarn run coverage
       - save_cache:
           key: v0-yarn-{{ .Branch }}-{{checksum "yarn.lock"}}
