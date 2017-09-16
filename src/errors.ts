@@ -107,7 +107,7 @@ export class Errors extends Base {
     if (this.options.mock) {
       throw new ExitError(code, this.stdout.output, this.stderr.output)
     } else {
-      // process.exit(code)
+      process.exit(code)
     }
   }
 
