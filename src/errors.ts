@@ -63,6 +63,7 @@ export class Errors extends Base {
   public error(err: Error | string, options: Partial<IErrorOptions> & { exitCode: false }): void
   public error(err: Error | string, options?: Partial<IErrorOptions>): never
   public error(err: Error | string, options?: any): any {
+    if (typeof options === 'string') options = { context: options }
     options = options || {}
     if (!options.severity) options.severity = 'error'
     if (options.exitCode === undefined) options.exitCode = 1
@@ -95,6 +96,7 @@ export class Errors extends Base {
   }
 
   public warn(err: Error | string, options: Partial<IErrorOptions> = {}) {
+    if (typeof options === 'string') options = { context: options }
     options.exitCode = false
     options.severity = 'warn'
     this.error(err, options)
