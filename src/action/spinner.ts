@@ -2,7 +2,7 @@ import { ActionBase } from './base'
 import { IBaseOptions } from '../base'
 import { deps } from '../deps'
 import { windows } from '../config'
-import { errtermwidth } from '../screen'
+import screen from '../screen'
 
 function color(s: string): string {
   if (!deps.supportsColor) return s
@@ -70,7 +70,7 @@ export class SpinnerAction extends ActionBase {
     return deps
       .stripAnsi(s)
       .split('\n')
-      .map(l => Math.ceil(l.length / errtermwidth))
+      .map(l => Math.ceil(l.length / screen.errtermwidth))
       .reduce((c, i) => c + i, 0)
   }
 

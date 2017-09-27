@@ -1,10 +1,10 @@
-import { stdtermwidth } from './screen'
+import screen from './screen'
 import { deps } from './deps'
 import _ from 'ts-lodash'
 
 function linewrap(length: number, s: string): string {
   const lw = require('@heroku/linewrap')
-  return lw(length, stdtermwidth, {
+  return lw(length, screen.stdtermwidth, {
     skipScheme: 'ansi-color',
   })(s).trim()
 }

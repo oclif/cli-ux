@@ -4,6 +4,7 @@ import { deps } from './deps'
 import { Base } from './base'
 import { ExitError } from './exit_error'
 import { StreamOutput } from './stream'
+import screen from './screen'
 
 const arrow = process.platform === 'win32' ? ' !' : ' ▸'
 
@@ -37,8 +38,7 @@ function getErrorMessage(err: any): string {
 
 function wrap(msg: string): string {
   const linewrap = require('@heroku/linewrap')
-  const { errtermwidth } = require('./screen')
-  return linewrap(6, errtermwidth, {
+  return linewrap(6, screen.errtermwidth, {
     skip: /^\$ .*$/,
     skipScheme: 'ansi-color',
   })(msg)
