@@ -14,15 +14,13 @@ export function shouldDisplaySpinner(options: IBaseOptions): boolean {
 
 export interface ITask {
   action: string
-  status?: string
+  status: string | undefined
   active: boolean
 }
 
 export class ActionBase extends Base {
-  protected task: ITask
-
   public start(action: string, status?: string) {
-    const task = (this.task = { action, status, active: this.task && this.task.active })
+    const task = (this.task = { action, status, active: !!(this.task && this.task.active) })
     this._start()
     task.active = true
     this.log(task)
@@ -38,6 +36,20 @@ export class ActionBase extends Base {
     this._stop()
     task.active = false
     delete this.task
+  }
+
+  private get globals(): any {
+    const globals = ((<any>global)['cli-ux'] = (<any>global)['cli-ux'] || {})
+    globals.action = globals.action || {}
+    return globals
+  }
+
+  public get task(): ITask | undefined {
+    return this.globals.action.task
+  }
+
+  public set task(task: ITask | undefined) {
+    this.globals.action.task = task
   }
 
   get running(): boolean {
