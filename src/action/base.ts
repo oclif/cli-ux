@@ -36,7 +36,7 @@ export class ActionBase extends Base {
     this.status = msg
     this._stop()
     task.active = false
-    delete this.task
+    this.task = undefined
   }
 
   private get globals(): any {
