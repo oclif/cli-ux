@@ -1,4 +1,4 @@
-import { cli, CLI } from '.'
+import { cli } from '.'
 import { deps } from './deps'
 
 import * as stdmock from 'std-mocks'
@@ -50,19 +50,12 @@ describe('with mocked stdout', () => {
   })
 })
 
-test('can be instantiated', () => {
-  const newCLI = new CLI({ mock: true })
-  newCLI.warn('foo')
-  expect(newCLI.stderr.output).toContain('foo')
-})
-
 describe('with mocked cli', () => {
-  let cli
   beforeEach(() => {
-    cli = new CLI({ mock: true })
+    cli.config.mock = true
   })
 
-  test.only('exit', () => {
+  test('exit', () => {
     expect.assertions(1)
     try {
       cli.exit(1)

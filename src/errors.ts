@@ -5,6 +5,7 @@ import { Base } from './base'
 import { ExitError } from './exit_error'
 import { StreamOutput } from './stream'
 import screen from './screen'
+import { Config } from './config'
 
 const arrow = process.platform === 'win32' ? ' !' : ' ▸'
 
@@ -67,13 +68,12 @@ export class Errors extends Base {
     options = options || {}
     if (!options.severity) options.severity = 'error'
     if (options.exitCode === undefined) options.exitCode = 1
-    if (options.severity !== 'warn' && this.options.mock && typeof err !== 'string' && options.exitCode !== false)
-      throw err
+    if (options.severity !== 'warn' && Config.mock && typeof err !== 'string' && options.exitCode !== false) throw err
     try {
       if (typeof err === 'string') err = new Error(err)
       const prefix = options.context ? `${options.context}: ` : ''
       this.logError(err)
-      if (this.options.debug) {
+      if (Config.debug) {
         this.stderr.write(`${options.severity.toUpperCase()}: ${prefix}`)
         this.stderr.log(err.stack || util.inspect(err))
       } else {
@@ -103,10 +103,10 @@ export class Errors extends Base {
   }
 
   public exit(code: number = 0) {
-    if (this.options.debug) {
+    if (Config.debug) {
       console.error(`Exiting with code: ${code}`)
     }
-    if (this.options.mock) {
+    if (Config.mock) {
       throw new ExitError(code, this.stdout.output, this.stderr.output)
     } else {
       process.exit(code)
@@ -114,7 +114,7 @@ export class Errors extends Base {
   }
 
   private logError(err: Error | string) {
-    if (!this.options.errlog) return
-    StreamOutput.logToFile(util.inspect(err) + '\n', this.options.errlog)
+    if (!Config.errlog) return
+    StreamOutput.logToFile(util.inspect(err) + '\n', Config.errlog)
   }
 }

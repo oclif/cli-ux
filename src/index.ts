@@ -2,35 +2,26 @@ import { deps } from './deps'
 import { StreamOutput } from './stream'
 import { Prompt, IPromptOptions } from './prompt'
 import { Errors, IErrorOptions } from './errors'
+import { Base } from './base'
 import { ActionBase } from './action/base'
 import { TableOptions } from './table'
+import { Config } from './config'
 
 const debug = require('debug')('cli-ux')
 
-export interface IOptions {
-  errlog?: string
-  mock?: boolean
-  debug?: boolean
-  action?: ActionBase
-}
-
-export class CLI {
+export class CLI extends Base {
   public stdout: StreamOutput
   public stderr: StreamOutput
 
-  constructor(readonly options: IOptions = {}) {
-    const globalOptions = (<any>global)['cli-ux'] || {}
-    if (options.mock === undefined) options.mock = globalOptions.mock
-    if (options.debug === undefined) options.debug = globalOptions.debug
-    this.stdout = new deps.StreamOutput(options.mock ? undefined : process.stdout)
-    this.stderr = new deps.StreamOutput(options.mock ? undefined : process.stderr)
-    if (options.mock) deps.chalk.enabled = false
+  constructor() {
+    super()
+    if (Config.mock) deps.chalk.enabled = false
   }
 
   private _prompt: Prompt
   public get Prompt() {
     if (!this._prompt) {
-      this._prompt = new deps.Prompt(this._depOpts)
+      this._prompt = new deps.Prompt()
     }
     return this._prompt
   }
@@ -38,7 +29,7 @@ export class CLI {
   private _errors: Errors
   public get Errors() {
     if (!this._errors) {
-      this._errors = new deps.Errors(this._depOpts)
+      this._errors = new deps.Errors()
     }
     return this._errors
   }
@@ -46,9 +37,7 @@ export class CLI {
   private _action: ActionBase
   public get action() {
     if (!this._action) {
-      this._action = deps.shouldDisplaySpinner(this._depOpts)
-        ? new deps.SpinnerAction(this._depOpts)
-        : new deps.SimpleAction(this._depOpts)
+      this._action = deps.shouldDisplaySpinner() ? new deps.SpinnerAction() : new deps.SimpleAction()
     }
     return this._action
   }
@@ -146,15 +135,6 @@ export class CLI {
    */
   public done() {
     this.action.stop()
-  }
-
-  private get _depOpts() {
-    return {
-      debug: this.options.debug || (this.options.debug === undefined && debug.enabled),
-      mock: !!this.options.mock,
-      stderr: this.stderr,
-      stdout: this.stdout,
-    }
   }
 }
 

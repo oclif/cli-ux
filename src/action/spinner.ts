@@ -1,7 +1,6 @@
 import { ActionBase } from './base'
-import { IBaseOptions } from '../base'
 import { deps } from '../deps'
-import { windows } from '../config'
+import { Config } from '../config'
 import screen from '../screen'
 
 function color(s: string): string {
@@ -16,9 +15,9 @@ export class SpinnerAction extends ActionBase {
   frameIndex: number
   output: string | undefined
 
-  constructor(options: Partial<IBaseOptions> = {}) {
-    super(options)
-    this.frames = require('./spinners')[windows ? 'line' : 'dots2'].frames
+  constructor() {
+    super()
+    this.frames = require('./spinners')[Config.windows ? 'line' : 'dots2'].frames
     this.frameIndex = 0
   }
 
@@ -26,7 +25,7 @@ export class SpinnerAction extends ActionBase {
     this._reset()
     if (this.spinner) clearInterval(this.spinner)
     this._render()
-    let interval: any = (this.spinner = setInterval(this._render.bind(this), windows ? 500 : 100, 'spinner'))
+    let interval: any = (this.spinner = setInterval(this._render.bind(this), Config.windows ? 500 : 100, 'spinner'))
     interval.unref()
   }
 

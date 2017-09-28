@@ -1,10 +1,7 @@
 import * as path from 'path'
 import * as util from 'util'
 import { deps } from './deps'
-
-export interface IOptions {
-  displayTimestamps?: boolean
-}
+import { Config } from './config'
 
 export class StreamOutput {
   public static logToFile(msg: string, logfile: string) {
@@ -18,25 +15,26 @@ export class StreamOutput {
 
   private static startOfLine = false
 
-  public logfile: string | undefined
-  public output = ''
-  private displayTimestamps: boolean
-  private mock: boolean
+  public get output(): string {
+    return this.type === 'stdout' ? Config.stdout : Config.stderr
+  }
 
-  constructor(readonly stream?: NodeJS.WriteStream, readonly options: IOptions = {}) {}
+  constructor(readonly type: 'stdout' | 'stderr', readonly stream: NodeJS.WriteStream) {}
 
   public write(msg?: string, options: { log?: boolean } = {}) {
     msg = msg || ''
     const log = options.log !== false
     if (log) this.writeLogFile(msg, StreamOutput.startOfLine)
     // conditionally show timestamp if configured to display
-    if (StreamOutput.startOfLine && this.displayTimestamps) {
+    if (StreamOutput.startOfLine && Config.displayTimestamps) {
       msg = this.timestamp(msg)
     }
-    if (this.stream) {
-      this.stream.write(msg)
+    if (Config.mock) {
+      let m = deps.stripAnsi(msg)
+      if (this.type === 'stdout') Config.stdout += m
+      else Config.stderr += m
     } else {
-      this.output += deps.stripAnsi(msg)
+      this.stream.write(msg)
     }
     StreamOutput.startOfLine = msg.endsWith('\n')
   }
@@ -53,6 +51,10 @@ export class StreamOutput {
     }
     msg = withTimestamp ? this.timestamp(msg) : msg
     StreamOutput.logToFile(msg, this.logfile)
+  }
+
+  public get logfile(): string | undefined {
+    if (this.type === 'stderr') return Config.errlog
   }
 
   private timestamp(msg: string): string {

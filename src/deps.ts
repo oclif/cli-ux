@@ -4,7 +4,6 @@ import * as moment from 'moment'
 import stripAnsi = require('strip-ansi')
 import fs = require('fs-extra')
 
-import { IBaseOptions } from './base'
 import { ActionBase, shouldDisplaySpinner } from './action/base'
 import { SpinnerAction } from './action/spinner'
 import { SimpleAction } from './action/simple'

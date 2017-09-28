@@ -1,10 +1,11 @@
-import { Base, IBaseOptions } from '../base'
+import { Base } from '../base'
+import { Config } from '../config'
 
-export function shouldDisplaySpinner(options: IBaseOptions): boolean {
+export function shouldDisplaySpinner(): boolean {
   return (
     !process.env.DEBUG &&
-    !options.mock &&
-    !options.debug &&
+    !Config.mock &&
+    !Config.debug &&
     !!process.stdin.isTTY &&
     !!process.stderr.isTTY &&
     !process.env.CI &&

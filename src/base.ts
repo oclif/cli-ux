@@ -1,27 +1,14 @@
 import { StreamOutput } from './stream'
-
-export interface IBaseOptions {
-  stdout: StreamOutput
-  stderr: StreamOutput
-  debug: boolean
-  mock: boolean
-  errlog?: string
-}
+import { Config } from './config'
 
 export abstract class Base {
   public stdout: StreamOutput
   public stderr: StreamOutput
-  protected options: IBaseOptions
+  public config: typeof Config
 
-  constructor(options: Partial<IBaseOptions> = {}) {
-    this.options = {
-      debug: !!options.debug,
-      mock: !!options.mock,
-      stderr: new StreamOutput(),
-      stdout: new StreamOutput(),
-      ...options,
-    }
-    this.stdout = this.options.stdout
-    this.stderr = this.options.stderr
+  constructor() {
+    this.config = Config
+    this.stdout = new StreamOutput('stdout', process.stdout)
+    this.stderr = new StreamOutput('stderr', process.stderr)
   }
 }
