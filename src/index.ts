@@ -19,9 +19,12 @@ export class CLI {
   public stderr: StreamOutput
 
   constructor(readonly options: IOptions = {}) {
-    this.stdout = new deps.StreamOutput(this.options.mock ? undefined : process.stdout)
-    this.stderr = new deps.StreamOutput(this.options.mock ? undefined : process.stderr)
-    if (this.options.mock) deps.chalk.enabled = false
+    const globalOptions = (<any>global)['cli-ux'] || {}
+    if (options.mock === undefined) options.mock = globalOptions.mock
+    if (options.debug === undefined) options.debug = globalOptions.debug
+    this.stdout = new deps.StreamOutput(options.mock ? undefined : process.stdout)
+    this.stderr = new deps.StreamOutput(options.mock ? undefined : process.stderr)
+    if (options.mock) deps.chalk.enabled = false
   }
 
   private _prompt: Prompt
