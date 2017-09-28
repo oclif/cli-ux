@@ -159,3 +159,4 @@ export class CLI {
 }
 
 export const cli = new CLI()
+export default cli
