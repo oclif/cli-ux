@@ -1,5 +1,4 @@
 import screen from './screen'
-import { deps } from './deps'
 import _ from 'ts-lodash'
 
 function linewrap(length: number, s: string): string {

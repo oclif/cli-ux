@@ -1,13 +1,15 @@
 import * as path from 'path'
 import * as util from 'util'
-import { deps } from './deps'
 import { Config } from './config'
+import stripAnsi = require('strip-ansi')
+import * as fs from 'fs-extra'
+import * as moment from 'moment'
 
 export class StreamOutput {
   public static logToFile(msg: string, logfile: string) {
     try {
-      deps.fs.mkdirpSync(path.dirname(logfile))
-      deps.fs.appendFileSync(logfile, deps.stripAnsi(msg))
+      fs.mkdirpSync(path.dirname(logfile))
+      fs.appendFileSync(logfile, stripAnsi(msg))
     } catch (err) {
       console.error(err)
     }
@@ -30,7 +32,7 @@ export class StreamOutput {
       msg = this.timestamp(msg)
     }
     if (Config.mock) {
-      let m = deps.stripAnsi(msg)
+      let m = stripAnsi(msg)
       if (this.type === 'stdout') Config.stdout += m
       else Config.stderr += m
     } else {
@@ -58,6 +60,6 @@ export class StreamOutput {
   }
 
   private timestamp(msg: string): string {
-    return `[${deps.moment().format()}] ${msg}`
+    return `[${moment().format()}] ${msg}`
   }
 }

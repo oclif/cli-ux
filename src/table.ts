@@ -1,6 +1,6 @@
 import { StreamOutput } from './stream'
-import { deps } from './deps'
 import _ from 'ts-lodash'
+import stripAnsi = require('strip-ansi')
 
 export type TableColumn = {
   key: string
@@ -79,16 +79,14 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
     },
   }
 
-  let colDefaults = {}
-
   function calcWidth(cell: any) {
-    let lines = deps.stripAnsi(cell).split(/[\r\n]+/)
+    let lines = stripAnsi(cell).split(/[\r\n]+/)
     let lineLengths = lines.map(_.property('length'))
     return Math.max.apply(Math, lineLengths)
   }
 
   function pad(string: string, length: number) {
-    let visibleLength = deps.stripAnsi(string).length
+    let visibleLength = stripAnsi(string).length
     let diff = length - visibleLength
 
     return string + ' '.repeat(Math.max(0, diff))

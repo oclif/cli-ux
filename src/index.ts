@@ -1,13 +1,14 @@
-import { deps } from './deps'
 import { StreamOutput } from './stream'
 import { Prompt, IPromptOptions } from './prompt'
 import { Errors, IErrorOptions } from './errors'
+import { SpinnerAction } from './action/spinner'
+import { SimpleAction } from './action/simple'
+import { shouldDisplaySpinner } from './action/base'
 import { Base } from './base'
 import { ActionBase } from './action/base'
 import { TableOptions } from './table'
 import { Config } from './config'
-
-const debug = require('debug')('cli-ux')
+import * as chalk from 'chalk'
 
 export class CLI extends Base {
   public stdout: StreamOutput
@@ -15,13 +16,13 @@ export class CLI extends Base {
 
   constructor() {
     super()
-    if (Config.mock) deps.chalk.enabled = false
+    if (Config.mock) (<any>chalk).enabled = true
   }
 
   private _prompt: Prompt
   public get Prompt() {
     if (!this._prompt) {
-      this._prompt = new deps.Prompt()
+      this._prompt = new Prompt()
     }
     return this._prompt
   }
@@ -29,7 +30,7 @@ export class CLI extends Base {
   private _errors: Errors
   public get Errors() {
     if (!this._errors) {
-      this._errors = new deps.Errors()
+      this._errors = new Errors()
     }
     return this._errors
   }
@@ -37,7 +38,7 @@ export class CLI extends Base {
   private _action: ActionBase
   public get action() {
     if (!this._action) {
-      this._action = deps.shouldDisplaySpinner() ? new deps.SpinnerAction() : new deps.SimpleAction()
+      this._action = shouldDisplaySpinner() ? new SpinnerAction() : new SimpleAction()
     }
     return this._action
   }
@@ -45,7 +46,7 @@ export class CLI extends Base {
   public prompt(name: string, options: IPromptOptions = {}) {
     return this.action.pauseAsync(() => {
       return this.Prompt.prompt(name, options)
-    }, deps.chalk.cyan('?'))
+    }, chalk.cyan('?'))
   }
 
   public log(data?: string, ...args: any[]) {
@@ -57,13 +58,13 @@ export class CLI extends Base {
   public warn(err: Error | string, options: Partial<IErrorOptions> = {}) {
     this.action.pause(() => {
       return this.Errors.warn(err, options)
-    }, deps.chalk.bold.yellow('!'))
+    }, chalk.bold.yellow('!'))
   }
 
   public error(err: Error | string, options: Partial<IErrorOptions> = {}) {
     this.action.pause(() => {
       return this.Errors.error(err, options)
-    }, deps.chalk.bold.red('!'))
+    }, chalk.bold.red('!'))
   }
 
   public exit(code: number = 1) {
@@ -77,7 +78,7 @@ export class CLI extends Base {
 
   public styledJSON(obj: any) {
     let json = JSON.stringify(obj, null, 2)
-    if (deps.chalk.enabled) {
+    if (chalk.enabled) {
       let cardinal = require('cardinal')
       let theme = require('cardinal/themes/jq')
       this.log(cardinal.highlight(json, { json: true, theme: theme }))
@@ -87,7 +88,7 @@ export class CLI extends Base {
   }
 
   public styledHeader(header: string) {
-    this.log(deps.chalk.dim('=== ') + deps.chalk.bold(header))
+    this.log(chalk.dim('=== ') + chalk.bold(header))
   }
 
   public styledObject(obj: any, keys: string[]) {
@@ -106,7 +107,7 @@ export class CLI extends Base {
       }
     }
     let logKeyValue = (key: string, value: any) => {
-      this.log(`${deps.chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value))
+      this.log(`${chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value))
     }
     for (var key of keys || Object.keys(obj).sort()) {
       let value = obj[key]

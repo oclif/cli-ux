@@ -1,12 +1,16 @@
 import { ActionBase } from './base'
-import { deps } from '../deps'
 import { Config } from '../config'
 import screen from '../screen'
+import * as supportsColor from 'supports-color'
+const ansiEscapes = require('ansi-escapes')
+import stripAnsi = require('strip-ansi')
+import * as ansiStyles from 'ansi-styles'
+import * as chalk from 'chalk'
 
 function color(s: string): string {
-  if (!deps.supportsColor) return s
-  let has256 = deps.supportsColor.has256 || (process.env.TERM || '').indexOf('256') !== -1
-  return has256 ? '\u001b[38;5;104m' + s + deps.ansiStyles.reset.open : deps.chalk.magenta(s)
+  if (!supportsColor) return s
+  let has256 = supportsColor.has256 || (process.env.TERM || '').indexOf('256') !== -1
+  return has256 ? '\u001b[38;5;104m' + s + ansiStyles.reset.open : chalk.magenta(s)
 }
 
 export class SpinnerAction extends ActionBase {
@@ -55,7 +59,7 @@ export class SpinnerAction extends ActionBase {
   _reset() {
     if (!this.output) return
     let lines = this._lines(this.output)
-    this._write(deps.ansiEscapes.cursorLeft + deps.ansiEscapes.cursorUp(lines) + deps.ansiEscapes.eraseDown)
+    this._write(ansiEscapes.cursorLeft + ansiEscapes.cursorUp(lines) + ansiEscapes.eraseDown)
     delete this.output
   }
 
@@ -66,8 +70,7 @@ export class SpinnerAction extends ActionBase {
   }
 
   _lines(s: string): number {
-    return deps
-      .stripAnsi(s)
+    return stripAnsi(s)
       .split('\n')
       .map(l => Math.ceil(l.length / screen.errtermwidth))
       .reduce((c, i) => c + i, 0)

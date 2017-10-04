@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { deps } from './deps'
+import * as chalk from 'chalk'
 
 import { Base } from './base'
 import { ExitError } from './exit_error'
@@ -77,9 +77,9 @@ export class Errors extends Base {
         this.stderr.write(`${options.severity.toUpperCase()}: ${prefix}`)
         this.stderr.log(err.stack || util.inspect(err))
       } else {
-        let bang = deps.chalk.red(arrow)
-        if (options.severity === 'fatal') bang = deps.chalk.bgRed.bold.white(' FATAL ')
-        if (options.severity === 'warn') bang = deps.chalk.yellow(arrow)
+        let bang = chalk.red(arrow)
+        if (options.severity === 'fatal') bang = chalk.bgRed.bold.white(' FATAL ')
+        if (options.severity === 'warn') bang = chalk.yellow(arrow)
         this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), bang))
       }
     } catch (e) {
