@@ -3,6 +3,7 @@ import { Config } from '../config'
 import screen from '../screen'
 import * as supportsColor from 'supports-color'
 const ansiEscapes = require('ansi-escapes')
+const spinners = require('./spinners')
 import stripAnsi = require('strip-ansi')
 import * as ansiStyles from 'ansi-styles'
 import * as chalk from 'chalk'
@@ -21,7 +22,7 @@ export class SpinnerAction extends ActionBase {
 
   constructor() {
     super()
-    this.frames = require('./spinners')[Config.windows ? 'line' : 'dots2'].frames
+    this.frames = spinners[Config.windows ? 'line' : 'dots2'].frames
     this.frameIndex = 0
   }
 
