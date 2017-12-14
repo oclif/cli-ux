@@ -1,9 +1,7 @@
 import { StreamOutput } from './stream'
 import { Prompt, IPromptOptions } from './prompt'
 import { Errors, IErrorOptions } from './errors'
-import { SpinnerAction } from './action/spinner'
-import { SimpleAction } from './action/simple'
-import { shouldDisplaySpinner } from './action/base'
+import { getSpinner } from './action/base'
 import { Base } from './base'
 import { ActionBase } from './action/base'
 import { TableOptions } from './table'
@@ -37,9 +35,7 @@ export class CLI extends Base {
 
   private _action: ActionBase
   public get action() {
-    if (!this._action) {
-      this._action = shouldDisplaySpinner() ? new SpinnerAction() : new SimpleAction()
-    }
+    if (!this._action) this._action = getSpinner()
     return this._action
   }
 

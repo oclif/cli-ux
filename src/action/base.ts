@@ -1,16 +1,19 @@
 import { Base } from '../base'
 import { Config } from '../config'
 
-export function shouldDisplaySpinner(): boolean {
-  return (
-    !process.env.DEBUG &&
+export function getSpinner(): ActionBase {
+  let Action: typeof ActionBase
+  if (Config.debug) Action = require('./debug').DebugAction
+  else if (
     !Config.mock &&
-    !Config.debug &&
     !!process.stdin.isTTY &&
     !!process.stderr.isTTY &&
     !process.env.CI &&
     process.env.TERM !== 'dumb'
   )
+    Action = require('./spinner').SpinnerAction
+  else Action = require('./simple').SimpleAction
+  return new Action()
 }
 
 export interface ITask {
