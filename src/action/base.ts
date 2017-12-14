@@ -32,14 +32,12 @@ export class ActionBase extends Base {
     if (!task) {
       return
     }
-    // TODO: is this right?
-    this.status = msg
-    this._stop()
+    this._stop(msg)
     task.active = false
     this.task = undefined
   }
 
-  private get globals(): any {
+  private get globals(): { action: { task?: ITask }; output: string | undefined } {
     const globals = ((<any>global)['cli-ux'] = (<any>global)['cli-ux'] || {})
     globals.action = globals.action || {}
     return globals
@@ -51,6 +49,13 @@ export class ActionBase extends Base {
 
   public set task(task: ITask | undefined) {
     this.globals.action.task = task
+  }
+
+  protected get output(): string | undefined {
+    return this.globals.output
+  }
+  protected set output(output: string | undefined) {
+    this.globals.output = output
   }
 
   get running(): boolean {
@@ -109,7 +114,7 @@ export class ActionBase extends Base {
   protected _start() {
     throw new Error('not implemented')
   }
-  protected _stop() {
+  protected _stop(status: string) {
     throw new Error('not implemented')
   }
   protected _resume() {

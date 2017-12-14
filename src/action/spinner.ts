@@ -18,7 +18,6 @@ export class SpinnerAction extends ActionBase {
   spinner: number
   frames: any
   frameIndex: number
-  output: string | undefined
 
   constructor() {
     super()
@@ -34,17 +33,18 @@ export class SpinnerAction extends ActionBase {
     interval.unref()
   }
 
-  _stop() {
+  _stop(status: string) {
+    if (this.task) this.task.status = status
     clearInterval(this.spinner)
     this._render()
-    delete this.output
+    this.output = undefined
   }
 
   _pause(icon?: string) {
     clearInterval(this.spinner)
     this._reset()
     if (icon) this._render(` ${icon}`)
-    delete this.output
+    this.output = undefined
   }
 
   _render(icon?: string) {
@@ -61,7 +61,7 @@ export class SpinnerAction extends ActionBase {
     if (!this.output) return
     let lines = this._lines(this.output)
     this._write(ansiEscapes.cursorLeft + ansiEscapes.cursorUp(lines) + ansiEscapes.eraseDown)
-    delete this.output
+    this.output = undefined
   }
 
   _frame(): string {
