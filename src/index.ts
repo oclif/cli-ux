@@ -47,8 +47,13 @@ export class CLI extends Base {
 
   public confirm(message: string): Promise<boolean> {
     return this.action.pauseAsync(async () => {
-      let response = await this.Prompt.prompt(message)
-      return ['y', 'yes'].includes(response.toLowerCase())
+      const confirm = async (): Promise<boolean> => {
+        let response = (await this.Prompt.prompt(message)).toLowerCase()
+        if (['n', 'no'].includes(response)) return false
+        if (['y', 'yes'].includes(response)) return true
+        return confirm()
+      }
+      return confirm()
     }, chalk.cyan('?'))
   }
 
