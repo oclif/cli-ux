@@ -45,6 +45,13 @@ export class CLI extends Base {
     }, chalk.cyan('?'))
   }
 
+  public confirm(message: string): Promise<boolean> {
+    return this.action.pauseAsync(async () => {
+      let response = await this.Prompt.prompt(message)
+      return ['y', 'yes'].includes(response.toLowerCase())
+    }, chalk.cyan('?'))
+  }
+
   public log(data?: string, ...args: any[]) {
     this.action.pause(() => {
       return this.stdout.log(data, ...args)
