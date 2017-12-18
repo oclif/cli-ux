@@ -6,7 +6,7 @@ const ansiEscapes = require('ansi-escapes')
 const spinners = require('./spinners')
 import stripAnsi = require('strip-ansi')
 import * as ansiStyles from 'ansi-styles'
-import * as chalk from 'chalk'
+import chalk from 'chalk'
 
 function color(s: string): string {
   if (!supportsColor) return s

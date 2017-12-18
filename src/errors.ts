@@ -1,5 +1,5 @@
 import * as util from 'util'
-import * as chalk from 'chalk'
+import chalk from 'chalk'
 
 import { Base } from './base'
 import { ExitError } from './exit_error'

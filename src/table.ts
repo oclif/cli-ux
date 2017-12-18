@@ -54,7 +54,7 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
 
       get: function(row: any) {
         let value
-        let path = _.result(this, 'key')
+        let path: any = _.result(this, 'key')
 
         if (!path) {
           value = row

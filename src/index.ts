@@ -6,7 +6,7 @@ import { Base } from './base'
 import { ActionBase } from './action/base'
 import { TableOptions } from './table'
 import { Config } from './config'
-import * as chalk from 'chalk'
+import chalk from 'chalk'
 
 export class CLI extends Base {
   public stdout: StreamOutput
