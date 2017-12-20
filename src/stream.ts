@@ -2,7 +2,7 @@ import * as path from 'path'
 import * as util from 'util'
 import { Config } from './config'
 import stripAnsi = require('strip-ansi')
-import * as fs from 'fs-extra'
+import * as fs from './fs'
 import * as moment from 'moment'
 
 export class StreamOutput {

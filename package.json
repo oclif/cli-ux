@@ -10,7 +10,6 @@
     "ansi-styles": "^3.2.0",
     "cardinal": "^1.0.0",
     "chalk": "^2.3.0",
-    "fs-extra": "^5.0.0",
     "lodash": "^4.17.4",
     "moment": "^2.20.0",
     "password-prompt": "^1.0.3",
@@ -20,7 +19,6 @@
   },
   "devDependencies": {
     "@types/ansi-styles": "^2.0.30",
-    "@types/fs-extra": "^5.0.0",
     "@types/jest": "^21.1.8",
     "@types/lodash": "^4.14.91",
     "@types/node": "^8.5.1",
