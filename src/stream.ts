@@ -1,15 +1,13 @@
+import deps from './deps'
 import * as path from 'path'
 import * as util from 'util'
-import { Config } from './config'
-import stripAnsi = require('strip-ansi')
 import * as fs from './fs'
-import * as moment from 'moment'
 
-export class StreamOutput {
+export default class StreamOutput {
   public static logToFile(msg: string, logfile: string) {
     try {
       fs.mkdirpSync(path.dirname(logfile))
-      fs.appendFileSync(logfile, stripAnsi(msg))
+      fs.appendFileSync(logfile, deps.stripAnsi(msg))
     } catch (err) {
       console.error(err)
     }
@@ -18,7 +16,7 @@ export class StreamOutput {
   private static startOfLine = false
 
   public get output(): string {
-    return this.type === 'stdout' ? Config.stdout : Config.stderr
+    return this.type === 'stdout' ? deps.Config.stdout : deps.Config.stderr
   }
 
   constructor(readonly type: 'stdout' | 'stderr', readonly stream: NodeJS.WriteStream) {}
@@ -28,13 +26,13 @@ export class StreamOutput {
     const log = options.log !== false
     if (log) this.writeLogFile(msg, StreamOutput.startOfLine)
     // conditionally show timestamp if configured to display
-    if (StreamOutput.startOfLine && Config.displayTimestamps) {
+    if (StreamOutput.startOfLine && deps.Config.displayTimestamps) {
       msg = this.timestamp(msg)
     }
-    if (Config.mock) {
-      let m = stripAnsi(msg)
-      if (this.type === 'stdout') Config.stdout += m
-      else Config.stderr += m
+    if (deps.Config.mock) {
+      let m = deps.stripAnsi(msg)
+      if (this.type === 'stdout') deps.Config.stdout += m
+      else deps.Config.stderr += m
     } else {
       this.stream.write(msg)
     }
@@ -56,10 +54,10 @@ export class StreamOutput {
   }
 
   public get logfile(): string | undefined {
-    if (this.type === 'stderr') return Config.errlog
+    if (this.type === 'stderr') return deps.Config.errlog
   }
 
   private timestamp(msg: string): string {
-    return `[${moment().format()}] ${msg}`
+    return `[${deps.moment().format()}] ${msg}`
   }
 }

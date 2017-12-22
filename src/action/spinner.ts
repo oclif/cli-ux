@@ -1,27 +1,21 @@
-import { ActionBase } from './base'
-import { Config } from '../config'
-import screen from '../screen'
+import deps from '../deps'
 import * as supportsColor from 'supports-color'
-const ansiEscapes = require('ansi-escapes')
 const spinners = require('./spinners')
-import stripAnsi = require('strip-ansi')
-import * as ansiStyles from 'ansi-styles'
-import chalk from 'chalk'
 
 function color(s: string): string {
   if (!supportsColor) return s
   let has256 = supportsColor.has256 || (process.env.TERM || '').indexOf('256') !== -1
-  return has256 ? '\u001b[38;5;104m' + s + ansiStyles.reset.open : chalk.magenta(s)
+  return has256 ? '\u001b[38;5;104m' + s + deps.ansiStyles.reset.open : deps.chalk.magenta(s)
 }
 
-export class SpinnerAction extends ActionBase {
+export class SpinnerAction extends deps.ActionBase.ActionBase {
   spinner: number
   frames: any
   frameIndex: number
 
   constructor() {
     super()
-    this.frames = spinners[Config.windows ? 'line' : 'dots2'].frames
+    this.frames = spinners[deps.Config.windows ? 'line' : 'dots2'].frames
     this.frameIndex = 0
   }
 
@@ -29,7 +23,11 @@ export class SpinnerAction extends ActionBase {
     this._reset()
     if (this.spinner) clearInterval(this.spinner)
     this._render()
-    let interval: any = (this.spinner = setInterval(this._render.bind(this), Config.windows ? 500 : 100, 'spinner'))
+    let interval: any = (this.spinner = setInterval(
+      this._render.bind(this),
+      deps.Config.windows ? 500 : 100,
+      'spinner',
+    ))
     interval.unref()
   }
 
@@ -60,7 +58,7 @@ export class SpinnerAction extends ActionBase {
   _reset() {
     if (!this.output) return
     let lines = this._lines(this.output)
-    this._write(ansiEscapes.cursorLeft + ansiEscapes.cursorUp(lines) + ansiEscapes.eraseDown)
+    this._write(deps.ansiEscapes.cursorLeft + deps.ansiEscapes.cursorUp(lines) + deps.ansiEscapes.eraseDown)
     this.output = undefined
   }
 
@@ -71,9 +69,10 @@ export class SpinnerAction extends ActionBase {
   }
 
   _lines(s: string): number {
-    return stripAnsi(s)
+    return deps
+      .stripAnsi(s)
       .split('\n')
-      .map(l => Math.ceil(l.length / screen.errtermwidth))
+      .map(l => Math.ceil(l.length / deps.screen.errtermwidth))
       .reduce((c, i) => c + i, 0)
   }
 

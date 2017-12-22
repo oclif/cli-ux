@@ -1,11 +1,10 @@
-import { Base } from '../base'
-import { Config } from '../config'
+import deps from '../deps'
 
 export function getSpinner(): ActionBase {
   let Action: typeof ActionBase
-  if (Config.debug) Action = require('./debug').DebugAction
+  if (deps.Config.debug) Action = require('./debug').DebugAction
   else if (
-    !Config.mock &&
+    !deps.Config.mock &&
     !!process.stdin.isTTY &&
     !!process.stderr.isTTY &&
     !process.env.CI &&
@@ -22,7 +21,7 @@ export interface ITask {
   active: boolean
 }
 
-export class ActionBase extends Base {
+export class ActionBase extends deps.Base {
   public start(action: string, status?: string) {
     const task = (this.task = { action, status, active: !!(this.task && this.task.active) })
     this._start()

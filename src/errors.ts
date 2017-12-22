@@ -1,11 +1,5 @@
+import deps from './deps'
 import * as util from 'util'
-import chalk from 'chalk'
-
-import { Base } from './base'
-import { ExitError } from './exit_error'
-import { StreamOutput } from './stream'
-import screen from './screen'
-import { Config } from './config'
 
 const arrow = process.platform === 'win32' ? ' !' : ' ▸'
 
@@ -39,7 +33,7 @@ function getErrorMessage(err: any): string {
 
 function wrap(msg: string): string {
   const linewrap = require('@heroku/linewrap')
-  return linewrap(6, screen.errtermwidth, {
+  return linewrap(6, deps.screen.errtermwidth, {
     skip: /^\$ .*$/,
     skipScheme: 'ansi-color',
   })(msg)
@@ -51,7 +45,7 @@ export interface IErrorOptions {
   context?: string
 }
 
-export class Errors extends Base {
+export class Errors extends deps.Base {
   public handleUnhandleds() {
     process.on('unhandledRejection', (reason, p) => {
       this.fatal(reason, { context: 'Promise unhandledRejection' })
@@ -68,18 +62,19 @@ export class Errors extends Base {
     options = options || {}
     if (!options.severity) options.severity = 'error'
     if (options.exitCode === undefined) options.exitCode = 1
-    if (options.severity !== 'warn' && Config.mock && typeof err !== 'string' && options.exitCode !== false) throw err
+    if (options.severity !== 'warn' && deps.Config.mock && typeof err !== 'string' && options.exitCode !== false)
+      throw err
     try {
       if (typeof err === 'string') err = new Error(err)
       const prefix = options.context ? `${options.context}: ` : ''
       this.logError(err)
-      if (Config.debug) {
+      if (deps.Config.debug) {
         this.stderr.write(`${options.severity.toUpperCase()}: ${prefix}`)
         this.stderr.log(err.stack || util.inspect(err))
       } else {
-        let bang = chalk.red(arrow)
-        if (options.severity === 'fatal') bang = chalk.bgRed.bold.white(' FATAL ')
-        if (options.severity === 'warn') bang = chalk.yellow(arrow)
+        let bang = deps.chalk.red(arrow)
+        if (options.severity === 'fatal') bang = deps.chalk.bgRed.bold.white(' FATAL ')
+        if (options.severity === 'warn') bang = deps.chalk.yellow(arrow)
         this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), bang))
       }
     } catch (e) {
@@ -103,18 +98,18 @@ export class Errors extends Base {
   }
 
   public exit(code: number = 0) {
-    if (Config.debug) {
+    if (deps.Config.debug) {
       console.error(`Exiting with code: ${code}`)
     }
-    if (Config.mock) {
-      throw new ExitError(code, this.stdout.output, this.stderr.output)
+    if (deps.Config.mock) {
+      throw new deps.ExitError(code, this.stdout.output, this.stderr.output)
     } else {
       process.exit(code)
     }
   }
 
   private logError(err: Error | string) {
-    if (!Config.errlog) return
-    StreamOutput.logToFile(util.inspect(err) + '\n', Config.errlog)
+    if (!deps.Config.errlog) return
+    deps.StreamOutput.logToFile(util.inspect(err) + '\n', deps.Config.errlog)
   }
 }

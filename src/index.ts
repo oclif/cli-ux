@@ -1,26 +1,18 @@
-import { StreamOutput } from './stream'
-import { Prompt, IPromptOptions } from './prompt'
+import StreamOutput from './stream'
+import Prompt, { IPromptOptions } from './prompt'
 import { Errors, IErrorOptions } from './errors'
-import { getSpinner } from './action/base'
-import { Base } from './base'
 import { ActionBase } from './action/base'
 import { TableOptions } from './table'
-import { Config } from './config'
-import chalk from 'chalk'
+import deps from './deps'
 
-export class CLI extends Base {
+export class CLI extends deps.Base {
   public stdout: StreamOutput
   public stderr: StreamOutput
-
-  constructor() {
-    super()
-    if (Config.mock) (<any>chalk).enabled = false
-  }
 
   private _prompt: Prompt
   public get Prompt() {
     if (!this._prompt) {
-      this._prompt = new Prompt()
+      this._prompt = new deps.Prompt()
     }
     return this._prompt
   }
@@ -28,21 +20,21 @@ export class CLI extends Base {
   private _errors: Errors
   public get Errors() {
     if (!this._errors) {
-      this._errors = new Errors()
+      this._errors = new deps.Errors()
     }
     return this._errors
   }
 
   private _action: ActionBase
   public get action() {
-    if (!this._action) this._action = getSpinner()
+    if (!this._action) this._action = deps.ActionBase.getSpinner()
     return this._action
   }
 
   public prompt(name: string, options: IPromptOptions = {}) {
     return this.action.pauseAsync(() => {
       return this.Prompt.prompt(name, options)
-    }, chalk.cyan('?'))
+    }, deps.chalk.cyan('?'))
   }
 
   public confirm(message: string): Promise<boolean> {
@@ -54,7 +46,7 @@ export class CLI extends Base {
         return confirm()
       }
       return confirm()
-    }, chalk.cyan('?'))
+    }, deps.chalk.cyan('?'))
   }
 
   public log(data?: string, ...args: any[]) {
@@ -66,13 +58,13 @@ export class CLI extends Base {
   public warn(err: Error | string, options: Partial<IErrorOptions> = {}) {
     this.action.pause(() => {
       return this.Errors.warn(err, options)
-    }, chalk.bold.yellow('!'))
+    }, deps.chalk.bold.yellow('!'))
   }
 
   public error(err: Error | string, options: Partial<IErrorOptions> = {}) {
     this.action.pause(() => {
       return this.Errors.error(err, options)
-    }, chalk.bold.red('!'))
+    }, deps.chalk.bold.red('!'))
   }
 
   public exit(code: number = 1) {
@@ -86,7 +78,7 @@ export class CLI extends Base {
 
   public styledJSON(obj: any) {
     let json = JSON.stringify(obj, null, 2)
-    if (chalk.enabled) {
+    if (deps.chalk.enabled) {
       let cardinal = require('cardinal')
       let theme = require('cardinal/themes/jq')
       this.log(cardinal.highlight(json, { json: true, theme: theme }))
@@ -96,7 +88,7 @@ export class CLI extends Base {
   }
 
   public styledHeader(header: string) {
-    this.log(chalk.dim('=== ') + chalk.bold(header))
+    this.log(deps.chalk.dim('=== ') + deps.chalk.bold(header))
   }
 
   public styledObject(obj: any, keys: string[]) {
@@ -115,7 +107,7 @@ export class CLI extends Base {
       }
     }
     let logKeyValue = (key: string, value: any) => {
-      this.log(`${chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value))
+      this.log(`${deps.chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value))
     }
     for (var key of keys || Object.keys(obj).sort()) {
       let value = obj[key]

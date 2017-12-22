@@ -1,6 +1,4 @@
-import { Base } from './base'
-import chalk from 'chalk'
-const passwordPrompt = require('password-prompt')
+import deps from './deps'
 
 export interface IPromptOptions {
   prompt?: string
@@ -14,12 +12,12 @@ interface IPromptConfig {
   isTTY: boolean
 }
 
-export class Prompt extends Base {
+export default class Prompt extends deps.Base {
   public prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
     const options: IPromptConfig = {
       isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY),
       name,
-      prompt: name ? chalk.dim(`${name}: `) : chalk.dim('> '),
+      prompt: name ? deps.chalk.dim(`${name}: `) : deps.chalk.dim('> '),
       type: 'normal',
       ...inputOptions,
     }
@@ -28,7 +26,7 @@ export class Prompt extends Base {
         return this.normal(options)
       case 'mask':
       case 'hide':
-        return passwordPrompt(options.prompt, { method: options.type })
+        return deps.passwordPrompt(options.prompt, { method: options.type })
       default:
         throw new Error(`unexpected type ${options.type}`)
     }

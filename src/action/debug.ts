@@ -1,6 +1,6 @@
-import { ActionBase } from './base'
+import deps from '../deps'
 
-export class DebugAction extends ActionBase {
+export class DebugAction extends deps.ActionBase.ActionBase {
   _start() {
     const task = this.task
     if (!task) return

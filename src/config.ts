@@ -1,4 +1,6 @@
-export class Config {
+import deps from './deps'
+
+export default class Config {
   public static get debug(): boolean {
     return !!Config._globals.debug
   }
@@ -11,6 +13,7 @@ export class Config {
   }
   public static set mock(mock: boolean) {
     if (mock) {
+      deps.chalk.enabled = false
       Config.stdout = ''
       Config.stderr = ''
     }
