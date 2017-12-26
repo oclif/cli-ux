@@ -1,6 +1,8 @@
-import { ActionBase } from './base'
+import { ActionBase, ActionType } from './base'
 
 export class SimpleAction extends ActionBase {
+  public type: ActionType = 'simple'
+
   _start() {
     const task = this.task
     if (!task) return

@@ -1,6 +1,9 @@
+import { ActionType } from './base'
 import deps from '../deps'
 
 export class DebugAction extends deps.ActionBase.ActionBase {
+  public type: ActionType = 'debug'
+
   _start() {
     const task = this.task
     if (!task) return

@@ -21,7 +21,11 @@ export interface ITask {
   active: boolean
 }
 
+export type ActionType = 'spinner' | 'simple' | 'debug'
+
 export class ActionBase extends deps.Base {
+  type: ActionType
+
   public start(action: string, status?: string) {
     const task = (this.task = { action, status, active: !!(this.task && this.task.active) })
     this._start()

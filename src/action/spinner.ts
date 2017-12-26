@@ -1,4 +1,5 @@
 import deps from '../deps'
+import { ActionType } from './base'
 import * as supportsColor from 'supports-color'
 const spinners = require('./spinners')
 
@@ -9,6 +10,8 @@ function color(s: string): string {
 }
 
 export class SpinnerAction extends deps.ActionBase.ActionBase {
+  public type: ActionType = 'spinner'
+
   spinner: number
   frames: any
   frameIndex: number
