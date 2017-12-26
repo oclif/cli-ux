@@ -4,6 +4,12 @@ import { Errors, IErrorOptions } from './errors'
 import { ActionBase } from './action/base'
 import { TableOptions } from './table'
 import deps from './deps'
+import { deprecate } from 'util'
+
+const deprecatedColor = deprecate(
+  () => require('heroku-cli-color'),
+  "cli.color is deprecated. Please use `import color from 'heroku-cli-color'` instead.",
+)
 
 export class CLI extends deps.Base {
   public stdout: StreamOutput
@@ -122,6 +128,10 @@ export class CLI extends deps.Base {
         logKeyValue(key, value)
       }
     }
+  }
+
+  public color() {
+    return deprecatedColor()
   }
 
   /**
