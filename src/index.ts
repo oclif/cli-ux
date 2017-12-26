@@ -7,7 +7,7 @@ import deps from './deps'
 import { deprecate } from 'util'
 
 const deprecatedColor = deprecate(
-  () => require('heroku-cli-color'),
+  () => require('heroku-cli-color').default,
   "cli.color is deprecated. Please use `import color from 'heroku-cli-color'` instead.",
 )
 
@@ -130,7 +130,7 @@ export class CLI extends deps.Base {
     }
   }
 
-  public color() {
+  public get color() {
     return deprecatedColor()
   }
 
