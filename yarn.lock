@@ -10,9 +10,9 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@heroku-cli/color@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@heroku-cli/color/-/color-1.0.3.tgz#f94866b351f20771ee958f07c790011ceb36c066"
+"@heroku-cli/color@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@heroku-cli/color/-/color-1.0.4.tgz#8d55cd9fd74c9f5b0b22ecb621ef52121206cd77"
   dependencies:
     ansi-styles "^3.2.0"
     chalk "^2.3.0"
