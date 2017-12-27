@@ -38,6 +38,9 @@
     "ts-node": "^4.1.0",
     "typescript": "^2.6.2"
   },
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "files": [
     "lib"
   ],
