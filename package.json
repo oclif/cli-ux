@@ -5,6 +5,7 @@
   "author": "Jeff Dickey",
   "bugs": "https://github.com/heroku/cli-ux/issues",
   "dependencies": {
+    "@cli-engine/screen": "^0.0.0",
     "@heroku-cli/color": "^1.0.4",
     "@heroku/linewrap": "^1.0.0",
     "ansi-escapes": "^3.0.0",

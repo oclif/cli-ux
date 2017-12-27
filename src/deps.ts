@@ -2,6 +2,7 @@ import {Chalk} from 'chalk'
 import stripAnsi = require('strip-ansi')
 import moment = require('moment')
 import ansiStyles = require('ansi-styles')
+import screen = require('@cli-engine/screen')
 
 import Prompt from './prompt'
 import {Errors} from './errors'
@@ -9,7 +10,6 @@ import ActionBase = require('./action/base')
 import Base from './base'
 import StreamOutput from './stream'
 import Config from './config'
-import screen = require('./screen')
 import exitError = require('./exit_error')
 
 export const deps = {
@@ -19,6 +19,7 @@ export const deps = {
   get ansiStyles(): typeof ansiStyles { return fetch('ansi-styles') },
   get ansiEscapes(): any { return fetch('ansi-escapes') },
   get passwordPrompt(): any { return fetch('password-prompt') },
+  get screen(): typeof screen { return fetch('@cli-engine/screen') },
 
   get Prompt(): typeof Prompt { return fetch('./prompt').default },
   get Errors(): typeof Errors { return fetch('./errors').Errors },
@@ -26,7 +27,6 @@ export const deps = {
   get Base(): typeof Base { return fetch('./base').default },
   get StreamOutput(): typeof StreamOutput { return fetch('./stream').default },
   get Config(): typeof Config { return fetch('./config').default },
-  get screen(): typeof screen.default { return fetch('./screen').default },
   get ExitError(): typeof exitError.ExitError { return fetch('./exit_error').ExitError },
 }
 
