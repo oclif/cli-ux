@@ -3,7 +3,7 @@
   "description": "set of CLI output utilities",
   "version": "2.0.15",
   "author": "Jeff Dickey",
-  "bugs": "https://github.com/jdxcode/cli-ux/issues",
+  "bugs": "https://github.com/heroku/cli-ux/issues",
   "dependencies": {
     "@heroku-cli/color": "^1.0.4",
     "@heroku/linewrap": "^1.0.0",
@@ -29,10 +29,7 @@
     "del-cli": "^1.1.0",
     "husky": "^0.14.3",
     "jest": "^22.0.4",
-    "lint-staged": "^6.0.0",
     "prettier": "^1.9.2",
-    "remap-istanbul": "^0.9.5",
-    "rimraf": "^2.6.2",
     "std-mocks": "^1.0.1",
     "ts-jest": "^22.0.0",
     "ts-node": "^4.1.0",
@@ -44,38 +41,16 @@
   "files": [
     "lib"
   ],
-  "homepage": "https://github.com/jdxcode/cli-ux",
-  "jest": {
-    "coverageReporters": [
-      "json"
-    ],
-    "transform": {
-      "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "\\.test\\.ts$",
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ]
-  },
+  "homepage": "https://github.com/heroku/cli-ux",
   "keywords": [
     "cli"
   ],
   "license": "ISC",
-  "lint-staged": {
-    "**/*.ts": [
-      "prettier --write",
-      "git add",
-      "jest --bail --findRelatedTests"
-    ]
-  },
   "main": "./lib/index.js",
-  "repository": "jdxcode/cli-ux",
+  "repository": "heroku/cli-ux",
   "scripts": {
-    "coverage": "cat coverage/coverage-final.json | remap-istanbul -o coverage/coverage-final.json && curl -s https://codecov.io/bash | bash",
-    "precommit": "lint-staged",
     "prepare": "del lib && tsc",
-    "pretest": "tsc --sourcemap",
+    "pretest": "tsc",
     "test": "jest"
   },
   "types": "./lib/index.d.ts"
