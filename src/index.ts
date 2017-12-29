@@ -4,8 +4,9 @@ import { Errors, IErrorOptions } from './errors'
 import { ActionBase } from './action/base'
 import { TableOptions } from './table'
 import deps from './deps'
-import { deprecate } from 'util'
+// import { deprecate } from 'util'
 
+const deprecate = process.env.DEBUG ? require('util').deprecate : (fn: () => {}) => () => fn()
 const deprecatedColor = deprecate(
   () => require('@heroku-cli/color').default,
   "cli.color is deprecated. Please use `import color from '@heroku-cli/color'` instead.",
