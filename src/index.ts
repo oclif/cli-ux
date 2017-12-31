@@ -63,12 +63,14 @@ export class CLI extends deps.Base {
   }
 
   public warn(err: Error | string, options: Partial<IErrorOptions> = {}) {
+    this.emit('warn', typeof err === 'string' ? new Error(err) : err)
     this.action.pause(() => {
       return this.Errors.warn(err, options)
     }, deps.chalk.bold.yellow('!'))
   }
 
   public error(err: Error | string, options: Partial<IErrorOptions> = {}) {
+    this.emit('error', typeof err === 'string' ? new Error(err) : err)
     this.action.pause(() => {
       return this.Errors.error(err, options)
     }, deps.chalk.bold.red('!'))
@@ -152,3 +154,6 @@ export class CLI extends deps.Base {
 
 export const cli = new CLI()
 export default cli
+
+// swallow error event so it does not cause a crash
+cli.on('error', () => {})
