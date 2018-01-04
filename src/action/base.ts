@@ -44,7 +44,7 @@ export class ActionBase extends deps.Base {
   }
 
   private get globals(): { action: { task?: ITask }; output: string | undefined } {
-    const globals = ((<any>global)['cli-ux'] = (<any>global)['cli-ux'] || {})
+    const globals = ((global as any)['cli-ux'] = (global as any)['cli-ux'] || {})
     globals.action = globals.action || {}
     return globals
   }

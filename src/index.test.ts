@@ -1,7 +1,7 @@
+import * as stdmock from 'std-mocks'
+
 import { cli } from '.'
 import { deps } from './deps'
-
-import * as stdmock from 'std-mocks'
 
 describe('with mocked stderr', () => {
   beforeEach(() => {

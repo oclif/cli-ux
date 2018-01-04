@@ -1,5 +1,6 @@
-import { ActionType } from './base'
 import deps from '../deps'
+
+import { ActionType } from './base'
 
 export class DebugAction extends deps.ActionBase.ActionBase {
   public type: ActionType = 'debug'

@@ -1,6 +1,8 @@
-import deps from '../deps'
-import { ActionType } from './base'
 import * as supportsColor from 'supports-color'
+
+import deps from '../deps'
+
+import { ActionType } from './base'
 const spinners = require('./spinners')
 
 function color(s: string): string {

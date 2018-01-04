@@ -1,6 +1,7 @@
-import StreamOutput from './stream'
-import deps from './deps'
 import * as EventEmitter from 'events'
+
+import deps from './deps'
+import StreamOutput from './stream'
 
 export default abstract class Base extends EventEmitter {
   public stdout: StreamOutput

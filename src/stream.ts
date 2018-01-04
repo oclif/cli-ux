@@ -1,6 +1,7 @@
-import deps from './deps'
 import * as path from 'path'
 import * as util from 'util'
+
+import deps from './deps'
 import * as fs from './fs'
 
 export default class StreamOutput {

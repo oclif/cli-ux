@@ -1,11 +1,11 @@
 import {Subject} from 'rxjs/Subject'
 
-import StreamOutput from './stream'
-import Prompt, { IPromptOptions } from './prompt'
-import { Errors, IErrorOptions } from './errors'
 import { ActionBase } from './action/base'
-import { TableOptions } from './table'
 import deps from './deps'
+import { Errors, IErrorOptions } from './errors'
+import Prompt, { IPromptOptions } from './prompt'
+import StreamOutput from './stream'
+import { TableOptions } from './table'
 // import { deprecate } from 'util'
 
 const deprecate = process.env.DEBUG ? require('util').deprecate : (fn: () => {}) => () => fn()
@@ -99,7 +99,7 @@ export class CLI extends Subject<Message> {
     if (deps.chalk.enabled) {
       let cardinal = require('cardinal')
       let theme = require('cardinal/themes/jq')
-      this.log(cardinal.highlight(json, { json: true, theme: theme }))
+      this.log(cardinal.highlight(json, { json: true, theme }))
     } else {
       this.log(json)
     }
@@ -127,12 +127,12 @@ export class CLI extends Subject<Message> {
     let logKeyValue = (key: string, value: any) => {
       this.log(`${deps.chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value))
     }
-    for (var key of keys || Object.keys(obj).sort()) {
+    for (let key of keys || Object.keys(obj).sort()) {
       let value = obj[key]
       if (Array.isArray(value)) {
         if (value.length > 0) {
           logKeyValue(key, value[0])
-          for (var e of value.slice(1)) {
+          for (let e of value.slice(1)) {
             this.log(' '.repeat(maxKeyLength) + pp(e))
           }
         }

@@ -1,5 +1,6 @@
-import deps from './deps'
 import * as util from 'util'
+
+import deps from './deps'
 
 const arrow = process.platform === 'win32' ? ' !' : ' ▸'
 

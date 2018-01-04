@@ -1,16 +1,16 @@
-import {Chalk} from 'chalk'
-import stripAnsi = require('strip-ansi')
-import moment = require('moment')
-import ansiStyles = require('ansi-styles')
 import screen = require('@cli-engine/screen')
+import ansiStyles = require('ansi-styles')
+import {Chalk} from 'chalk'
+import moment = require('moment')
+import stripAnsi = require('strip-ansi')
 
-import Prompt from './prompt'
-import {Errors} from './errors'
 import ActionBase = require('./action/base')
 import Base from './base'
-import StreamOutput from './stream'
 import Config from './config'
+import {Errors} from './errors'
 import exitError = require('./exit_error')
+import Prompt from './prompt'
+import StreamOutput from './stream'
 
 export const deps = {
   get chalk(): Chalk { return fetch('chalk') },

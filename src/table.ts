@@ -1,8 +1,9 @@
 import _ from 'ts-lodash'
+
 import deps from './deps'
 import StreamOutput from './stream'
 
-export type TableColumn = {
+export interface TableColumn {
   key: string
   label?: string | (() => string)
   format: (value: string, row: string) => string
@@ -10,7 +11,7 @@ export type TableColumn = {
   width: number
 }
 
-export type TableOptions = {
+export interface TableOptions {
   columns: TableColumn[]
   colSep: string
   after: (row: any[], options: TableOptions) => void
@@ -48,11 +49,11 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
     columns: (inputOptions.columns || []).map(c => ({
       format: (value: any) => (value ? value.toString() : ''),
       width: 0,
-      label: function() {
+      label() {
         return this.key.toString()
       },
 
-      get: function(row: any) {
+      get(row: any) {
         let value
         let path: any = _.result(this, 'key')
 
@@ -70,10 +71,10 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
     after: () => {},
     headerAnsi: _.identity,
     printLine: (s: any) => stream.log(s),
-    printRow: function(cells: any[]) {
+    printRow(cells: any[]) {
       this.printLine((cells.join(this.colSep) as any).trimRight())
     },
-    printHeader: function(cells: any[]) {
+    printHeader(cells: any[]) {
       this.printRow(cells.map(_.ary(this.headerAnsi, 1)))
       this.printRow(cells.map(hdr => hdr.replace(/./g, '─')))
     },
@@ -104,7 +105,7 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
       for (let col of columns) {
         let cell = col.get(row)
 
-        col.width = Math.max((<string>_.result(col, 'label')).length, col.width || 0, calcWidth(cell))
+        col.width = Math.max((_.result(col, 'label') as string).length, col.width || 0, calcWidth(cell))
 
         row.height = Math.max(row.height || 0, cell.split(/[\r\n]+/).length)
       }
