@@ -1,3 +1,5 @@
+import {Subject} from 'rxjs/Subject'
+
 import StreamOutput from './stream'
 import Prompt, { IPromptOptions } from './prompt'
 import { Errors, IErrorOptions } from './errors'
@@ -12,7 +14,14 @@ const deprecatedColor = deprecate(
   "cli.color is deprecated. Please use `import color from '@heroku-cli/color'` instead.",
 )
 
-export class CLI extends deps.Base {
+export type Level = 'trace' | 'debug' | 'info' | 'warn' | 'error'
+
+export interface Message {
+  level: Level
+  content: string
+}
+
+export class CLI extends Subject<Message> {
   public stdout: StreamOutput
   public stderr: StreamOutput
 
@@ -154,6 +163,3 @@ export class CLI extends deps.Base {
 
 export const cli = new CLI()
 export default cli
-
-// swallow error event so it does not cause a crash
-cli.on('error', () => {})

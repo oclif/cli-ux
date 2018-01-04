@@ -1,0 +1,27 @@
+import cli from '../src/cli'
+
+cli.info('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+cli.error('foo')
+
+setTimeout(() => cli.error('foo1'), 10)
+setTimeout(() => cli.error('foo1'), 10)
+setTimeout(() => cli.error('foo1'), 10)
+setTimeout(() => cli.error('foo1'), 10)
+setTimeout(() => cli.error('foo1'), 10)
+setTimeout(() => cli.error('foo1'), 10)
+
+cli.done()

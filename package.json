@@ -12,18 +12,23 @@
     "ansi-styles": "^3.2.0",
     "cardinal": "^1.0.0",
     "chalk": "^2.3.0",
+    "fs-extra": "^5.0.0",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "password-prompt": "^1.0.3",
+    "rxjs": "^5.5.6",
     "strip-ansi": "^4.0.0",
     "supports-color": "^5.1.0",
-    "ts-lodash": "^4.0.8"
+    "ts-lodash": "^4.0.9"
   },
   "devDependencies": {
+    "@heroku-cli/tslint": "^1.1.1",
     "@types/ansi-styles": "^2.0.30",
+    "@types/debug": "^0.0.30",
+    "@types/fs-extra": "^5.0.0",
     "@types/jest": "^22.0.1",
     "@types/lodash": "^4.14.91",
-    "@types/node": "^8.5.2",
+    "@types/node": "^8.5.5",
     "@types/strip-ansi": "^3.0.0",
     "@types/supports-color": "^3.1.0",
     "babel-core": "^6.26.0",
@@ -31,6 +36,7 @@
     "husky": "^0.14.3",
     "jest": "^22.0.4",
     "prettier": "^1.9.2",
+    "rwlockfile": "^2.0.16",
     "std-mocks": "^1.0.1",
     "ts-jest": "^22.0.0",
     "ts-node": "^4.1.0",
@@ -50,7 +56,7 @@
   "main": "./lib/index.js",
   "repository": "heroku/cli-ux",
   "scripts": {
-    "prepare": "del lib && tsc",
+    "prepare": "del lib && tsc && del 'lib/**/*.test.+(d.ts|test.js)' 'lib/__test__/**/*'",
     "pretest": "tsc",
     "test": "jest"
   },
