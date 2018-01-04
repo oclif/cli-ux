@@ -1,6 +1,7 @@
 import * as supportsColor from 'supports-color'
 
 import deps from '../deps'
+import StreamOutput from '../stream'
 
 import { ActionType } from './base'
 const spinners = require('./spinners')
@@ -18,9 +19,9 @@ export class SpinnerAction extends deps.ActionBase.ActionBase {
   frames: any
   frameIndex: number
 
-  constructor() {
-    super()
-    this.frames = spinners[deps.Config.windows ? 'line' : 'dots2'].frames
+  constructor(stdout: StreamOutput, stderr: StreamOutput) {
+    super(stdout, stderr)
+    this.frames = spinners[deps.config.windows ? 'line' : 'dots2'].frames
     this.frameIndex = 0
   }
 
@@ -30,7 +31,7 @@ export class SpinnerAction extends deps.ActionBase.ActionBase {
     this._render()
     let interval: any = (this.spinner = setInterval(
       this._render.bind(this),
-      deps.Config.windows ? 500 : 100,
+      deps.config.windows ? 500 : 100,
       'spinner',
     ))
     interval.unref()
@@ -82,6 +83,6 @@ export class SpinnerAction extends deps.ActionBase.ActionBase {
   }
 
   _write(s: string) {
-    this.stderr.write(s, { log: false })
+    this.stderr.write(s)
   }
 }

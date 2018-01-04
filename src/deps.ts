@@ -6,8 +6,7 @@ import stripAnsi = require('strip-ansi')
 
 import ActionBase = require('./action/base')
 import Base from './base'
-import Config from './config'
-import {Errors} from './errors'
+import {Config} from './config'
 import exitError = require('./exit_error')
 import Prompt from './prompt'
 import StreamOutput from './stream'
@@ -22,11 +21,10 @@ export const deps = {
   get screen(): typeof screen { return fetch('@cli-engine/screen') },
 
   get Prompt(): typeof Prompt { return fetch('./prompt').default },
-  get Errors(): typeof Errors { return fetch('./errors').Errors },
   get ActionBase(): typeof ActionBase { return fetch('./action/base') },
   get Base(): typeof Base { return fetch('./base').default },
   get StreamOutput(): typeof StreamOutput { return fetch('./stream').default },
-  get Config(): typeof Config { return fetch('./config').default },
+  get config(): Config { return fetch('./config').default },
   get ExitError(): typeof exitError.ExitError { return fetch('./exit_error').ExitError },
 }
 

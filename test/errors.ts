@@ -2,8 +2,10 @@ import cli from '../src'
 
 cli.warn('this is a warning')
 
-cli.on('warn', err => {
-  console.dir(err)
+cli.subscribe(m => {
+  if (m.level === 'warn') {
+    console.dir(m)
+  }
 })
 
 cli.warn('is emitted')

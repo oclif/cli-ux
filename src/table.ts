@@ -70,7 +70,7 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
     colSep: '  ',
     after: () => {},
     headerAnsi: _.identity,
-    printLine: (s: any) => stream.log(s),
+    printLine: (s: any) => stream.write(s + '\n'),
     printRow(cells: any[]) {
       this.printLine((cells.join(this.colSep) as any).trimRight())
     },
@@ -113,7 +113,7 @@ export function table(stream: StreamOutput, data: any[], inputOptions: Partial<T
 
     if (options.printHeader) {
       options.printHeader(
-        columns.map(function(col) {
+        columns.map((col) => {
           let label = _.result(col, 'label') as string
           return pad(label, col.width || label.length)
         }),

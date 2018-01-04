@@ -5,6 +5,7 @@ import * as path from 'path'
 const o777 = parseInt('0777', 8)
 
 export function mkdirpSync(p: string, opts: { mode?: number } = {}, made?: string): string | undefined {
+  // tslint:disable-next-line
   if (!opts.mode) opts.mode = o777 & ~process.umask()
 
   p = path.resolve(p)

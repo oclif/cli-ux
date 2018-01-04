@@ -3,7 +3,7 @@ import * as path from 'path'
 import {of} from 'rxjs/observable/of'
 
 import logger from './logger'
-import {Level} from './message'
+import {Message} from './message'
 
 let log: string
 beforeEach(() => {
@@ -12,24 +12,24 @@ beforeEach(() => {
 
 test('writes stuff out', async () => {
   await of(
-    {level: Level.debug, content: 'debug content'},
-    {level: Level.info, content: 'info content'},
-    {level: Level.warn, content: 'warn content'},
+    {type: 'line', level: 'debug', content: 'content'} as Message,
+    {type: 'line', level: 'info', content: 'content'} as Message,
+    {type: 'line', level: 'warn', content: 'content', error: new Error()},
   )
     .pipe(
-      logger(path.join(global.testRoot, 'error.log'), Level.info)
+      logger(path.join(global.testRoot, 'error.log'), 'info')
     ).toPromise()
   expect(fs.readFileSync(log, 'utf8')).toContain('] info content')
 })
 
 test('does not create file if no output', async () => {
   await of(
-    {level: Level.debug, content: 'debug content'},
-    {level: Level.info, content: 'info content'},
-    {level: Level.warn, content: 'warn content'},
+    {type: 'line', level: 'debug', content: 'content'} as Message,
+    {type: 'line', level: 'info', content: 'content'} as Message,
+    {type: 'line', level: 'warn', content: 'content', error: new Error()},
   )
     .pipe(
-      logger(path.join(global.testRoot, 'error.log'), Level.error)
+      logger(path.join(global.testRoot, 'error.log'), 'error')
     ).toPromise()
   expect(fs.existsSync(log)).toEqual(false)
 })

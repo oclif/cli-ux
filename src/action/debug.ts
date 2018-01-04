@@ -27,6 +27,6 @@ export class DebugAction extends deps.ActionBase.ActionBase {
   }
 
   _write(s: string) {
-    this.stderr.write(s, { log: false })
+    this.stderr.write(s)
   }
 }

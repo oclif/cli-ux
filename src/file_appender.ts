@@ -3,7 +3,7 @@ import * as path from 'path'
 import {Observable} from 'rxjs/observable'
 import {bufferTime, last, map} from 'rxjs/operators'
 
-export default (file: string) => (source: Observable<string>) => {
+export default (file: string) => (source: Observable<string>): Observable<Promise<void>> => {
   let stream: Promise<fs.WriteStream> | undefined
   function getStream () {
     return stream = stream || (async () => {
@@ -22,7 +22,7 @@ export default (file: string) => (source: Observable<string>) => {
   async function close () {
     if (!stream) return
     const s = await stream
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       s.end((err: Error) => err ? reject(err) : resolve())
       stream = undefined
     })

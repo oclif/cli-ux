@@ -1,10 +1,29 @@
 import deps from '../deps'
+import StreamOutput from '../stream'
 
-export function getSpinner(): ActionBase {
+export interface IAction {
+  status: string | undefined
+  start(msg: string, status?: string): void
+  stop(status?: string): void
+}
+
+export type ActionMessage = {
+  type: 'action_start'
+  content: string
+  status?: string
+} | {
+  type: 'action_stop'
+  status: string
+} | {
+  type: 'action_status'
+  status: string | undefined
+}
+
+export function getSpinner(stdout: StreamOutput, stderr: StreamOutput): ActionBase {
   let Action: typeof ActionBase
-  if (deps.Config.debug) Action = require('./debug').DebugAction
+  if (deps.config.debug) Action = require('./debug').DebugAction
   else if (
-    !deps.Config.mock &&
+    !deps.config.mock &&
     !!process.stdin.isTTY &&
     !!process.stderr.isTTY &&
     !process.env.CI &&
@@ -12,7 +31,7 @@ export function getSpinner(): ActionBase {
   )
     Action = require('./spinner').SpinnerAction
   else Action = require('./simple').SimpleAction
-  return new Action()
+  return new Action(stdout, stderr)
 }
 
 export interface ITask {
@@ -30,7 +49,6 @@ export class ActionBase extends deps.Base {
     const task = (this.task = { action, status, active: !!(this.task && this.task.active) })
     this._start()
     task.active = true
-    this.log(task)
   }
 
   public stop(msg: string = 'done') {
@@ -43,25 +61,25 @@ export class ActionBase extends deps.Base {
     this.task = undefined
   }
 
-  private get globals(): { action: { task?: ITask }; output: string | undefined } {
-    const globals = ((global as any)['cli-ux'] = (global as any)['cli-ux'] || {})
+  private get globals() {
+    const globals = global['cli-ux'] = global['cli-ux'] || {}
     globals.action = globals.action || {}
     return globals
   }
 
   public get task(): ITask | undefined {
-    return this.globals.action.task
+    return this.globals.action!.task
   }
 
   public set task(task: ITask | undefined) {
-    this.globals.action.task = task
+    this.globals.action!.task = task
   }
 
   protected get output(): string | undefined {
-    return this.globals.output
+    return this.globals.action!.output
   }
   protected set output(output: string | undefined) {
-    this.globals.output = output
+    this.globals.action!.output = output
   }
 
   get running(): boolean {
@@ -81,7 +99,6 @@ export class ActionBase extends deps.Base {
     }
     this._updateStatus(status, task.status)
     task.status = status
-    this.log(task)
   }
 
   public async pauseAsync(fn: () => Promise<any>, icon?: string) {
@@ -110,11 +127,6 @@ export class ActionBase extends deps.Base {
       this._resume()
     }
     return ret
-  }
-
-  protected log({ action, status }: { action: string; status?: string }) {
-    const msg = status ? `${action}... ${status}\n` : `${action}...\n`
-    this.stderr.writeLogFile(msg, true)
   }
 
   protected _start() {

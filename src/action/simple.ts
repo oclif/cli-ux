@@ -38,6 +38,6 @@ export class SimpleAction extends ActionBase {
   }
 
   _write(s: string) {
-    this.stderr.write(s, { log: false })
+    this.stderr.write(s)
   }
 }

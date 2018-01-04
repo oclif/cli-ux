@@ -6,10 +6,10 @@ beforeEach(() => {
 
 test('shows a warning', () => {
   cli.warn('uh oh')
-  expect(cli.stderr.output).toEqual(' ▸    uh oh\n')
+  expect(cli.stderr).toEqual(' ▸    uh oh\n')
 })
 
 test('shows a warning with context', () => {
   cli.warn('uh oh', { context: 'foo' })
-  expect(cli.stderr.output).toEqual(' ▸    foo: uh oh\n')
+  expect(cli.stderr).toEqual(' ▸    foo: uh oh\n')
 })

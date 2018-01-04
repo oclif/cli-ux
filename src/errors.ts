@@ -13,7 +13,14 @@ function bangify(msg: string, c: string): string {
   return lines.join('\n')
 }
 
-function getErrorMessage(err: any): string {
+export function getExitCode (options: Partial<IErrorOptions>): false | number {
+  let exit = options.exit || (options as any).exitCode
+  if (exit === false) return false
+  if (exit === undefined) return 1
+  return exit
+}
+
+export function getErrorMessage(err: any, {context}: Partial<IErrorOptions> = {}): string {
   let message
   if (err.body) {
     // API error
@@ -29,7 +36,8 @@ function getErrorMessage(err: any): string {
   } else if (err.message) {
     message = err.message
   }
-  return message || util.inspect(err)
+  message = message || util.inspect(err)
+  return context ? `${context}: ${message}` : message
 }
 
 function wrap(msg: string): string {
@@ -41,76 +49,19 @@ function wrap(msg: string): string {
 }
 
 export interface IErrorOptions {
-  exitCode?: number | false
-  severity: 'warn' | 'fatal' | 'error'
+  exit?: number | false
   context?: string
 }
 
-export class Errors extends deps.Base {
-  public handleUnhandleds() {
-    process.on('unhandledRejection', (reason, p) => {
-      this.fatal(reason, { context: 'Promise unhandledRejection' })
-    })
-    process.on('uncaughtException', error => {
-      this.fatal(error, { context: 'Error uncaughtException' })
-    })
-  }
-
-  public error(err: Error | string, options: Partial<IErrorOptions> & { exitCode: false }): void
-  public error(err: Error | string, options?: Partial<IErrorOptions>): never
-  public error(err: Error | string, options?: any): any {
-    if (typeof options === 'string') options = { context: options }
-    options = options || {}
-    if (!options.severity) options.severity = 'error'
-    if (options.exitCode === undefined) options.exitCode = 1
-    if (options.severity !== 'warn' && deps.Config.mock && typeof err !== 'string' && options.exitCode !== false)
-      throw err
-    try {
-      if (typeof err === 'string') err = new Error(err)
-      const prefix = options.context ? `${options.context}: ` : ''
-      this.logError(err)
-      if (deps.Config.debug) {
-        this.stderr.write(`${options.severity.toUpperCase()}: ${prefix}`)
-        this.stderr.log(err.stack || util.inspect(err))
-      } else {
-        let bang = deps.chalk.red(arrow)
-        if (options.severity === 'fatal') bang = deps.chalk.bgRed.bold.white(' FATAL ')
-        if (options.severity === 'warn') bang = deps.chalk.yellow(arrow)
-        this.stderr.log(bangify(wrap(prefix + getErrorMessage(err)), bang))
-      }
-    } catch (e) {
-      console.error('error displaying error')
-      console.error(e)
-      console.error(err)
-    }
-    if (options.exitCode !== false) this.exit(options.exitCode)
-  }
-
-  public fatal(err: Error | string, options: Partial<IErrorOptions> = {}) {
-    options.severity = 'fatal'
-    this.error(err, options)
-  }
-
-  public warn(err: Error | string, options: Partial<IErrorOptions> = {}) {
-    if (typeof options === 'string') options = { context: options }
-    options.exitCode = false
-    options.severity = 'warn'
-    this.error(err, options)
-  }
-
-  public exit(code: number = 0) {
-    if (deps.Config.debug) {
-      console.error(`Exiting with code: ${code}`)
-    }
-    if (deps.Config.mock) {
-      throw new deps.ExitError(code, this.stdout.output, this.stderr.output)
-    } else {
-      process.exit(code)
-    }
-  }
-
-  private logError(err: Error | string) {
-    if (!deps.Config.errlog) return
-    deps.StreamOutput.logToFile(util.inspect(err) + '\n', deps.Config.errlog)
+export function renderError (err: Error, severity: 'warn' | 'error' | 'fatal', options: IErrorOptions = {}) {
+  const prefix = options.context ? `${options.context}: ` : ''
+  if (deps.config.debug) {
+    return `${severity.toUpperCase()}: ${prefix}\n${err.stack || util.inspect(err)}`
+  } else {
+    let bang = deps.chalk.red(arrow)
+    if (severity === 'fatal') bang = deps.chalk.bgRed.bold.white(' FATAL ')
+    if (severity === 'warn') bang = deps.chalk.yellow(arrow)
+    return bangify(wrap(prefix + getErrorMessage(err)), bang)
   }
 }
+

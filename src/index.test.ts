@@ -1,10 +1,10 @@
-import * as stdmock from 'std-mocks'
+const stdmock = require('std-mocks')
 
 import { cli } from '.'
-import { deps } from './deps'
 
 describe('with mocked stderr', () => {
   beforeEach(() => {
+    cli.config.mock = false
     stdmock.use({ stderr: true })
   })
 
@@ -44,7 +44,7 @@ describe('with mocked stdout', () => {
   test('outputs more to stdout', () => {
     stdmock.use()
     cli.stdout.write('it works')
-    cli.stdout.log('it works')
+    cli.stdout.write('it works\n')
     stdmock.restore()
     expect(stdmock.flush().stdout).toEqual(['it works', 'it works\n'])
   })
@@ -104,7 +104,7 @@ info: arr: [ 'a', 'b', 'c' ]
 
   test('table', () => {
     cli.table([{ name: 'a' }, { name: 'b' }], {
-      columns: [{ key: 'name' }],
+      columns: [{ key: 'name' }] as any,
     })
     expect(cli.stdout.output).toBe(`name
 ────

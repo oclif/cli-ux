@@ -5,6 +5,21 @@ declare namespace NodeJS {
     columns: number
     testCount: number
     testRoot: string
+    'cli-ux'?: {
+      debug?: boolean
+      mock?: boolean
+      errlog?: string
+      stdout?: string
+      stderr?: string
+      action?: {
+        task?: {
+          action: string
+          status: string | undefined
+          active: boolean
+        }
+        output?: string
+      }
+    }
   }
 }
 
