@@ -12,8 +12,10 @@ jobs:
             - v0-yarn-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{checksum "yarn.lock"}}
             - v0-yarn-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-
             - v0-yarn-{{ .Environment.CIRCLE_JOB }}-master
-      - run: yarn
+      - run: yarn global add greenkeeper-lockfile@1 && greenkeeper-lockfile-update
+      - run: yarn --frozen-lockfile
       - run: yarn test --coverage
+      - run: greenkeeper-lockfile-upload
       - run: curl -s https://codecov.io/bash | bash
       - save_cache:
           key: v0-yarn-{{ .Environment.CIRCLE_JOB }}-{{ .Branch }}-{{checksum "yarn.lock"}}
