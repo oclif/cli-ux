@@ -48,6 +48,17 @@ export class Config extends EventEmitter {
     return process.platform === 'win32'
   }
 
+  public get action(): 'spinner' | 'simple' | 'debug' {
+    return (this.debug && 'debug') || (
+      !deps.config.mock &&
+      !!process.stdin.isTTY &&
+      !!process.stderr.isTTY &&
+      !process.env.CI &&
+      process.env.TERM !== 'dumb' &&
+      'spinner'
+    ) || 'simple'
+  }
+
   private get _globals() {
     const globals = global['cli-ux'] = global['cli-ux'] || {}
     globals.action = globals.action || {}

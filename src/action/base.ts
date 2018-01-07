@@ -1,5 +1,4 @@
 import deps from '../deps'
-import StreamOutput from '../stream'
 
 export interface IAction {
   status: string | undefined
@@ -17,21 +16,6 @@ export type ActionMessage = {
 } | {
   type: 'action_status'
   status: string | undefined
-}
-
-export function getSpinner(stdout: StreamOutput, stderr: StreamOutput): ActionBase {
-  let Action: typeof ActionBase
-  if (deps.config.debug) Action = require('./debug').DebugAction
-  else if (
-    !deps.config.mock &&
-    !!process.stdin.isTTY &&
-    !!process.stderr.isTTY &&
-    !process.env.CI &&
-    process.env.TERM !== 'dumb'
-  )
-    Action = require('./spinner').SpinnerAction
-  else Action = require('./simple').SimpleAction
-  return new Action(stdout, stderr)
 }
 
 export interface ITask {
