@@ -1,7 +1,6 @@
 import screen = require('@cli-engine/screen')
 import ansiStyles = require('ansi-styles')
 import {Chalk} from 'chalk'
-import moment = require('moment')
 import stripAnsi = require('strip-ansi')
 
 import ActionBase = require('./action/base')
@@ -13,7 +12,6 @@ import StreamOutput from './stream'
 
 export const deps = {
   get chalk(): Chalk { return fetch('chalk') },
-  get moment(): typeof moment { return fetch('moment') },
   get stripAnsi(): typeof stripAnsi { return fetch('strip-ansi') },
   get ansiStyles(): typeof ansiStyles { return fetch('ansi-styles') },
   get ansiEscapes(): any { return fetch('ansi-escapes') },

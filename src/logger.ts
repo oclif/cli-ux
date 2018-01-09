@@ -1,11 +1,10 @@
 import {Observable} from 'rxjs/observable'
 import {filter, map} from 'rxjs/operators'
 
-import deps from './deps'
 import appendFile from './file_appender'
 import {Level, levelGte, LineMessage, Message} from './message'
 
-const timestamp = () => `[${deps.moment().format()}]`
+const timestamp = () => `[${new Date().toISOString()}]`
 
 function isLineMessage (level: Level) {
   // tslint:disable-next-line
