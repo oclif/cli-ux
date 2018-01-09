@@ -2120,6 +2120,10 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
+luxon@^0.2.12:
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-0.2.12.tgz#a5edc7a9439ceb605bd400420c4bad657d25a161"
+
 make-dir@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.0.0.tgz#97a011751e91dd87cfadef58832ebb04936de978"

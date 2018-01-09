@@ -48,6 +48,14 @@ export class Config extends EventEmitter {
     return process.platform === 'win32'
   }
 
+  public get setup(): boolean{
+    return !!this._globals.setup
+  }
+
+  public set setup(setup: boolean) {
+    this._globals.setup = setup
+  }
+
   public get action(): 'spinner' | 'simple' | 'debug' {
     return (this.debug && 'debug') || (
       !deps.config.mock &&

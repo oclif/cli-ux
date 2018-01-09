@@ -35,17 +35,17 @@ export class CLI extends Subject<Message> {
   private __action: ActionBase
   private _action: IAction
   public get action() {
-    if (!this._action) {
-      this.__action = deps.ActionBase.getSpinner(this.stdout, this.stderr)
-      const subject = this
-      this._action = {
-        start(content: string, status?: string) { subject.next({type: 'action_start', content, status}) },
-        stop(status: string = 'done') { subject.next({type: 'action_stop', status}) },
-        get status() { return subject.__action.status },
-        set status(v: string | undefined) { subject.next({type: 'action_status', status}) },
-      }
-    }
-    return this._action
+    // if (!this._action) {
+    //   this.__action = deps.ActionBase.getSpinner(this.stdout, this.stderr)
+    //   const subject = this
+    //   this._action = {
+    //     start(content: string, status?: string) { subject.next({type: 'action_start', content, status}) },
+    //     stop(status: string = 'done') { subject.next({type: 'action_stop', status}) },
+    //     get status() { return subject.__action.status },
+    //     set status(v: string | undefined) { subject.next({type: 'action_status', status}) },
+    //   }
+    // }
+    // return this._action
   }
 
   constructor () {
@@ -188,14 +188,30 @@ export class CLI extends Subject<Message> {
 
   /**
    * puts in a handler for process.on('uncaughtException') and process.on('unhandledRejection')
+   * and some other things
    */
-  public handleUnhandleds() {
-    process.on('unhandledRejection', (reason, p) => {
+  public setup() {
+    if (this.config.setup) return
+    this.config.setup = true
+    process.once('unhandledRejection', (reason, p) => {
       this.fatal(reason, { context: 'Promise unhandledRejection' })
     })
-    process.on('uncaughtException', error => {
+    process.once('uncaughtException', error => {
       this.fatal(error, { context: 'Error uncaughtException' })
     })
+    process.once('SIGINT', () => {
+      // if (this.action.task) cli.action.stop(color.red('ctrl-c'))
+      cli.exit(1)
+    })
+    const handleEPIPE = (err: NodeJS.ErrnoException) => {
+      if (err.code !== 'EPIPE') throw err
+    }
+    process.stdout.on('error', handleEPIPE)
+    process.stderr.on('error', handleEPIPE)
+  }
+
+  public handleUnhandled() {
+    deprecate(() => this.setup(), 'this command is now .setup()')
   }
 
   /**

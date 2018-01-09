@@ -11,6 +11,7 @@ declare namespace NodeJS {
       errlog?: string
       stdout?: string
       stderr?: string
+      setup?: boolean
       action?: {
         task?: {
           action: string
