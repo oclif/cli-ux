@@ -46,12 +46,12 @@ function wrap(msg: string): string {
   })(msg)
 }
 
-export default function (cli: CLI): Rx.Observable<any> {
+export default function (o: Rx.Subject<Message>): Rx.Observable<any> {
   function renderError(message: ErrorMessage): string {
     let bang = chalk.red(arrow)
     if (message.severity === 'fatal') bang = chalk.bgRed.bold.white(' FATAL ')
     if (message.severity === 'warn') bang = chalk.yellow(arrow)
-    const msg = cli.scope ? `${cli.scope}: ${getErrorMessage(message.error)}` : getErrorMessage(message.error)
+    const msg = message.scope ? `${message.scope}: ${getErrorMessage(message.error)}` : getErrorMessage(message.error)
     return bangify(wrap(msg), bang)
   }
 
@@ -90,11 +90,11 @@ export default function (cli: CLI): Rx.Observable<any> {
 
   handleUnhandleds()
 
-  return cli
-    .takeUntil(cli.filter(m => m.type === 'done'))
+  return o
+    .takeUntil(o.filter(m => m.type === 'done'))
     .filter<Message, ErrorMessage>((m): m is ErrorMessage => m.type === 'error')
     .do(m => {
-      cli.next({type: 'logger', severity: m.severity, message: getErrorMessage(m.error)})
+      o.next({type: 'logger', scope: m.scope, severity: m.severity, message: getErrorMessage(m.error)})
       process.stderr.write(renderError(m) + '\n')
     })
 }

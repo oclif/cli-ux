@@ -3,13 +3,12 @@ import * as _ from 'lodash'
 import * as path from 'path'
 import Rx = require('rxjs/Rx')
 
-import {CLI} from '.'
 import {config} from './config'
 import {ConfigMessage, LoggerMessage, Message} from './message'
 
 const timestamp = () => new Date().toISOString()
 
-export default function setup(cli: CLI): Rx.Observable<any> {
+export default function setup(o: Rx.Subject<Message>): Rx.Observable<any> {
   function log(file: string) {
     let stream: Promise<fs.WriteStream> | undefined
     function getStream() {
@@ -37,8 +36,8 @@ export default function setup(cli: CLI): Rx.Observable<any> {
 
     if (!file) return Rx.Observable.empty()
 
-    const messages$ = cli
-      .takeUntil(cli.filter(m => m.type === 'done'))
+    const messages$ = o
+      .takeUntil(o.filter(m => m.type === 'done'))
       .filter<Message, LoggerMessage>((m): m is LoggerMessage => m.type === 'logger')
       .filter(m => {
         switch (config.logLevel) {
@@ -50,7 +49,7 @@ export default function setup(cli: CLI): Rx.Observable<any> {
           default: return false
         }
       })
-      .map(m => _([timestamp(), m.severity.toUpperCase(), cli.scope, m.message]).compact().join(' '))
+      .map(m => _([timestamp(), m.severity.toUpperCase(), m.scope, m.message]).compact().join(' '))
     return messages$
       .bufferWhen(() => messages$.delay(10))
       .filter(lines => lines.length > 0)
@@ -63,9 +62,9 @@ export default function setup(cli: CLI): Rx.Observable<any> {
       .finally(close)
   }
 
-  return cli
-  .takeUntil(cli.filter(m => m.type === 'done'))
-  .startWith({type: 'config', prop: 'errlog', value: cli.config.errlog})
+  return o
+  .takeUntil(o.filter(m => m.type === 'done'))
+  .startWith({type: 'config', prop: 'errlog', value: config.errlog})
   .filter<Message, ConfigMessage>((m): m is ConfigMessage => m.type === 'config' && m.prop === 'errlog')
   .switchMap(m => log(m.value))
 }

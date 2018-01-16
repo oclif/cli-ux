@@ -13,20 +13,19 @@ export interface IErrorOptions {
   severity?: 'fatal' | 'error' | 'warn'
 }
 
-export class CLI extends Rx.Subject<Message> {
-  children: Rx.Observable<any>
-  subscription: Rx.Subscription
+let subject: Rx.Subject<Message> = new Rx.Subject()
+let children: Rx.Observable<any>
+
+config.subscribe(subject)
+
+export class CLI {
   config: Config = config
 
-  constructor(public scope?: string) {
-    super()
-    this.reset()
-    this.config.subscribe(this)
-  }
+  constructor(public scope?: string) {}
 
   error(input: Error | string, options: IErrorOptions = {}) {
     const error = input instanceof Error ? input : new Error(input)
-    this.next({type: 'error', severity: options.severity || 'error', error} as ErrorMessage)
+    subject.next({type: 'error', scope: this.scope, severity: options.severity || 'error', error} as ErrorMessage)
     const code = getExitCode(options)
     if (code !== false) this.exit(code, error)
   }
@@ -34,28 +33,19 @@ export class CLI extends Rx.Subject<Message> {
   fatal(input: Error | string, options: IErrorOptions = {}) { this.error(input, {...options, severity: 'fatal'}) }
   warn(input: Error | string) { this.error(input, {severity: 'warn', exit: false}) }
 
-  info(...input: any[]) { this.next({type: 'output', severity: 'info', input}) }
   log(...input: any[]) { this.info(...input) }
-  debug(...input: any[]) { this.next({type: 'output', severity: 'debug', input}) }
-  trace(...input: any[]) { this.next({type: 'output', severity: 'trace', input}) }
+  info(...input: any[]) { subject.next({type: 'output', scope: this.scope, severity: 'info', input}) }
+  debug(...input: any[]) { subject.next({type: 'output', scope: this.scope, severity: 'debug', input}) }
+  trace(...input: any[]) { subject.next({type: 'output', scope: this.scope, severity: 'trace', input}) }
 
   exit(code = 1, error?: Error) { throw new ExitError(code, error) }
 
   async done() {
     await new Promise((resolve, reject) => {
-      this.children.subscribe({error: reject, complete: resolve})
-      this.next({type: 'done'})
+      children.subscribe({error: reject, complete: resolve})
+      subject.next({type: 'done'})
     })
-    this.reset()
-  }
-
-  private reset() {
-    this.children = Rx.Observable.forkJoin(
-      errors(this),
-      output(this),
-      logger(this),
-    ).share()
-    this.children.subscribe()
+    reset()
   }
 }
 
@@ -65,5 +55,15 @@ function getExitCode(options: IErrorOptions): false | number {
   if (exit === undefined) return 1
   return exit
 }
+
+function reset() {
+  children = Rx.Observable.forkJoin(
+    errors(subject),
+    output(subject),
+    logger(subject),
+  ).share()
+  children.subscribe()
+}
+reset()
 
 export default new CLI()
