@@ -3,15 +3,14 @@ import Rx = require('rxjs/Rx')
 import errors from './errors'
 import {ExitError} from './exit'
 import logger from './logger'
-import {Message} from './message'
+import {ErrorMessage, Message} from './message'
 import output from './output'
 
 import {config, Config} from './config'
 
-const buildError = (i: string | Error) => i instanceof Error ? i : new Error(i)
-
 export interface IErrorOptions {
   exit?: number | false
+  severity?: 'fatal' | 'error' | 'warn'
 }
 
 export class CLI extends Rx.Subject<Message> {
@@ -25,40 +24,22 @@ export class CLI extends Rx.Subject<Message> {
     this.config.subscribe(this)
   }
 
-  fatal(input: Error | string, options: IErrorOptions = {}) {
-    const error = buildError(input)
-    this.next({type: 'error', severity: 'fatal', error})
-    const code = getExitCode(options)
-    if (code !== false) this.exit(code, error)
-  }
-
   error(input: Error | string, options: IErrorOptions = {}) {
-    const error = buildError(input)
-    this.next({type: 'error', severity: 'error', error})
+    const error = input instanceof Error ? input : new Error(input)
+    this.next({type: 'error', severity: options.severity || 'error', error} as ErrorMessage)
     const code = getExitCode(options)
     if (code !== false) this.exit(code, error)
   }
 
-  warn(input: Error | string) {
-    const error = buildError(input)
-    this.next({type: 'error', severity: 'warn', error})
-  }
+  fatal(input: Error | string, options: IErrorOptions = {}) { this.error(input, {...options, severity: 'fatal'}) }
+  warn(input: Error | string) { this.error(input, {severity: 'warn', exit: false}) }
 
-  info(...input: any[]) {
-    this.next({type: 'output', severity: 'info', input})
-  }
+  info(...input: any[]) { this.next({type: 'output', severity: 'info', input}) }
+  log(...input: any[]) { this.info(...input) }
+  debug(...input: any[]) { this.next({type: 'output', severity: 'debug', input}) }
+  trace(...input: any[]) { this.next({type: 'output', severity: 'trace', input}) }
 
-  debug(...input: any[]) {
-    this.next({type: 'output', severity: 'debug', input})
-  }
-
-  trace(...input: any[]) {
-    this.next({type: 'output', severity: 'trace', input})
-  }
-
-  exit(code = 1, error?: Error) {
-    throw new ExitError(code, error)
-  }
+  exit(code = 1, error?: Error) { throw new ExitError(code, error) }
 
   async done() {
     await new Promise((resolve, reject) => {
