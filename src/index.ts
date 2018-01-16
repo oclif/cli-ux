@@ -1,10 +1,15 @@
+// tslint:disable no-console
+
 import Rx = require('rxjs/Rx')
 
+import {ActionBase} from './action/base'
+import deps from './deps'
 import errors from './errors'
 import {ExitError} from './exit'
 import logger from './logger'
 import {ErrorMessage, Message} from './message'
 import output from './output'
+import {IPromptOptions} from './prompt'
 
 import {config, Config} from './config'
 
@@ -20,6 +25,8 @@ config.subscribe(subject)
 
 export class CLI {
   config: Config = config
+
+  get action(): ActionBase { return config.action }
 
   constructor(public scope?: string) {}
 
@@ -41,11 +48,33 @@ export class CLI {
   exit(code = 1, error?: Error) { throw new ExitError(code, error) }
 
   async done() {
+    config.action.stop()
     await new Promise((resolve, reject) => {
       children.subscribe({error: reject, complete: resolve})
       subject.next({type: 'done'})
     })
     reset()
+  }
+
+  styledObject(...args: any[]) { require('./styled/object').default(...args) }
+  table(...args: any[]) { (require('./styled/table'))(...args) }
+
+  prompt(name: string, options: IPromptOptions = {}) {
+    return this.action.pauseAsync(() => {
+      return deps.prompt.prompt(name, options)
+    }, deps.chalk.cyan('?'))
+  }
+
+  confirm(message: string): Promise<boolean> {
+    return this.action.pauseAsync(async () => {
+      const confirm = async (): Promise<boolean> => {
+        let response = (await deps.prompt.prompt(message)).toLowerCase()
+        if (['n', 'no'].includes(response)) return false
+        if (['y', 'yes'].includes(response)) return true
+        return confirm()
+      }
+      return confirm()
+    }, deps.chalk.cyan('?'))
   }
 }
 
@@ -66,4 +95,14 @@ function reset() {
 }
 reset()
 
-export default new CLI()
+export const cli = new CLI()
+export default cli
+
+process.once('exit', async () => {
+  try {
+    await cli.done()
+  } catch (err) {
+    console.error(err)
+    process.exitCode = 1
+  }
+})

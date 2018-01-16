@@ -1,11 +1,11 @@
 // tslint:disable no-console
 
-import * as screen from '@dxcli/screen'
-import chalk from 'chalk'
 import Rx = require('rxjs/Rx')
 import {inspect} from 'util'
 
 import {CLI} from '.'
+import {config} from './config'
+import deps from './deps'
 import {ErrorMessage, Message} from './message'
 
 const arrow = process.platform === 'win32' ? ' !' : ' ▸'
@@ -31,7 +31,7 @@ function getErrorMessage(err: any): string {
   }
   // Unhandled error
   if (err.message && err.code) {
-    message = `${inspect(err.code)}: ${err.message}`
+    message = `${inspect(err.code)}: ${message}`
   } else if (err.message) {
     message = err.message
   }
@@ -40,7 +40,7 @@ function getErrorMessage(err: any): string {
 
 function wrap(msg: string): string {
   const linewrap = require('@heroku/linewrap')
-  return linewrap(6, screen.errtermwidth, {
+  return linewrap(6, deps.screen.errtermwidth, {
     skip: /^\$ .*$/,
     skipScheme: 'ansi-color',
   })(msg)
@@ -48,9 +48,9 @@ function wrap(msg: string): string {
 
 export default function (o: Rx.Subject<Message>): Rx.Observable<any> {
   function renderError(message: ErrorMessage): string {
-    let bang = chalk.red(arrow)
-    if (message.severity === 'fatal') bang = chalk.bgRed.bold.white(' FATAL ')
-    if (message.severity === 'warn') bang = chalk.yellow(arrow)
+    let bang = deps.chalk.red(arrow)
+    if (message.severity === 'fatal') bang = deps.chalk.bgRed.bold.white(' FATAL ')
+    if (message.severity === 'warn') bang = deps.chalk.yellow(arrow)
     const msg = message.scope ? `${message.scope}: ${getErrorMessage(message.error)}` : getErrorMessage(message.error)
     return bangify(wrap(msg), bang)
   }
@@ -61,8 +61,8 @@ export default function (o: Rx.Subject<Message>): Rx.Observable<any> {
     // and can be ignored
     try {
       if (err.code === 'EPIPE') return
-      if (err.code === 'EEXIT') {
-        process.exitCode = (err as any).status
+      if (err.code === 'EEXIT' && typeof (err as any).status === 'number') {
+        process.exit((err as any).status)
       } else {
         const cli = new CLI(scope)
         cli.fatal(err, {exit: false})
@@ -95,6 +95,18 @@ export default function (o: Rx.Subject<Message>): Rx.Observable<any> {
     .filter<Message, ErrorMessage>((m): m is ErrorMessage => m.type === 'error')
     .do(m => {
       o.next({type: 'logger', scope: m.scope, severity: m.severity, message: getErrorMessage(m.error)})
-      process.stderr.write(renderError(m) + '\n')
+      const bang = (m.severity === 'warn' && deps.chalk.yellowBright('!'))
+      || (m.severity === 'fatal' && deps.chalk.bold.bgRedBright('!!!'))
+      || deps.chalk.bold.redBright('!')
+      try {
+        config.action.pause(() => {
+          process.stderr.write(config.debug ? inspect(m.error) : renderError(m) + '\n')
+          if (m.severity === 'fatal') process.stderr.write(inspect(m.error) + '\n')
+        }, bang)
+      } catch (newErr) {
+        console.error(newErr)
+        console.error(m.error)
+        process.exit(1)
+      }
     })
 }

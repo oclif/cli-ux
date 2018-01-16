@@ -1,27 +1,30 @@
 import Rx = require('rxjs/Rx')
 import * as semver from 'semver'
 
+import {ActionBase} from './action/base'
 import {ConfigMessage} from './message'
 
 const version = semver.parse(require('../package.json').version)!
-
-  // get actionType(): 'spinner' | 'simple' {
-  //   return (
-  //     !!process.stdin.isTTY &&
-  //     !!process.stderr.isTTY &&
-  //     !process.env.CI &&
-  //     process.env.TERM !== 'dumb' &&
-  //     'spinner'
-  //   ) || 'simple'
-  // },
 
 export type Levels = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace'
 
 const globals = global['cli-ux'] || (global['cli-ux'] = {})
 
+const actionType = (
+  !!process.stdin.isTTY &&
+  !!process.stderr.isTTY &&
+  !process.env.CI &&
+  process.env.TERM !== 'dumb' &&
+  'spinner'
+) || 'simple'
+
+const Action = actionType === 'spinner' ? require('./action/spinner').default : require('./action/simple').default
+
 export class Config extends Rx.Subject<ConfigMessage> {
   logLevel: Levels = 'warn'
   outputLevel: Levels = 'info'
+  debug = process.env.DEBUG === '*'
+  action: ActionBase = new Action()
 
   get errlog(): string | undefined { return globals.errlog }
   set errlog(errlog: string | undefined) {

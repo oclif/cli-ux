@@ -7,20 +7,25 @@
   "dependencies": {
     "@dxcli/screen": "^0.0.0",
     "@heroku/linewrap": "^1.0.0",
+    "ansi-styles": "^3.2.0",
     "chalk": "^2.3.0",
     "fs-extra": "^5.0.0",
     "lodash": "^4.17.4",
+    "password-prompt": "^1.0.3",
     "rxjs": "^5.5.6",
-    "semver": "^5.4.1"
+    "semver": "^5.4.1",
+    "strip-ansi": "^4.0.0",
+    "supports-color": "^5.1.0"
   },
   "devDependencies": {
     "@dxcli/dev": "^1.1.3",
     "@dxcli/dev-semantic-release": "^0.0.3",
-    "@dxcli/dev-test": "^0.2.0",
+    "@dxcli/dev-test": "^0.2.1",
     "@dxcli/dev-tslint": "^0.0.14",
     "@types/fs-extra": "^5.0.0",
     "@types/node": "^9.3.0",
     "@types/semver": "^5.4.0",
+    "@types/supports-color": "^3.1.0",
     "eslint": "^4.15.0",
     "eslint-config-dxcli": "^1.1.4",
     "husky": "^0.14.3",

@@ -130,9 +130,9 @@
     "@semantic-release/npm" "^2.6.1"
     semantic-release "^12.2.0"
 
-"@dxcli/dev-test@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@dxcli/dev-test/-/dev-test-0.2.0.tgz#c67148036103afa4223dcbaadae998b23e286ac9"
+"@dxcli/dev-test@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@dxcli/dev-test/-/dev-test-0.2.1.tgz#0e4f82c1f2159bc37e06f611968178ee0039d3b4"
   dependencies:
     "@dxcli/dev-nyc-config" "^0.0.3"
     "@types/ansi-styles" "^2.0.30"
@@ -324,6 +324,10 @@
 "@types/strip-json-comments@0.0.30":
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
+
+"@types/supports-color@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/supports-color/-/supports-color-3.1.0.tgz#3584b6b54f45333e988da2c29e6797eff5a20f8c"
 
 JSONStream@^1.0.4:
   version "1.3.2"
