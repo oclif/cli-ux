@@ -10,10 +10,11 @@ beforeEach(() => {
 describe.stderr('errors', () => {
   it('warns', () => {
     cli.warn('foobar')
-    expect(output.stderr).to.equal(' ✖    foobar\n')
+    expect(output.stderr).to.equal(' ▸    foobar\n')
   })
 
   it('errors', () => {
     expect(() => cli.error('foobar')).to.throw(/foobar/)
+    expect(output.stderr).to.equal(' ▸    foobar\n')
   })
 })

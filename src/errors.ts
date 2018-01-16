@@ -8,7 +8,7 @@ import {inspect} from 'util'
 import {CLI} from '.'
 import {ErrorMessage, Message} from './message'
 
-const arrow = process.platform === 'win32' ? ' ×' : ' ✖'
+const arrow = process.platform === 'win32' ? ' !' : ' ▸'
 
 function bangify(msg: string, c: string): string {
   const lines = msg.split('\n')
