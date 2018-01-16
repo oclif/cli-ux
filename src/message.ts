@@ -1,46 +1,47 @@
-export type Level = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'
-import {ActionMessage} from './action/base'
+import {Levels} from './config'
 
-export interface ILineMessage {
-  type: 'line'
-  content: string
+export interface ConfigMessage {
+  type: 'config'
+  prop: string
+  value: any
 }
 
-export type LineMessage = ILineMessage & ({
-  level: 'trace'
+export type OutputMessage = {
+  type: 'output'
+  severity: 'trace'
+  input: any[]
 } | {
-  level: 'debug'
+  type: 'output'
+  severity: 'debug'
+  input: any[]
 } | {
-  level: 'info'
-} | {
-  level: 'warn'
-  error: Error
-} | {
-  level: 'error'
-  error: Error
-} | {
-  level: 'fatal'
-  error: Error
-})
-
-export type Message = LineMessage | ActionMessage
-
-export function levelInt (l: Level): number {
-  switch (l) {
-    case 'trace':
-      return 0
-    case 'debug':
-      return 1
-    case 'info':
-      return 2
-    case 'warn':
-      return 3
-    case 'error':
-      return 4
-    case 'fatal':
-      return 5
-  }
+  type: 'output'
+  severity: 'info'
+  input: any[]
 }
-export function levelGte (a: Level, b: Level) {
-  return levelInt(a) >= levelInt(b)
+
+export type ErrorMessage = {
+  type: 'error'
+  severity: 'warn'
+  error: Error
+} | {
+  type: 'error'
+  severity: 'error'
+  error: Error
+} | {
+  type: 'error'
+  severity: 'fatal'
+  error: Error
 }
+
+export interface LoggerMessage {
+  type: 'logger'
+  message: string
+  severity: Levels
+}
+
+export interface DoneMessage {
+  type: 'done'
+}
+
+export type Message = OutputMessage | ErrorMessage | ConfigMessage | LoggerMessage | DoneMessage

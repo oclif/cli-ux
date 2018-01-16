@@ -1,8 +1,14 @@
-import * as util from 'util'
+// tslint:disable no-console
 
-import deps from './deps'
+import * as screen from '@dxcli/screen'
+import chalk from 'chalk'
+import Rx = require('rxjs/Rx')
+import {inspect} from 'util'
 
-const arrow = process.platform === 'win32' ? ' !' : ' ▸'
+import {CLI} from '.'
+import {ErrorMessage, Message} from './message'
+
+const arrow = process.platform === 'win32' ? ' ×' : ' ✖'
 
 function bangify(msg: string, c: string): string {
   const lines = msg.split('\n')
@@ -13,55 +19,82 @@ function bangify(msg: string, c: string): string {
   return lines.join('\n')
 }
 
-export function getExitCode (options: Partial<IErrorOptions>): false | number {
-  let exit = options.exit || (options as any).exitCode
-  if (exit === false) return false
-  if (exit === undefined) return 1
-  return exit
-}
-
-export function getErrorMessage(err: any, {context}: Partial<IErrorOptions> = {}): string {
+function getErrorMessage(err: any): string {
   let message
   if (err.body) {
     // API error
     if (err.body.message) {
-      message = util.inspect(err.body.message)
+      message = inspect(err.body.message)
     } else if (err.body.error) {
-      message = util.inspect(err.body.error)
+      message = inspect(err.body.error)
     }
   }
   // Unhandled error
   if (err.message && err.code) {
-    message = `${util.inspect(err.code)}: ${err.message}`
+    message = `${inspect(err.code)}: ${err.message}`
   } else if (err.message) {
     message = err.message
   }
-  message = message || util.inspect(err)
-  return context ? `${context}: ${message}` : message
+  return message || inspect(err)
 }
 
 function wrap(msg: string): string {
   const linewrap = require('@heroku/linewrap')
-  return linewrap(6, deps.screen.errtermwidth, {
+  return linewrap(6, screen.errtermwidth, {
     skip: /^\$ .*$/,
     skipScheme: 'ansi-color',
   })(msg)
 }
 
-export interface IErrorOptions {
-  exit?: number | false
-  context?: string
-}
-
-export function renderError (err: Error, severity: 'warn' | 'error' | 'fatal', options: IErrorOptions = {}) {
-  const prefix = options.context ? `${options.context}: ` : ''
-  if (deps.config.debug) {
-    return `${severity.toUpperCase()}: ${prefix}\n${err.stack || util.inspect(err)}`
-  } else {
-    let bang = deps.chalk.red(arrow)
-    if (severity === 'fatal') bang = deps.chalk.bgRed.bold.white(' FATAL ')
-    if (severity === 'warn') bang = deps.chalk.yellow(arrow)
-    return bangify(wrap(prefix + getErrorMessage(err)), bang)
+export default function (cli: CLI): Rx.Observable<any> {
+  function renderError(message: ErrorMessage): string {
+    let bang = chalk.red(arrow)
+    if (message.severity === 'fatal') bang = chalk.bgRed.bold.white(' FATAL ')
+    if (message.severity === 'warn') bang = chalk.yellow(arrow)
+    const msg = cli.scope ? `${cli.scope}: ${getErrorMessage(message.error)}` : getErrorMessage(message.error)
+    return bangify(wrap(msg), bang)
   }
-}
 
+  const handleError = (scope: string) => async (err: NodeJS.ErrnoException) => {
+    // ignore EPIPE errors
+    // these come from using | head and | tail
+    // and can be ignored
+    try {
+      if (err.code === 'EPIPE') return
+      if (err.code === 'EEXIT') {
+        process.exitCode = (err as any).status
+      } else {
+        const cli = new CLI(scope)
+        cli.fatal(err, {exit: false})
+        await cli.done()
+        process.exit(100)
+      }
+    } catch (err) {
+      console.error(err)
+      process.exit(101)
+    }
+  }
+
+  function handleUnhandleds() {
+    process.once('SIGINT', () => {
+      const cli = new CLI('SIGINT')
+      const err: NodeJS.ErrnoException = new Error()
+      err.code = 'ESIGINT'
+      cli.error(err)
+    })
+    process.once('unhandledRejection', handleError('unhandledRejection'))
+    process.once('uncaughtException', handleError('uncaughtException'))
+    process.stdout.on('error', handleError)
+    process.stderr.on('error', handleError)
+  }
+
+  handleUnhandleds()
+
+  return cli
+    .takeUntil(cli.filter(m => m.type === 'done'))
+    .filter<Message, ErrorMessage>((m): m is ErrorMessage => m.type === 'error')
+    .do(m => {
+      cli.next({type: 'logger', severity: m.severity, message: getErrorMessage(m.error)})
+      process.stderr.write(renderError(m) + '\n')
+    })
+}
