@@ -1,4 +1,5 @@
 // tslint:disable no-console
+// tslint:disable restrict-plus-operands
 
 import Rx = require('rxjs/Rx')
 
