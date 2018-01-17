@@ -8,6 +8,7 @@
     "@dxcli/screen": "^0.0.0",
     "@heroku/linewrap": "^1.0.0",
     "ansi-styles": "^3.2.0",
+    "cardinal": "^1.0.0",
     "chalk": "^2.3.0",
     "fs-extra": "^5.0.0",
     "lodash": "^4.17.4",

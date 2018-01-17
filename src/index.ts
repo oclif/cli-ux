@@ -58,6 +58,20 @@ export class CLI {
 
   styledObject(...args: any[]) { require('./styled/object').default(...args) }
   table(...args: any[]) { (require('./styled/table'))(...args) }
+  styledJSON(obj: any) {
+    let json = JSON.stringify(obj, null, 2)
+    if (!deps.chalk.enabled) {
+      this.log(json)
+      return
+    }
+    let cardinal = require('cardinal')
+    let theme = require('cardinal/themes/jq')
+    this.log(cardinal.highlight(json, {json: true, theme}))
+  }
+
+  styledHeader(header: string) {
+    this.log(deps.chalk.dim('=== ') + deps.chalk.bold(header))
+  }
 
   prompt(name: string, options: IPromptOptions = {}) {
     return this.action.pauseAsync(() => {
