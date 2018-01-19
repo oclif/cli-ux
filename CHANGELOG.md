@@ -1,3 +1,11 @@
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/dxcli/cli-ux/compare/d97fe55bc687f862a282a40500ba5313509fb866...v3.1.0) (2018-01-19)
+
+
+### Features
+
+* allow setting scope in warn/error/fatal call ([b6e1933](https://github.com/dxcli/cli-ux/commit/b6e1933))
+
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/dxcli/cli-ux/compare/07e27d5d3dab474c577eab1ae58f5e68a1256f79...v3.0.1) (2018-01-19)
 
