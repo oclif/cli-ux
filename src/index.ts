@@ -24,16 +24,33 @@ let children: Rx.Observable<any>
 
 config.subscribe(subject)
 
-export class CLI {
+export interface ICLI {
+  fatal(input: Error | string, scope: string | string[], options?: IErrorOptions): void
+  fatal(input: Error | string, options?: IErrorOptions): void
+  error(input: Error | string, scope: string | string[], options?: IErrorOptions): void
+  error(input: Error | string, options?: IErrorOptions): void
+  warn(input: Error | string, scope?: string | string[]): void
+}
+
+function getScopeAndOpts(scopeOrOpts: string | string[] | undefined | IErrorOptions, options: IErrorOptions | undefined): {scope?: string, options: IErrorOptions} {
+  options = options || {}
+  if (typeof scopeOrOpts === 'string') return {scope: scopeOrOpts, options}
+  if (Array.isArray(scopeOrOpts)) return {scope: scopeOrOpts.join(':'), options}
+  if (scopeOrOpts) return {options: scopeOrOpts}
+  return {options}
+}
+
+export class CLI implements ICLI {
   config: Config = config
 
   get action(): ActionBase { return config.action }
 
   constructor(public scope?: string) {}
 
-  error(input: Error | string, options: IErrorOptions = {}) {
+  error(input: Error | string, a?: string | string[] | IErrorOptions, b: IErrorOptions = {}) {
+    const {scope, options} = getScopeAndOpts(a, b)
     const error = input instanceof Error ? input : new Error(input)
-    subject.next({type: 'error', scope: this.scope, severity: options.severity || 'error', error} as ErrorMessage)
+    subject.next({type: 'error', scope: scope || this.scope, severity: options.severity || 'error', error} as ErrorMessage)
     const code = getExitCode(options)
     if (code === false) return
     let exitErr: ExitError = error as any
@@ -41,8 +58,11 @@ export class CLI {
     throw exitErr
   }
 
-  fatal(input: Error | string, options: IErrorOptions = {}) { this.error(input, {...options, severity: 'fatal'}) }
-  warn(input: Error | string) { this.error(input, {severity: 'warn', exit: false}) }
+  fatal(input: Error | string, a?: string | string[] | IErrorOptions, b: IErrorOptions = {}) {
+    const {scope, options} = getScopeAndOpts(a, b)
+    this.error(input, scope, {...options, severity: 'fatal'})
+  }
+  warn(input: Error | string, scope?: string | string[]) { this.error(input, scope, {severity: 'warn', exit: false}) }
 
   log(...input: any[]) { this.info(...input) }
   info(...input: any[]) { subject.next({type: 'output', scope: this.scope, severity: 'info', input}) }

@@ -33,9 +33,11 @@ describe.stdout.stderr('logger', () => {
     let cli = new CLI('mynewscope')
     cli.warn('showwarning')
     cli.info('hideme')
+    cli.warn('showotherwarning', ['myotherscope'])
     cli.error('showerror', {exit: false})
     await cli.done()
     expect(fs.readFileSync(log, 'utf8')).to.contain(' WARN mynewscope showwarning')
+    expect(fs.readFileSync(log, 'utf8')).to.contain(' WARN myotherscope showotherwarning')
   })
 
   it('does not create file if no output', async () => {
