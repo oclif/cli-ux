@@ -1,3 +1,11 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/dxcli/cli-ux/compare/07e27d5d3dab474c577eab1ae58f5e68a1256f79...v3.0.1) (2018-01-19)
+
+
+### Bug Fixes
+
+* add newline after traceback ([d97fe55](https://github.com/dxcli/cli-ux/commit/d97fe55))
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/dxcli/cli-ux/compare/v2.0.21...v3.0.0) (2018-01-19)
 
