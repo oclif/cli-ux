@@ -115,6 +115,9 @@ reset()
 
 export const cli = new CLI()
 export default cli
+export {
+  ExitError
+}
 
 process.once('exit', async () => {
   try {
