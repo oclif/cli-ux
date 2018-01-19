@@ -102,7 +102,7 @@ export default function (o: Rx.Subject<Message>): Rx.Observable<any> {
       || deps.chalk.bold.redBright('!')
       try {
         config.action.pause(() => {
-          process.stderr.write(config.debug ? inspect(m.error) : renderError(m) + '\n')
+          process.stderr.write(config.debug ? inspect(m.error) + '\n' : renderError(m) + '\n')
           if (m.severity === 'fatal') process.stderr.write(inspect(m.error) + '\n')
         }, bang)
       } catch (newErr) {
