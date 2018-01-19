@@ -55,14 +55,14 @@ export default function (o: Rx.Subject<Message>): Rx.Observable<any> {
     return bangify(wrap(msg), bang)
   }
 
-  const handleError = (scope: string) => async (err: NodeJS.ErrnoException) => {
+  const handleError = (scope: string) => async (err: any) => {
     // ignore EPIPE errors
     // these come from using | head and | tail
     // and can be ignored
     try {
       if (err.code === 'EPIPE') return
-      if (err.code === 'EEXIT' && typeof (err as any).status === 'number') {
-        process.exit((err as any).status)
+      if (typeof err.exitCode === 'number') {
+        process.exit(err.exitCode)
       } else {
         const cli = new CLI(scope)
         cli.fatal(err, {exit: false})

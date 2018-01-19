@@ -35,7 +35,10 @@ export class CLI {
     const error = input instanceof Error ? input : new Error(input)
     subject.next({type: 'error', scope: this.scope, severity: options.severity || 'error', error} as ErrorMessage)
     const code = getExitCode(options)
-    if (code !== false) this.exit(code, error)
+    if (code === false) return
+    let exitErr: ExitError = error as any
+    exitErr.exitCode = exitErr.exitCode || code
+    throw exitErr
   }
 
   fatal(input: Error | string, options: IErrorOptions = {}) { this.error(input, {...options, severity: 'fatal'}) }
