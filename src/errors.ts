@@ -76,6 +76,8 @@ export default function (o: Rx.Subject<Message>): Rx.Observable<any> {
   }
 
   function handleUnhandleds() {
+    if (config.errorsHandled) return
+    config.errorsHandled = true
     process.once('SIGINT', () => {
       const cli = new CLI('SIGINT')
       const err: NodeJS.ErrnoException = new Error()

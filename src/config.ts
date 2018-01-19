@@ -25,6 +25,7 @@ export class Config extends Rx.Subject<ConfigMessage> {
   outputLevel: Levels = 'info'
   debug = process.env.DEBUG === '*'
   action: ActionBase = new Action()
+  errorsHandled = false
 
   get errlog(): string | undefined { return globals.errlog }
   set errlog(errlog: string | undefined) {
