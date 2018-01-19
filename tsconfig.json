@@ -9,6 +9,7 @@
     "rootDir": "./src",
     "strict": true,
     "strictFunctionTypes": false,
+    "sourceMap": true,
     "target": "es2017"
   },
   "include": [
