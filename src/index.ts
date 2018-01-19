@@ -37,7 +37,7 @@ export class CLI {
     const code = getExitCode(options)
     if (code === false) return
     let exitErr: ExitError = error as any
-    exitErr.exitCode = exitErr.exitCode || code
+    exitErr['cli-ux'] = exitErr['cli-ux'] || {exitCode: code}
     throw exitErr
   }
 

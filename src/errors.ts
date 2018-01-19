@@ -61,8 +61,8 @@ export default function (o: Rx.Subject<Message>): Rx.Observable<any> {
     // and can be ignored
     try {
       if (err.code === 'EPIPE') return
-      if (typeof err.exitCode === 'number') {
-        process.exit(err.exitCode)
+      if (err['cli-ux'] && typeof err['cli-ux'].exitCode === 'number') {
+        process.exit(err['cli-ux'].exitCode)
       } else {
         const cli = new CLI(scope)
         cli.fatal(err, {exit: false})
