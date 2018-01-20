@@ -1,3 +1,11 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/dxcli/cli-ux/compare/b6e193302e266a2754dc87a671674920a34e11c5...v3.1.1) (2018-01-20)
+
+
+### Bug Fixes
+
+* remove rxjs ([7fbc05c](https://github.com/dxcli/cli-ux/commit/7fbc05c))
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/dxcli/cli-ux/compare/d97fe55bc687f862a282a40500ba5313509fb866...v3.1.0) (2018-01-19)
 
