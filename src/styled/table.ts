@@ -13,7 +13,7 @@ export interface TableColumn {
 }
 
 export interface TableOptions {
-  columns: TableColumn[]
+  columns: Partial<TableColumn>[]
   colSep: string
   after(row: any[], options: TableOptions): void
   printLine(row: any[]): void
@@ -51,7 +51,7 @@ export default function table(data: any[], inputOptions: Partial<TableOptions> =
       format: (value: any) => (value ? value.toString() : ''),
       width: 0,
       label() {
-        return this.key.toString()
+        return this.key!.toString()
       },
 
       get(row: any) {
@@ -64,7 +64,7 @@ export default function table(data: any[], inputOptions: Partial<TableOptions> =
           value = _.get(row, path)
         }
 
-        return this.format(value, row)
+        return (this.format as any)(value, row)
       },
       ...c,
     })),
@@ -95,7 +95,7 @@ export default function table(data: any[], inputOptions: Partial<TableOptions> =
   }
 
   function render() {
-    let columns: TableColumn[] = options.columns
+    let columns: TableColumn[] = options.columns as any
 
     if (typeof columns[0] === 'string') {
       columns = (columns as any).map((key: any) => ({key}))
@@ -138,5 +138,3 @@ export default function table(data: any[], inputOptions: Partial<TableOptions> =
 
   render()
 }
-
-module.exports = table

@@ -4,7 +4,7 @@ import * as util from 'util'
 
 import deps from '../deps'
 
-export default function styledObject(obj: any, keys: string[]) {
+export default function styledObject(obj: any, keys?: string[]) {
   let keyLengths = Object.keys(obj).map(key => key.toString().length)
   let maxKeyLength = Math.max.apply(Math, keyLengths) + 2
   function pp(obj: any) {

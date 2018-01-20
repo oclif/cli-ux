@@ -1,3 +1,4 @@
+import config from './config'
 import deps from './deps'
 
 export interface IPromptOptions {
@@ -12,10 +13,28 @@ interface IPromptConfig {
   isTTY: boolean
 }
 
-export function prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
+export default {
+  prompt(name: string, options: IPromptOptions = {}) {
+    return config.action.pauseAsync(() => {
+      return _prompt(name, options)
+    }, deps.chalk.cyan('?'))
+  },
+  confirm(message: string): Promise<boolean> {
+    return config.action.pauseAsync(async () => {
+      const confirm = async (): Promise<boolean> => {
+        let response = (await _prompt(message)).toLowerCase()
+        if (['n', 'no'].includes(response)) return false
+        if (['y', 'yes'].includes(response)) return true
+        return confirm()
+      }
+      return confirm()
+    }, deps.chalk.cyan('?'))
+  }
+}
+
+function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
   const options: IPromptConfig = {
-    isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY),
-    name,
+    isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY), name,
     prompt: name ? deps.chalk.dim(`${name}: `) : deps.chalk.dim('> '),
     type: 'normal',
     ...inputOptions,

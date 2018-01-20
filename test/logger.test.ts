@@ -3,11 +3,13 @@ import {describe, expect, it} from '@dxcli/dev-test'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 
-import cli, {CLI} from '../src'
+import cli from '../src'
 
 const log = path.join(__dirname, '../tmp/error.log')
+const logLevel = cli.config.logLevel
 
 beforeEach(() => {
+  cli.config.logLevel = logLevel
   fs.removeSync(log)
   cli.config.errlog = log
 })
@@ -29,15 +31,23 @@ describe.stdout.stderr('logger', () => {
     expect(fs.readFileSync(log, 'utf8')).to.contain(' ERROR showerror')
   })
 
-  it('uses scope', async () => {
-    let cli = new CLI('mynewscope')
+  it('can change log level', async () => {
+    cli.config.logLevel = 'debug'
     cli.warn('showwarning')
-    cli.info('hideme')
-    cli.warn('showotherwarning', ['myotherscope'])
+    cli.info('showme')
+    cli.debug('hideme')
     cli.error('showerror', {exit: false})
     await cli.done()
+    expect(fs.readFileSync(log, 'utf8')).to.contain(' ERROR showerror')
+  })
+
+  it('uses scope', async () => {
+    let _cli = cli.scope('mynewscope')
+    _cli.warn('showwarning')
+    _cli.info('hideme')
+    _cli.error('showerror', {exit: false})
+    await cli.done()
     expect(fs.readFileSync(log, 'utf8')).to.contain(' WARN mynewscope showwarning')
-    expect(fs.readFileSync(log, 'utf8')).to.contain(' WARN myotherscope showotherwarning')
   })
 
   it('does not create file if no output', async () => {

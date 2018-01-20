@@ -13,44 +13,28 @@
     "fs-extra": "^5.0.0",
     "lodash": "^4.17.4",
     "password-prompt": "^1.0.3",
-    "rxjs": "^5.5.6",
     "semver": "^5.5.0",
     "strip-ansi": "^4.0.0",
     "supports-color": "^5.1.0"
   },
   "devDependencies": {
-    "@dxcli/dev": "^1.1.3",
     "@dxcli/dev-semantic-release": "^0.0.3",
-    "@dxcli/dev-test": "^0.2.2",
+    "@dxcli/dev-test": "^0.4.0",
     "@dxcli/dev-tslint": "^0.0.15",
     "@types/fs-extra": "^5.0.0",
     "@types/node": "^9.3.0",
     "@types/semver": "^5.4.0",
     "@types/supports-color": "^3.1.0",
-    "eslint": "^4.15.0",
+    "cross-env": "^5.1.3",
+    "eslint": "^4.16.0",
     "eslint-config-dxcli": "^1.1.4",
     "husky": "^0.14.3",
     "mocha": "^5.0.0",
+    "nps": "^5.7.1",
+    "nps-utils": "^1.5.0",
     "nyc": "^11.4.1",
     "ts-node": "^4.1.0",
     "typescript": "^2.6.2"
-  },
-  "dxcli": {
-    "workflows": {
-      "test": [
-        "eslint .",
-        "tsc -p test --noEmit",
-        "tslint -p test",
-        "commitlint --from origin/master",
-        "mocha \"test/**/*.ts\""
-      ],
-      "lint": [
-        "eslint .",
-        "tsc -p test --noEmit",
-        "tslint -p test",
-        "commitlint --from origin/master"
-      ]
-    }
   },
   "engines": {
     "node": ">=8.0.0"
@@ -67,10 +51,9 @@
   "repository": "dxcli/cli-ux",
   "scripts": {
     "commitmsg": "dxcli-dev-commitmsg",
-    "lint": "dxcli-dev lint",
-    "precommit": "dxcli-dev lint",
-    "prepare": "rm -rf lib && tsc",
-    "test": "dxcli-dev test"
+    "precommit": "nps lint",
+    "prepare": "nps build",
+    "test": "nps test"
   },
   "types": "lib/index.d.ts"
 }

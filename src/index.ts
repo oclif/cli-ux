@@ -1,149 +1,92 @@
-// tslint:disable no-console
-// tslint:disable restrict-plus-operands
-
-import Rx = require('rxjs/Rx')
+import * as EventEmitter from 'events'
 
 import {ActionBase} from './action/base'
 import deps from './deps'
-import errors from './errors'
+import * as Errors from './errors'
 import {ExitError} from './exit'
-import logger from './logger'
-import {ErrorMessage, Message} from './message'
-import output from './output'
+import * as Logger from './logger'
+import Output from './output'
 import {IPromptOptions} from './prompt'
+import * as Table from './styled/table'
 
 import {config, Config} from './config'
 
-export interface IErrorOptions {
-  exit?: number | false
-  severity?: 'fatal' | 'error' | 'warn'
-}
+const e = new EventEmitter()
+const output = Output(e)
+const errors = Errors.default(e)
+const logger = Logger.default(e)
 
-let subject: Rx.Subject<Message> = new Rx.Subject()
-let children: Rx.Observable<any>
+export const scope = (_scope?: string) => {
+  return {
+    config,
+    scope,
 
-config.subscribe(subject)
+    trace: output('trace', _scope),
+    debug: output('debug', _scope),
+    info: output('info', _scope),
+    log: output('info', _scope),
 
-export interface ICLI {
-  fatal(input: Error | string, scope: string | string[], options?: IErrorOptions): void
-  fatal(input: Error | string, options?: IErrorOptions): void
-  error(input: Error | string, scope: string | string[], options?: IErrorOptions): void
-  error(input: Error | string, options?: IErrorOptions): void
-  warn(input: Error | string, scope?: string | string[]): void
-}
+    warn: errors('warn', _scope),
+    error: errors('error', _scope),
+    fatal: errors('fatal', _scope),
 
-function getScopeAndOpts(scopeOrOpts: string | string[] | undefined | IErrorOptions, options: IErrorOptions | undefined): {scope?: string, options: IErrorOptions} {
-  options = options || {}
-  if (typeof scopeOrOpts === 'string') return {scope: scopeOrOpts, options}
-  if (Array.isArray(scopeOrOpts)) return {scope: scopeOrOpts.join(':'), options}
-  if (scopeOrOpts) return {options: scopeOrOpts}
-  return {options}
-}
+    exit(code = 1, error?: Error) { throw new ExitError(code, error) },
 
-export class CLI implements ICLI {
-  config: Config = config
+    get prompt() { return deps.prompt.prompt },
+    get confirm() { return deps.prompt.confirm },
+    get action() { return config.action },
+    get styledObject() { return deps.styledObject },
+    get styledHeader() { return deps.styledHeader },
+    get styledJSON() { return deps.styledJSON },
+    get table() { return deps.table },
 
-  get action(): ActionBase { return config.action }
-
-  constructor(public scope?: string) {}
-
-  error(input: Error | string, a?: string | string[] | IErrorOptions, b: IErrorOptions = {}) {
-    const {scope, options} = getScopeAndOpts(a, b)
-    const error = input instanceof Error ? input : new Error(input)
-    subject.next({type: 'error', scope: scope || this.scope, severity: options.severity || 'error', error} as ErrorMessage)
-    const code = getExitCode(options)
-    if (code === false) return
-    let exitErr: ExitError = error as any
-    exitErr['cli-ux'] = exitErr['cli-ux'] || {exitCode: code}
-    throw exitErr
-  }
-
-  fatal(input: Error | string, a?: string | string[] | IErrorOptions, b: IErrorOptions = {}) {
-    const {scope, options} = getScopeAndOpts(a, b)
-    this.error(input, scope, {...options, severity: 'fatal'})
-  }
-  warn(input: Error | string, scope?: string | string[]) { this.error(input, scope, {severity: 'warn', exit: false}) }
-
-  log(...input: any[]) { this.info(...input) }
-  info(...input: any[]) { subject.next({type: 'output', scope: this.scope, severity: 'info', input}) }
-  debug(...input: any[]) { subject.next({type: 'output', scope: this.scope, severity: 'debug', input}) }
-  trace(...input: any[]) { subject.next({type: 'output', scope: this.scope, severity: 'trace', input}) }
-
-  exit(code = 1, error?: Error) { throw new ExitError(code, error) }
-
-  async done() {
-    config.action.stop()
-    await new Promise((resolve, reject) => {
-      children.subscribe({error: reject, complete: resolve})
-      subject.next({type: 'done'})
-    })
-    reset()
-  }
-
-  styledObject(...args: any[]) { require('./styled/object').default(...args) }
-  table(...args: any[]) { (require('./styled/table'))(...args) }
-  styledJSON(obj: any) {
-    let json = JSON.stringify(obj, null, 2)
-    if (!deps.chalk.enabled) {
-      this.log(json)
-      return
+    async done() {
+      config.action.stop()
+      await logger.done()
+      // await flushStdout()
     }
-    let cardinal = require('cardinal')
-    let theme = require('cardinal/themes/jq')
-    this.log(cardinal.highlight(json, {json: true, theme}))
-  }
-
-  styledHeader(header: string) {
-    this.log(deps.chalk.dim('=== ') + deps.chalk.bold(header))
-  }
-
-  prompt(name: string, options: IPromptOptions = {}) {
-    return this.action.pauseAsync(() => {
-      return deps.prompt.prompt(name, options)
-    }, deps.chalk.cyan('?'))
-  }
-
-  confirm(message: string): Promise<boolean> {
-    return this.action.pauseAsync(async () => {
-      const confirm = async (): Promise<boolean> => {
-        let response = (await deps.prompt.prompt(message)).toLowerCase()
-        if (['n', 'no'].includes(response)) return false
-        if (['y', 'yes'].includes(response)) return true
-        return confirm()
-      }
-      return confirm()
-    }, deps.chalk.cyan('?'))
   }
 }
 
-function getExitCode(options: IErrorOptions): false | number {
-  let exit = options.exit === undefined ? (options as any).exitCode : options.exit
-  if (exit === false) return false
-  if (exit === undefined) return 1
-  return exit
-}
-
-function reset() {
-  children = Rx.Observable.forkJoin(
-    errors(subject),
-    output(subject),
-    logger(subject),
-  ).share()
-  children.subscribe()
-}
-reset()
-
-export const cli = new CLI()
+export const cli = scope()
 export default cli
+
 export {
-  ExitError
+  ActionBase,
+  Config,
+  Errors,
+  ExitError,
+  IPromptOptions,
+  Table,
 }
 
 process.once('exit', async () => {
   try {
     await cli.done()
   } catch (err) {
+    // tslint:disable no-console
     console.error(err)
     process.exitCode = 1
   }
 })
+
+// async function flushStdout() {
+//   function timeout(p: Promise<any>, ms: number) {
+//     function wait(ms: number, unref: boolean = false) {
+//       return new Promise(resolve => {
+//         let t: any = setTimeout(resolve, ms)
+//         if (unref) t.unref()
+//       })
+//     }
+
+//     return Promise.race([p, wait(ms, true).then(() => cli.warn('timed out'))])
+//   }
+
+//   async function flush() {
+//     let p = new Promise(resolve => process.stdout.once('drain', resolve))
+//     process.stdout.write('')
+//     return p
+//   }
+
+//   await timeout(flush(), 10000)
+// }

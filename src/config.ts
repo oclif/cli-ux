@@ -1,12 +1,17 @@
-import Rx = require('rxjs/Rx')
+import * as EventEmitter from 'events'
 import * as semver from 'semver'
 
 import {ActionBase} from './action/base'
-import {ConfigMessage} from './message'
 
 const version = semver.parse(require('../package.json').version)!
 
 export type Levels = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace'
+
+export interface ConfigMessage {
+  type: 'config'
+  prop: string
+  value: any
+}
 
 const globals = global['cli-ux'] || (global['cli-ux'] = {})
 
@@ -20,29 +25,37 @@ const actionType = (
 
 const Action = actionType === 'spinner' ? require('./action/spinner').default : require('./action/simple').default
 
-export class Config extends Rx.Subject<ConfigMessage> {
+export class Config extends EventEmitter {
   logLevel: Levels = 'warn'
   outputLevel: Levels = 'info'
-  debug = process.env.DEBUG === '*'
+  _debug = false
   action: ActionBase = new Action()
   errorsHandled = false
+
+  constructor() {
+    super()
+    this.debug = process.env.DEBUG === '*'
+  }
 
   get errlog(): string | undefined { return globals.errlog }
   set errlog(errlog: string | undefined) {
     globals.errlog = errlog
-    this.next({type: 'config', prop: 'errlog', value: errlog})
+    this.emit('errlog', errlog)
+  }
+
+  get debug(): boolean {
+    return this._debug
+  }
+  set debug(v: boolean) {
+    this._debug = v
+    if (this._debug && this.outputLevel !== 'trace') this.outputLevel = 'debug'
   }
 }
 
-function current() {
-  if (!globals[version.major] || globals[version.major].closed) return
-  return globals[version.major]
-}
-
 function fetch() {
-  let subject = current()
-  if (subject) return subject
+  if (globals[version.major]) return globals[version.major]
   return globals[version.major] = new Config()
 }
 
 export const config: Config = fetch()
+export default config
