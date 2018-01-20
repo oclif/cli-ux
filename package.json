@@ -5,7 +5,7 @@
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/dxcli/cli-ux/issues",
   "dependencies": {
-    "@dxcli/screen": "^0.0.0",
+    "@dxcli/screen": "^0.0.1",
     "@heroku/linewrap": "^1.0.0",
     "ansi-styles": "^3.2.0",
     "cardinal": "^1.0.0",
