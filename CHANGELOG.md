@@ -1,3 +1,11 @@
+<a name="3.1.2"></a>
+## [3.1.2](https://github.com/dxcli/cli-ux/compare/5c43c89f96d825e4e7e41eb6cda9a6ed209730e0...v3.1.2) (2018-01-20)
+
+
+### Bug Fixes
+
+* update password-prompt ([c4f9d16](https://github.com/dxcli/cli-ux/commit/c4f9d16))
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/dxcli/cli-ux/compare/b6e193302e266a2754dc87a671674920a34e11c5...v3.1.1) (2018-01-20)
 
