@@ -47,7 +47,7 @@ module.exports = {
           hiddenFromHelp: true,
         },
         test: {
-          script: series.nps('ci.mocha.nyc cross-env MOCHA_FILE="reports/mocha.xml" nps \\"test.mocha --reporter mocha-junit-reporter\\"'),
+          script: 'MOCHA_FILE="reports/mocha.xml" nps "ci.mocha.nyc nps \\"test.mocha --reporter mocha-junit-reporter\\""',
           hiddenFromHelp: true,
         },
         report: {
@@ -68,7 +68,7 @@ module.exports = {
         hiddenFromHelp: true,
       },
       release: {
-        script: 'yarn --frozen-lockfile && dxcli-dev-semantic-release',
+        script: 'dxcli-dev-semantic-release',
         hiddenFromHelp: true,
       },
     },
