@@ -1,6 +1,5 @@
 import screen = require('@dxcli/screen')
 import ansiStyles = require('ansi-styles')
-import {Chalk} from 'chalk'
 import stripAnsi = require('strip-ansi')
 
 import prompt = require('./prompt')
@@ -10,7 +9,6 @@ import styledObject = require('./styled/object')
 import table = require('./styled/table')
 
 export const deps = {
-  get chalk(): Chalk { return fetch('chalk') },
   get stripAnsi(): typeof stripAnsi { return fetch('strip-ansi') },
   get ansiStyles(): typeof ansiStyles { return fetch('ansi-styles') },
   get ansiEscapes(): any { return fetch('ansi-escapes') },

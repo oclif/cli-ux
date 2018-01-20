@@ -1,5 +1,6 @@
 // tslint:disable no-console
 
+import chalk from 'chalk'
 import {inspect} from 'util'
 
 import CLI from '.'
@@ -11,7 +12,7 @@ export interface Message {
   type: 'error'
   scope: string | undefined
   severity: 'fatal' | 'error' | 'warn'
-  error: Error
+  error: CLIError
 }
 
 export interface Options {
@@ -48,23 +49,35 @@ export function getErrorMessage(err: any): string {
   return message || inspect(err)
 }
 
-function wrap(msg: string): string {
-  const linewrap = require('@heroku/linewrap')
-  return linewrap(6, deps.screen.errtermwidth, {
-    skip: /^\$ .*$/,
-    skipScheme: 'ansi-color',
-  })(msg)
-}
-
-function render(message: Message): string {
-  let bang = deps.chalk.red(arrow)
-  let msg = message.scope ? `${message.scope}: ${getErrorMessage(message.error)}` : getErrorMessage(message.error)
-  if (message.severity === 'fatal') {
-    bang = deps.chalk.bgRed.bold.white(' FATAL ')
-    msg += `\n${inspect(message.error)}`
+function displayError(err: CLIError) {
+  function wrap(msg: string): string {
+    const linewrap = require('@heroku/linewrap')
+    return linewrap(6, deps.screen.errtermwidth, {
+      skip: /^\$ .*$/,
+      skipScheme: 'ansi-color',
+    })(msg)
   }
-  if (message.severity === 'warn') bang = deps.chalk.yellow(arrow)
-  return bangify(wrap(msg), bang)
+
+  function render(): string {
+    let bang = chalk.red(arrow)
+    let msg = err['cli-ux'].scope ? `${err['cli-ux'].scope}: ${getErrorMessage(err)}` : getErrorMessage(err)
+    if (err['cli-ux'].severity === 'fatal') {
+      bang = chalk.bgRed.bold.white(' FATAL ')
+      msg += `\n${inspect(err)}`
+    }
+    if (err['cli-ux'].severity === 'warn') bang = chalk.yellow(arrow)
+    return bangify(wrap(msg), bang)
+  }
+
+  function getBang(): string {
+    if (err['cli-ux'].severity === 'warn') return chalk.yellowBright('!')
+    if (err['cli-ux'].severity === 'fatal') return chalk.bold.bgRedBright('!!!')
+    return chalk.bold.redBright('!')
+  }
+
+  config.action.pause(() => {
+    console.error(render())
+  }, getBang())
 }
 
 export class CLIError extends Error {
@@ -76,6 +89,13 @@ export class CLIError extends Error {
   }
 
   constructor(input: any, severity: 'fatal' | 'error' | 'warn', scope: string | undefined, opts: Options) {
+    function getExitCode(options: Options): false | number {
+      let exit = options.exit === undefined ? (options as any).exitCode : options.exit
+      if (exit === false) return false
+      if (exit === undefined) return 1
+      return exit
+    }
+
     const err: CLIError = typeof input === 'string' ? super(input) && this : input
     err['cli-ux'] = err['cli-ux'] || {
       severity,
@@ -86,23 +106,11 @@ export class CLIError extends Error {
   }
 }
 
-function getExitCode(options: Options): false | number {
-  let exit = options.exit === undefined ? (options as any).exitCode : options.exit
-  if (exit === false) return false
-  if (exit === undefined) return 1
-  return exit
-}
-
 export default (e: IEventEmitter) => {
   e.on('output', m => {
     if (m.type !== 'error') return
-    const bang = (m.severity === 'warn' && deps.chalk.yellowBright('!'))
-    || (m.severity === 'fatal' && deps.chalk.bold.bgRedBright('!!!'))
-    || deps.chalk.bold.redBright('!')
     try {
-      config.action.pause(() => {
-        console.error(render(m))
-      }, bang)
+      if (m.error['cli-ux'].exit === false) displayError(m.error)
     } catch (newErr) {
       console.error(newErr)
       console.error(m.error)
@@ -120,12 +128,11 @@ export default (e: IEventEmitter) => {
         const cli: typeof CLI = require('.').cli.scope(scope)
         if (err.code === 'EPIPE') return
         if (err['cli-ux'] && typeof err['cli-ux'].exit === 'number') {
+          displayError(err)
           await cli.done().catch(cli.debug)
           process.exit(err['cli-ux'].exit as number)
         } else {
-          cli.fatal(err, {exit: false})
-          await cli.done().catch(cli.debug)
-          process.exit(100)
+          cli.fatal(err)
         }
       } catch (newError) {
         console.error(err)

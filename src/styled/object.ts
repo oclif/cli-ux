@@ -1,8 +1,7 @@
 // tslint:disable
 
+import chalk from 'chalk'
 import * as util from 'util'
-
-import deps from '../deps'
 
 export default function styledObject(obj: any, keys?: string[]) {
   let keyLengths = Object.keys(obj).map(key => key.toString().length)
@@ -18,7 +17,7 @@ export default function styledObject(obj: any, keys?: string[]) {
     }
   }
   let logKeyValue = (key: string, value: any) => {
-    console.log(`${deps.chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value))
+    console.log(`${chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value))
   }
   for (let key of keys || Object.keys(obj).sort()) {
     let value = obj[key]

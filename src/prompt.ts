@@ -1,3 +1,5 @@
+import chalk from 'chalk'
+
 import config from './config'
 import deps from './deps'
 
@@ -17,7 +19,7 @@ export default {
   prompt(name: string, options: IPromptOptions = {}) {
     return config.action.pauseAsync(() => {
       return _prompt(name, options)
-    }, deps.chalk.cyan('?'))
+    }, chalk.cyan('?'))
   },
   confirm(message: string): Promise<boolean> {
     return config.action.pauseAsync(async () => {
@@ -28,14 +30,14 @@ export default {
         return confirm()
       }
       return confirm()
-    }, deps.chalk.cyan('?'))
+    }, chalk.cyan('?'))
   }
 }
 
 function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
   const options: IPromptConfig = {
     isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY), name,
-    prompt: name ? deps.chalk.dim(`${name}: `) : deps.chalk.dim('> '),
+    prompt: name ? chalk.dim(`${name}: `) : chalk.dim('> '),
     type: 'normal',
     ...inputOptions,
   }

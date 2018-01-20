@@ -15,6 +15,5 @@ describe.stderr('errors', () => {
 
   it('errors', () => {
     expect(() => cli.error('foobar')).to.throw(/foobar/)
-    expect(output.stderr).to.equal(' ▸    foobar\n')
   })
 })
