@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@dxcli/dev-semantic-release": "^0.0.3",
-    "@dxcli/dev-test": "^0.4.2",
+    "@dxcli/dev-test": "^0.5.0",
     "@dxcli/dev-tslint": "^0.0.15",
     "@types/fs-extra": "^5.0.0",
     "@types/node": "^9.3.0",
