@@ -25,6 +25,8 @@ if [[ "$CIRCLE_BRANCH" == greenkeeper/* ]]; then
 fi
 
 yarn install $CLI_ENGINE_UTIL_YARN_ARGS
+yarn link
+yarn link cli-ux
 
 if [[ "$CLI_ENGINE_GREENKEEPER_BRANCH" == 1 ]]; then
   greenkeeper-lockfile-upload
