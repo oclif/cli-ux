@@ -1,3 +1,11 @@
+<a name="3.1.4"></a>
+## [3.1.4](https://github.com/dxcli/cli-ux/compare/00cf754903f88b7daa379667f2e616253381b518...v3.1.4) (2018-01-20)
+
+
+### Bug Fixes
+
+* only display error when unhandled ([5631c04](https://github.com/dxcli/cli-ux/commit/5631c04))
+
 <a name="3.1.3"></a>
 ## [3.1.3](https://github.com/dxcli/cli-ux/compare/c4f9d162525f9b4db63206a271b380e1bd357bb3...v3.1.3) (2018-01-20)
 
