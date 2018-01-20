@@ -3607,6 +3607,13 @@ password-prompt@^1.0.3:
     ansi-escapes "^3.0.0"
     cross-spawn "^5.1.0"
 
+password-prompt@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/password-prompt/-/password-prompt-1.0.4.tgz#933bac8db3528fcb27e9fdbc0a6592adcbdb5ed9"
+  dependencies:
+    ansi-escapes "^3.0.0"
+    cross-spawn "^5.1.0"
+
 path-exists@2.1.0, path-exists@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-2.1.0.tgz#0feb6c64f0fc518d9a754dd5efb62c7022761f4b"
