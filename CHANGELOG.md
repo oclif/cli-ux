@@ -1,3 +1,11 @@
+<a name="3.1.3"></a>
+## [3.1.3](https://github.com/dxcli/cli-ux/compare/c4f9d162525f9b4db63206a271b380e1bd357bb3...v3.1.3) (2018-01-20)
+
+
+### Bug Fixes
+
+* fixed exitCode ([00cf754](https://github.com/dxcli/cli-ux/commit/00cf754))
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/dxcli/cli-ux/compare/5c43c89f96d825e4e7e41eb6cda9a6ed209730e0...v3.1.2) (2018-01-20)
 
