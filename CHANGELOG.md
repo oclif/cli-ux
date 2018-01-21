@@ -1,3 +1,11 @@
+<a name="3.1.5"></a>
+## [3.1.5](https://github.com/dxcli/cli-ux/compare/5631c047709bf7025fb9399e1764a2cb45e2daf9...v3.1.5) (2018-01-21)
+
+
+### Bug Fixes
+
+* added some exports ([8575f69](https://github.com/dxcli/cli-ux/commit/8575f69))
+
 <a name="3.1.4"></a>
 ## [3.1.4](https://github.com/dxcli/cli-ux/compare/00cf754903f88b7daa379667f2e616253381b518...v3.1.4) (2018-01-20)
 
