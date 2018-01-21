@@ -2,7 +2,7 @@ import * as EventEmitter from 'events'
 
 import {ActionBase} from './action/base'
 import deps from './deps'
-import * as Errors from './errors'
+import Errors, {CLIError, Options as ErrorOptions} from './errors'
 import {ExitError} from './exit'
 import * as Logger from './logger'
 import Output from './output'
@@ -13,7 +13,7 @@ import {config, Config} from './config'
 
 const e = new EventEmitter()
 const output = Output(e)
-const errors = Errors.default(e)
+const errors = Errors(e)
 const logger = Logger.default(e)
 
 export const scope = (_scope?: string) => {
@@ -53,7 +53,9 @@ export default cli
 
 export {
   ActionBase,
+  CLIError,
   Config,
+  ErrorOptions,
   Errors,
   ExitError,
   IPromptOptions,
