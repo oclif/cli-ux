@@ -1,4 +1,4 @@
-import {describe, expect, it} from '@dxcli/dev-test'
+import {expect, fancy} from 'fancy-mocha'
 
 import * as fs from 'fs-extra'
 import * as path from 'path'
@@ -15,15 +15,21 @@ beforeEach(() => {
 })
 afterEach(() => cli.config.errlog = undefined)
 
-describe.stdout.stderr('logger', () => {
-  it('does nothing if no error.log', async () => {
+describe('logger', () => {
+  fancy()
+  .stdout()
+  .stderr()
+  .it('does nothing if no error.log', async () => {
     cli.config.errlog = undefined
     cli.info('foobar')
     await cli.done()
     expect(fs.pathExistsSync(log)).to.equal(false)
   })
 
-  it('writes stuff out', async () => {
+  fancy()
+  .stdout()
+  .stderr()
+  .it('writes stuff out', async () => {
     cli.warn('showwarning')
     cli.info('hideme')
     cli.error('showerror', {exit: false})
@@ -31,7 +37,10 @@ describe.stdout.stderr('logger', () => {
     expect(fs.readFileSync(log, 'utf8')).to.contain(' ERROR showerror')
   })
 
-  it('can change log level', async () => {
+  fancy()
+  .stdout()
+  .stderr()
+  .it('can change log level', async () => {
     cli.config.logLevel = 'debug'
     cli.warn('showwarning')
     cli.info('showme')
@@ -41,7 +50,10 @@ describe.stdout.stderr('logger', () => {
     expect(fs.readFileSync(log, 'utf8')).to.contain(' ERROR showerror')
   })
 
-  it('uses scope', async () => {
+  fancy()
+  .stdout()
+  .stderr()
+  .it('uses scope', async () => {
     let _cli = cli.scope('mynewscope')
     _cli.warn('showwarning')
     _cli.info('hideme')
@@ -50,7 +62,10 @@ describe.stdout.stderr('logger', () => {
     expect(fs.readFileSync(log, 'utf8')).to.contain(' WARN mynewscope showwarning')
   })
 
-  it('does not create file if no output', async () => {
+  fancy()
+  .stdout()
+  .stderr()
+  .it('does not create file if no output', async () => {
     cli.trace('mycontent')
     cli.debug('mycontent')
     cli.info('mycontent')

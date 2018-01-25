@@ -1,9 +1,11 @@
-import {describe, expect, it, output} from '@dxcli/dev-test'
+import {expect, fancy} from 'fancy-mocha'
 
 import cli from '../../src'
 
-describe.stdout('styled/table', () => {
-  it('shows a table', () => {
+describe('styled/table', () => {
+  fancy()
+  .stdout()
+  .it('shows a table', output => {
     cli.table([
       {foo: 1, bar: 1},
       {foo: 2, bar: 2},

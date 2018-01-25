@@ -102,29 +102,9 @@
   dependencies:
     find-up "^2.1.0"
 
-"@dxcli/command@^0.1.13":
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/@dxcli/command/-/command-0.1.13.tgz#b4dec2e629076c2b50f4cf43c9324dd6ccb98382"
-  dependencies:
-    "@dxcli/config" "^0.1.20"
-    "@dxcli/parser" "^0.0.3"
-    "@dxcli/screen" "^0.0.1"
-    cli-ux "^3.1.3"
-    debug "^3.1.0"
-
-"@dxcli/config@^0.1.20":
-  version "0.1.20"
-  resolved "https://registry.yarnpkg.com/@dxcli/config/-/config-0.1.20.tgz#e344d15818876663505ef7adbf71afb23a89323b"
-  dependencies:
-    debug "^3.1.0"
-    fs-extra "^5.0.0"
-    load-json-file "^4.0.0"
-    lodash "^4.17.4"
-    read-pkg "^3.0.0"
-
-"@dxcli/dev-commitmsg@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@dxcli/dev-commitmsg/-/dev-commitmsg-0.0.3.tgz#8941971c9778b675dd14c407c1123b8bef397757"
+"@dxcli/dev-commitmsg@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@dxcli/dev-commitmsg/-/dev-commitmsg-0.0.4.tgz#c26f6b5856aa50d91dd36adc18d0c48f3d0dfa61"
   dependencies:
     "@commitlint/cli" "^6.0.1"
     "@commitlint/config-conventional" "^5.2.3"
@@ -135,37 +115,16 @@
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@dxcli/dev-nyc-config/-/dev-nyc-config-0.0.3.tgz#3ff59cf561663710f025a41f64d608d2977a3d3b"
 
-"@dxcli/dev-semantic-release@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@dxcli/dev-semantic-release/-/dev-semantic-release-0.0.3.tgz#8b6a2f9874b93fe43f432eb4eee5775d683494ee"
+"@dxcli/dev-semantic-release@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@dxcli/dev-semantic-release/-/dev-semantic-release-0.1.0.tgz#adc88f1eaee862b73ae824496d4076f3fcc5c7c9"
   dependencies:
-    "@dxcli/dev-commitmsg" "^0.0.3"
+    "@dxcli/dev-commitmsg" "^0.0.4"
     "@semantic-release/changelog" "^1.0.0"
-    "@semantic-release/git" "^2.0.1"
-    "@semantic-release/github" "^3.0.1"
-    "@semantic-release/npm" "^2.6.1"
-    semantic-release "^12.2.0"
-
-"@dxcli/dev-test@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@dxcli/dev-test/-/dev-test-0.5.2.tgz#102e1f9a8922264a5050f6c16a8060ea26493152"
-  dependencies:
-    "@dxcli/dev-nyc-config" "^0.0.3"
-    "@dxcli/engine" "^0.1.5"
-    "@types/ansi-styles" "^2.0.30"
-    "@types/chai" "^4.1.1"
-    "@types/chai-as-promised" "^7.1.0"
-    "@types/lodash" "^4.14.93"
-    "@types/mocha" "^2.2.46"
-    "@types/read-pkg" "^3.0.0"
-    "@types/strip-ansi" "^3.0.0"
-    chai "^4.1.2"
-    chai-as-promised "^7.1.1"
-    lodash "^4.17.4"
-    mocha-junit-reporter "^1.16.0"
-    std-mocks "^1.0.1"
-    strip-ansi "^4.0.0"
-    ts-node "^4.1.0"
+    "@semantic-release/git" "^2.0.2"
+    "@semantic-release/github" "^3.0.3"
+    "@semantic-release/npm" "^2.6.4"
+    semantic-release "^12.2.2"
 
 "@dxcli/dev-tslint@^0.0.15":
   version "0.0.15"
@@ -173,49 +132,6 @@
   dependencies:
     tslint "^5.9.1"
     tslint-xo "^0.5.0"
-
-"@dxcli/engine@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@dxcli/engine/-/engine-0.1.5.tgz#7d576b0d15cd65a4f57035af2bead7c0c069f0c2"
-  dependencies:
-    "@dxcli/command" "^0.1.13"
-    "@dxcli/config" "^0.1.20"
-    "@dxcli/loader" "^0.1.4"
-    cli-ux "^3.1.3"
-    debug "^3.1.0"
-
-"@dxcli/loader@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@dxcli/loader/-/loader-0.1.4.tgz#ac8e3e02574f191158beb9c7f1661229ebe52910"
-  dependencies:
-    "@dxcli/config" "^0.1.20"
-    "@dxcli/manifest-file" "^0.0.3"
-    cli-ux "^3.1.3"
-    debug "^3.1.0"
-    globby "^7.1.1"
-    lodash "^4.17.4"
-
-"@dxcli/manifest-file@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@dxcli/manifest-file/-/manifest-file-0.0.3.tgz#0bb44827b354e844f3276d4e38571104c2b8ecb2"
-  dependencies:
-    debug "^3.1.0"
-    fs-extra "^5.0.0"
-    load-json-file "^4.0.0"
-    lodash "^4.17.4"
-    rwlockfile "^2.0.21"
-
-"@dxcli/parser@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@dxcli/parser/-/parser-0.0.3.tgz#be08ac4b3809685b3351978ae702b1e14cae47fd"
-  dependencies:
-    "@dxcli/screen" "^0.0.0"
-    chalk "^2.3.0"
-    lodash "^4.17.4"
-
-"@dxcli/screen@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@dxcli/screen/-/screen-0.0.0.tgz#a85f69bfb00d3961656bad5d7b12f8e603c7ce09"
 
 "@dxcli/screen@^0.0.1":
   version "0.0.1"
@@ -268,7 +184,7 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@semantic-release/error/-/error-2.1.0.tgz#44771f676f5b148da309111285a97901aa95a6e0"
 
-"@semantic-release/git@^2.0.1":
+"@semantic-release/git@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@semantic-release/git/-/git-2.0.2.tgz#00f82f338999820cf54beb8e9e3acdd5b160f571"
   dependencies:
@@ -284,7 +200,7 @@
     p-reduce "^1.0.0"
     semver "^5.4.1"
 
-"@semantic-release/github@^3.0.1":
+"@semantic-release/github@^3.0.1", "@semantic-release/github@^3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@semantic-release/github/-/github-3.0.3.tgz#a986fa36111a34b3cc42b1a7f41fe4f019df570b"
   dependencies:
@@ -299,7 +215,7 @@
     parse-github-url "^1.0.1"
     url-join "^3.0.0"
 
-"@semantic-release/npm@^2.0.0", "@semantic-release/npm@^2.6.1":
+"@semantic-release/npm@^2.0.0", "@semantic-release/npm@^2.6.4":
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/@semantic-release/npm/-/npm-2.6.4.tgz#0343816d94f3d1d6539c216c2886391647e3f9b7"
   dependencies:
@@ -333,15 +249,9 @@
   version "2.0.30"
   resolved "https://registry.yarnpkg.com/@types/ansi-styles/-/ansi-styles-2.0.30.tgz#9a645299020a224afc6a8cd055195850b3c2af85"
 
-"@types/chai-as-promised@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@types/chai-as-promised/-/chai-as-promised-7.1.0.tgz#010b04cde78eacfb6e72bfddb3e58fe23c2e78b9"
-  dependencies:
-    "@types/chai" "*"
-
-"@types/chai@*", "@types/chai@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.1.tgz#15f1257fab17b7acb9c413f9f88d3d87f834d11e"
+"@types/chai@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.2.tgz#f1af664769cfb50af805431c407425ed619daa21"
 
 "@types/fs-extra@^5.0.0":
   version "5.0.0"
@@ -349,27 +259,23 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.93":
-  version "4.14.93"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.93.tgz#a6d2a1e1601a3c29196f38ef1990b68a9afa1e1c"
+"@types/lodash@^4.14.96":
+  version "4.14.96"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.96.tgz#49a402bb6984af7dd9a48cea3781744a3774bff1"
 
-"@types/mocha@^2.2.46":
-  version "2.2.46"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.46.tgz#b04713f7759d1cf752effdaae7b3969e285ebc16"
+"@types/mocha@^2.2.47":
+  version "2.2.47"
+  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.47.tgz#30bbd880834d4af0f609025f282a69b8d4458f06"
+
+"@types/nock@^9.1.2":
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/@types/nock/-/nock-9.1.2.tgz#0515b27e3f6bbc11834d22508ad02e2921dd376a"
+  dependencies:
+    "@types/node" "*"
 
 "@types/node@*", "@types/node@^9.3.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.3.0.tgz#3a129cda7c4e5df2409702626892cb4b96546dd5"
-
-"@types/normalize-package-data@*":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
-
-"@types/read-pkg@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/read-pkg/-/read-pkg-3.0.0.tgz#17ab6f0b396a58a5567ee387f558f2caedc8ae53"
-  dependencies:
-    "@types/normalize-package-data" "*"
 
 "@types/semver@^5.4.0":
   version "5.4.0"
@@ -835,12 +741,6 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-chai-as-promised@^7.1.1:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/chai-as-promised/-/chai-as-promised-7.1.1.tgz#08645d825deb8696ee61725dbf590c012eb00ca0"
-  dependencies:
-    check-error "^1.0.2"
-
 chai@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chai/-/chai-4.1.2.tgz#0f64584ba642f0f2ace2806279f4f06ca23ad73c"
@@ -884,11 +784,7 @@ chardet@^0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
 
-charenc@~0.0.1:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
-
-check-error@^1.0.1, check-error@^1.0.2:
+check-error@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/check-error/-/check-error-1.0.2.tgz#574d312edd88bb5dd8912e9286dd6c0aed4aac82"
 
@@ -932,22 +828,6 @@ cli-table@^0.3.1:
   resolved "https://registry.yarnpkg.com/cli-table/-/cli-table-0.3.1.tgz#f53b05266a8b1a0b934b3d0821e6e2dc5914ae23"
   dependencies:
     colors "1.0.3"
-
-cli-ux@^3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/cli-ux/-/cli-ux-3.1.3.tgz#2ec39244aacc636ca329443884e4c5f825b796d8"
-  dependencies:
-    "@dxcli/screen" "^0.0.0"
-    "@heroku/linewrap" "^1.0.0"
-    ansi-styles "^3.2.0"
-    cardinal "^1.0.0"
-    chalk "^2.3.0"
-    fs-extra "^5.0.0"
-    lodash "^4.17.4"
-    password-prompt "^1.0.4"
-    semver "^5.5.0"
-    strip-ansi "^4.0.0"
-    supports-color "^5.1.0"
 
 cli-width@^2.0.0:
   version "2.2.0"
@@ -1162,13 +1042,22 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-cosmiconfig@^3.0.1, cosmiconfig@^3.1.0:
+cosmiconfig@^3.0.1:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-3.1.0.tgz#640a94bf9847f321800403cd273af60665c73397"
   dependencies:
     is-directory "^0.3.1"
     js-yaml "^3.9.0"
     parse-json "^3.0.0"
+    require-from-string "^2.0.1"
+
+cosmiconfig@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-4.0.0.tgz#760391549580bbd2df1e562bc177b13c290972dc"
+  dependencies:
+    is-directory "^0.3.1"
+    js-yaml "^3.9.0"
+    parse-json "^4.0.0"
     require-from-string "^2.0.1"
 
 cp-file@^3.1.0:
@@ -1222,10 +1111,6 @@ cross-spawn@^5.0.1, cross-spawn@^5.1.0:
     lru-cache "^4.0.1"
     shebang-command "^1.2.0"
     which "^1.2.9"
-
-crypt@~0.0.1:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
 
 cryptiles@3.x.x:
   version "3.1.2"
@@ -1287,7 +1172,7 @@ debug-log@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debug-log/-/debug-log-1.0.1.tgz#2307632d4c04382b8df8a32f70b895046d52745f"
 
-debug@3.1.0, debug@^3.1.0:
+debug@*, debug@3.1.0, debug@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
@@ -1724,6 +1609,13 @@ extsprintf@1.3.0:
 extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
+
+fancy-mocha@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/fancy-mocha/-/fancy-mocha-0.3.1.tgz#2848e4644b3732c06392cfc2fdb2d4d5d4112423"
+  dependencies:
+    lodash "^4.17.4"
+    stdout-stderr "^0.1.4"
 
 fast-deep-equal@^1.0.0:
   version "1.0.0"
@@ -2341,7 +2233,7 @@ is-arrayish@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/is-arrayish/-/is-arrayish-0.2.1.tgz#77c99840527aa8ecb1a8ba697b80645a7a926a9d"
 
-is-buffer@^1.1.5, is-buffer@~1.1.1:
+is-buffer@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
 
@@ -2494,12 +2386,6 @@ is-posix-bracket@^0.1.0:
 is-primitive@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-primitive/-/is-primitive-2.0.0.tgz#207bab91638499c07b2adf240a41a87210034575"
-
-is-process-active@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/is-process-active/-/is-process-active-1.0.1.tgz#63616541f447d84b71783cb2002360cf7e690b4f"
-  dependencies:
-    debug "^3.1.0"
 
 is-promise@^2.1.0:
   version "2.1.0"
@@ -2851,7 +2737,7 @@ lodash@4.17.2:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
-lodash@^4.0.0, lodash@^4.11.1, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1:
+lodash@^4.0.0, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -2928,14 +2814,6 @@ md5-hex@^1.2.0:
 md5-o-matic@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/md5-o-matic/-/md5-o-matic-0.1.1.tgz#822bccd65e117c514fab176b25945d54100a03c3"
-
-md5@^2.1.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/md5/-/md5-2.2.1.tgz#53ab38d5fe3c8891ba465329ea23fac0540126f9"
-  dependencies:
-    charenc "~0.0.1"
-    crypt "~0.0.1"
-    is-buffer "~1.1.1"
 
 mem@^1.1.0:
   version "1.1.0"
@@ -3047,20 +2925,11 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mkdirp@0.5.1, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1:
+mkdirp@0.5.1, mkdirp@^0.5.0, mkdirp@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
-
-mocha-junit-reporter@^1.16.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/mocha-junit-reporter/-/mocha-junit-reporter-1.16.0.tgz#3d76af53e2f5e81f9b93406acee1e48b5dd6e6cc"
-  dependencies:
-    debug "^2.2.0"
-    md5 "^2.1.0"
-    mkdirp "~0.5.1"
-    xml "^1.0.0"
 
 mocha@^5.0.0:
   version "5.0.0"
@@ -3904,14 +3773,6 @@ run-async@^2.2.0:
   dependencies:
     is-promise "^2.1.0"
 
-rwlockfile@^2.0.21:
-  version "2.0.21"
-  resolved "https://registry.yarnpkg.com/rwlockfile/-/rwlockfile-2.0.21.tgz#c2eb13d77df18dbb268dcd28017df17d5a97f8a8"
-  dependencies:
-    fs-extra "^5.0.0"
-    is-process-active "^1.0.1"
-    uuid "^3.2.1"
-
 rx-lite-aggregates@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite-aggregates/-/rx-lite-aggregates-4.0.8.tgz#753b87a89a11c95467c4ac1626c4efc4e05c67be"
@@ -3934,9 +3795,9 @@ safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@~5.1.0, 
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
 
-semantic-release@^12.2.0:
-  version "12.2.2"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-12.2.2.tgz#6f114c2e2cb55040b78f985e11b0aa7d8d2ee111"
+semantic-release@^12.2.2:
+  version "12.2.4"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-12.2.4.tgz#cbcf0842ab65a4da1908f48e05a4d895c58d539d"
   dependencies:
     "@semantic-release/commit-analyzer" "^5.0.0"
     "@semantic-release/error" "^2.1.0"
@@ -3945,13 +3806,13 @@ semantic-release@^12.2.0:
     "@semantic-release/release-notes-generator" "^6.0.0"
     chalk "^2.3.0"
     commander "^2.11.0"
-    cosmiconfig "^3.1.0"
+    cosmiconfig "^4.0.0"
     debug "^3.1.0"
     env-ci "^1.0.0"
     execa "^0.9.0"
     get-stream "^3.0.0"
     git-log-parser "^1.2.0"
-    lodash "^4.0.0"
+    lodash "^4.17.4"
     marked "^0.3.9"
     marked-terminal "^2.0.0"
     p-reduce "^1.0.0"
@@ -4220,11 +4081,12 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-std-mocks@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/std-mocks/-/std-mocks-1.0.1.tgz#d3388876d7beeba3c70fbd8e2bcaf46eb07d79fe"
+stdout-stderr@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/stdout-stderr/-/stdout-stderr-0.1.4.tgz#57aae28cf19bbc0faddcf75a7464389d813faa9f"
   dependencies:
-    lodash "^4.11.1"
+    debug "*"
+    strip-ansi "^4.0.0"
 
 stream-combiner2@~1.1.1:
   version "1.1.1"
@@ -4633,7 +4495,7 @@ uuid@^2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
-uuid@^3.1.0, uuid@^3.2.1:
+uuid@^3.1.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 
@@ -4724,10 +4586,6 @@ write@^0.2.1:
   resolved "https://registry.yarnpkg.com/write/-/write-0.2.1.tgz#5fc03828e264cea3fe91455476f7a3c566cb0757"
   dependencies:
     mkdirp "^0.5.1"
-
-xml@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
 
 xtend@~4.0.1:
   version "4.0.1"
