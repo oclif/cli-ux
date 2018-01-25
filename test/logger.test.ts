@@ -19,7 +19,7 @@ describe('logger', () => {
   fancy()
   .stdout()
   .stderr()
-  .it('does nothing if no error.log', async () => {
+  .end('does nothing if no error.log', async () => {
     cli.config.errlog = undefined
     cli.info('foobar')
     await cli.done()
@@ -29,7 +29,7 @@ describe('logger', () => {
   fancy()
   .stdout()
   .stderr()
-  .it('writes stuff out', async () => {
+  .end('writes stuff out', async () => {
     cli.warn('showwarning')
     cli.info('hideme')
     cli.error('showerror', {exit: false})
@@ -40,7 +40,7 @@ describe('logger', () => {
   fancy()
   .stdout()
   .stderr()
-  .it('can change log level', async () => {
+  .end('can change log level', async () => {
     cli.config.logLevel = 'debug'
     cli.warn('showwarning')
     cli.info('showme')
@@ -53,7 +53,7 @@ describe('logger', () => {
   fancy()
   .stdout()
   .stderr()
-  .it('uses scope', async () => {
+  .end('uses scope', async () => {
     let _cli = cli.scope('mynewscope')
     _cli.warn('showwarning')
     _cli.info('hideme')
@@ -65,7 +65,7 @@ describe('logger', () => {
   fancy()
   .stdout()
   .stderr()
-  .it('does not create file if no output', async () => {
+  .end('does not create file if no output', async () => {
     cli.trace('mycontent')
     cli.debug('mycontent')
     cli.info('mycontent')

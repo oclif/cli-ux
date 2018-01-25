@@ -5,7 +5,7 @@ import cli from '../../src'
 describe('styled/table', () => {
   fancy()
   .stdout()
-  .it('shows a table', output => {
+  .end('shows a table', output => {
     cli.styledObject([
       {foo: 1, bar: 1},
       {foo: 2, bar: 2},

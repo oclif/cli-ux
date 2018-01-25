@@ -10,13 +10,13 @@ beforeEach(() => {
 describe('errors', () => {
   fancy()
   .stderr()
-  .it('warns', output => {
+  .end('warns', output => {
     cli.warn('foobar')
     expect(output.stderr).to.equal(' ▸    foobar\n')
   })
 
   fancy()
-  .it('errors', () => {
+  .end('errors', () => {
     expect(() => cli.error('foobar')).to.throw(/foobar/)
   })
 })

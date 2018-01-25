@@ -34,7 +34,7 @@
     "chai": "^4.1.2",
     "eslint": "^4.16.0",
     "eslint-config-dxcli": "^1.1.4",
-    "fancy-mocha": "^0.3.1",
+    "fancy-mocha": "^0.3.2",
     "husky": "^0.14.3",
     "mocha": "^5.0.0",
     "mocha-junit-reporter": "^1.16.0",
