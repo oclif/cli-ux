@@ -63,6 +63,8 @@ function displayError(err: CLIError) {
     let msg = err['cli-ux'].scope ? `${err['cli-ux'].scope}: ${getErrorMessage(err)}` : getErrorMessage(err)
     if (err['cli-ux'].severity === 'fatal') {
       bang = chalk.bgRed.bold.white(' FATAL ')
+    }
+    if (err['cli-ux'].severity === 'fatal' || config.debug) {
       msg += `\n${inspect(err)}`
     }
     if (err['cli-ux'].severity === 'warn') bang = chalk.yellow(arrow)
