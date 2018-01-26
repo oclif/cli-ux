@@ -1,3 +1,11 @@
+<a name="3.1.7"></a>
+## [3.1.7](https://github.com/dxcli/cli-ux/compare/2841c67c47ad976b247fd9b47a0d3efb4044db9e...v3.1.7) (2018-01-26)
+
+
+### Bug Fixes
+
+* cleaner debug errors ([5a731a3](https://github.com/dxcli/cli-ux/commit/5a731a3))
+
 <a name="3.1.6"></a>
 ## [3.1.6](https://github.com/dxcli/cli-ux/compare/8575f69d6cbcafeb863225c5bde11de1207d42f0...v3.1.6) (2018-01-26)
 

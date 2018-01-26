@@ -1,7 +1,7 @@
 {
   "name": "cli-ux",
   "description": "cli IO utilities",
-  "version": "3.1.6",
+  "version": "3.1.7",
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/dxcli/cli-ux/issues",
   "dependencies": {
