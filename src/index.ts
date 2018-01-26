@@ -5,6 +5,7 @@ import deps from './deps'
 import Errors, {CLIError, Options as ErrorOptions} from './errors'
 import {ExitError} from './exit'
 import * as Logger from './logger'
+import notify from './notify'
 import Output from './output'
 import {IPromptOptions} from './prompt'
 import * as Table from './styled/table'
@@ -31,6 +32,7 @@ export const scope = (_scope?: string) => {
     fatal: errors('fatal', _scope),
 
     exit(code = 1, error?: Error) { throw new ExitError(code, error) },
+    notify,
 
     get prompt() { return deps.prompt.prompt },
     get confirm() { return deps.prompt.confirm },
