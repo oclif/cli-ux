@@ -162,6 +162,7 @@ export default (e: IEventEmitter) => {
   handleUnhandleds()
 
   return (severity: 'fatal' | 'error' | 'warn', scope?: string) => (input: Error | string, scopeOrOpts?: string | Options, opts: Options = {}) => {
+    if (!input) return
     if (typeof scopeOrOpts === 'string') scope = scopeOrOpts
     else if (typeof scopeOrOpts === 'object') opts = scopeOrOpts
     const error = new CLIError(input, severity, scope, opts)

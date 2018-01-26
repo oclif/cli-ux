@@ -6,6 +6,9 @@ describe('notify', () => {
   fancy
   .stderr()
   .it('shows notification', (_, done) => {
-    cli.notify({message: 'example notification'}, done)
+    cli.notify({message: 'example notification'}, err => {
+      cli.warn(err)
+      done()
+    })
   })
 })
