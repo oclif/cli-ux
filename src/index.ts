@@ -1,11 +1,12 @@
 import * as EventEmitter from 'events'
+import {NodeNotifier} from 'node-notifier'
 
 import {ActionBase} from './action/base'
 import deps from './deps'
 import Errors, {CLIError, Options as ErrorOptions} from './errors'
 import {ExitError} from './exit'
 import * as Logger from './logger'
-import notify from './notify'
+import notify, {Notification, NotificationCallback} from './notify'
 import Output from './output'
 import {IPromptOptions} from './prompt'
 import * as Table from './styled/table'
@@ -58,6 +59,9 @@ export {
   CLIError,
   Config,
   ErrorOptions,
+  NodeNotifier,
+  Notification,
+  NotificationCallback,
   Errors,
   ExitError,
   IPromptOptions,

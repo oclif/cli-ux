@@ -1,6 +1,11 @@
+// tslint:disable no-empty-interface
+
 import Notifier = require('node-notifier')
 
-export default (opts: Notifier.Notification, cb?: Notifier.NotificationCallback) => {
+export interface NotificationCallback extends Notifier.NotificationCallback {}
+export interface Notification extends Notifier.Notification {}
+
+export default (opts: Notification, cb?: NotificationCallback) => {
   const notifier: typeof Notifier = require('node-notifier')
   return notifier.notify({
     // title: `heroku ${process.argv[2]}`,
