@@ -1,32 +1,19 @@
-import {expect, fancy} from 'fancy-mocha'
-
 import * as fs from 'fs-extra'
-import * as path from 'path'
 
 import cli from '../src'
 
-const log = path.join(__dirname, '../tmp/error.log')
-const logLevel = cli.config.logLevel
-
-beforeEach(() => {
-  cli.config.logLevel = logLevel
-  fs.removeSync(log)
-  cli.config.errlog = log
-})
-afterEach(() => cli.config.errlog = undefined)
+import {expect, fancy} from './fancy'
 
 describe('logger', () => {
-  fancy()
+  fancy
   .stdout()
-  .stderr()
   .end('does nothing if no error.log', async () => {
     cli.config.errlog = undefined
     cli.info('foobar')
     await cli.done()
-    expect(fs.pathExistsSync(log)).to.equal(false)
   })
 
-  fancy()
+  fancy
   .stdout()
   .stderr()
   .end('writes stuff out', async () => {
@@ -34,10 +21,10 @@ describe('logger', () => {
     cli.info('hideme')
     cli.error('showerror', {exit: false})
     await cli.done()
-    expect(fs.readFileSync(log, 'utf8')).to.contain(' ERROR showerror')
+    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain(' ERROR showerror')
   })
 
-  fancy()
+  fancy
   .stdout()
   .stderr()
   .end('can change log level', async () => {
@@ -47,10 +34,10 @@ describe('logger', () => {
     cli.debug('hideme')
     cli.error('showerror', {exit: false})
     await cli.done()
-    expect(fs.readFileSync(log, 'utf8')).to.contain(' ERROR showerror')
+    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain(' ERROR showerror')
   })
 
-  fancy()
+  fancy
   .stdout()
   .stderr()
   .end('uses scope', async () => {
@@ -59,10 +46,10 @@ describe('logger', () => {
     _cli.info('hideme')
     _cli.error('showerror', {exit: false})
     await cli.done()
-    expect(fs.readFileSync(log, 'utf8')).to.contain(' WARN mynewscope showwarning')
+    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain(' WARN mynewscope showwarning')
   })
 
-  fancy()
+  fancy
   .stdout()
   .stderr()
   .end('does not create file if no output', async () => {
@@ -70,6 +57,6 @@ describe('logger', () => {
     cli.debug('mycontent')
     cli.info('mycontent')
     await cli.done()
-    expect(fs.pathExistsSync(log)).to.equal(false)
+    expect(fs.pathExistsSync(cli.config.errlog!)).to.equal(false)
   })
 })

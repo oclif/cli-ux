@@ -126,9 +126,9 @@
     "@semantic-release/npm" "^2.6.4"
     semantic-release "^12.2.2"
 
-"@dxcli/dev-tslint@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@dxcli/dev-tslint/-/dev-tslint-0.0.16.tgz#84aa077d5f0c92f770b2b7eb091588c8553b4c9f"
+"@dxcli/dev-tslint@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@dxcli/dev-tslint/-/dev-tslint-0.0.17.tgz#f20767b72188a0695e4b34ba50976e11502d3891"
   dependencies:
     tslint "^5.9.1"
     tslint-xo "^0.5.0"
@@ -259,9 +259,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.96":
-  version "4.14.96"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.96.tgz#49a402bb6984af7dd9a48cea3781744a3774bff1"
+"@types/lodash@^4.14.97":
+  version "4.14.97"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.97.tgz#7262d6d5fc5e87cdb3f68eb33accd4024f2b211e"
 
 "@types/mocha@^2.2.47":
   version "2.2.47"
@@ -270,6 +270,12 @@
 "@types/nock@^9.1.2":
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/@types/nock/-/nock-9.1.2.tgz#0515b27e3f6bbc11834d22508ad02e2921dd376a"
+  dependencies:
+    "@types/node" "*"
+
+"@types/node-notifier@^0.0.28":
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/@types/node-notifier/-/node-notifier-0.0.28.tgz#86ba3d3aa8d918352cc3191d88de328b20dc93c1"
   dependencies:
     "@types/node" "*"
 
@@ -1622,9 +1628,9 @@ extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
 
-fancy-mocha@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/fancy-mocha/-/fancy-mocha-0.3.3.tgz#414359b859e84cb8d25a9183d02fc52c03d43403"
+fancy-test@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/fancy-test/-/fancy-test-0.5.0.tgz#ebefe0ad756eb2fbd1eaafe0383c710bada2cb6d"
   dependencies:
     lodash "^4.17.4"
     stdout-stderr "^0.1.4"
@@ -2004,6 +2010,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6,
 growl@1.10.3:
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.3.tgz#1926ba90cf3edfe2adb4927f5880bc22c66c790f"
+
+growly@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
 
 handlebars@^4.0.2, handlebars@^4.0.3:
   version "4.0.11"
@@ -3032,6 +3042,15 @@ node-emoji@^1.4.1:
   dependencies:
     lodash.toarray "^4.4.0"
 
+node-notifier@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/node-notifier/-/node-notifier-5.2.1.tgz#fa313dd08f5517db0e2502e5758d664ac69f9dea"
+  dependencies:
+    growly "^1.3.0"
+    semver "^5.4.1"
+    shellwords "^0.1.1"
+    which "^1.3.0"
+
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, "normalize-package-data@~1.0.1 || ^2.0.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.4.0.tgz#12f95a307d58352075a04907b84ac8be98ac012f"
@@ -3907,6 +3926,10 @@ shelljs@0.7.6:
     glob "^7.0.0"
     interpret "^1.0.0"
     rechoir "^0.6.2"
+
+shellwords@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
 
 signal-exit@^3.0.0, signal-exit@^3.0.1, signal-exit@^3.0.2:
   version "3.0.2"

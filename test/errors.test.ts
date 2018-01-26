@@ -1,22 +1,17 @@
-import chalk from 'chalk'
-import {expect, fancy} from 'fancy-mocha'
-
 import cli from '../src'
 
-beforeEach(() => {
-  chalk.enabled = false
-})
+import {expect, fancy} from './fancy'
 
 describe('errors', () => {
-  fancy()
+  fancy
   .stderr()
-  .end('warns', output => {
+  .end('warns', async output => {
     cli.warn('foobar')
     expect(output.stderr).to.equal(' ▸    foobar\n')
   })
 
-  fancy()
-  .end('errors', () => {
+  fancy
+  .end('errors', async () => {
     expect(() => cli.error('foobar')).to.throw(/foobar/)
   })
 })

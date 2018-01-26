@@ -66,8 +66,8 @@ export default (e: IEventEmitter) => {
 
     async function close() {
       e.removeListener('output', handleOutput)
-      await flush()
       if (!stream) return
+      await flush()
       const s = await stream
       return new Promise<void>((resolve, reject) => {
         s.end()
