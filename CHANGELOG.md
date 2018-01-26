@@ -1,3 +1,17 @@
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/dxcli/cli-ux/compare/5a731a3d18140e2a516ffda35ed9b35d99b9fe20...v3.2.0) (2018-01-26)
+
+
+### Bug Fixes
+
+* fix notification types ([19cc816](https://github.com/dxcli/cli-ux/commit/19cc816))
+* updated fancy-test ([2c5b377](https://github.com/dxcli/cli-ux/commit/2c5b377))
+
+
+### Features
+
+* added notify() ([0bdc77a](https://github.com/dxcli/cli-ux/commit/0bdc77a))
+
 <a name="3.1.7"></a>
 ## [3.1.7](https://github.com/dxcli/cli-ux/compare/2841c67c47ad976b247fd9b47a0d3efb4044db9e...v3.1.7) (2018-01-26)
 
