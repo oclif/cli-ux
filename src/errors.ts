@@ -59,15 +59,19 @@ function displayError(err: CLIError) {
   }
 
   function render(): string {
+    const {severity, scope} = err['cli-ux']
+    if (severity === 'fatal' || config.debug) {
+      // show stack trace
+      let msg = ''
+      if (severity !== 'error') msg += `${severity}: `
+      if (scope) msg += `${scope}: `
+      msg += err.stack || inspect(err)
+      return msg
+    }
     let bang = chalk.red(arrow)
-    let msg = err['cli-ux'].scope ? `${err['cli-ux'].scope}: ${getErrorMessage(err)}` : getErrorMessage(err)
-    if (err['cli-ux'].severity === 'fatal') {
-      bang = chalk.bgRed.bold.white(' FATAL ')
-    }
-    if (err['cli-ux'].severity === 'fatal' || config.debug) {
-      msg += `\n${inspect(err)}`
-    }
-    if (err['cli-ux'].severity === 'warn') bang = chalk.yellow(arrow)
+    let msg = scope ? `${scope}: ${getErrorMessage(err)}` : getErrorMessage(err)
+    if (severity as any === 'fatal') bang = chalk.bgRed.bold.white(' FATAL ')
+    if (severity === 'warn') bang = chalk.yellow(arrow)
     return bangify(wrap(msg), bang)
   }
 
@@ -149,15 +153,17 @@ export default (e: IEventEmitter) => {
       err.code = 'ESIGINT'
       cli.error(err)
     })
-    process.once('unhandledRejection', handleError('unhandledRejection'))
-    process.once('uncaughtException', handleError('uncaughtException'))
+    process.on('unhandledRejection', handleError('unhandledRejection'))
+    process.on('uncaughtException' as any, handleError('uncaughtException'))
     process.stdout.on('error', handleError('stdout'))
     process.stderr.on('error', handleError('stdout'))
-    e.on('error', handleError('cli-ux'))
+    e.on('error', handleError('cli-ux') as any)
   }
   handleUnhandleds()
 
-  return (severity: 'fatal' | 'error' | 'warn', scope?: string) => (input: Error | string, opts: Options = {}) => {
+  return (severity: 'fatal' | 'error' | 'warn', scope?: string) => (input: Error | string, scopeOrOpts?: string | Options, opts: Options = {}) => {
+    if (typeof scopeOrOpts === 'string') scope = scopeOrOpts
+    else if (typeof scopeOrOpts === 'object') opts = scopeOrOpts
     const error = new CLIError(input, severity, scope, opts)
     const msg: Message = {type: 'error', scope, severity, error}
     e.emit('output', msg)
