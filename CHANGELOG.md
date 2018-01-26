@@ -1,3 +1,11 @@
+<a name="3.1.6"></a>
+## [3.1.6](https://github.com/dxcli/cli-ux/compare/8575f69d6cbcafeb863225c5bde11de1207d42f0...v3.1.6) (2018-01-26)
+
+
+### Bug Fixes
+
+* show stack trace when debug is on ([2841c67](https://github.com/dxcli/cli-ux/commit/2841c67))
+
 <a name="3.1.5"></a>
 ## [3.1.5](https://github.com/dxcli/cli-ux/compare/5631c047709bf7025fb9399e1764a2cb45e2daf9...v3.1.5) (2018-01-21)
 
