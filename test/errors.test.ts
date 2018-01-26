@@ -7,7 +7,11 @@ describe('errors', () => {
   .stderr()
   .end('warns', async output => {
     cli.warn('foobar')
-    expect(output.stderr).to.equal(' ▸    foobar\n')
+    if (process.platform === 'win32') {
+      expect(output.stderr).to.equal(' !    foobar\n')
+    } else {
+      expect(output.stderr).to.equal(' ▸    foobar\n')
+    }
   })
 
   fancy
