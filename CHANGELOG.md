@@ -1,3 +1,11 @@
+<a name="3.2.1"></a>
+## [3.2.1](https://github.com/dxcli/cli-ux/compare/24b359f0971638b3247e9b618ff0d57fe04b1f1c...v3.2.1) (2018-01-27)
+
+
+### Bug Fixes
+
+* error rendering ([6a3a407](https://github.com/dxcli/cli-ux/commit/6a3a407))
+
 <a name="3.2.0"></a>
 # [3.2.0](https://github.com/dxcli/cli-ux/compare/5a731a3d18140e2a516ffda35ed9b35d99b9fe20...v3.2.0) (2018-01-26)
 
