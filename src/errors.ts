@@ -42,7 +42,7 @@ export function getErrorMessage(err: any): string {
   }
   // Unhandled error
   if (err.message && err.code) {
-    message = `${inspect(err.code)}: ${message}`
+    message = `${inspect(err.code)}: ${err.message}`
   } else if (err.message) {
     message = err.message
   }
