@@ -1,3 +1,11 @@
+<a name="3.3.0"></a>
+# [3.3.0](https://github.com/dxcli/cli-ux/compare/ed1f20770c0a4d4862b88ed9d326d95d18f42646...v3.3.0) (2018-01-28)
+
+
+### Features
+
+* added error context ([36c2a6e](https://github.com/dxcli/cli-ux/commit/36c2a6e))
+
 <a name="3.2.2"></a>
 ## [3.2.2](https://github.com/dxcli/cli-ux/compare/6a3a407b4926d449553c7a6c8afd5b7945634288...v3.2.2) (2018-01-28)
 
