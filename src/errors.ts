@@ -5,6 +5,7 @@ import * as clean from 'clean-stack'
 import * as extract from 'extract-stack'
 import indent = require('indent-string')
 import * as _ from 'lodash'
+import stripAnsi = require('strip-ansi')
 import {inspect} from 'util'
 
 import CLI from '.'
@@ -59,7 +60,7 @@ export function getErrorMessage(err: any, opts: {stack?: boolean} = {}): string 
   // Unhandled error
   if (err.message) message = err.message
   if (context && !_.isEmpty(context)) {
-    message += '\n' + indent(styledObject(err['cli-ux'].context), 4)
+    message += '\n' + stripAnsi(indent(styledObject(err['cli-ux'].context), 4))
   }
   message = message || inspect(err)
 
