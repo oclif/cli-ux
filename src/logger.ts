@@ -44,7 +44,7 @@ export default (e: IEventEmitter) => {
   const handleOutput = (m: Output.Message | Errors.Message) => {
     if (!canWrite(m.severity)) return
     const msg = m.type === 'error' ? Errors.getErrorMessage(m.error) : Output.render(m)
-    const output = chomp(_([timestamp(), m.severity.toUpperCase(), m.scope, msg]).compact().join(' '))
+    const output = chomp(_([timestamp(), m.severity.toUpperCase(), msg]).compact().join(' '))
     buffer.push(deps.stripAnsi(output))
     flush(50).catch(console.error)
   }

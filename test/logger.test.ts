@@ -40,18 +40,6 @@ describe('logger', () => {
   fancy
   .stdout()
   .stderr()
-  .end('uses scope', async () => {
-    let _cli = cli.scope('mynewscope')
-    _cli.warn('showwarning')
-    _cli.info('hideme')
-    _cli.error('showerror', {exit: false})
-    await cli.done()
-    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain(' WARN mynewscope showwarning')
-  })
-
-  fancy
-  .stdout()
-  .stderr()
   .end('does not create file if no output', async () => {
     cli.trace('mycontent')
     cli.debug('mycontent')

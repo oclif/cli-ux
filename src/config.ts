@@ -30,14 +30,11 @@ export class Config {
   _debug = false
   action: ActionBase = new Action()
   errorsHandled = false
+  context = {}
+  errlog?: string
 
   constructor() {
     this.debug = process.env.DEBUG === '*'
-  }
-
-  get errlog(): string | undefined { return globals.errlog }
-  set errlog(errlog: string | undefined) {
-    globals.errlog = errlog
   }
 
   get debug(): boolean {
