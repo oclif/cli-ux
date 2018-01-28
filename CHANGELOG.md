@@ -1,3 +1,11 @@
+<a name="3.3.5"></a>
+## [3.3.5](https://github.com/dxcli/cli-ux/compare/55234318a3c6e9cc63ed3fbf4000d7cd08f9332f...v3.3.5) (2018-01-28)
+
+
+### Bug Fixes
+
+* add newline before context ([5ada0f5](https://github.com/dxcli/cli-ux/commit/5ada0f5))
+
 <a name="3.3.4"></a>
 ## [3.3.4](https://github.com/dxcli/cli-ux/compare/fcefe7934ebafe668a52183e2c727965719d63d0...v3.3.4) (2018-01-28)
 
