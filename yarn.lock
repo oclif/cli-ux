@@ -124,9 +124,9 @@
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@dxcli/nyc-config/-/nyc-config-0.0.4.tgz#bd60c089aaa6d5da34e415bab6bc527d8c35a210"
 
-"@dxcli/screen@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@dxcli/screen/-/screen-0.0.1.tgz#9af4e8d0e5a9475e9e4b5f2da775b0447ff72fc2"
+"@dxcli/screen@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@dxcli/screen/-/screen-0.0.2.tgz#06afc9301e2f170b90f9943b2c76ffabfea3b735"
 
 "@dxcli/semantic-release@^0.3.3":
   version "0.3.3"
