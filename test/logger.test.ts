@@ -47,4 +47,12 @@ describe('logger', () => {
     await cli.done()
     expect(fs.pathExistsSync(cli.config.errlog!)).to.equal(false)
   })
+
+  fancy
+  .stderr()
+  .end('adds context', async () => {
+    cli.warn('mycontent', {context: {foo: 'bar'}})
+    await cli.done()
+    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain('foo: bar')
+  })
 })
