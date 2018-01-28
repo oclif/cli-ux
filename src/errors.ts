@@ -147,7 +147,7 @@ export default (e: IEventEmitter) => {
         const cli: typeof CLI = require('.').cli
         if (err.code === 'EPIPE') return
         if (err['cli-ux'] && typeof err['cli-ux'].exit === 'number') {
-          displayError(err)
+          if (err.code !== 'EEXIT') displayError(err)
           await cli.done().catch(cli.debug)
           process.exit(err['cli-ux'].exit as number)
         } else {
