@@ -1,5 +1,5 @@
 {
-  "extends": "@dxcli/dev-tslint",
+  "extends": "@dxcli/tslint",
   "rules": {
     "prefer-template": false
   }
