@@ -55,4 +55,13 @@ describe('logger', () => {
     await cli.done()
     expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain('foo: bar')
   })
+
+  fancy
+  .stderr()
+  .stub(cli.config, 'context', {foo: 'baz'})
+  .end('adds global context', async () => {
+    cli.warn('mycontent')
+    await cli.done()
+    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain('foo: baz')
+  })
 })
