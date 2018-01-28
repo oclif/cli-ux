@@ -1,3 +1,11 @@
+<a name="3.3.1"></a>
+## [3.3.1](https://github.com/dxcli/cli-ux/compare/dea2d691df66b04ef9361047d3caedabecb568cb...v3.3.1) (2018-01-28)
+
+
+### Bug Fixes
+
+* default severity to error ([1b8881a](https://github.com/dxcli/cli-ux/commit/1b8881a))
+
 <a name="3.3.0"></a>
 # [3.3.0](https://github.com/dxcli/cli-ux/compare/ed1f20770c0a4d4862b88ed9d326d95d18f42646...v3.3.0) (2018-01-28)
 
