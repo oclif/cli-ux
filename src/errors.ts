@@ -68,7 +68,7 @@ function displayError(err: CLIError) {
   }
 
   function render(): string {
-    const {severity} = err['cli-ux']
+    const severity = (err['cli-ux'] && err['cli-ux'].severity) || 'error'
     const msg = [
       _.upperFirst(severity === 'warn' ? 'warning' : severity),
       ': ',
