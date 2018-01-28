@@ -1,3 +1,12 @@
+<a name="3.3.6"></a>
+## [3.3.6](https://github.com/dxcli/cli-ux/compare/5ada0f5afb095273bbf6e533a9bee7afeadcb51c...v3.3.6) (2018-01-28)
+
+
+### Bug Fixes
+
+* hide EEXIT ([69a2262](https://github.com/dxcli/cli-ux/commit/69a2262))
+* make context any ([2d98234](https://github.com/dxcli/cli-ux/commit/2d98234))
+
 <a name="3.3.5"></a>
 ## [3.3.5](https://github.com/dxcli/cli-ux/compare/55234318a3c6e9cc63ed3fbf4000d7cd08f9332f...v3.3.5) (2018-01-28)
 
