@@ -1,3 +1,11 @@
+<a name="3.3.3"></a>
+## [3.3.3](https://github.com/dxcli/cli-ux/compare/baa67494a4be2066ba877e7dc6ab320e3ed972a3...v3.3.3) (2018-01-28)
+
+
+### Bug Fixes
+
+* set content type to object ([fcefe79](https://github.com/dxcli/cli-ux/commit/fcefe79))
+
 <a name="3.3.2"></a>
 ## [3.3.2](https://github.com/dxcli/cli-ux/compare/1b8881a7f0f1ec52df18073f9fe17972e691599b...v3.3.2) (2018-01-28)
 
