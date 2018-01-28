@@ -1,3 +1,11 @@
+<a name="3.3.8"></a>
+## [3.3.8](https://github.com/dxcli/cli-ux/compare/bc6ad0a7ff5130dcdd9a74bd61d07e9506a10a92...v3.3.8) (2018-01-28)
+
+
+### Bug Fixes
+
+* fixed fatal errors ([88173e0](https://github.com/dxcli/cli-ux/commit/88173e0))
+
 <a name="3.3.7"></a>
 ## [3.3.7](https://github.com/dxcli/cli-ux/compare/69a226230021f72bdb52adaf9394bfb938d1e44f...v3.3.7) (2018-01-28)
 
