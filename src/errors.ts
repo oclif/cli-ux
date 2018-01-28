@@ -35,7 +35,18 @@ function bangify(msg: string, c: string): string {
   return lines.join('\n')
 }
 
-export function getErrorMessage(err: any): string {
+export function getErrorMessage(err: any, opts: {stack?: boolean} = {}): string {
+  const severity = (err['cli-ux'] && err['cli-ux'].severity) || 'error'
+  const context = err['cli-ux'] && err['cli-ux'].context
+
+  function wrap(msg: string): string {
+    const linewrap = require('@heroku/linewrap')
+    return linewrap(6, deps.screen.errtermwidth, {
+      skip: /^\$ .*$/,
+      skipScheme: 'ansi-color',
+    })(msg)
+  }
+
   let message
   if (err.body) {
     // API error
@@ -46,54 +57,43 @@ export function getErrorMessage(err: any): string {
     }
   }
   // Unhandled error
-  if (err.message && err.code) {
-    message = `${inspect(err.code)}: ${err.message}`
-  } else if (err.message) {
-    message = err.message
-  }
-  const context = err['cli-ux'] && err['cli-ux'].context
+  if (err.message) message = err.message
   if (context && !_.isEmpty(context)) {
     message += '\n' + indent(styledObject(err['cli-ux'].context), 4)
   }
-  return message || inspect(err)
+  message = message || inspect(err)
+
+  message = [
+    _.upperFirst(severity === 'warn' ? 'warning' : severity),
+    ': ',
+    message,
+  ].join('')
+
+  if (opts.stack || process.env.CI || severity === 'fatal' || config.debug) {
+    // show stack trace
+    let stack = err.stack || inspect(err)
+    stack = clean(stack, {pretty: true})
+    stack = extract(stack)
+    message = [message, stack].join('\n')
+  } else {
+    let bang = severity === 'warn' ? chalk.yellow(arrow) : chalk.red(arrow)
+    if (severity === 'warn') bang = chalk.yellow(arrow)
+    message = bangify(wrap(message), bang)
+  }
+  return message
 }
 
 function displayError(err: CLIError) {
-  function wrap(msg: string): string {
-    const linewrap = require('@heroku/linewrap')
-    return linewrap(6, deps.screen.errtermwidth, {
-      skip: /^\$ .*$/,
-      skipScheme: 'ansi-color',
-    })(msg)
-  }
-
-  function render(): string {
-    const severity = (err['cli-ux'] && err['cli-ux'].severity) || 'error'
-    const msg = [
-      _.upperFirst(severity === 'warn' ? 'warning' : severity),
-      ': ',
-      getErrorMessage(err),
-    ].join('')
-    if (process.env.CI || severity === 'fatal' || config.debug) {
-      // show stack trace
-      let stack = err.stack || inspect(err)
-      stack = clean(stack, {pretty: true})
-      stack = extract(stack)
-      return [msg, stack].join('\n')
-    }
-    let bang = severity === 'warn' ? chalk.yellow(arrow) : chalk.red(arrow)
-    if (severity === 'warn') bang = chalk.yellow(arrow)
-    return bangify(wrap(msg), bang)
-  }
+  const severity = (err['cli-ux'] && err['cli-ux'].severity) || 'error'
 
   function getBang(): string {
-    if (err['cli-ux'].severity === 'warn') return chalk.yellowBright('!')
-    if (err['cli-ux'].severity === 'fatal') return chalk.bold.bgRedBright('!!!')
+    if (severity === 'warn') return chalk.yellowBright('!')
+    if (severity === 'fatal') return chalk.bold.bgRedBright('!!!')
     return chalk.bold.redBright('!')
   }
 
   config.action.pause(() => {
-    console.error(render())
+    console.error(getErrorMessage(err))
   }, getBang())
 }
 

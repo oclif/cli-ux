@@ -21,7 +21,7 @@ describe('logger', () => {
     cli.info('hideme')
     cli.error('showerror', {exit: false})
     await cli.done()
-    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain(' ERROR showerror')
+    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain(' Warning: showwarning')
   })
 
   fancy
@@ -34,7 +34,7 @@ describe('logger', () => {
     cli.debug('hideme')
     cli.error('showerror', {exit: false})
     await cli.done()
-    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain(' ERROR showerror')
+    expect(fs.readFileSync(cli.config.errlog!, 'utf8')).to.contain(' Error: showerror')
   })
 
   fancy

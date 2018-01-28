@@ -1,5 +1,4 @@
 import * as fs from 'fs-extra'
-import * as _ from 'lodash'
 import * as path from 'path'
 
 import {config} from './config'
@@ -43,16 +42,17 @@ export default (e: IEventEmitter) => {
 
   const handleOutput = (m: Output.Message | Errors.Message) => {
     if (!canWrite(m.severity)) return
-    const msg = m.type === 'error' ? Errors.getErrorMessage(m.error) : Output.render(m)
-    const output = chomp(_([timestamp(), m.severity.toUpperCase(), msg]).compact().join(' '))
-    buffer.push(deps.stripAnsi(output))
+    let msg = m.type === 'error' ? Errors.getErrorMessage(m.error, {stack: true}) : Output.render(m)
+    msg = deps.stripAnsi(chomp(msg))
+    let lines = msg.split('\n').map(l => `${timestamp()} ${l}`)
+    buffer.push(...lines)
     flush(50).catch(console.error)
   }
   e.on('output', handleOutput)
 
   async function flush(waitForMs: number = 0) {
+    await wait(waitForMs)
     flushing = flushing.then(async () => {
-      await wait(waitForMs)
       if (!config.errlog || buffer.length === 0) return
       const file = config.errlog
       const mylines = buffer
