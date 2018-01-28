@@ -3,7 +3,8 @@
 import chalk from 'chalk'
 import * as util from 'util'
 
-export default function styledObject(obj: any, keys?: string[]) {
+export default function styledObject(obj: any, keys?: string[]): string {
+  let output: string[] = []
   let keyLengths = Object.keys(obj).map(key => key.toString().length)
   let maxKeyLength = Math.max.apply(Math, keyLengths) + 2
   function pp(obj: any) {
@@ -16,20 +17,21 @@ export default function styledObject(obj: any, keys?: string[]) {
       return util.inspect(obj)
     }
   }
-  let logKeyValue = (key: string, value: any) => {
-    console.log(`${chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value))
+  let logKeyValue = (key: string, value: any): string => {
+    return `${chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value)
   }
   for (let key of keys || Object.keys(obj).sort()) {
     let value = obj[key]
     if (Array.isArray(value)) {
       if (value.length > 0) {
-        logKeyValue(key, value[0])
+        output.push(logKeyValue(key, value[0]))
         for (let e of value.slice(1)) {
-          console.log(' '.repeat(maxKeyLength) + pp(e))
+          output.push(' '.repeat(maxKeyLength) + pp(e))
         }
       }
     } else if (value !== null && value !== undefined) {
-      logKeyValue(key, value)
+      output.push(logKeyValue(key, value))
     }
   }
+  return output.join('\n')
 }

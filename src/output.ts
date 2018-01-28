@@ -5,14 +5,13 @@ import {IEventEmitter} from './events'
 
 export interface Message {
   type: 'output'
-  scope: string | undefined
   severity: 'trace' | 'debug' | 'info'
   data: any[]
 }
 
 export function render(m: Message): string {
   const msg = m.data.map(a => typeof a === 'string' ? a : inspect(a)).join(' ')
-  return (m.scope ? `${m.scope}: ${msg}` : msg) + '\n'
+  return msg + '\n'
 }
 
 function shouldLog(m: Message) {
@@ -31,8 +30,8 @@ export default (e: IEventEmitter) => {
     process.stdout.write(render(m))
   })
 
-  return (severity: 'trace' | 'debug' | 'info', scope?: string) => (...data: any[]) => {
-    const msg: Message = {type: 'output', scope, severity, data}
+  return (severity: 'trace' | 'debug' | 'info') => (...data: any[]) => {
+    const msg: Message = {type: 'output', severity, data}
     e.emit('output', msg)
   }
 }

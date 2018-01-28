@@ -1,22 +1,27 @@
 // tslint:disable no-console
 
 import chalk from 'chalk'
+import * as clean from 'clean-stack'
+import * as extract from 'extract-stack'
+import indent = require('indent-string')
+import * as _ from 'lodash'
 import {inspect} from 'util'
 
 import CLI from '.'
 import {config} from './config'
 import deps from './deps'
 import {IEventEmitter} from './events'
+import styledObject from './styled/object'
 
 export interface Message {
   type: 'error'
-  scope: string | undefined
   severity: 'fatal' | 'error' | 'warn'
   error: CLIError
 }
 
 export interface Options {
   exit?: number | false
+  context?: object
 }
 
 const arrow = process.platform === 'win32' ? ' !' : ' ▸'
@@ -46,6 +51,10 @@ export function getErrorMessage(err: any): string {
   } else if (err.message) {
     message = err.message
   }
+  const context = err['cli-ux'] && err['cli-ux'].context
+  if (context && !_.isEmpty(context)) {
+    message += '\n' + indent(styledObject(err['cli-ux'].context), 4)
+  }
   return message || inspect(err)
 }
 
@@ -59,18 +68,20 @@ function displayError(err: CLIError) {
   }
 
   function render(): string {
-    const {severity, scope} = err['cli-ux']
-    if (severity === 'fatal' || config.debug) {
+    const {severity} = err['cli-ux']
+    const msg = [
+      _.upperFirst(severity === 'warn' ? 'warning' : severity),
+      ': ',
+      getErrorMessage(err),
+    ].join('')
+    if (process.env.CI || severity === 'fatal' || config.debug) {
       // show stack trace
-      let msg = ''
-      if (severity !== 'error') msg += `${severity}: `
-      if (scope) msg += `${scope}: `
-      msg += err.stack || inspect(err)
-      return msg
+      let stack = err.stack || inspect(err)
+      stack = clean(stack, {pretty: true})
+      stack = extract(stack)
+      return [msg, stack].join('\n')
     }
-    let bang = chalk.red(arrow)
-    let msg = scope ? `${scope}: ${getErrorMessage(err)}` : getErrorMessage(err)
-    if (severity as any === 'fatal') bang = chalk.bgRed.bold.white(' FATAL ')
+    let bang = severity === 'warn' ? chalk.yellow(arrow) : chalk.red(arrow)
     if (severity === 'warn') bang = chalk.yellow(arrow)
     return bangify(wrap(msg), bang)
   }
@@ -90,11 +101,11 @@ export class CLIError extends Error {
   code: string
   'cli-ux': {
     severity: 'fatal' | 'error' | 'warn'
-    scope: string | undefined
     exit: number | false
+    context: object
   }
 
-  constructor(input: any, severity: 'fatal' | 'error' | 'warn', scope: string | undefined, opts: Options) {
+  constructor(input: any, severity: 'fatal' | 'error' | 'warn', opts: Options) {
     function getExitCode(options: Options): false | number {
       let exit = options.exit === undefined ? (options as any).exitCode : options.exit
       if (exit === false) return false
@@ -105,8 +116,8 @@ export class CLIError extends Error {
     const err: CLIError = typeof input === 'string' ? super(input) && this : input
     err['cli-ux'] = err['cli-ux'] || {
       severity,
-      scope,
       exit: severity === 'warn' ? false : getExitCode(opts),
+      context: {...config.context, ...opts.context},
     }
     return err
   }
@@ -126,12 +137,12 @@ export default (e: IEventEmitter) => {
 
   function handleUnhandleds() {
     if (config.errorsHandled) return
-    const handleError = (scope: string) => async (err: CLIError) => {
+    const handleError = (_: string) => async (err: CLIError) => {
       // ignore EPIPE errors
       // these come from using | head and | tail
       // and can be ignored
       try {
-        const cli: typeof CLI = require('.').cli.scope(scope)
+        const cli: typeof CLI = require('.').cli
         if (err.code === 'EPIPE') return
         if (err['cli-ux'] && typeof err['cli-ux'].exit === 'number') {
           displayError(err)
@@ -161,12 +172,10 @@ export default (e: IEventEmitter) => {
   }
   handleUnhandleds()
 
-  return (severity: 'fatal' | 'error' | 'warn', scope?: string) => (input: Error | string, scopeOrOpts?: string | Options, opts: Options = {}) => {
+  return (severity: 'fatal' | 'error' | 'warn') => (input: Error | string, opts: Options = {}) => {
     if (!input) return
-    if (typeof scopeOrOpts === 'string') scope = scopeOrOpts
-    else if (typeof scopeOrOpts === 'object') opts = scopeOrOpts
-    const error = new CLIError(input, severity, scope, opts)
-    const msg: Message = {type: 'error', scope, severity, error}
+    const error = new CLIError(input, severity, opts)
+    const msg: Message = {type: 'error', severity, error}
     e.emit('output', msg)
     if (error['cli-ux'].exit !== false) throw error
   }

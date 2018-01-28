@@ -18,43 +18,38 @@ const output = Output(e)
 const errors = Errors(e)
 const logger = Logger.default(e)
 
-export const scope = (_scope?: string) => {
-  return {
-    config,
-    scope,
+export const cli = {
+  config,
+  trace: output('trace'),
+  debug: output('debug'),
+  info: output('info'),
+  log: output('info'),
 
-    trace: output('trace', _scope),
-    debug: output('debug', _scope),
-    info: output('info', _scope),
-    log: output('info', _scope),
+  warn: errors('warn'),
+  error: errors('error'),
+  fatal: errors('fatal'),
 
-    warn: errors('warn', _scope),
-    error: errors('error', _scope),
-    fatal: errors('fatal', _scope),
+  exit(code = 1, error?: Error) { throw new ExitError(code, error) },
+  notify,
 
-    exit(code = 1, error?: Error) { throw new ExitError(code, error) },
-    notify,
+  get prompt() { return deps.prompt.prompt },
+  get confirm() { return deps.prompt.confirm },
+  get action() { return config.action },
+  styledObject(obj: any, keys?: string[]) { cli.info(deps.styledObject(obj, keys)) },
+  get styledHeader() { return deps.styledHeader },
+  get styledJSON() { return deps.styledJSON },
+  get table() { return deps.table },
 
-    get prompt() { return deps.prompt.prompt },
-    get confirm() { return deps.prompt.confirm },
-    get action() { return config.action },
-    get styledObject() { return deps.styledObject },
-    get styledHeader() { return deps.styledHeader },
-    get styledJSON() { return deps.styledJSON },
-    get table() { return deps.table },
-
-    async done() {
-      config.action.stop()
-      await logger.flush()
-      // await flushStdout()
-    }
+  async done() {
+    config.action.stop()
+    await logger.flush()
+    // await flushStdout()
   }
 }
-
-export const cli = scope()
 export default cli
 
 export {
+  config,
   ActionBase,
   CLIError,
   Config,
