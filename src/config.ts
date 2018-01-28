@@ -30,7 +30,7 @@ export class Config {
   _debug = false
   action: ActionBase = new Action()
   errorsHandled = false
-  context = {}
+  context: object = {}
   errlog?: string
 
   constructor() {
