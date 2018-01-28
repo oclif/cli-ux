@@ -32,6 +32,7 @@ function bangify(msg: string, c: string): string {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
     lines[i] = c + line.substr(2, line.length)
+    lines[i] = lines[i].trimRight()
   }
   return lines.join('\n')
 }
@@ -60,7 +61,7 @@ export function getErrorMessage(err: any, opts: {stack?: boolean} = {}): string 
   // Unhandled error
   if (err.message) message = err.message
   if (context && !_.isEmpty(context)) {
-    message += '\n' + stripAnsi(indent(styledObject(err['cli-ux'].context), 4))
+    message += '\n\n' + stripAnsi(indent(styledObject(err['cli-ux'].context), 4))
   }
   message = message || inspect(err)
 
