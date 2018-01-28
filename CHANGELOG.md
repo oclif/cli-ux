@@ -1,3 +1,11 @@
+<a name="3.3.4"></a>
+## [3.3.4](https://github.com/dxcli/cli-ux/compare/fcefe7934ebafe668a52183e2c727965719d63d0...v3.3.4) (2018-01-28)
+
+
+### Bug Fixes
+
+* strip ansi from context ([5523431](https://github.com/dxcli/cli-ux/commit/5523431))
+
 <a name="3.3.3"></a>
 ## [3.3.3](https://github.com/dxcli/cli-ux/compare/baa67494a4be2066ba877e7dc6ab320e3ed972a3...v3.3.3) (2018-01-28)
 
