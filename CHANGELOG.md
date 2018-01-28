@@ -1,3 +1,11 @@
+<a name="3.3.7"></a>
+## [3.3.7](https://github.com/dxcli/cli-ux/compare/69a226230021f72bdb52adaf9394bfb938d1e44f...v3.3.7) (2018-01-28)
+
+
+### Bug Fixes
+
+* hide sigints ([bc6ad0a](https://github.com/dxcli/cli-ux/commit/bc6ad0a))
+
 <a name="3.3.6"></a>
 ## [3.3.6](https://github.com/dxcli/cli-ux/compare/5ada0f5afb095273bbf6e533a9bee7afeadcb51c...v3.3.6) (2018-01-28)
 
