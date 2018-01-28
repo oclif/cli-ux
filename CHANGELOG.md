@@ -1,3 +1,11 @@
+<a name="3.2.2"></a>
+## [3.2.2](https://github.com/dxcli/cli-ux/compare/6a3a407b4926d449553c7a6c8afd5b7945634288...v3.2.2) (2018-01-28)
+
+
+### Bug Fixes
+
+* fixed logging on windows ([ed1f207](https://github.com/dxcli/cli-ux/commit/ed1f207))
+
 <a name="3.2.1"></a>
 ## [3.2.1](https://github.com/dxcli/cli-ux/compare/24b359f0971638b3247e9b618ff0d57fe04b1f1c...v3.2.1) (2018-01-27)
 
