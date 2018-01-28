@@ -21,7 +21,7 @@
   "devDependencies": {
     "@dxcli/dev": "^2.0.13",
     "@dxcli/semantic-release": "^0.3.3",
-    "@dxcli/tslint": "^0.0.24",
+    "@dxcli/tslint": "^0.1.1",
     "@types/fs-extra": "^5.0.0",
     "@types/semver": "^5.4.0",
     "chai": "^4.1.2",
