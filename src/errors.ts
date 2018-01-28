@@ -146,14 +146,17 @@ export default (e: IEventEmitter) => {
       try {
         const cli: typeof CLI = require('.').cli
         if (err.code === 'EPIPE') return
+        let exit = 1
         if (err['cli-ux'] && typeof err['cli-ux'].exit === 'number') {
           if (err.code === 'ESIGINT') cli.action.stop(chalk.yellowBright('!'))
           else if (err.code !== 'EEXIT') displayError(err)
-          await cli.done().catch(cli.debug)
-          process.exit(err['cli-ux'].exit as number)
+          const c = err['cli-ux'].exit
+          if (typeof c === 'number') exit = c
         } else {
-          cli.fatal(err)
+          cli.fatal(err, {exit: false})
         }
+        await cli.done().catch(cli.debug)
+        process.exit(exit)
       } catch (newError) {
         console.error(err)
         console.error(newError)
