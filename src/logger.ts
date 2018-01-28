@@ -28,70 +28,40 @@ function canWrite(severity: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fat
 }
 
 export default (e: IEventEmitter) => {
-  let lines: string[] = []
-  let cur: {close(): Promise<void>} | undefined
+  let flushing: Promise<void> = Promise.resolve()
+  let buffer: string[] = []
+  // it would be preferable to use createWriteStream
+  // but it gives out EPERM issues on windows for some reason
+  //
+  // let stream: Promise<fs.WriteStream> | undefined
+  // function getStream() {
+  //   return stream = stream || (async () => {
+  //     await fs.mkdirp(path.dirname(file))
+  //     return fs.createWriteStream(file, {flags: 'a+', encoding: 'utf8'})
+  //   })()
+  // }
 
-  function log(file: string) {
-    let stream: Promise<fs.WriteStream> | undefined
-    function getStream() {
-      return stream = stream || (async () => {
-        await fs.mkdirp(path.dirname(file))
-        return fs.createWriteStream(file, {flags: 'a+', encoding: 'utf8'})
-      })()
-    }
+  const handleOutput = (m: Output.Message | Errors.Message) => {
+    if (!canWrite(m.severity)) return
+    const msg = m.type === 'error' ? Errors.getErrorMessage(m.error) : Output.render(m)
+    const output = chomp(_([timestamp(), m.severity.toUpperCase(), m.scope, msg]).compact().join(' '))
+    buffer.push(deps.stripAnsi(output))
+    flush(50).catch(console.error)
+  }
+  e.on('output', handleOutput)
 
-    let flushing: Promise<void> = Promise.resolve()
-    async function flush(waitForMs: number = 0) {
-      if (lines.length === 0) return flushing
-      const stream = await getStream()
+  async function flush(waitForMs: number = 0) {
+    flushing = flushing.then(async () => {
       await wait(waitForMs)
-      flushing = flushing.then(() => {
-        if (lines.length === 0) return
-        const mylines = lines
-        lines = []
-        return new Promise<any>((resolve, reject) => {
-          stream.write(mylines.join('\n') + '\n', (err: any) => err ? reject(err) : resolve())
-        })
-      })
-    }
-
-    const handleOutput = (m: Output.Message | Errors.Message) => {
-      if (!canWrite(m.severity)) return
-      const msg = m.type === 'error' ? Errors.getErrorMessage(m.error) : Output.render(m)
-      const output = chomp(_([timestamp(), m.severity.toUpperCase(), m.scope, msg]).compact().join(' '))
-      lines.push(deps.stripAnsi(output))
-      flush(50).catch(console.error)
-    }
-    e.on('output', handleOutput)
-
-    async function close() {
-      e.removeListener('output', handleOutput)
-      if (!stream) return
-      await flush()
-      const s = await stream
-      return new Promise<void>((resolve, reject) => {
-        s.end()
-        s.on('close', resolve)
-        s.on('error', reject)
-        stream = undefined
-      })
-    }
-
-    return {close}
+      if (!config.errlog || buffer.length === 0) return
+      const file = config.errlog
+      const mylines = buffer
+      buffer = []
+      await fs.mkdirp(path.dirname(file))
+      await fs.appendFile(file, mylines.join('\n') + '\n')
+    })
+    await flushing
   }
 
-  async function done() {
-    if (cur) await cur.close()
-  }
-
-  async function startLogging() {
-    await done()
-    if (config.errlog) cur = log(config.errlog)
-  }
-  startLogging().catch(console.error)
-  config.on('errlog', startLogging)
-
-  return {
-    done,
-  }
+  return {flush}
 }

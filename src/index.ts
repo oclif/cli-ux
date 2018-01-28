@@ -45,7 +45,7 @@ export const scope = (_scope?: string) => {
 
     async done() {
       config.action.stop()
-      await logger.done()
+      await logger.flush()
       // await flushStdout()
     }
   }

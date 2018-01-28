@@ -1,4 +1,3 @@
-import * as EventEmitter from 'events'
 import * as semver from 'semver'
 
 import {ActionBase} from './action/base'
@@ -25,7 +24,7 @@ const actionType = (
 
 const Action = actionType === 'spinner' ? require('./action/spinner').default : require('./action/simple').default
 
-export class Config extends EventEmitter {
+export class Config {
   logLevel: Levels = 'warn'
   outputLevel: Levels = 'info'
   _debug = false
@@ -33,14 +32,12 @@ export class Config extends EventEmitter {
   errorsHandled = false
 
   constructor() {
-    super()
     this.debug = process.env.DEBUG === '*'
   }
 
   get errlog(): string | undefined { return globals.errlog }
   set errlog(errlog: string | undefined) {
     globals.errlog = errlog
-    this.emit('errlog', errlog)
   }
 
   get debug(): boolean {
