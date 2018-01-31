@@ -1,3 +1,11 @@
+<a name="3.3.9"></a>
+## [3.3.9](https://github.com/anycli/cli-ux/compare/88173e01297b4e0036466ae4a49208662013d998...v3.3.9) (2018-01-31)
+
+
+### Bug Fixes
+
+* anycli rename ([9c6183f](https://github.com/anycli/cli-ux/commit/9c6183f))
+
 <a name="3.3.8"></a>
 ## [3.3.8](https://github.com/dxcli/cli-ux/compare/bc6ad0a7ff5130dcdd9a74bd61d07e9506a10a92...v3.3.8) (2018-01-28)
 
