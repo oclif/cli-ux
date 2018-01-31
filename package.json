@@ -3,9 +3,9 @@
   "description": "cli IO utilities",
   "version": "3.3.8",
   "author": "Jeff Dickey @jdxcode",
-  "bugs": "https://github.com/dxcli/cli-ux/issues",
+  "bugs": "https://github.com/anycli/cli-ux/issues",
   "dependencies": {
-    "@dxcli/screen": "^0.0.1",
+    "@anycli/screen": "^0.0.3",
     "@heroku/linewrap": "^1.0.0",
     "ansi-styles": "^3.2.0",
     "cardinal": "^1.0.0",
@@ -22,16 +22,27 @@
     "supports-color": "^5.1.0"
   },
   "devDependencies": {
-    "@dxcli/dev": "^2.0.14",
-    "@dxcli/semantic-release": "^0.3.3",
-    "@dxcli/tslint": "^0.1.1",
+    "@anycli/tslint": "^0.1.3",
+    "@commitlint/cli": "^6.0.2",
+    "@commitlint/config-conventional": "^6.0.2",
+    "@types/ansi-styles": "^2.0.30",
+    "@types/chai": "^4.1.2",
     "@types/clean-stack": "^1.3.0",
     "@types/extract-stack": "^1.0.0",
     "@types/fs-extra": "^5.0.0",
     "@types/indent-string": "^3.0.0",
+    "@types/lodash": "^4.14.98",
+    "@types/mocha": "^2.2.47",
+    "@types/nock": "^9.1.2",
+    "@types/node": "^9.4.0",
+    "@types/node-notifier": "^0.0.28",
+    "@types/read-pkg": "^3.0.0",
     "@types/semver": "^5.4.0",
+    "@types/strip-ansi": "^3.0.0",
+    "@types/supports-color": "^3.1.0",
     "chai": "^4.1.2",
     "eslint": "^4.16.0",
+    "eslint-config-anycli": "^1.2.1",
     "fancy-test": "^0.6.4",
     "husky": "^0.14.3",
     "mocha": "^5.0.0",
@@ -47,15 +58,15 @@
   "files": [
     "/lib"
   ],
-  "homepage": "https://github.com/dxcli/cli-ux",
+  "homepage": "https://github.com/anycli/cli-ux",
   "keywords": [
-    "dxcli"
+    "anycli"
   ],
   "license": "MIT",
   "main": "lib/index.js",
-  "repository": "dxcli/cli-ux",
+  "repository": "anycli/cli-ux",
   "scripts": {
-    "commitmsg": "dxcli-commitlint",
+    "commitmsg": "commitlint -x @commitlint/config-conventional -e $GIT_PARAMS",
     "precommit": "nps lint -l warn",
     "prepublishOnly": "nps build",
     "test": "nps test -l warn"
