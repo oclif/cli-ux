@@ -1,3 +1,11 @@
+<a name="3.3.10"></a>
+## [3.3.10](https://github.com/anycli/cli-ux/compare/9c6183f3ab9f0ba919123a7bcd607a4ebf22ddd3...v3.3.10) (2018-01-31)
+
+
+### Bug Fixes
+
+* rethrow cli-ux errors ([b87052c](https://github.com/anycli/cli-ux/commit/b87052c))
+
 <a name="3.3.9"></a>
 ## [3.3.9](https://github.com/anycli/cli-ux/compare/88173e01297b4e0036466ae4a49208662013d998...v3.3.9) (2018-01-31)
 
