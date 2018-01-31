@@ -19,7 +19,7 @@ const stdmockWrite = {
 }
 
 export class ActionBase {
-  type: ActionType
+  type!: ActionType
   std: 'stdout' | 'stderr' = 'stdout'
   protected stdmocks?: ['stdout' | 'stderr', string[]][]
 

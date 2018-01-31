@@ -17,7 +17,7 @@ function color(s: string): string {
 export default class SpinnerAction extends ActionBase {
   public type: ActionType = 'spinner'
 
-  spinner: number
+  spinner?: number
   frames: any
   frameIndex: number
 
@@ -41,13 +41,13 @@ export default class SpinnerAction extends ActionBase {
 
   protected _stop(status: string) {
     if (this.task) this.task.status = status
-    clearInterval(this.spinner)
+    if (this.spinner) clearInterval(this.spinner)
     this._render()
     this.output = undefined
   }
 
   protected _pause(icon?: string) {
-    clearInterval(this.spinner)
+    if (this.spinner) clearInterval(this.spinner)
     this._reset()
     if (icon) this._render(` ${icon}`)
     this.output = undefined

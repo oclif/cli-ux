@@ -100,7 +100,7 @@ function displayError(err: CLIError) {
 }
 
 export class CLIError extends Error {
-  code: string
+  code?: string
   'cli-ux': {
     severity: 'fatal' | 'error' | 'warn'
     exit: number | false
@@ -180,9 +180,14 @@ export default (e: IEventEmitter) => {
 
   return (severity: 'fatal' | 'error' | 'warn') => (input: Error | string, opts: Options = {}) => {
     if (!input) return
+    if (isCLIError(input)) throw input
     const error = new CLIError(input, severity, opts)
     const msg: Message = {type: 'error', severity, error}
     e.emit('output', msg)
     if (error['cli-ux'].exit !== false) throw error
   }
+}
+
+function isCLIError(input: any): input is CLIError {
+  return input['cli-ux']
 }
