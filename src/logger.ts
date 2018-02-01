@@ -44,7 +44,7 @@ export default (e: IEventEmitter) => {
     if (!canWrite(m.severity)) return
     let msg = m.type === 'error' ? Errors.getErrorMessage(m.error, {stack: true}) : Output.render(m)
     msg = deps.stripAnsi(chomp(msg))
-    let lines = msg.split('\n').map(l => `${timestamp()} ${l}`)
+    let lines = msg.split('\n').map(l => `${timestamp()} ${l}`.trimRight())
     buffer.push(...lines)
     flush(50).catch(console.error)
   }
