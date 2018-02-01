@@ -1,3 +1,11 @@
+<a name="3.3.12"></a>
+## [3.3.12](https://github.com/anycli/cli-ux/compare/0c891855dae975e7963d51cd51a8fb88e058f478...v3.3.12) (2018-02-01)
+
+
+### Bug Fixes
+
+* trim log line endings ([759d5e3](https://github.com/anycli/cli-ux/commit/759d5e3))
+
 <a name="3.3.11"></a>
 ## [3.3.11](https://github.com/anycli/cli-ux/compare/b87052cbfe731de7d8c19ac590b0144e66974b79...v3.3.11) (2018-02-01)
 

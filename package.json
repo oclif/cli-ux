@@ -1,7 +1,7 @@
 {
   "name": "cli-ux",
   "description": "cli IO utilities",
-  "version": "3.3.11",
+  "version": "3.3.12",
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/anycli/cli-ux/issues",
   "dependencies": {
