@@ -12,5 +12,5 @@ export default function styledJSON(obj: any) {
   }
   let cardinal = require('cardinal')
   let theme = require('cardinal/themes/jq')
-  cli.info(cardinal.highlight(json, {json: true, theme}) + '\n')
+  cli.info(cardinal.highlight(json, {json: true, theme}))
 }
