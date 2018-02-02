@@ -1,3 +1,11 @@
+<a name="3.3.13"></a>
+## [3.3.13](https://github.com/anycli/cli-ux/compare/759d5e3bfd82eaa758d97678d974cd5f78c7675a...v3.3.13) (2018-02-02)
+
+
+### Bug Fixes
+
+* remove extra newline from styledJSON ([8ce11fc](https://github.com/anycli/cli-ux/commit/8ce11fc))
+
 <a name="3.3.12"></a>
 ## [3.3.12](https://github.com/anycli/cli-ux/compare/0c891855dae975e7963d51cd51a8fb88e058f478...v3.3.12) (2018-02-01)
 
