@@ -71,7 +71,7 @@ export function getErrorMessage(err: any, opts: {stack?: boolean} = {}): string 
     message,
   ].join('')
 
-  if (opts.stack || process.env.CI || severity === 'fatal' || config.debug) {
+  if (config.showStackTrace || opts.stack || process.env.CI || severity === 'fatal' || config.debug) {
     // show stack trace
     let stack = err.stack || inspect(err)
     stack = clean(stack, {pretty: true})

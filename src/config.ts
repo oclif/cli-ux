@@ -32,6 +32,7 @@ export class Config {
   errorsHandled = false
   context: any = {}
   errlog?: string
+  showStackTrace = true
 
   constructor() {
     this.debug = process.env.DEBUG === '*'

@@ -7,6 +7,7 @@ describe('errors', () => {
   .env({CI: null})
   .stderr()
   .it('warns', async output => {
+    cli.config.showStackTrace = false
     cli.warn('foobar')
     if (process.platform === 'win32') {
       expect(output.stderr).to.equal(' !    Warning: foobar\n')
