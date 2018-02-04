@@ -1,3 +1,11 @@
+<a name="3.3.14"></a>
+## [3.3.14](https://github.com/anycli/cli-ux/compare/8ce11fce38ea59a35716990d38e2242fa9977324...v3.3.14) (2018-02-04)
+
+
+### Bug Fixes
+
+* default to display stack trace ([20d719c](https://github.com/anycli/cli-ux/commit/20d719c))
+
 <a name="3.3.13"></a>
 ## [3.3.13](https://github.com/anycli/cli-ux/compare/759d5e3bfd82eaa758d97678d974cd5f78c7675a...v3.3.13) (2018-02-02)
 
