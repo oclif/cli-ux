@@ -72,11 +72,15 @@ export function getErrorMessage(err: any, opts: {stack?: boolean} = {}): string 
   ].join('')
 
   if (config.showStackTrace || opts.stack || process.env.CI || severity === 'fatal' || config.debug) {
-    // show stack trace
-    let stack = err.stack || inspect(err)
-    stack = clean(stack, {pretty: true})
-    stack = extract(stack)
-    message = [message, '', stack].join('\n')
+    if (severity === 'warn') {
+      process.emitWarning(err)
+    } else {
+      // show stack trace
+      let stack = err.stack || inspect(err)
+      stack = clean(stack, {pretty: true})
+      stack = extract(stack)
+      message = [message, '', stack].join('\n')
+    }
   } else {
     let bang = severity === 'warn' ? chalk.yellow(arrow) : chalk.red(arrow)
     if (severity === 'warn') bang = chalk.yellow(arrow)
