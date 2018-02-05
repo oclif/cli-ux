@@ -1,3 +1,12 @@
+<a name="3.3.15"></a>
+## [3.3.15](https://github.com/anycli/cli-ux/compare/20d719c681e5e23488cfa6a494e34e2968133e6a...v3.3.15) (2018-02-05)
+
+
+### Bug Fixes
+
+* remove notify ([c0ff832](https://github.com/anycli/cli-ux/commit/c0ff832))
+* remove notify ([5fbbf70](https://github.com/anycli/cli-ux/commit/5fbbf70))
+
 <a name="3.3.14"></a>
 ## [3.3.14](https://github.com/anycli/cli-ux/compare/8ce11fce38ea59a35716990d38e2242fa9977324...v3.3.14) (2018-02-04)
 
