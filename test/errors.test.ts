@@ -10,9 +10,9 @@ describe('errors', () => {
     cli.config.showStackTrace = false
     cli.warn('foobar')
     if (process.platform === 'win32') {
-      expect(output.stderr).to.equal(' !    Warning: foobar\n')
+      expect(output.stderr).to.equal(' ×    Warning: foobar\n')
     } else {
-      expect(output.stderr).to.equal(' ▸    Warning: foobar\n')
+      expect(output.stderr).to.equal(' ✖    Warning: foobar\n')
     }
   })
 
@@ -23,9 +23,9 @@ describe('errors', () => {
     cli.config.context = {foo: 'bar'}
     cli.warn('foobar')
     if (process.platform === 'win32') {
-      expect(output.stderr).to.equal(' !    Warning: foobar\n !\n !    foo: bar\n')
+      expect(output.stderr).to.equal(' ×    Warning: foobar\n ×\n ×    foo: bar\n')
     } else {
-      expect(output.stderr).to.equal(' ▸    Warning: foobar\n ▸\n ▸    foo: bar\n')
+      expect(output.stderr).to.equal(' ✖    Warning: foobar\n ✖\n ✖    foo: bar\n')
     }
   })
 
