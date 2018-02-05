@@ -27,24 +27,16 @@ const Action = actionType === 'spinner' ? require('./action/spinner').default : 
 export class Config {
   logLevel: Levels = 'warn'
   outputLevel: Levels = 'info'
-  _debug = false
   action: ActionBase = new Action()
   errorsHandled = false
-  context: any = {}
-  errlog?: string
   showStackTrace = true
 
-  constructor() {
-    this.debug = process.env.DEBUG === '*'
-  }
-
-  get debug(): boolean {
-    return this._debug
-  }
-  set debug(v: boolean) {
-    this._debug = v
-    if (this._debug && this.outputLevel !== 'trace') this.outputLevel = 'debug'
-  }
+  get debug(): boolean { return globals.debug || process.env.DEBUG === '*' }
+  set debug(v: boolean) { globals.debug = v }
+  get context(): any { return globals.context || {} }
+  set context(v: any) { globals.context = v }
+  get errlog(): string | undefined { return globals.errlog || {} }
+  set errlog(v: string | undefined) { globals.errlog = v }
 }
 
 function fetch() {
