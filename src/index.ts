@@ -1,12 +1,10 @@
 import * as EventEmitter from 'events'
-import {NodeNotifier} from 'node-notifier'
 
 import {ActionBase} from './action/base'
 import deps from './deps'
 import Errors, {CLIError, Options as ErrorOptions} from './errors'
 import {ExitError} from './exit'
 import * as Logger from './logger'
-import notify, {Notification, NotificationCallback} from './notify'
 import Output from './output'
 import {IPromptOptions} from './prompt'
 import * as Table from './styled/table'
@@ -30,7 +28,6 @@ export const cli = {
   fatal: errors('fatal'),
 
   exit(code = 1, error?: Error) { throw new ExitError(code, error) },
-  notify,
 
   get prompt() { return deps.prompt.prompt },
   get confirm() { return deps.prompt.confirm },
@@ -54,9 +51,6 @@ export {
   CLIError,
   Config,
   ErrorOptions,
-  NodeNotifier,
-  Notification,
-  NotificationCallback,
   Errors,
   ExitError,
   IPromptOptions,
