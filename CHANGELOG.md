@@ -1,3 +1,11 @@
+<a name="3.3.16"></a>
+## [3.3.16](https://github.com/anycli/cli-ux/compare/c0ff832f1103b3b3601b2e3b316b27c8dd4a6f1f...v3.3.16) (2018-02-05)
+
+
+### Bug Fixes
+
+* allow globals to be set without major version ([582601b](https://github.com/anycli/cli-ux/commit/582601b))
+
 <a name="3.3.15"></a>
 ## [3.3.15](https://github.com/anycli/cli-ux/compare/20d719c681e5e23488cfa6a494e34e2968133e6a...v3.3.15) (2018-02-05)
 
