@@ -1,3 +1,11 @@
+<a name="3.3.17"></a>
+## [3.3.17](https://github.com/anycli/cli-ux/compare/582601b7c5bf7d7c8512f4f58450fa006c4a7e77...v3.3.17) (2018-02-05)
+
+
+### Bug Fixes
+
+* new error icon ([02e5eac](https://github.com/anycli/cli-ux/commit/02e5eac))
+
 <a name="3.3.16"></a>
 ## [3.3.16](https://github.com/anycli/cli-ux/compare/c0ff832f1103b3b3601b2e3b316b27c8dd4a6f1f...v3.3.16) (2018-02-05)
 
