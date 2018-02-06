@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import {expect, fancy as base, FancyTypes, NockScope} from 'fancy-test'
+import {expect, fancy as base, FancyTypes} from 'fancy-test'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 
@@ -8,7 +8,6 @@ import cli from '../src'
 export {
   expect,
   FancyTypes,
-  NockScope,
 }
 
 let count = 0
