@@ -1,3 +1,11 @@
+<a name="3.3.18"></a>
+## [3.3.18](https://github.com/anycli/cli-ux/compare/02e5eac0a7f82869547744b55cb10d41d2d59305...v3.3.18) (2018-02-06)
+
+
+### Bug Fixes
+
+* updated deps ([5ef3c8c](https://github.com/anycli/cli-ux/commit/5ef3c8c))
+
 <a name="3.3.17"></a>
 ## [3.3.17](https://github.com/anycli/cli-ux/compare/582601b7c5bf7d7c8512f4f58450fa006c4a7e77...v3.3.17) (2018-02-05)
 
