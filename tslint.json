@@ -1,5 +1,5 @@
 {
-  "extends": "@anycli/tslint",
+  "extends": "@oclif/tslint",
   "rules": {
     "prefer-template": false
   }

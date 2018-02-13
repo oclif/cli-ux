@@ -1,4 +1,4 @@
-import screen = require('@anycli/screen')
+import screen = require('@oclif/screen')
 import ansiStyles = require('ansi-styles')
 import stripAnsi = require('strip-ansi')
 
@@ -13,7 +13,7 @@ export const deps = {
   get ansiStyles(): typeof ansiStyles { return fetch('ansi-styles') },
   get ansiEscapes(): any { return fetch('ansi-escapes') },
   get passwordPrompt(): any { return fetch('password-prompt') },
-  get screen(): typeof screen { return fetch('@anycli/screen') },
+  get screen(): typeof screen { return fetch('@oclif/screen') },
 
   get prompt(): typeof prompt.default { return fetch('./prompt').default },
   get styledObject(): typeof styledObject.default { return fetch('./styled/object').default },
