@@ -1,3 +1,11 @@
+<a name="3.3.19"></a>
+## [3.3.19](https://github.com/oclif/cli-ux/compare/5ef3c8c54d58e05b25d9df225302069be73473d1...v3.3.19) (2018-02-13)
+
+
+### Bug Fixes
+
+* rename to oclif ([b48d16e](https://github.com/oclif/cli-ux/commit/b48d16e))
+
 <a name="3.3.18"></a>
 ## [3.3.18](https://github.com/anycli/cli-ux/compare/02e5eac0a7f82869547744b55cb10d41d2d59305...v3.3.18) (2018-02-06)
 
