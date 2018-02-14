@@ -6,15 +6,14 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@heroku/linewrap/-/linewrap-1.0.0.tgz#a9d4e99f0a3e423a899b775f5f3d6747a1ff15c6"
 
-"@oclif/screen@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@oclif/screen/-/screen-1.0.0.tgz#4f9848c19c2f598bc2572c026c49b04bf32bbca0"
+"@oclif/screen@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@oclif/screen/-/screen-1.0.1.tgz#2e67c95911977a5badfff9b500e6e00dae40869c"
 
-"@oclif/tslint@^0.2.7":
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/@oclif/tslint/-/tslint-0.2.9.tgz#804c64b4ed92fa4087276295cdafbcdc78485f3a"
+"@oclif/tslint@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@oclif/tslint/-/tslint-1.0.1.tgz#ef68459638548e3a3a06fd6da60025fe33f4bcb8"
   dependencies:
-    tslint "^5.9.1"
     tslint-xo "^0.6.0"
 
 "@types/ansi-styles@^2.0.30":
@@ -51,9 +50,13 @@
   version "2.2.48"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.48.tgz#3523b126a0b049482e1c3c11877460f76622ffab"
 
-"@types/node@*", "@types/node@^9.4.5":
+"@types/node@*":
   version "9.4.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.5.tgz#d2a90c634208173d1b1a0a6ba9f1df3de62edcf5"
+
+"@types/node@^9.4.6":
+  version "9.4.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.6.tgz#d8176d864ee48753d053783e4e463aec86b8d82e"
 
 "@types/semver@^5.5.0":
   version "5.5.0"
@@ -406,14 +409,14 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-oclif@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-oclif/-/eslint-config-oclif-1.3.1.tgz#06b683cd6787d774cbdca22614858e06a3eb83ac"
+eslint-config-oclif@^1.3.7:
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/eslint-config-oclif/-/eslint-config-oclif-1.3.7.tgz#fbd09d16acdc42e554d526b372070386f7a06ecc"
   dependencies:
     eslint-config-xo-space "^0.17.0"
     eslint-plugin-mocha "^4.11.0"
-    eslint-plugin-node "^5.2.1"
-    eslint-plugin-unicorn "^3.0.1"
+    eslint-plugin-node "^6.0.0"
+    eslint-plugin-unicorn "^4.0.1"
 
 eslint-config-xo-space@^0.17.0:
   version "0.17.0"
@@ -431,18 +434,18 @@ eslint-plugin-mocha@^4.11.0:
   dependencies:
     ramda "^0.24.1"
 
-eslint-plugin-node@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-5.2.1.tgz#80df3253c4d7901045ec87fa660a284e32bdca29"
+eslint-plugin-node@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-6.0.0.tgz#5ad5ee6b5346aec6cc9cde0b8619caed2c6d8f25"
   dependencies:
     ignore "^3.3.6"
     minimatch "^3.0.4"
     resolve "^1.3.3"
-    semver "5.3.0"
+    semver "^5.4.1"
 
-eslint-plugin-unicorn@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-3.0.1.tgz#dae02614a53b921541a9318a46e50ab5bdeb5d7c"
+eslint-plugin-unicorn@^4.0.1:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-4.0.2.tgz#845de915e7a975f15779466fc92cc01973bbf103"
   dependencies:
     clean-regexp "^1.0.0"
     eslint-ast-utils "^1.0.0"
@@ -451,6 +454,7 @@ eslint-plugin-unicorn@^3.0.1:
     lodash.kebabcase "^4.0.1"
     lodash.snakecase "^4.0.1"
     lodash.upperfirst "^4.2.0"
+    safe-regex "^1.1.0"
 
 eslint-scope@^3.7.1:
   version "3.7.1"
@@ -885,9 +889,9 @@ mkdirp@0.5.1, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mocha@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-5.0.0.tgz#cccac988b0bc5477119cba0e43de7af6d6ad8f4e"
+mocha@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-5.0.1.tgz#759b62c836b0732382a62b6b1fb245ec1bc943ac"
   dependencies:
     browser-stdout "1.3.0"
     commander "2.11.0"
@@ -1054,6 +1058,10 @@ restore-cursor@^2.0.0:
     onetime "^2.0.0"
     signal-exit "^3.0.2"
 
+ret@~0.1.10:
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
+
 rimraf@^2.2.8:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
@@ -1084,11 +1092,13 @@ safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
 
-semver@5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
+safe-regex@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/safe-regex/-/safe-regex-1.1.0.tgz#40a3669f3b077d1e943d44629e157dd48023bf2e"
+  dependencies:
+    ret "~0.1.10"
 
-semver@^5.3.0, semver@^5.5.0:
+semver@^5.3.0, semver@^5.4.1, semver@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
