@@ -10,7 +10,7 @@ export interface ITask {
 export type ActionType = 'spinner' | 'simple' | 'debug'
 
 export interface Options {
-  stderr?: boolean
+  stdout?: boolean
 }
 
 const stdmockWrite = {
@@ -20,11 +20,11 @@ const stdmockWrite = {
 
 export class ActionBase {
   type!: ActionType
-  std: 'stdout' | 'stderr' = 'stdout'
+  std: 'stdout' | 'stderr' = 'stderr'
   protected stdmocks?: ['stdout' | 'stderr', string[]][]
 
   public start(action: string, status?: string, opts: Options = {}) {
-    this.std = opts.stderr ? 'stderr' : 'stdout'
+    this.std = opts.stdout ? 'stdout' : 'stderr'
     const task = (this.task = {action, status, active: !!(this.task && this.task.active)})
     this._start()
     task.active = true
