@@ -1,3 +1,11 @@
+<a name="3.3.23"></a>
+## [3.3.23](https://github.com/oclif/cli-ux/compare/v3.3.22...v3.3.23) (2018-02-16)
+
+
+### Bug Fixes
+
+* use stderr for action by default ([536a5d7](https://github.com/oclif/cli-ux/commit/536a5d7))
+
 <a name="3.3.20"></a>
 ## [3.3.20](https://github.com/oclif/cli-ux/compare/b48d16e80adc6f2cfb49524243a5e87f01465abb...v3.3.20) (2018-02-14)
 
