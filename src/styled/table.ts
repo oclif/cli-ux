@@ -48,7 +48,7 @@ export default function table(data: any[], inputOptions: Partial<TableOptions> =
   const options: TableOptions = {
     ...inputOptions,
     columns: (inputOptions.columns || []).map(c => ({
-      format: (value: any) => (value ? value.toString() : ''),
+      format: (value: any) => (value != null ? value.toString() : ''),
       width: 0,
       label() {
         return this.key!.toString()
