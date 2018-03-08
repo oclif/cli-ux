@@ -1,3 +1,11 @@
+<a name="3.3.25"></a>
+## [3.3.25](https://github.com/oclif/cli-ux/compare/6bb5303b1098826dd400faa80b09871a1044273e...v3.3.25) (2018-03-08)
+
+
+### Bug Fixes
+
+* default table formatter to display falsy values. ([14ea34c](https://github.com/oclif/cli-ux/commit/14ea34c))
+
 <a name="3.3.24"></a>
 ## [3.3.24](https://github.com/oclif/cli-ux/compare/536a5d711395ea47409773a1c14ce8343229435d...v3.3.24) (2018-02-28)
 
