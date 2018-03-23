@@ -1,3 +1,11 @@
+<a name="3.3.26"></a>
+## [3.3.26](https://github.com/oclif/cli-ux/compare/e67e228581456006b2e915eaa7d55efff62fc382...v3.3.26) (2018-03-23)
+
+
+### Bug Fixes
+
+* updated deps ([d772af6](https://github.com/oclif/cli-ux/commit/d772af6))
+
 <a name="3.3.25"></a>
 ## [3.3.25](https://github.com/oclif/cli-ux/compare/6bb5303b1098826dd400faa80b09871a1044273e...v3.3.25) (2018-03-08)
 
