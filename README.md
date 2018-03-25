@@ -11,3 +11,29 @@ cli IO utilities
 [![Known Vulnerabilities](https://snyk.io/test/npm/cli-ux/badge.svg)](https://snyk.io/test/npm/cli-ux)
 [![Downloads/week](https://img.shields.io/npm/dw/cli-ux.svg)](https://npmjs.org/package/cli-ux)
 [![License](https://img.shields.io/npm/l/cli-ux.svg)](https://github.com/oclif/cli-ux/blob/master/package.json)
+
+# Usage
+
+The following assumes you have installed `cli-ux` to your project with `npm install cli-ux` or `yarn add cli-ux` and have it required in your script (TypeScript example):
+
+```typescript
+import cli from 'cli-ux'
+cli.prompt('What is your name?')
+```
+
+# cli.prompt()
+
+Prompt for user input.
+
+```typescript
+// just prompt for input
+await cli.prompt('What is your name?')
+
+// mask input after enter is pressed
+await cli.prompt('What is your two-factor token?', {type: 'mask'})
+
+// mask input after enter is pressed
+await cli.prompt('What is your password?', {type: 'hide'})
+```
+
+![prompt demo](assets/prompt.gif)
