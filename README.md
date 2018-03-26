@@ -32,7 +32,7 @@ await cli.prompt('What is your name?')
 // mask input after enter is pressed
 await cli.prompt('What is your two-factor token?', {type: 'mask'})
 
-// mask input after enter is pressed
+// mask input on keypress (before enter is pressed)
 await cli.prompt('What is your password?', {type: 'hide'})
 ```
 
