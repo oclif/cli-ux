@@ -13,15 +13,14 @@ export interface Options {
   stdout?: boolean
 }
 
-const stdmockWrite = {
-  stdout: process.stdout.write,
-  stderr: process.stderr.write,
-}
-
 export class ActionBase {
   type!: ActionType
   std: 'stdout' | 'stderr' = 'stderr'
   protected stdmocks?: ['stdout' | 'stderr', string[]][]
+  private stdmockOrigs = {
+    stdout: process.stdout.write,
+    stderr: process.stderr.write,
+  }
 
   public start(action: string, status?: string, opts: Options = {}) {
     this.std = opts.stdout ? 'stdout' : 'stderr'
@@ -134,6 +133,11 @@ export class ActionBase {
       const outputs: ['stdout', 'stderr'] = ['stdout', 'stderr']
       if (toggle) {
         if (this.stdmocks) return
+        this.stdmockOrigs = {
+          stdout: process.stdout.write,
+          stderr: process.stderr.write,
+        }
+
         this.stdmocks = []
         for (let std of outputs) {
           (process[std] as any).write = (...args: any[]) => {
@@ -144,7 +148,7 @@ export class ActionBase {
         if (!this.stdmocks) return
         // this._write('stderr', '\nresetstdmock\n\n\n')
         delete this.stdmocks
-        for (let std of outputs) process[std].write = stdmockWrite[std] as any
+        for (let std of outputs) process[std].write = this.stdmockOrigs[std] as any
       }
     } catch (err) {
       this._write('stderr', inspect(err))
@@ -178,6 +182,6 @@ export class ActionBase {
    * write to the real stdout/stderr
    */
   protected _write(std: 'stdout' | 'stderr', s: string | string[]) {
-    stdmockWrite[std].apply(process[std], _.castArray(s))
+    this.stdmockOrigs[std].apply(process[std], _.castArray(s))
   }
 }
