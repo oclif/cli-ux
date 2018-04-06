@@ -1,3 +1,11 @@
+<a name="3.3.27"></a>
+## [3.3.27](https://github.com/oclif/cli-ux/compare/d772af6bda5effb7edb7f7af856d079f680d213d...v3.3.27) (2018-04-06)
+
+
+### Bug Fixes
+
+* allow stdout/stderr to work with stdout-stderr for testing ([6fea4ad](https://github.com/oclif/cli-ux/commit/6fea4ad))
+
 <a name="3.3.26"></a>
 ## [3.3.26](https://github.com/oclif/cli-ux/compare/e67e228581456006b2e915eaa7d55efff62fc382...v3.3.26) (2018-03-23)
 
