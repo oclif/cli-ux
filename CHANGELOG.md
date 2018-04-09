@@ -1,3 +1,11 @@
+<a name="3.3.28"></a>
+## [3.3.28](https://github.com/oclif/cli-ux/compare/baf2c1530acbd29ccf4f89b3fde6ecd31ad398a4...v3.3.28) (2018-04-09)
+
+
+### Bug Fixes
+
+* move [@heroku](https://github.com/heroku)/linewrap to [@oclif](https://github.com/oclif)/linewrap ([dd8dbeb](https://github.com/oclif/cli-ux/commit/dd8dbeb))
+
 <a name="3.3.27"></a>
 ## [3.3.27](https://github.com/oclif/cli-ux/compare/d772af6bda5effb7edb7f7af856d079f680d213d...v3.3.27) (2018-04-06)
 
