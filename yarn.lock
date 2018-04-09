@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@heroku/linewrap@^1.0.0":
+"@oclif/linewrap@^1.0.0":
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@heroku/linewrap/-/linewrap-1.0.0.tgz#a9d4e99f0a3e423a899b775f5f3d6747a1ff15c6"
+  resolved "https://registry.yarnpkg.com/@oclif/linewrap/-/linewrap-1.0.0.tgz#aedcb64b479d4db7be24196384897b5000901d91"
 
 "@oclif/screen@^1.0.2":
   version "1.0.2"

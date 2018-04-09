@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 import deps from './deps'
 
 function linewrap(length: number, s: string): string {
-  const lw = require('@heroku/linewrap')
+  const lw = require('@oclif/linewrap')
   return lw(length, deps.screen.stdtermwidth, {
     skipScheme: 'ansi-color',
   })(s).trim()

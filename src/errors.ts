@@ -42,7 +42,7 @@ export function getErrorMessage(err: any, opts: {stack?: boolean} = {}): string 
   const context = err['cli-ux'] && err['cli-ux'].context
 
   function wrap(msg: string): string {
-    const linewrap = require('@heroku/linewrap')
+    const linewrap = require('@oclif/linewrap')
     return linewrap(6, deps.screen.errtermwidth, {
       skip: /^\$ .*$/,
       skipScheme: 'ansi-color',
