@@ -1,3 +1,11 @@
+<a name="3.3.30"></a>
+## [3.3.30](https://github.com/oclif/cli-ux/compare/691783132f73d1d88267e34d18391c4756d76885...v3.3.30) (2018-04-10)
+
+
+### Bug Fixes
+
+* updated supportsColor reference ([0e5b0e9](https://github.com/oclif/cli-ux/commit/0e5b0e9))
+
 <a name="3.3.29"></a>
 ## [3.3.29](https://github.com/oclif/cli-ux/compare/dd8dbeb3c05c094274e8a757ed66dbd35dded47e...v3.3.29) (2018-04-10)
 
