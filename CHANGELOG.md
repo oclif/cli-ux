@@ -1,3 +1,12 @@
+<a name="3.3.29"></a>
+## [3.3.29](https://github.com/oclif/cli-ux/compare/dd8dbeb3c05c094274e8a757ed66dbd35dded47e...v3.3.29) (2018-04-10)
+
+
+### Bug Fixes
+
+* disable spinner when TERM=emacs-color ([6917831](https://github.com/oclif/cli-ux/commit/6917831))
+* fixed errlog default ([7adfa9a](https://github.com/oclif/cli-ux/commit/7adfa9a))
+
 <a name="3.3.28"></a>
 ## [3.3.28](https://github.com/oclif/cli-ux/compare/baf2c1530acbd29ccf4f89b3fde6ecd31ad398a4...v3.3.28) (2018-04-09)
 
