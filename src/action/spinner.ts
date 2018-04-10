@@ -10,7 +10,7 @@ const spinners = require('./spinners')
 
 function color(s: string): string {
   if (!supportsColor) return s
-  let has256 = supportsColor.has256 || (process.env.TERM || '').indexOf('256') !== -1
+  let has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
   return has256 ? `\u001b[38;5;104m${s}${deps.ansiStyles.reset.open}` : chalk.magenta(s)
 }
 
