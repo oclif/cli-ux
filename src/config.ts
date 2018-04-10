@@ -35,7 +35,7 @@ export class Config {
   set debug(v: boolean) { globals.debug = v }
   get context(): any { return globals.context || {} }
   set context(v: any) { globals.context = v }
-  get errlog(): string | undefined { return globals.errlog || {} }
+  get errlog(): string | undefined { return globals.errlog }
   set errlog(v: string | undefined) { globals.errlog = v }
 }
 
