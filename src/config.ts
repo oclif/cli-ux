@@ -18,7 +18,7 @@ const actionType = (
   !!process.stdin.isTTY &&
   !!process.stderr.isTTY &&
   !process.env.CI &&
-  process.env.TERM !== 'dumb' &&
+  !['dumb', 'emacs-color'].includes(process.env.TERM!) &&
   'spinner'
 ) || 'simple'
 
