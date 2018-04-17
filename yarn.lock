@@ -1248,9 +1248,9 @@ tree-kill@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.0.tgz#5846786237b4239014f05db156b643212d4c6f36"
 
-ts-node@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-5.0.1.tgz#78e5d1cb3f704de1b641e43b76be2d4094f06f81"
+ts-node@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.0.0.tgz#46c25f8498593a9248eeea16906f1598fa098140"
   dependencies:
     arrify "^1.0.0"
     chalk "^2.3.0"
