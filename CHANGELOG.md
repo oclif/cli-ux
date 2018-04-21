@@ -1,3 +1,11 @@
+<a name="3.4.0"></a>
+# [3.4.0](https://github.com/oclif/cli-ux/compare/d8cbd0c99733f48e706650a90151620fc68080f2...v3.4.0) (2018-04-21)
+
+
+### Features
+
+* allow the user to require no input, which allows for defaults ([#27](https://github.com/oclif/cli-ux/issues/27)) ([93a182d](https://github.com/oclif/cli-ux/commit/93a182d))
+
 <a name="3.3.31"></a>
 ## [3.3.31](https://github.com/oclif/cli-ux/compare/0e5b0e97526d80cc6567338b323549b052b1b666...v3.3.31) (2018-04-18)
 
