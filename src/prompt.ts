@@ -6,6 +6,10 @@ import deps from './deps'
 export interface IPromptOptions {
   prompt?: string
   type?: 'normal' | 'mask' | 'hide'
+  /**
+   * Requires user input if true, otherwise allows empty input
+   */
+  required?: boolean
 }
 
 interface IPromptConfig {
@@ -13,6 +17,7 @@ interface IPromptConfig {
   prompt: string
   type: 'normal' | 'mask' | 'hide'
   isTTY: boolean
+  required: boolean
 }
 
 export default {
@@ -39,6 +44,7 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
     isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY), name,
     prompt: name ? chalk.dim(`${name}: `) : chalk.dim('> '),
     type: 'normal',
+    required: true,
     ...inputOptions,
   }
   switch (options.type) {
@@ -61,7 +67,7 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
     process.stdin.once('data', data => {
       process.stdin.pause()
       data = data.trim()
-      if (data === '') {
+      if (options.required && data === '') {
         resolve(normal(options, retries - 1))
       } else {
         resolve(data)
