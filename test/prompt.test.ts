@@ -3,9 +3,6 @@ import cli from '../src'
 import {expect, fancy} from './fancy'
 
 describe('prompt', () => {
-  after(function () {
-    (global as any).asyncDump()
-  })
   fancy
   .stdout()
   .stderr()
