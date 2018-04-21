@@ -1,3 +1,11 @@
+<a name="3.4.1"></a>
+## [3.4.1](https://github.com/oclif/cli-ux/compare/v3.4.0...v3.4.1) (2018-04-21)
+
+
+### Bug Fixes
+
+* bump semantic-release ([3cbf708](https://github.com/oclif/cli-ux/commit/3cbf708))
+
 <a name="3.4.0"></a>
 # [3.4.0](https://github.com/oclif/cli-ux/compare/d8cbd0c99733f48e706650a90151620fc68080f2...v3.4.0) (2018-04-21)
 
