@@ -8,7 +8,7 @@
     "@oclif/linewrap": "^1.0.0",
     "@oclif/screen": "^1.0.2",
     "ansi-styles": "^3.2.1",
-    "cardinal": "^1.0.0",
+    "cardinal": "^2.0.0",
     "chalk": "^2.4.0",
     "clean-stack": "^1.3.0",
     "extract-stack": "^1.0.0",
