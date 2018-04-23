@@ -133,9 +133,9 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ansicolors@~0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.2.1.tgz#be089599097b74a5c9c4a84a0cdbcdb62bd87aef"
+ansicolors@~0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.3.2.tgz#665597de86a9ffe3aa9bfbe6cae5c6ea426b4979"
 
 argparse@^1.0.7:
   version "1.0.9"
@@ -198,12 +198,12 @@ callsites@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-0.2.0.tgz#afab96262910a7f33c19a5775825c69f34e350ca"
 
-cardinal@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/cardinal/-/cardinal-1.0.0.tgz#50e21c1b0aa37729f9377def196b5a9cec932ee9"
+cardinal@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/cardinal/-/cardinal-2.0.1.tgz#2431630e6c006253b803967249b2d72e50d1985d"
   dependencies:
-    ansicolors "~0.2.1"
-    redeyed "~1.0.0"
+    ansicolors "~0.3.2"
+    redeyed "~2.0.0"
 
 chai@^4.1.2:
   version "4.1.2"
@@ -523,13 +523,9 @@ espree@^3.5.4:
     acorn "^5.5.0"
     acorn-jsx "^3.0.0"
 
-esprima@^4.0.0:
+esprima@^4.0.0, esprima@~4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
-
-esprima@~3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.0.0.tgz#53cf247acda77313e551c3aa2e73342d3fb4f7d9"
 
 esquery@^1.0.0:
   version "1.0.0"
@@ -1026,11 +1022,11 @@ readable-stream@^2.2.2:
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
 
-redeyed@~1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/redeyed/-/redeyed-1.0.1.tgz#e96c193b40c0816b00aec842698e61185e55498a"
+redeyed@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/redeyed/-/redeyed-2.0.0.tgz#e7ae722cd4ce4dbc537cb5810fef3de2ac76ff12"
   dependencies:
-    esprima "~3.0.0"
+    esprima "~4.0.0"
 
 regexpp@^1.0.1:
   version "1.0.1"
