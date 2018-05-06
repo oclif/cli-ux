@@ -15,7 +15,7 @@
     "fs-extra": "^6.0.0",
     "indent-string": "^3.2.0",
     "lodash": "^4.17.10",
-    "password-prompt": "^1.0.4",
+    "password-prompt": "^1.0.5",
     "semver": "^5.5.0",
     "strip-ansi": "^4.0.0",
     "supports-color": "^5.4.0"
@@ -30,7 +30,7 @@
     "@types/indent-string": "^3.0.0",
     "@types/lodash": "^4.14.108",
     "@types/mocha": "^5.2.0",
-    "@types/node": "^10.0.2",
+    "@types/node": "^10.0.4",
     "@types/semver": "^5.5.0",
     "@types/strip-ansi": "^3.0.0",
     "@types/supports-color": "^5.3.0",
@@ -41,8 +41,8 @@
     "fancy-test": "^1.0.6",
     "husky": "^0.14.3",
     "mocha": "^5.1.1",
-    "ts-node": "^6.0.2",
-    "tslint": "^5.9.1",
+    "ts-node": "^6.0.3",
+    "tslint": "^5.10.0",
     "typescript": "^2.8.3"
   },
   "engines": {

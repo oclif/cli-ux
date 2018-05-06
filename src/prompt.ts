@@ -10,6 +10,7 @@ export interface IPromptOptions {
    * Requires user input if true, otherwise allows empty input
    */
   required?: boolean
+  default?: string
 }
 
 interface IPromptConfig {
@@ -18,6 +19,7 @@ interface IPromptConfig {
   type: 'normal' | 'mask' | 'hide'
   isTTY: boolean
   required: boolean
+  default?: string
 }
 
 export default {
@@ -40,9 +42,13 @@ export default {
 }
 
 function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
+  let prompt = chalk.dim('> ')
+  if (name && inputOptions.default) prompt = chalk.dim(name) + ' ' + chalk.yellow('[' + inputOptions.default + ']') + chalk.dim(': ')
+  else if (name) prompt = chalk.dim(`${name}: `)
   const options: IPromptConfig = {
-    isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY), name,
-    prompt: name ? chalk.dim(`${name}: `) : chalk.dim('> '),
+    isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY),
+    name,
+    prompt,
     type: 'normal',
     required: true,
     ...inputOptions,
@@ -67,10 +73,10 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
     process.stdin.once('data', data => {
       process.stdin.pause()
       data = data.trim()
-      if (options.required && data === '') {
+      if (!options.default && options.required && data === '') {
         resolve(normal(options, retries - 1))
       } else {
-        resolve(data)
+        resolve(data || options.default)
       }
     })
   })
