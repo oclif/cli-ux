@@ -1,3 +1,17 @@
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/oclif/cli-ux/compare/v3.4.1...v3.5.0) (2018-05-06)
+
+
+### Bug Fixes
+
+* updated deps ([d26fc0f](https://github.com/oclif/cli-ux/commit/d26fc0f))
+
+
+### Features
+
+* default for prompt ([bb4c363](https://github.com/oclif/cli-ux/commit/bb4c363))
+* default for prompt ([b136fce](https://github.com/oclif/cli-ux/commit/b136fce))
+
 <a name="3.4.1"></a>
 ## [3.4.1](https://github.com/oclif/cli-ux/compare/v3.4.0...v3.4.1) (2018-04-21)
 
