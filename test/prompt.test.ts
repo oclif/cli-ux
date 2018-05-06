@@ -25,6 +25,6 @@ describe('prompt', () => {
       process.stdin.emit('data', '')
       const answer = await promptPromise
       await cli.done()
-      expect(answer).to.equal('')
+      expect(answer).to.equal(undefined)
   })
 })

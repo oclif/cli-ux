@@ -1,6 +1,6 @@
 import {cli} from '../src'
 
-const wait = (ms = 400) => new Promise(resolve => setTimeout(resolve, ms))
+const wait = (ms = 100) => new Promise(resolve => setTimeout(resolve, ms))
 
 async function run() {
   cli.action.start('doing a thing')
@@ -16,6 +16,9 @@ async function run() {
   await wait()
   cli.log(`you entered: ${input}`)
   input = await cli.prompt('your name (default)', {default: 'somedefault'})
+  await wait()
+  cli.log(`you entered: ${input}`)
+  input = await cli.prompt('your name (not required)', {required: false})
   await wait()
   cli.action.stop()
   cli.log(`you entered: ${input}`)
