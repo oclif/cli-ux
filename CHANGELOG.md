@@ -1,3 +1,16 @@
+<a name="4.0.0"></a>
+# [4.0.0](https://github.com/oclif/cli-ux/compare/v3.5.0...v4.0.0) (2018-05-06)
+
+
+### Features
+
+* use [@oclif](https://github.com/oclif)/errors for errors ([7ecdf46](https://github.com/oclif/cli-ux/commit/7ecdf46))
+
+
+### BREAKING CHANGES
+
+* all the error logging functions have been moved to @oclif/errors
+
 <a name="3.5.0"></a>
 # [3.5.0](https://github.com/oclif/cli-ux/compare/v3.4.1...v3.5.0) (2018-05-06)
 
