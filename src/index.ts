@@ -1,33 +1,19 @@
-import * as EventEmitter from 'events'
+import * as Errors from '@oclif/errors'
+import * as util from 'util'
 
 import {ActionBase} from './action/base'
+import {config, Config} from './config'
 import deps from './deps'
-import Errors, {CLIError, Options as ErrorOptions} from './errors'
 import {ExitError} from './exit'
-import * as Logger from './logger'
-import Output from './output'
 import {IPromptOptions} from './prompt'
 import * as Table from './styled/table'
 
-import {config, Config} from './config'
-
-const e = new EventEmitter()
-const output = Output(e)
-const errors = Errors(e)
-const logger = Logger.default(e)
-
 export const cli = {
   config,
-  trace: output('trace'),
-  debug: output('debug'),
-  info: output('info'),
-  log: output('info'),
 
-  warn: errors('warn'),
-  error: errors('error'),
-  fatal: errors('fatal'),
-
-  exit(code = 1, error?: Error) { throw new ExitError(code, error) },
+  warn: Errors.warn,
+  error: Errors.error,
+  exit: Errors.exit,
 
   get prompt() { return deps.prompt.prompt },
   get confirm() { return deps.prompt.confirm },
@@ -39,19 +25,35 @@ export const cli = {
 
   async done() {
     config.action.stop()
-    await logger.flush()
     // await flushStdout()
-  }
+  },
+
+  trace(format: string, ...args: string[]) {
+    if (this.config.outputLevel === 'trace') {
+      process.stdout.write(util.format(format, ...args) + '\n')
+    }
+  },
+
+  debug(format: string, ...args: string[]) {
+    if (['trace', 'debug'].includes(this.config.outputLevel)) {
+      process.stdout.write(util.format(format, ...args) + '\n')
+    }
+  },
+
+  info(format: string, ...args: string[]) {
+    process.stdout.write(util.format(format, ...args) + '\n')
+  },
+
+  log(format: string, ...args: string[]) {
+    this.info(format, ...args)
+  },
 }
 export default cli
 
 export {
   config,
   ActionBase,
-  CLIError,
   Config,
-  ErrorOptions,
-  Errors,
   ExitError,
   IPromptOptions,
   Table,

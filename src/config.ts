@@ -25,7 +25,6 @@ const actionType = (
 const Action = actionType === 'spinner' ? require('./action/spinner').default : require('./action/simple').default
 
 export class Config {
-  logLevel: Levels = 'warn'
   outputLevel: Levels = 'info'
   action: ActionBase = new Action()
   errorsHandled = false
@@ -35,8 +34,6 @@ export class Config {
   set debug(v: boolean) { globals.debug = v }
   get context(): any { return globals.context || {} }
   set context(v: any) { globals.context = v }
-  get errlog(): string | undefined { return globals.errlog }
-  set errlog(v: string | undefined) { globals.errlog = v }
 }
 
 function fetch() {

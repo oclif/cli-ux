@@ -53,3 +53,4 @@ async function main() {
   cli.error('oh no')
 }
 main()
+.catch(require('@oclif/errors/handle'))
