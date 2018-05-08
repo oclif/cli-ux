@@ -42,9 +42,9 @@ export default {
 }
 
 function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
-  let prompt = chalk.dim('> ')
-  if (name && inputOptions.default) prompt = chalk.dim(name) + ' ' + chalk.yellow('[' + inputOptions.default + ']') + chalk.dim(': ')
-  else if (name) prompt = chalk.dim(`${name}: `)
+  let prompt = '> '
+  if (name && inputOptions.default) prompt = name + ' ' + chalk.yellow('[' + inputOptions.default + ']') + ': '
+  else if (name) prompt = `${name}: `
   const options: IPromptConfig = {
     isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY),
     name,
