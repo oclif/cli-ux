@@ -1,3 +1,11 @@
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/oclif/cli-ux/compare/v4.0.0...v4.0.1) (2018-05-08)
+
+
+### Bug Fixes
+
+* remove prompt dimming ([57eb516](https://github.com/oclif/cli-ux/commit/57eb516))
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/oclif/cli-ux/compare/v3.5.0...v4.0.0) (2018-05-06)
 
