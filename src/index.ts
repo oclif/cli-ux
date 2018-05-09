@@ -47,6 +47,16 @@ export const cli = {
   log(format: string, ...args: string[]) {
     this.info(format, ...args)
   },
+
+  url(text: string, uri: string, params = {}) {
+    const supports = require('supports-hyperlinks')
+    if (supports.stdout) {
+      const hyperlinker = require('hyperlinker')
+      this.log(hyperlinker(text, uri, params))
+    } else {
+      this.log(uri)
+    }
+  }
 }
 export default cli
 

@@ -38,6 +38,18 @@ await cli.prompt('What is your password?', {type: 'hide'})
 
 ![prompt demo](assets/prompt.gif)
 
+# cli.url(text, uri)
+
+Create a hyperlink (if supported in the terminal)
+
+```typescript
+await cli.prompt('sometext', 'https://google.com')
+// shows sometext as a hyperlink in supported terminals
+// shows https://google.com in unsupported terminals
+```
+
+![url demo](assets/url.gif)
+
 # cli.action
 
 Shows a spinner
