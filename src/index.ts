@@ -56,7 +56,17 @@ export const cli = {
     } else {
       this.log(uri)
     }
-  }
+  },
+
+  annotation(text: string, annotation: string) {
+    const supports = require('supports-hyperlinks')
+    if (supports.stdout) {
+      //\u001b]8;;https://google.com\u0007sometext\u001b]8;;\u0007
+      this.log(`\u001b]1337;AddAnnotation=${text.length}|${annotation}\u0007${text}`)
+    } else {
+      this.log(text)
+    }
+  },
 }
 export default cli
 

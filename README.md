@@ -68,3 +68,14 @@ cli.action.stop('custom message') // shows 'starting a process... custom message
 This degrades gracefully when not connected to a TTY. It queues up any writes to stdout/stderr so they are displayed above the spinner.
 
 ![action demo](assets/action.gif)
+
+# annotation
+
+Shows an iterm annotation
+
+```typescript
+// start the spinner
+cli.annotation('sometest', 'annotated with this text')
+```
+
+![annotation demo](assets/annotation.png)
