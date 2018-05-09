@@ -1,3 +1,11 @@
+<a name="4.2.0"></a>
+# [4.2.0](https://github.com/oclif/cli-ux/compare/v4.1.0...v4.2.0) (2018-05-09)
+
+
+### Features
+
+* annotations ([343fc79](https://github.com/oclif/cli-ux/commit/343fc79))
+
 <a name="4.1.0"></a>
 # [4.1.0](https://github.com/oclif/cli-ux/compare/v4.0.1...v4.1.0) (2018-05-09)
 
