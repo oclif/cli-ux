@@ -1,3 +1,11 @@
+<a name="4.2.1"></a>
+## [4.2.1](https://github.com/oclif/cli-ux/compare/v4.2.0...v4.2.1) (2018-05-10)
+
+
+### Bug Fixes
+
+* allow ux.log() with no args ([6182edc](https://github.com/oclif/cli-ux/commit/6182edc))
+
 <a name="4.2.0"></a>
 # [4.2.0](https://github.com/oclif/cli-ux/compare/v4.1.0...v4.2.0) (2018-05-09)
 
