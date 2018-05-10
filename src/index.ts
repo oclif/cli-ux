@@ -44,8 +44,8 @@ export const cli = {
     process.stdout.write(util.format(format, ...args) + '\n')
   },
 
-  log(format: string, ...args: string[]) {
-    this.info(format, ...args)
+  log(format?: string, ...args: string[]) {
+    this.info(format || '', ...args)
   },
 
   url(text: string, uri: string, params = {}) {
