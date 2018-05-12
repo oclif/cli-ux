@@ -1,3 +1,11 @@
+<a name="4.2.2"></a>
+## [4.2.2](https://github.com/oclif/cli-ux/compare/v4.2.1...v4.2.2) (2018-05-12)
+
+
+### Bug Fixes
+
+* action output ([87900d3](https://github.com/oclif/cli-ux/commit/87900d3))
+
 <a name="4.2.1"></a>
 ## [4.2.1](https://github.com/oclif/cli-ux/compare/v4.2.0...v4.2.1) (2018-05-10)
 
