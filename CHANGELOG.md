@@ -1,3 +1,11 @@
+<a name="4.2.3"></a>
+## [4.2.3](https://github.com/oclif/cli-ux/compare/v4.2.2...v4.2.3) (2018-05-12)
+
+
+### Bug Fixes
+
+* updated deps ([d6aef92](https://github.com/oclif/cli-ux/commit/d6aef92))
+
 <a name="4.2.2"></a>
 ## [4.2.2](https://github.com/oclif/cli-ux/compare/v4.2.1...v4.2.2) (2018-05-12)
 
