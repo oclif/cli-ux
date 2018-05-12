@@ -166,7 +166,7 @@ export class ActionBase {
         let cur = this.stdmocks.shift() as ['stdout' | 'stderr', string[]]
         std = cur[0]
         this._write(std, cur[1])
-        output += cur[1].map((a: any) => a.toString('utf8')).join('')
+        output += (cur[1][0] as any).toString('utf8')
       }
       // add newline if there isn't one already
       // otherwise we'll just overwrite it when we render
