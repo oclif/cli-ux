@@ -8,7 +8,7 @@ import {ExitError} from './exit'
 import {IPromptOptions} from './prompt'
 import * as Table from './styled/table'
 
-export const cli = {
+export const ux = {
   config,
 
   warn: Errors.warn,
@@ -18,7 +18,7 @@ export const cli = {
   get prompt() { return deps.prompt.prompt },
   get confirm() { return deps.prompt.confirm },
   get action() { return config.action },
-  styledObject(obj: any, keys?: string[]) { cli.info(deps.styledObject(obj, keys)) },
+  styledObject(obj: any, keys?: string[]) { ux.info(deps.styledObject(obj, keys)) },
   get styledHeader() { return deps.styledHeader },
   get styledJSON() { return deps.styledJSON },
   get table() { return deps.table },
@@ -72,16 +72,16 @@ export const cli = {
     function timeout(p: Promise<any>, ms: number) {
       function wait(ms: number, unref: boolean = false) {
         return new Promise(resolve => {
-          let t: any = setTimeout(resolve, ms)
+          let t: any = setTimeout(() => resolve(), ms)
           if (unref) t.unref()
         })
       }
 
-      return Promise.race([p, wait(ms, true).then(() => cli.warn('timed out'))])
+      return Promise.race([p, wait(ms, true).then(() => ux.warn('timed out'))])
     }
 
     async function flush() {
-      let p = new Promise(resolve => process.stdout.once('drain', resolve))
+      let p = new Promise(resolve => process.stdout.once('drain', () => resolve()))
       process.stdout.write('')
       return p
     }
@@ -89,7 +89,8 @@ export const cli = {
     await timeout(flush(), 10000)
   }
 }
-export default cli
+export default ux
+export const cli = ux
 
 export {
   config,
@@ -102,7 +103,7 @@ export {
 
 process.once('exit', async () => {
   try {
-    await cli.done()
+    await ux.done()
   } catch (err) {
     // tslint:disable no-console
     console.error(err)
