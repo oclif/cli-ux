@@ -67,6 +67,27 @@ export const cli = {
       this.log(text)
     }
   },
+
+  async flush() {
+    function timeout(p: Promise<any>, ms: number) {
+      function wait(ms: number, unref: boolean = false) {
+        return new Promise(resolve => {
+          let t: any = setTimeout(resolve, ms)
+          if (unref) t.unref()
+        })
+      }
+
+      return Promise.race([p, wait(ms, true).then(() => cli.warn('timed out'))])
+    }
+
+    async function flush() {
+      let p = new Promise(resolve => process.stdout.once('drain', resolve))
+      process.stdout.write('')
+      return p
+    }
+
+    await timeout(flush(), 10000)
+  }
 }
 export default cli
 
@@ -88,24 +109,3 @@ process.once('exit', async () => {
     process.exitCode = 1
   }
 })
-
-// async function flushStdout() {
-//   function timeout(p: Promise<any>, ms: number) {
-//     function wait(ms: number, unref: boolean = false) {
-//       return new Promise(resolve => {
-//         let t: any = setTimeout(resolve, ms)
-//         if (unref) t.unref()
-//       })
-//     }
-
-//     return Promise.race([p, wait(ms, true).then(() => cli.warn('timed out'))])
-//   }
-
-//   async function flush() {
-//     let p = new Promise(resolve => process.stdout.once('drain', resolve))
-//     process.stdout.write('')
-//     return p
-//   }
-
-//   await timeout(flush(), 10000)
-// }
