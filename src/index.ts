@@ -77,7 +77,7 @@ export const ux = {
         })
       }
 
-      return Promise.race([p, wait(ms, true).then(() => ux.warn('timed out'))])
+      return Promise.race([p, wait(ms, true).then(() => ux.error('timed out'))])
     }
 
     async function flush() {
