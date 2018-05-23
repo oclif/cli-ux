@@ -4,7 +4,7 @@ import * as path from 'path'
 const isWsl = require('is-wsl')
 
 export namespace open {
-  export interface Options {
+  export type Options = {
     // wait: boolean
     app?: string | string[]
   }
