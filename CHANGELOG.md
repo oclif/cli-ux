@@ -1,3 +1,16 @@
+<a name="4.4.0"></a>
+# [4.4.0](https://github.com/oclif/cli-ux/compare/v4.3.1...v4.4.0) (2018-05-23)
+
+
+### Bug Fixes
+
+* switch to type ([893c3c9](https://github.com/oclif/cli-ux/commit/893c3c9))
+
+
+### Features
+
+* added ux.open() ([5bb9f2c](https://github.com/oclif/cli-ux/commit/5bb9f2c))
+
 <a name="4.3.1"></a>
 ## [4.3.1](https://github.com/oclif/cli-ux/compare/v4.3.0...v4.3.1) (2018-05-18)
 
