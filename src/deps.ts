@@ -2,6 +2,7 @@ import screen = require('@oclif/screen')
 import ansiStyles = require('ansi-styles')
 import stripAnsi = require('strip-ansi')
 
+import open = require('./open')
 import prompt = require('./prompt')
 import styledHeader = require('./styled/header')
 import styledJSON = require('./styled/json')
@@ -15,6 +16,7 @@ export const deps = {
   get passwordPrompt(): any { return fetch('password-prompt') },
   get screen(): typeof screen { return fetch('@oclif/screen') },
 
+  get open(): typeof open.default { return fetch('./open').default },
   get prompt(): typeof prompt.default { return fetch('./prompt').default },
   get styledObject(): typeof styledObject.default { return fetch('./styled/object').default },
   get styledHeader(): typeof styledHeader.default { return fetch('./styled/header').default },

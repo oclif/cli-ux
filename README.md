@@ -50,6 +50,14 @@ await cli.prompt('sometext', 'https://google.com')
 
 ![url demo](assets/url.gif)
 
+# cli.open
+
+Open a url in the browser
+
+```typescript
+await cli.open('https://oclif.io')
+```
+
 # cli.action
 
 Shows a spinner

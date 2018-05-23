@@ -22,6 +22,7 @@ export const ux = {
   get styledHeader() { return deps.styledHeader },
   get styledJSON() { return deps.styledJSON },
   get table() { return deps.table },
+  get open() { return deps.open },
 
   async done() {
     config.action.stop()
