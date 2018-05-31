@@ -77,7 +77,7 @@ This degrades gracefully when not connected to a TTY. It queues up any writes to
 
 ![action demo](assets/action.gif)
 
-# annotation
+# cli.annotation
 
 Shows an iterm annotation
 
@@ -87,3 +87,12 @@ cli.annotation('sometest', 'annotated with this text')
 ```
 
 ![annotation demo](assets/annotation.png)
+
+# cli.wait
+
+Waits for 1 second or given milliseconds
+
+```typescript
+await cli.wait()
+await cli.wait(3000)
+```
