@@ -1,5 +1,5 @@
 export const deps = {
-  get stripAnsi(): typeof import('strip-ansi') { return fetch('strip-ansi') },
+  get stripAnsi(): typeof import ('strip-ansi') { return fetch('strip-ansi') },
   get ansiStyles(): typeof import('ansi-styles') { return fetch('ansi-styles') },
   get ansiEscapes(): any { return fetch('ansi-escapes') },
   get passwordPrompt(): any { return fetch('password-prompt') },
@@ -11,7 +11,7 @@ export const deps = {
   get styledHeader(): typeof import('./styled/header').default { return fetch('./styled/header').default },
   get styledJSON(): typeof import('./styled/json').default { return fetch('./styled/json').default },
   get table(): typeof import('./styled/table').default { return fetch('./styled/table').default },
-  get table(): typeof import('./wait').default { return fetch('./wait').default },
+  get wait(): typeof import('./wait').default { return fetch('./wait').default },
 }
 
 const cache: any = {}
