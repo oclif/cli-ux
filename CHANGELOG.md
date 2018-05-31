@@ -1,3 +1,11 @@
+<a name="4.4.1"></a>
+## [4.4.1](https://github.com/oclif/cli-ux/compare/v4.4.0...v4.4.1) (2018-05-31)
+
+
+### Bug Fixes
+
+* typescript 2.9 ([#33](https://github.com/oclif/cli-ux/issues/33)) ([7ddf325](https://github.com/oclif/cli-ux/commit/7ddf325))
+
 <a name="4.4.0"></a>
 # [4.4.0](https://github.com/oclif/cli-ux/compare/v4.3.1...v4.4.0) (2018-05-23)
 
