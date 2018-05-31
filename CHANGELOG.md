@@ -1,3 +1,11 @@
+<a name="4.5.1"></a>
+## [4.5.1](https://github.com/oclif/cli-ux/compare/v4.5.0...v4.5.1) (2018-05-31)
+
+
+### Bug Fixes
+
+* semantic-release@3 ([333f3af](https://github.com/oclif/cli-ux/commit/333f3af))
+
 <a name="4.5.0"></a>
 # [4.5.0](https://github.com/oclif/cli-ux/compare/v4.4.1...v4.5.0) (2018-05-31)
 
