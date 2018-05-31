@@ -90,7 +90,7 @@ cli.annotation('sometest', 'annotated with this text')
 
 # cli.wait
 
-Waits for 1 sec or given milliseconds
+Waits for 1 second or given milliseconds
 
 ```typescript
 await cli.wait()
