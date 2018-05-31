@@ -1,3 +1,11 @@
+<a name="4.5.0"></a>
+# [4.5.0](https://github.com/oclif/cli-ux/compare/v4.4.1...v4.5.0) (2018-05-31)
+
+
+### Features
+
+* add wait ([#32](https://github.com/oclif/cli-ux/issues/32)) ([5abcfa6](https://github.com/oclif/cli-ux/commit/5abcfa6))
+
 <a name="4.4.1"></a>
 ## [4.4.1](https://github.com/oclif/cli-ux/compare/v4.4.0...v4.4.1) (2018-05-31)
 
