@@ -81,6 +81,9 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
         resolve(data || options.default)
       }
     })
-    setTimeout(() => reject(), options.timeout || 10000).unref()
+    setTimeout(() => {
+      process.stdin.end()
+      reject(new Error('Prompt timeout'))
+    }, options.timeout || 10000).unref()
   })
 }
