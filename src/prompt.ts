@@ -72,17 +72,15 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
     process.stdin.setEncoding('utf8')
     process.stderr.write(options.prompt)
     process.stdin.resume()
-    let timer = setTimeout(() => reject(), options.timeout || 10000)
     process.stdin.once('data', data => {
       process.stdin.pause()
       data = data.trim()
       if (!options.default && options.required && data === '') {
-        timer.unref()
         resolve(normal(options, retries - 1))
       } else {
-        timer.unref()
         resolve(data || options.default)
       }
     })
+    setTimeout(() => reject(), options.timeout || 10000).unref()
   })
 }
