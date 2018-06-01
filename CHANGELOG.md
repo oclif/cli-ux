@@ -1,3 +1,11 @@
+<a name="4.6.0"></a>
+# [4.6.0](https://github.com/oclif/cli-ux/compare/v4.5.1...v4.6.0) (2018-06-01)
+
+
+### Features
+
+* add timeout to prompt ([#34](https://github.com/oclif/cli-ux/issues/34)) ([77b6118](https://github.com/oclif/cli-ux/commit/77b6118))
+
 <a name="4.5.1"></a>
 ## [4.5.1](https://github.com/oclif/cli-ux/compare/v4.5.0...v4.5.1) (2018-05-31)
 
