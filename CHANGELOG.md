@@ -1,3 +1,11 @@
+<a name="4.6.1"></a>
+## [4.6.1](https://github.com/oclif/cli-ux/compare/v4.6.0...v4.6.1) (2018-06-01)
+
+
+### Bug Fixes
+
+* unref prompt timeout ([#35](https://github.com/oclif/cli-ux/issues/35)) ([1fd35fb](https://github.com/oclif/cli-ux/commit/1fd35fb))
+
 <a name="4.6.0"></a>
 # [4.6.0](https://github.com/oclif/cli-ux/compare/v4.5.1...v4.6.0) (2018-06-01)
 
