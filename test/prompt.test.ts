@@ -27,4 +27,12 @@ describe('prompt', () => {
       await cli.done()
       expect(answer).to.equal(undefined)
   })
+
+  fancy
+  .stdout()
+  .stderr()
+  .end('timeouts with no input', async () => {
+    const response = await cli.prompt('Require input?', {timeout: 3000})
+    expect(response).to.not.exist
+  })
 })

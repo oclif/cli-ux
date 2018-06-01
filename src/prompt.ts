@@ -6,6 +6,7 @@ import deps from './deps'
 export interface IPromptOptions {
   prompt?: string
   type?: 'normal' | 'mask' | 'hide'
+  timeout?: number
   /**
    * Requires user input if true, otherwise allows empty input
    */
@@ -20,6 +21,7 @@ interface IPromptConfig {
   isTTY: boolean
   required: boolean
   default?: string
+  timeout?: number
 }
 
 export default {
@@ -66,7 +68,7 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
 
 function normal(options: IPromptConfig, retries = 100): Promise<string> {
   if (retries < 0) throw new Error('no input')
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     process.stdin.setEncoding('utf8')
     process.stderr.write(options.prompt)
     process.stdin.resume()
@@ -79,5 +81,6 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
         resolve(data || options.default)
       }
     })
+    setTimeout(() => reject(), options.timeout || 10000)
   })
 }
