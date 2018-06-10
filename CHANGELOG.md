@@ -1,3 +1,11 @@
+<a name="4.6.2"></a>
+## [4.6.2](https://github.com/oclif/cli-ux/compare/v4.6.1...v4.6.2) (2018-06-10)
+
+
+### Bug Fixes
+
+* only timeout when set ([203fe8e](https://github.com/oclif/cli-ux/commit/203fe8e))
+
 <a name="4.6.1"></a>
 ## [4.6.1](https://github.com/oclif/cli-ux/compare/v4.6.0...v4.6.1) (2018-06-01)
 
