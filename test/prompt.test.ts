@@ -1,6 +1,12 @@
+import * as chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
+
+chai.use(chaiAsPromised)
+const expect = chai.expect
+
 import cli from '../src'
 
-import {expect, fancy} from './fancy'
+import {fancy} from './fancy'
 
 describe('prompt', () => {
   fancy
@@ -31,8 +37,9 @@ describe('prompt', () => {
   fancy
   .stdout()
   .stderr()
-  .do(async () => {
-    await cli.prompt('Require input?', {timeout: 100})
+  .end('timeouts with no input', async () => {
+    await expect(cli.prompt('Require input?', {timeout: 1}))
+    .to.eventually.be.rejectedWith('timed out')
   })
   .catch('Prompt timeout')
   .end('timeouts with no input')
