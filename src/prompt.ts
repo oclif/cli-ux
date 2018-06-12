@@ -81,9 +81,11 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
         resolve(data || options.default)
       }
     })
-    setTimeout(() => {
-      process.stdin.pause()
-      reject(new Error('Prompt timeout'))
-    }, options.timeout || 10000).unref()
+    if (options.timeout) {
+      setTimeout(() => {
+        process.stdin.pause()
+        reject(new Error('Prompt timeout'))
+      }, options.timeout || 10000).unref()
+    }
   })
 }
