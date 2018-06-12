@@ -1,3 +1,11 @@
+<a name="4.6.3"></a>
+## [4.6.3](https://github.com/oclif/cli-ux/compare/v4.6.2...v4.6.3) (2018-06-12)
+
+
+### Bug Fixes
+
+* pause prompt stdin ([#36](https://github.com/oclif/cli-ux/issues/36)) ([1443998](https://github.com/oclif/cli-ux/commit/1443998))
+
 <a name="4.6.2"></a>
 ## [4.6.2](https://github.com/oclif/cli-ux/compare/v4.6.1...v4.6.2) (2018-06-10)
 
