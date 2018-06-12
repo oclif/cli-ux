@@ -37,8 +37,8 @@ describe('prompt', () => {
   fancy
   .stdout()
   .stderr()
-  .end('timeouts with no input', async () => {
+  .it('timeouts with no input', async () => {
     await expect(cli.prompt('Require input?', {timeout: 1}))
-    .to.eventually.be.rejectedWith('timed out')
+      .to.eventually.be.rejectedWith('Prompt timeout')
   })
 })
