@@ -8,6 +8,8 @@ async function run() {
   let input = await cli.prompt('your name (normal)')
   cli.action.start('working')
   await wait()
+  input = await cli.anykey()
+  await wait()
   cli.log(`you entered: ${input}`)
   input = await cli.prompt('your name (mask)', {type: 'mask'})
   await wait()

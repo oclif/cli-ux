@@ -14,7 +14,7 @@ jobs:
             - v1-yarn-{{checksum ".circleci/config.yml"}}-{{ checksum "yarn.lock"}}
             - v1-yarn-{{checksum ".circleci/config.yml"}}
       - run: .circleci/greenkeeper
-      - run: yarn add -D nyc@11 @oclif/nyc-config@0
+      - run: yarn add -D nyc@13 @oclif/nyc-config@1
       - run: |
           $NYC yarn test
           $NYC report --reporter text-lcov > coverage.lcov

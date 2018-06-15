@@ -1,12 +1,12 @@
 environment:
-  nodejs_version: "9"
+  nodejs_version: "10"
 cache:
   - '%LOCALAPPDATA%\Yarn -> appveyor.yml'
   - node_modules -> yarn.lock
 
 install:
   - ps: Install-Product node $env:nodejs_version x64
-  - yarn add -D nyc@11 @oclif/nyc-config@0
+  - yarn add -D nyc@13 @oclif/nyc-config@1
 test_script:
   - .\node_modules\.bin\nyc --nycrc-path node_modules/@oclif/nyc-config/.nycrc yarn test
 after_test:

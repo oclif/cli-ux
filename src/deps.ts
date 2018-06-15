@@ -6,7 +6,7 @@ export const deps = {
   get screen(): typeof import ('@oclif/screen') { return fetch('@oclif/screen') },
 
   get open(): typeof import ('./open').default { return fetch('./open').default },
-  get prompt(): typeof import ('./prompt').default { return fetch('./prompt').default },
+  get prompt(): typeof import ('./prompt') { return fetch('./prompt') },
   get styledObject(): typeof import ('./styled/object').default { return fetch('./styled/object').default },
   get styledHeader(): typeof import ('./styled/header').default { return fetch('./styled/header').default },
   get styledJSON(): typeof import ('./styled/json').default { return fetch('./styled/json').default },

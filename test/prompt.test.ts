@@ -24,6 +24,39 @@ describe('prompt', () => {
   fancy
   .stdout()
   .stderr()
+  .stdin('y')
+  .end('confirm', async () => {
+    const promptPromise = cli.confirm('yes/no?')
+    const answer = await promptPromise
+    await cli.done()
+    expect(answer).to.equal(true)
+  })
+
+  fancy
+  .stdout()
+  .stderr()
+  .stdin('n')
+  .end('confirm', async () => {
+    const promptPromise = cli.confirm('yes/no?')
+    const answer = await promptPromise
+    await cli.done()
+    expect(answer).to.equal(false)
+  })
+
+  fancy
+  .stdout()
+  .stderr()
+  .stdin('x')
+  .end('gets anykey', async () => {
+    const promptPromise = cli.anykey()
+    const answer = await promptPromise
+    await cli.done()
+    expect(answer).to.equal('x')
+  })
+
+  fancy
+  .stdout()
+  .stderr()
   .end('does not require input', async () => {
       const promptPromise = cli.prompt('Require input?', {
         required: false
