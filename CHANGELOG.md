@@ -1,3 +1,10 @@
+## [4.7.1](https://github.com/oclif/cli-ux/compare/v4.7.0...v4.7.1) (2018-06-15)
+
+
+### Bug Fixes
+
+* add newline after anykey ([13ccb4d](https://github.com/oclif/cli-ux/commit/13ccb4d))
+
 # [4.7.0](https://github.com/oclif/cli-ux/compare/v4.6.3...v4.7.0) (2018-06-15)
 
 
