@@ -34,6 +34,12 @@ await cli.prompt('What is your two-factor token?', {type: 'mask'})
 
 // mask input on keypress (before enter is pressed)
 await cli.prompt('What is your password?', {type: 'hide'})
+
+// yes/no confirmation
+await cli.confirm('Continue?')
+
+// "press any key to continue"
+await cli.anykey()
 ```
 
 ![prompt demo](assets/prompt.gif)

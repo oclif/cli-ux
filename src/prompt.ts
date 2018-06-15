@@ -1,3 +1,4 @@
+import {error} from '@oclif/errors'
 import chalk from 'chalk'
 
 import config from './config'
@@ -5,7 +6,7 @@ import deps from './deps'
 
 export interface IPromptOptions {
   prompt?: string
-  type?: 'normal' | 'mask' | 'hide'
+  type?: 'normal' | 'mask' | 'hide' | 'single'
   timeout?: number
   /**
    * Requires user input if true, otherwise allows empty input
@@ -17,30 +18,50 @@ export interface IPromptOptions {
 interface IPromptConfig {
   name: string
   prompt: string
-  type: 'normal' | 'mask' | 'hide'
+  type: 'normal' | 'mask' | 'hide' | 'single'
   isTTY: boolean
   required: boolean
   default?: string
   timeout?: number
 }
 
-export default {
-  prompt(name: string, options: IPromptOptions = {}) {
-    return config.action.pauseAsync(() => {
-      return _prompt(name, options)
-    }, chalk.cyan('?'))
-  },
-  confirm(message: string): Promise<boolean> {
-    return config.action.pauseAsync(async () => {
-      const confirm = async (): Promise<boolean> => {
-        let response = (await _prompt(message)).toLowerCase()
-        if (['n', 'no'].includes(response)) return false
-        if (['y', 'yes'].includes(response)) return true
-        return confirm()
-      }
+/**
+ * prompt for input
+ */
+export function prompt(name: string, options: IPromptOptions = {}) {
+  return config.action.pauseAsync(() => {
+    return _prompt(name, options)
+  }, chalk.cyan('?'))
+}
+
+/**
+ * confirmation prompt (yes/no)
+ */
+export function confirm(message: string): Promise<boolean> {
+  return config.action.pauseAsync(async () => {
+    const confirm = async (): Promise<boolean> => {
+      let response = (await _prompt(message)).toLowerCase()
+      if (['n', 'no'].includes(response)) return false
+      if (['y', 'yes'].includes(response)) return true
       return confirm()
-    }, chalk.cyan('?'))
+    }
+    return confirm()
+  }, chalk.cyan('?'))
+}
+
+/**
+ * "press anykey to continue"
+ */
+export async function anykey(message?: string): Promise<void> {
+  if (!message) {
+    message = process.stdin.setRawMode
+      ? `Press any key to continue or ${chalk.yellow('q')} to exit`
+      : `Press enter to continue or ${chalk.yellow('q')} to exit`
   }
+  const char = await prompt(message, {type: 'single'})
+  if (char === 'q') error('quit')
+  if (char === '\u0003') error('ctrl-c')
+  return char
 }
 
 function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
@@ -58,12 +79,22 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
   switch (options.type) {
     case 'normal':
       return normal(options)
+    case 'single':
+      return single(options)
     case 'mask':
     case 'hide':
       return deps.passwordPrompt(options.prompt, {method: options.type})
     default:
       throw new Error(`unexpected type ${options.type}`)
   }
+}
+
+async function single(options: IPromptConfig): Promise<string> {
+  const raw = process.stdin.isRaw
+  if (process.stdin.setRawMode) process.stdin.setRawMode(true)
+  const response = await normal(options)
+  if (process.stdin.setRawMode) process.stdin.setRawMode(!!raw)
+  return response
 }
 
 function normal(options: IPromptConfig, retries = 100): Promise<string> {
