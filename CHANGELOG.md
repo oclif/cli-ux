@@ -1,3 +1,10 @@
+# [4.7.0](https://github.com/oclif/cli-ux/compare/v4.6.3...v4.7.0) (2018-06-15)
+
+
+### Features
+
+* anykey ([#39](https://github.com/oclif/cli-ux/issues/39)) ([67eee41](https://github.com/oclif/cli-ux/commit/67eee41))
+
 <a name="4.6.3"></a>
 ## [4.6.3](https://github.com/oclif/cli-ux/compare/v4.6.2...v4.6.3) (2018-06-12)
 
