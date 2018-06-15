@@ -53,12 +53,14 @@ export function confirm(message: string): Promise<boolean> {
  * "press anykey to continue"
  */
 export async function anykey(message?: string): Promise<void> {
+  const tty = !!process.stdin.setRawMode
   if (!message) {
-    message = process.stdin.setRawMode
+    message = tty
       ? `Press any key to continue or ${chalk.yellow('q')} to exit`
       : `Press enter to continue or ${chalk.yellow('q')} to exit`
   }
   const char = await prompt(message, {type: 'single'})
+  if (tty) process.stderr.write('\n')
   if (char === 'q') error('quit')
   if (char === '\u0003') error('ctrl-c')
   return char
