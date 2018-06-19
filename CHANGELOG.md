@@ -1,3 +1,10 @@
+## [4.7.2](https://github.com/oclif/cli-ux/compare/v4.7.1...v4.7.2) (2018-06-19)
+
+
+### Bug Fixes
+
+* **table:** Allow user to override tableoptions ([#40](https://github.com/oclif/cli-ux/issues/40)) ([14b972e](https://github.com/oclif/cli-ux/commit/14b972e)), closes [#37](https://github.com/oclif/cli-ux/issues/37)
+
 ## [4.7.1](https://github.com/oclif/cli-ux/compare/v4.7.0...v4.7.1) (2018-06-15)
 
 
