@@ -46,6 +46,17 @@ export interface TableOptions {
  */
 export default function table(data: any[], inputOptions: Partial<TableOptions> = {}) {
   const options: TableOptions = {
+    colSep: '  ',
+    after: () => {},
+    headerAnsi: _.identity,
+    printLine: (s: any) => console.log(s),
+    printRow(cells: any[]) {
+      this.printLine((cells.join(this.colSep) as any).trimRight())
+    },
+    printHeader(cells: any[]) {
+      this.printRow(cells.map(_.ary(this.headerAnsi, 1)))
+      this.printRow(cells.map(hdr => hdr.replace(/./g, '─')))
+    },
     ...inputOptions,
     columns: (inputOptions.columns || []).map(c => ({
       format: (value: any) => (value != null ? value.toString() : ''),
@@ -68,17 +79,6 @@ export default function table(data: any[], inputOptions: Partial<TableOptions> =
       },
       ...c,
     })),
-    colSep: '  ',
-    after: () => {},
-    headerAnsi: _.identity,
-    printLine: (s: any) => console.log(s),
-    printRow(cells: any[]) {
-      this.printLine((cells.join(this.colSep) as any).trimRight())
-    },
-    printHeader(cells: any[]) {
-      this.printRow(cells.map(_.ary(this.headerAnsi, 1)))
-      this.printRow(cells.map(hdr => hdr.replace(/./g, '─')))
-    },
   }
 
   function calcWidth(cell: any) {
