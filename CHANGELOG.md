@@ -1,3 +1,10 @@
+## [4.7.3](https://github.com/oclif/cli-ux/compare/v4.7.2...v4.7.3) (2018-06-22)
+
+
+### Bug Fixes
+
+* **anykey:** allow pressing "enter" ([b2215eb](https://github.com/oclif/cli-ux/commit/b2215eb))
+
 ## [4.7.2](https://github.com/oclif/cli-ux/compare/v4.7.1...v4.7.2) (2018-06-19)
 
 
