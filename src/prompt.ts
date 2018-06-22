@@ -59,7 +59,7 @@ export async function anykey(message?: string): Promise<void> {
       ? `Press any key to continue or ${chalk.yellow('q')} to exit`
       : `Press enter to continue or ${chalk.yellow('q')} to exit`
   }
-  const char = await prompt(message, {type: 'single'})
+  const char = await prompt(message, {type: 'single', required: false})
   if (tty) process.stderr.write('\n')
   if (char === 'q') error('quit')
   if (char === '\u0003') error('ctrl-c')
@@ -94,7 +94,7 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
 async function single(options: IPromptConfig): Promise<string> {
   const raw = process.stdin.isRaw
   if (process.stdin.setRawMode) process.stdin.setRawMode(true)
-  const response = await normal(options)
+  const response = await normal({required: false, ...options})
   if (process.stdin.setRawMode) process.stdin.setRawMode(!!raw)
   return response
 }
