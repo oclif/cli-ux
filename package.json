@@ -42,7 +42,7 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "concurrently": "^3.5.1",
-    "eslint": "^4.19.1",
+    "eslint": "^5.0.0",
     "eslint-config-oclif": "^1.5.1",
     "fancy-test": "^1.2.0",
     "husky": "^0.14.3",
