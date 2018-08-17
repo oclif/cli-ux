@@ -1,3 +1,10 @@
+# [4.8.0](https://github.com/oclif/cli-ux/compare/v4.7.3...v4.8.0) (2018-08-17)
+
+
+### Features
+
+* typescript 3 ([995442d](https://github.com/oclif/cli-ux/commit/995442d))
+
 ## [4.7.3](https://github.com/oclif/cli-ux/compare/v4.7.2...v4.7.3) (2018-06-22)
 
 
