@@ -16,7 +16,7 @@ export default class SimpleAction extends ActionBase {
 
   protected _resume() {}
 
-  protected _updateStatus(status: string, prevStatus?: string, newline: boolean = false) {
+  protected _updateStatus(status: string, prevStatus?: string, newline = false) {
     const task = this.task
     if (!task) return
     if (task.active && !prevStatus) this._write(this.std, ` ${status}`)

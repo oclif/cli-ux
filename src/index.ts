@@ -76,7 +76,7 @@ export const ux = {
 
   async flush() {
     function timeout(p: Promise<any>, ms: number) {
-      function wait(ms: number, unref: boolean = false) {
+      function wait(ms: number, unref = false) {
         return new Promise(resolve => {
           let t: any = setTimeout(() => resolve(), ms)
           if (unref) t.unref()

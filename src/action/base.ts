@@ -30,7 +30,7 @@ export class ActionBase {
     this._stdout(true)
   }
 
-  public stop(msg: string = 'done') {
+  public stop(msg = 'done') {
     const task = this.task
     if (!task) {
       return

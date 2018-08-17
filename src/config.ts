@@ -12,7 +12,8 @@ export interface ConfigMessage {
   value: any
 }
 
-const globals = global['cli-ux'] || (global['cli-ux'] = {})
+const g: any = global
+const globals = g['cli-ux'] || (g['cli-ux'] = {})
 
 const actionType = (
   !!process.stdin.isTTY &&
