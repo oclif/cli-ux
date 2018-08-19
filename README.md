@@ -24,8 +24,8 @@ cli.prompt('What is your name?')
 Javascript variant:
 
 ```javascript
-const cliUx = require('cli-ux');
-const cli = cliUx.cli;
+const cliUx = require('cli-ux')
+const cli = cliUx.cli
 
 cli.prompt('What is your name?')
 ```
