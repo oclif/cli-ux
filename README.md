@@ -21,6 +21,15 @@ import cli from 'cli-ux'
 cli.prompt('What is your name?')
 ```
 
+Javascript variant:
+
+```javascript
+const cliUx = require('cli-ux');
+const cli = cliUx.cli;
+
+cli.prompt('What is your name?')
+```
+
 # cli.prompt()
 
 Prompt for user input.
