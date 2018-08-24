@@ -19,6 +19,22 @@
     reflect-metadata "^0.1.12"
     tslib "^1.8.1"
 
+"@oclif/command@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@oclif/command/-/command-1.5.0.tgz#d5276a19506349fff0254b0dd98e3b8a2bd971aa"
+  dependencies:
+    "@oclif/errors" "^1.1.2"
+    "@oclif/parser" "^3.6.0"
+    debug "^3.1.0"
+    semver "^5.5.0"
+
+"@oclif/config@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@oclif/config/-/config-1.7.0.tgz#deb465093d10a1ee802cca7580cd2d33f78d9d60"
+  dependencies:
+    debug "^3.1.0"
+    tslib "^1.9.3"
+
 "@oclif/errors@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@oclif/errors/-/errors-1.1.2.tgz#2a54aae07a7655cc4523cae270d0a50cbc5dbef3"
@@ -32,6 +48,14 @@
 "@oclif/linewrap@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@oclif/linewrap/-/linewrap-1.0.0.tgz#aedcb64b479d4db7be24196384897b5000901d91"
+
+"@oclif/parser@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@oclif/parser/-/parser-3.6.0.tgz#8d0b4c3e012aa1f0d59a6936b3dedec318b11a6d"
+  dependencies:
+    "@oclif/linewrap" "^1.0.0"
+    chalk "^2.4.1"
+    tslib "^1.9.3"
 
 "@oclif/screen@^1.0.2":
   version "1.0.2"
@@ -1436,7 +1460,7 @@ tslib@1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
 
-tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1:
+tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
 

@@ -10,7 +10,7 @@ export interface TableColumn {
   format(value: string, row: string): string
   get(row: any[]): string
   width: number
-}
+} 
 
 export interface TableOptions {
   columns: Partial<TableColumn>[]
