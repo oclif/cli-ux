@@ -41,7 +41,7 @@
     "@types/supports-color": "^5.3.0",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "concurrently": "^3.6.1",
+    "concurrently": "^4.0.0",
     "eslint": "^5.3.0",
     "eslint-config-oclif": "^2.0.0",
     "fancy-test": "^1.2.0",
