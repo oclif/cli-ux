@@ -27,8 +27,7 @@ export const ux = {
   get styledHeader() { return deps.styledHeader },
   get styledJSON() { return deps.styledJSON },
   get table() { return deps.table },
-  get supertableFlags() { return deps.supertable.flags },
-  get supertable() { return deps.supertable.table },
+  get supertable() { return deps.supertable },
   get open() { return deps.open },
   get wait() { return deps.wait },
 

@@ -8,35 +8,7 @@ const sw = function (str: string) {
   return String(str || '').length
 }
 
-export type TableColumnOptions = Partial<TableColumn> & { key: string }
-
-export interface TableColumn {
-  key: string
-  header: string
-  extended?: boolean
-  minWidth?: number
-  width?: number
-  staticWidth?: boolean
-  get(cell: any, row: any): string
-}
-
-export interface SuperTableOptions {
-  printLine?: any,
-  flags: any,
-}
-
-interface TableOptions {
-  sort?: string,
-  filter?: string,
-  columns?: string,
-  extended?: boolean,
-  full?: boolean,
-  csv?: boolean,
-  'no-header'?: boolean,
-  printLine?: any,
-}
-
-function outputCSV(data: any[], columns: TableColumn[], options: TableOptions) {
+function outputCSV(data: any[], columns: SuperTable.Column[], options: SuperTable.Options) {
   options.printLine(columns.map(c => c.header).join(','))
   data.forEach((d: any) => {
     let row: string[] = []
@@ -45,7 +17,7 @@ function outputCSV(data: any[], columns: TableColumn[], options: TableOptions) {
   })
 }
 
-function outputTable(data: any[], columns: TableColumn[], options: TableOptions) {
+function outputTable(data: any[], columns: SuperTable.Column[], options: SuperTable.Options) {
   // find min/max column width
   for (let col of columns) {
     if (col.staticWidth) continue
@@ -90,7 +62,7 @@ function outputTable(data: any[], columns: TableColumn[], options: TableOptions)
   }
 }
 
-function outputArray(data: any[], columns: TableColumn[], options: TableOptions) {
+function outputArray(data: any[], columns: SuperTable.Column[], options: SuperTable.Options) {
   // build table rows from input array data
   let rows = data.map(d => {
     let row = {}
@@ -144,8 +116,8 @@ function outputArray(data: any[], columns: TableColumn[], options: TableOptions)
   }
 
   // display
-  const outputTable = options.csv ? outputCSV : outputArray
-  outputTable(rows, columns, options)
+  const output = options.csv ? outputCSV : outputTable
+  output(rows, columns, options)
 }
 
 const flags = {
@@ -158,26 +130,14 @@ const flags = {
   'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide header from output'}),
 }
 
-function supertableOptions(flags: { [key: string]: any }): TableOptions {
-  return {
-    extended: flags.extended,
-    full: flags.full,
-    columns: flags.columns,
-    filter: flags.filter,
-    sort: flags.sort || 'name',
-    csv: flags.csv,
-    'no-header': flags['no-header'],
-  }
-}
-
-function table(data: any, cols: TableColumnOptions[], flags: any) {
-  const options = supertableOptions(flags)
+function build(data: any, cols: SuperTable.ColumnOptions[], options: SuperTable.Options) {
   // tslint:disable-next-line:no-console
   if (!options.printLine) options.printLine = (s: any) => console.log(s)
+  if (!options.sort) options.sort = 'name'
 
   // clean up columns array
-  let columns: TableColumn[] = cols.map(col => {
-    let header = col.header || _.capitalize(col.key.replace('_', ' '))
+  let columns: SuperTable.Column[] = cols.map(col => {
+    let header = col.header || _.capitalize(col.key.replace(/\_/g, ' '))
     if (!col.width) col.width = 0
     if (col.width) col.staticWidth = true
     if (col.minWidth) col.minWidth = Math.max(col.minWidth, sw(header))
@@ -191,7 +151,7 @@ function table(data: any, cols: TableColumnOptions[], flags: any) {
 
   // filter columns
   if (options.columns) {
-    let keys = options.columns!.split(',').map(k => k.replace(' ', '_'))
+    let keys = options.columns!.split(',').map(k => k.replace(/\s/g, '_'))
     columns = columns.filter(c => keys.includes(c.key))
   } else if (!options.extended) {
     // show extented columns/properties
@@ -203,9 +163,32 @@ function table(data: any, cols: TableColumnOptions[], flags: any) {
   // To-do: handle single object
 }
 
-export const supertable = {
-  flags,
-  table,
+export namespace SuperTable {
+  export type ColumnOptions = Partial<Column> & { key: string }
+
+  export interface Column {
+    key: string
+    header: string
+    extended?: boolean
+    minWidth?: number
+    width?: number
+    staticWidth?: boolean
+    get(cell: any, row: any): string
+  }
+
+  export interface Options {
+    printLine?: any,
+    sort?: string,
+    filter?: string,
+    columns?: string,
+    extended?: boolean,
+    full?: boolean,
+    csv?: boolean,
+    'no-header'?: boolean,
+  }
 }
 
-export default supertable
+export default {
+  flags,
+  build,
+}
