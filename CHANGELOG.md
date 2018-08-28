@@ -1,3 +1,10 @@
+## [4.8.1](https://github.com/oclif/cli-ux/compare/v4.8.0...v4.8.1) (2018-08-28)
+
+
+### Bug Fixes
+
+* Move `[@oclif](https://github.com/oclif)/errors` into `dependencies` ([#49](https://github.com/oclif/cli-ux/issues/49)) ([a9cf484](https://github.com/oclif/cli-ux/commit/a9cf484))
+
 # [4.8.0](https://github.com/oclif/cli-ux/compare/v4.7.3...v4.8.0) (2018-08-17)
 
 
