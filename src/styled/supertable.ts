@@ -4,9 +4,7 @@ import chalk from 'chalk'
 import * as _ from 'lodash'
 import {inspect} from 'util'
 
-const sw = function (str: string) {
-  return String(str || '').length
-}
+const sw = require('string-width')
 
 function outputCSV(data: any[], columns: SuperTable.Column[], options: SuperTable.Options) {
   options.printLine(columns.map(c => c.header).join(','))
@@ -159,8 +157,8 @@ function build(data: any, cols: SuperTable.ColumnOptions[], options: SuperTable.
   }
 
   // display
-  if (Array.isArray(data)) return outputArray(data, columns, options)
-  // To-do: handle single object
+  if (!Array.isArray(data)) data = [data]
+  return outputArray(data, columns, options)
 }
 
 export namespace SuperTable {

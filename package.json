@@ -21,6 +21,7 @@
     "lodash": "^4.17.10",
     "password-prompt": "^1.0.7",
     "semver": "^5.5.1",
+    "string-width": "^2.1.1",
     "strip-ansi": "^4.0.0",
     "supports-color": "^5.5.0",
     "supports-hyperlinks": "^1.0.1"
