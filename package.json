@@ -25,7 +25,7 @@
     "supports-hyperlinks": "^1.0.1"
   },
   "devDependencies": {
-    "@oclif/tslint": "^2.0.0",
+    "@oclif/tslint": "^3.1.0",
     "@types/ansi-styles": "^3.2.0",
     "@types/chai": "^4.1.4",
     "@types/chai-as-promised": "^7.1.0",
