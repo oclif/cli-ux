@@ -124,7 +124,7 @@ Where:
 `cli.supertable.flags` is an object containing all the flags to include in your command to give users customizable tables
 
 ```typescript
-const flags = {
+{
   columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-seperated)'}),
   sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
   filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
@@ -135,13 +135,15 @@ const flags = {
 }
 ```
 
+Example class:
+
 ```typescript
 import {api} from 'my-api-clent'
 import {cli} from 'cli-ux'
 import {Command} from '@oclif/command'
 import {SuperTable} from 'cli-ux/lib/styled/supertable'
 
-export class Users extends Command {
+export default class Users extends Command {
   static flags = {
     ...cli.supertable.flags
   }
@@ -171,4 +173,18 @@ export class Users extends Command {
     ux.supertable.display(apps, columns, options)
   }
 }
+```
+
+Displays:
+
+```bash
+$ example-cli users
+Name   Team
+Jordan Sales
+Jamie  Engineering
+
+$ example-cli users --additional
+Name   Team        ID
+Jordan Sales       100
+Jamie  Engineering 200
 ```
