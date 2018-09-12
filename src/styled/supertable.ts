@@ -138,12 +138,12 @@ function output(data: any[], columns: Column[], options: Options) {
 }
 
 const flags = {
-  columns: Flags.string({exclusive: ['all'], description: 'only show provided columns (comma-seperated)'}),
+  columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-seperated)'}),
   sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
   filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
-  csv: Flags.boolean({exclusive: ['json'], description: 'output is csv format'}),
+  csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
   additional: Flags.boolean({description: 'show additional properties'}),
-  'no-truncate': Flags.boolean({description: 'do not truncate output to fit screen'}),
+  'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
   'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
 }
 

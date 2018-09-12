@@ -102,3 +102,73 @@ Waits for 1 second or given milliseconds
 await cli.wait()
 await cli.wait(3000)
 ```
+
+# cli.supertable
+
+Displays a customizable table
+
+```typescript
+cli.supertable.display(data, columns, options)
+```
+
+Where:
+
+- `data`: array of data object to display
+- `columns`: SuperTable.Columns object (see more below)
+- `options`: SuperTable.Options object (see more below)
+
+`SuperTable.Columns` ... foo
+
+`SuperTable.Options` ... foo
+
+`cli.supertable.flags` is an object containing all the flags to include in your command to give users customizable tables
+
+```typescript
+const flags = {
+  columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-seperated)'}),
+  sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
+  filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
+  csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
+  additional: Flags.boolean({description: 'show additional properties'}),
+  'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
+  'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
+}
+```
+
+```typescript
+import {api} from 'my-api-clent'
+import {cli} from 'cli-ux'
+import {Command} from '@oclif/command'
+import {SuperTable} from 'cli-ux/lib/styled/supertable'
+
+export class Users extends Command {
+  static flags = {
+    ...cli.supertable.flags
+  }
+
+  async run() {
+    const {flags} = this.parse(User)
+    const users = await api.get<any[]>('/users')
+
+    const columns: SuperTable.Columns = {
+      name: {
+        minWidth: 7,
+      },
+      team: {
+        get: row => row.owner && row.owner.email
+      },
+      id: {
+        header: "ID",
+        additional: true
+      }
+    }
+
+    const options: SuperTable.Options = {
+      printLine: this.log,
+      ...flags, // parsed flags
+    }
+
+    ux.supertable.display(apps, columns, options)
+  }
+}
+```
