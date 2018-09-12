@@ -26,7 +26,7 @@ function outputTable(data: any[], columns: Column[], options: Options) {
   const maxWidth = stdtermwidth
   const shouldShorten = () => {
     // don't shorten if full mode
-    if (options.full || !process.stdout.isTTY) return
+    if (options['no-header'] || !process.stdout.isTTY) return
 
     // don't shorten if there is enough screen width
     let dataMaxWidth = _.sumBy(columns, c => c.width!)
@@ -84,7 +84,7 @@ function outputTable(data: any[], columns: Column[], options: Options) {
   }
 }
 
-function outputArray(data: any[], columns: Column[], options: Options) {
+function output(data: any[], columns: Column[], options: Options) {
   // build table rows from input array data
   let rows = data.map(d => {
     let row = {}
@@ -137,13 +137,12 @@ function outputArray(data: any[], columns: Column[], options: Options) {
   }
 
   // display
-  const output = options.csv ? outputCSV : outputTable
-  output(rows, columns, options)
+  (options.csv ? outputCSV : outputTable)(rows, columns, options)
 }
 
 const flags = {
   columns: Flags.string({exclusive: ['all'], description: 'only show provided columns (comma-seperated)'}),
-  sort: Flags.string({description: 'property to sort by'}),
+  sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
   filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
   csv: Flags.boolean({exclusive: ['json'], description: 'output is csv format'}),
   additional: Flags.boolean({description: 'show additional properties'}),
@@ -151,7 +150,7 @@ const flags = {
   'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
 }
 
-function display(data: any, cols: SuperTable.Columns, options: SuperTable.Options) {
+function display(data: any, cols: SuperTable.Columns, options: SuperTable.Options = {}) {
   // tslint:disable-next-line:no-console
   if (!options.printLine) options.printLine = (s: any) => console.log(s)
   if (!options.sort) options.sort = 'name'
@@ -163,7 +162,7 @@ function display(data: any, cols: SuperTable.Columns, options: SuperTable.Option
     const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
     return {
       key,
-      extended: false,
+      additional: false,
       get: (row: any) => row[key],
       ...col,
       header,
@@ -175,14 +174,14 @@ function display(data: any, cols: SuperTable.Columns, options: SuperTable.Option
   if (options.columns) {
     let keys = options.columns!.split(',').map(k => k.replace(/\s/g, '_'))
     columns = columns.filter(c => keys.includes(c.key))
-  } else if (!options.extended) {
+  } else if (!options.additional) {
     // show extented columns/properties
-    columns = columns.filter(c => !c.extended)
+    columns = columns.filter(c => !c.additional)
   }
 
   // display
   if (!Array.isArray(data)) data = [data]
-  return outputArray(data, columns, options)
+  return output(data, columns, options)
 }
 
 export namespace SuperTable {
@@ -191,7 +190,7 @@ export namespace SuperTable {
   export interface Column {
     key: string
     header: string
-    extended: boolean
+    additional: boolean
     minWidth: number
     get(row: any): string
   }
