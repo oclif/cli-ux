@@ -7,6 +7,7 @@
   "dependencies": {
     "@oclif/command": "^1.5.0",
     "@oclif/errors": "^1.2.0",
+    "@oclif/config": "^1.7.4",
     "@oclif/linewrap": "^1.0.0",
     "@oclif/screen": "^1.0.2",
     "ansi-styles": "^3.2.1",

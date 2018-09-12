@@ -28,6 +28,13 @@
     debug "^3.1.0"
     semver "^5.5.0"
 
+"@oclif/config@^1.7.4":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@oclif/config/-/config-1.7.4.tgz#5b7f779534a339de8c62a863b12f5740b15c41f5"
+  dependencies:
+    debug "^3.1.0"
+    tslib "^1.9.3"
+
 "@oclif/errors@^1.1.2", "@oclif/errors@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@oclif/errors/-/errors-1.2.0.tgz#4166952699724c25af2ab4528fe223e930655e72"
