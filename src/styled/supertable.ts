@@ -2,7 +2,6 @@ import {flags as Flags} from '@oclif/command'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
 import * as _ from 'lodash'
-import {inspect} from 'util'
 
 const sw = require('string-width')
 
@@ -87,11 +86,9 @@ function outputTable(data: any[], columns: Column[], options: Options) {
 function output(data: any[], columns: Column[], options: Options) {
   // build table rows from input array data
   let rows = data.map(d => {
-    let row = {}
+    let row: {[key: string]: string | number | boolean} = {}
     for (let col of columns) {
-      let val = col.get(d)
-      if (typeof (val) === 'boolean' || !val) val = inspect(val, {breakLength: Infinity})
-      _.set(row, col.key, val)
+      row[col.key] = col.get(d)
     }
     return row
   })
