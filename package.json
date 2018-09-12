@@ -1,11 +1,12 @@
 {
   "name": "cli-ux",
   "description": "cli IO utilities",
-  "version": "4.8.0",
+  "version": "4.8.1",
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/oclif/cli-ux/issues",
   "dependencies": {
     "@oclif/command": "^1.5.0",
+    "@oclif/errors": "^1.2.0",
     "@oclif/linewrap": "^1.0.0",
     "@oclif/screen": "^1.0.2",
     "ansi-styles": "^3.2.1",
@@ -26,7 +27,6 @@
     "supports-hyperlinks": "^1.0.1"
   },
   "devDependencies": {
-    "@oclif/errors": "^1.2.0",
     "@oclif/tslint": "^2.0.0",
     "@types/ansi-styles": "^3.2.0",
     "@types/chai": "^4.1.4",
