@@ -100,7 +100,7 @@ describe('styled/supertable', () => {
       .end('use header value for id', output => {
         cli.supertable.display(apps, columns)
         expect(output.stdout.slice(0, 2)).to.equal('ID')
-    })
+      })
 
     fancy
       .stdout()
