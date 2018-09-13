@@ -147,7 +147,7 @@ const flags = {
   'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
 }
 
-function display(data: any, cols: SuperTable.Columns, options: SuperTable.Options = {}) {
+function display(data: any, cols: Supertable.Columns, options: Supertable.Options = {}) {
   // tslint:disable-next-line:no-console
   if (!options.printLine) options.printLine = (s: any) => console.log(s)
   if (!options.sort) options.sort = 'name'
@@ -181,7 +181,7 @@ function display(data: any, cols: SuperTable.Columns, options: SuperTable.Option
   return output(data, columns, options)
 }
 
-export namespace SuperTable {
+export namespace Supertable {
   export type Columns = {[key: string]: Partial<Column>}
 
   export interface Column {
@@ -204,8 +204,8 @@ export namespace SuperTable {
   }
 }
 
-type Column = SuperTable.Column & {width?: number, maxWidth?: number}
-type Options = SuperTable.Options
+type Column = Supertable.Column & {width?: number, maxWidth?: number}
+type Options = Supertable.Options
 
 export default {
   flags,

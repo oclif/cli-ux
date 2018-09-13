@@ -114,13 +114,13 @@ cli.supertable.display(data, columns, options)
 Where:
 
 - `data`: array of data objects to display
-- `columns`: SuperTable.Columns object
-- `options`: SuperTable.Options object
+- `columns`: Supertable.Columns object
+- `options`: Supertable.Options object
 
-`SuperTable.Columns` defines the table columns and their display options. While the key is necessary, all column options are optional.
+`Supertable.Columns` defines the table columns and their display options. While the key is necessary, all column options are optional.
 
 ```typescript
-const columns = SuperTable.Columns = {
+const columns = Supertable.Columns = {
   name: {},
   id: {
     header: 'ID', // override column header
@@ -131,10 +131,10 @@ const columns = SuperTable.Columns = {
 }
 ```
 
-`SuperTable.Options` defines the table options, most of which are the parsed flags from the user for display customization, all of which are optional.
+`Supertable.Options` defines the table options, most of which are the parsed flags from the user for display customization, all of which are optional.
 
 ```typescript
-const columns = SuperTable.Options = {
+const columns = Supertable.Options = {
   printLine: customeLogger, // (optional) logger for csv displaying
   columns: flags.columns,
   sort: flags.sort,
@@ -166,7 +166,7 @@ Example class:
 import {api} from 'my-api-clent'
 import {cli} from 'cli-ux'
 import {Command} from '@oclif/command'
-import {SuperTable} from 'cli-ux/lib/styled/supertable'
+import {Supertable} from 'cli-ux/lib/styled/supertable'
 
 export default class Users extends Command {
   static flags = {
@@ -177,7 +177,7 @@ export default class Users extends Command {
     const {flags} = this.parse(User)
     const users = await api.get<any[]>('/users')
 
-    const columns: SuperTable.Columns = {
+    const columns: Supertable.Columns = {
       name: {
         minWidth: 7,
       },
@@ -190,7 +190,7 @@ export default class Users extends Command {
       }
     }
 
-    const options: SuperTable.Options = {
+    const options: Supertable.Options = {
       printLine: this.log,
       ...flags, // parsed flags
     }
