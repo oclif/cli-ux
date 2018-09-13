@@ -1,3 +1,10 @@
+## [4.8.2](https://github.com/oclif/cli-ux/compare/v4.8.1...v4.8.2) (2018-09-13)
+
+
+### Bug Fixes
+
+* ensure ansi-escapes is added ([ed4038f](https://github.com/oclif/cli-ux/commit/ed4038f))
+
 ## [4.8.1](https://github.com/oclif/cli-ux/compare/v4.8.0...v4.8.1) (2018-08-28)
 
 
