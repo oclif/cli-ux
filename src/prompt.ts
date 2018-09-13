@@ -79,15 +79,15 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
     ...inputOptions,
   }
   switch (options.type) {
-    case 'normal':
-      return normal(options)
-    case 'single':
-      return single(options)
-    case 'mask':
-    case 'hide':
-      return deps.passwordPrompt(options.prompt, {method: options.type})
-    default:
-      throw new Error(`unexpected type ${options.type}`)
+  case 'normal':
+    return normal(options)
+  case 'single':
+    return single(options)
+  case 'mask':
+  case 'hide':
+    return deps.passwordPrompt(options.prompt, {method: options.type})
+  default:
+    throw new Error(`unexpected type ${options.type}`)
   }
 }
 
