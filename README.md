@@ -113,20 +113,20 @@ cli.supertable.display(data, columns, options)
 
 Where:
 
-- `data`: array of data object to display
-- `columns`: SuperTable.Columns object (see more below)
-- `options`: SuperTable.Options object (see more below)
+- `data`: array of data objects to display
+- `columns`: SuperTable.Columns object
+- `options`: SuperTable.Options object
 
-`SuperTable.Columns` defines the table columns and their display options. While the key is necessary, options are optional.
+`SuperTable.Columns` defines the table columns and their display options. While the key is necessary, all column options are optional.
 
 ```typescript
 const columns = SuperTable.Columns = {
   name: {},
   id: {
-    header: 'ID', // override upcase of key as column header
+    header: 'ID', // override column header
     minWidth: '10', // column must display at this width or greater
     additional: true, // only display this column when the --additional flag is present
-    get: row => `US-O1-${row.id}`, // custom getter from data row object 
+    get: row => `US-O1-${row.id}`, // custom getter for data row object 
   },
 }
 ```
@@ -212,4 +212,18 @@ $ example-cli users --additional
 Name   Team        ID
 Jordan Sales       100
 Jamie  Engineering 200
+
+$ example-cli users --columns=name
+Name
+Jordan
+Jamie
+
+$ example-cli users --filter="team=sales"
+Name   Team        ID
+Jordan Sales       100
+
+$ example-cli users --sort=team
+Name   Team        ID
+Jamie  Engineering 200
+Jordan Sales       100
 ```
