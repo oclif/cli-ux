@@ -117,11 +117,36 @@ Where:
 - `columns`: SuperTable.Columns object (see more below)
 - `options`: SuperTable.Options object (see more below)
 
-`SuperTable.Columns` ... foo
+`SuperTable.Columns` defines the table columns and their display options. While the key is necessary, options are optional.
 
-`SuperTable.Options` ... foo
+```typescript
+const columns = SuperTable.Columns = {
+  name: {},
+  id: {
+    header: 'ID', // override upcase of key as column header
+    minWidth: '10', // column must display at this width or greater
+    additional: true, // only display this column when the --additional flag is present
+    get: row => `US-O1-${row.id}`, // custom getter from data row object 
+  },
+}
+```
 
-`cli.supertable.flags` is an object containing all the flags to include in your command to give users customizable tables
+`SuperTable.Options` defines the table options, most of which are the parsed flags from the user for display customization, all of which are optional.
+
+```typescript
+const columns = SuperTable.Options = {
+  printLine: customeLogger, // (optional) logger for csv displaying
+  columns: flags.columns,
+  sort: flags.sort,
+  filter: flags.filter,
+  csv: flags.csv,
+  additional: flags.additional,
+  'no-truncate': flags['no-truncate]',
+  'no-header': flags['no-header]',
+}
+```
+
+`cli.supertable.flags` is an object containing all the flags to include in your command class.
 
 ```typescript
 {

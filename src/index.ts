@@ -6,7 +6,6 @@ import {config, Config} from './config'
 import deps from './deps'
 import {ExitError} from './exit'
 import {IPromptOptions} from './prompt'
-import * as SuperTable from './styled/supertable'
 import * as Table from './styled/table'
 
 export const ux = {
@@ -107,7 +106,6 @@ export {
   ExitError,
   IPromptOptions,
   Table,
-  SuperTable,
 }
 
 process.once('exit', async () => {
