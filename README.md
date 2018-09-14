@@ -140,7 +140,7 @@ const columns: Table.Columns = {
   id: {
     header: 'ID', // override column header
     minWidth: '10', // column must display at this width or greater
-    additional: true, // only display this column when the --additional flag is present
+    extra: true, // only display this column when the --extra flag is present
     get: row => `US-O1-${row.id}`, // custom getter for data row object 
   },
 }
@@ -155,7 +155,7 @@ const options: Table.Options = {
   sort: flags.sort,
   filter: flags.filter,
   csv: flags.csv,
-  additional: flags.additional,
+  extra: flags.extra,
   'no-truncate': flags['no-truncate]',
   'no-header': flags['no-header]',
 }
@@ -164,10 +164,9 @@ const options: Table.Options = {
 Example class:
 
 ```typescript
-import {api} from 'my-api-client'
-import {cli} from 'cli-ux'
 import {Command} from '@oclif/command'
-import {Table} from 'cli-ux/lib/styled/table'
+import {cli} from 'cli-ux'
+import axios from 'axios'
 
 export default class Users extends Command {
   static flags = {
@@ -175,19 +174,19 @@ export default class Users extends Command {
   }
 
   async run() {
-    const {flags} = this.parse(User)
-    const users = await api.get<any[]>('/users')
+    const {flags} = this.parse(Users)
+    const {data: users} = await axios.get('https://jsonplaceholder.typicode.com/users')
 
-    ux.table.display(apps, {
+    cli.table(users, {
       name: {
         minWidth: 7,
       },
-      team: {
-        get: row => row.owner && row.owner.email
+      company: {
+        get: (row: any) => row.company && row.company.name
       },
       id: {
-        header: "ID",
-        additional: true
+        header: 'ID',
+        extra: true
       }
     }, {
       printLine: this.log,
@@ -199,7 +198,7 @@ export default class Users extends Command {
 
 Displays:
 
-```bash
+```shell
 $ example-cli users
 Name   Team
 Jordan Sales

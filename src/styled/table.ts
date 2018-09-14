@@ -10,7 +10,7 @@ export namespace Table {
 
   export interface Column<T extends object> {
     header: string
-    additional: boolean
+    extra: boolean
     minWidth: number
     get(row: T): any
   }
@@ -19,7 +19,7 @@ export namespace Table {
     sort?: string,
     filter?: string,
     columns?: string,
-    additional?: boolean,
+    extra?: boolean,
     'no-truncate'?: boolean,
     csv?: boolean,
     'no-header'?: boolean,
@@ -29,11 +29,11 @@ export namespace Table {
 
 class Table<T extends object> {
   static flags = {
-    columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-seperated)'}),
+    columns: Flags.string({exclusive: ['extra'], description: 'only show provided columns (comma-seperated)'}),
     sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
     csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
-    additional: Flags.boolean({description: 'show additional properties'}),
+    extra: Flags.boolean({char: 'x', description: 'show all properties'}),
     'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
     'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
   }
@@ -49,7 +49,7 @@ class Table<T extends object> {
       const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
       return {
         key,
-        additional: false,
+        extra: false,
         get: (row: any) => row[key],
         ...col,
         header,
@@ -61,9 +61,9 @@ class Table<T extends object> {
     if (options.columns) {
       let keys = options.columns!.split(',').map(k => k.replace(/\s/g, '_'))
       this.columns = this.columns.filter(c => keys.includes(c.key))
-    } else if (!options.additional) {
+    } else if (!options.extra) {
       // show extented columns/properties
-      this.columns = this.columns.filter(c => !c.additional)
+      this.columns = this.columns.filter(c => !c.extra)
     }
 
     const printLine = (s: any) => process.stdout.write(s + '\n')
@@ -227,12 +227,9 @@ class Table<T extends object> {
   }
 }
 
-function display<T extends object>(data: T[], columns: Table.Columns<T>, options: Table.Options = {}) {
+export function display<T extends object>(data: T[], columns: Table.Columns<T>, options: Table.Options = {}) {
   new Table(data, columns, options).display()
 }
-const flags = Table.flags
-
-export default {
-  flags,
-  display,
+export namespace display {
+  export const flags = Table.flags
 }
