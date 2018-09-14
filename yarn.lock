@@ -416,14 +416,14 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-oclif@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-oclif/-/eslint-config-oclif-3.0.0.tgz#766bc14c51b4ca4973acf66d719df8c7c71dd700"
+eslint-config-oclif@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-oclif/-/eslint-config-oclif-3.1.0.tgz#cbc207ced09e31676dcee2f724fc509cd20eb0bd"
   dependencies:
     eslint-config-xo-space "^0.20.0"
     eslint-plugin-mocha "^5.2.0"
     eslint-plugin-node "^7.0.1"
-    eslint-plugin-unicorn "^5.0.0"
+    eslint-plugin-unicorn "^6.0.1"
 
 eslint-config-xo-space@^0.20.0:
   version "0.20.0"
@@ -459,9 +459,9 @@ eslint-plugin-node@^7.0.1:
     resolve "^1.8.1"
     semver "^5.5.0"
 
-eslint-plugin-unicorn@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-5.0.0.tgz#3cd37e9202892c4f819c3ce76dcbcae415c84b1d"
+eslint-plugin-unicorn@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-6.0.1.tgz#4a97f0bc9449e20b82848dad12094ee2ba72347e"
   dependencies:
     clean-regexp "^1.0.0"
     eslint-ast-utils "^1.0.0"
@@ -577,9 +577,9 @@ extract-stack@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/extract-stack/-/extract-stack-1.0.0.tgz#b97acaf9441eea2332529624b732fc5a1c8165fa"
 
-fancy-test@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/fancy-test/-/fancy-test-1.4.0.tgz#93e8b1904afbcefb496f58a05f6d2d99fc9c4acc"
+fancy-test@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/fancy-test/-/fancy-test-1.4.1.tgz#c87267e01c71185ef4cd5a9cf508eb7e3adbdc94"
   dependencies:
     "@types/chai" "^4.1.4"
     "@types/lodash" "^4.14.116"
@@ -587,7 +587,7 @@ fancy-test@^1.4.0:
     "@types/nock" "^9.3.0"
     "@types/node" "^10.9.4"
     "@types/sinon" "^5.0.2"
-    lodash "^4.17.10"
+    lodash "^4.17.11"
     mock-stdin "^0.3.1"
     stdout-stderr "^0.1.9"
 
