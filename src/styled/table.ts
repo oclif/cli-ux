@@ -1,140 +1,238 @@
-// tslint:disable
-
+import {flags as Flags} from '@oclif/command'
+import {stdtermwidth} from '@oclif/screen'
+import chalk from 'chalk'
 import * as _ from 'lodash'
+import {inspect} from 'util'
 
-import deps from '../deps'
+const sw = require('string-width')
+export namespace Table {
+  export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
 
-export interface TableColumn {
-  key: string
-  label?: string | (() => string)
-  format(value: string, row: string): string
-  get(row: any[]): string
-  width: number
+  export interface Column<T extends object> {
+    header: string
+    additional: boolean
+    minWidth: number
+    get(row: T): any
+  }
+
+  export interface Options {
+    sort?: string,
+    filter?: string,
+    columns?: string,
+    additional?: boolean,
+    'no-truncate'?: boolean,
+    csv?: boolean,
+    'no-header'?: boolean,
+    printLine?(s: any): any,
+  }
 }
 
-export interface TableOptions {
-  columns: Partial<TableColumn>[]
-  colSep: string
-  after(row: any[], options: TableOptions): void
-  printLine(row: any[]): void
-  printRow(row: any[]): void
-  printHeader(row: any[]): void
-  headerAnsi: any
-}
-
-/**
- * Generates a Unicode table and feeds it into configured printer.
- *
- * Top-level arguments:
- *
- * @arg {Object[]} data - the records to format as a table.
- * @arg {Object} options - configuration for the table.
- *
- * @arg {Object[]} [options.columns] - Options for formatting and finding values for table columns.
- * @arg {function(string)} [options.headerAnsi] - Zero-width formattter for entire header.
- * @arg {string} [options.colSep] - Separator between columns.
- * @arg {function(row, options)} [options.after] - Function called after each row is printed.
- * @arg {function(string)} [options.printLine] - Function responsible for printing to terminal.
- * @arg {function(cells)} [options.printHeader] - Function to print header cells as a row.
- * @arg {function(cells)} [options.printRow] - Function to print cells as a row.
- *
- * @arg {function(row)|string} [options.columns[].key] - Path to the value in the row or function to retrieve the pre-formatted value for the cell.
- * @arg {function(string)} [options.columns[].label] - Header name for column.
- * @arg {function(string, row)} [options.columns[].format] - Formatter function for column value.
- * @arg {function(row)} [options.columns[].get] - Function to return a value to be presented in cell without formatting.
- *
- */
-export default function table(data: any[], inputOptions: Partial<TableOptions> = {}) {
-  const options: TableOptions = {
-    colSep: '  ',
-    after: () => {},
-    headerAnsi: _.identity,
-    printLine: (s: any) => console.log(s),
-    printRow(cells: any[]) {
-      this.printLine((cells.join(this.colSep) as any).trimRight())
-    },
-    printHeader(cells: any[]) {
-      this.printRow(cells.map(_.ary(this.headerAnsi, 1)))
-      this.printRow(cells.map(hdr => hdr.replace(/./g, '─')))
-    },
-    ...inputOptions,
-    columns: (inputOptions.columns || []).map(c => ({
-      format: (value: any) => (value != null ? value.toString() : ''),
-      width: 0,
-      label() {
-        return this.key!.toString()
-      },
-
-      get(row: any) {
-        let value
-        let path: any = _.result(this, 'key')
-
-        if (!path) {
-          value = row
-        } else {
-          value = _.get(row, path)
-        }
-
-        return (this.format as any)(value, row)
-      },
-      ...c,
-    })),
+class Table<T extends object> {
+  static flags = {
+    columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-seperated)'}),
+    sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
+    filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
+    csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
+    additional: Flags.boolean({description: 'show additional properties'}),
+    'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
+    'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
   }
 
-  function calcWidth(cell: any) {
-    let lines = deps.stripAnsi(cell).split(/[\r\n]+/)
-    let lineLengths = lines.map(_.property('length'))
-    return Math.max.apply(Math, lineLengths)
-  }
+  options: Table.Options & { printLine(s: any): any }
+  columns: (Table.Column<T> & { key: string, width?: number, maxWidth?: number })[]
 
-  function pad(string: string, length: number) {
-    let visibleLength = deps.stripAnsi(string).length
-    let diff = length - visibleLength
+  constructor(private data: T[], columns: Table.Columns<T>, options: Table.Options = {}) {
+    // clean up columns array
+    this.columns = Object.keys(columns).map((key: string) => {
+      const col = columns[key]
+      const header = col.header || _.capitalize(key.replace(/\_/g, ' '))
+      const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
+      return {
+        key,
+        additional: false,
+        get: (row: any) => row[key],
+        ...col,
+        header,
+        minWidth,
+      }
+    })
 
-    return string + ' '.repeat(Math.max(0, diff))
-  }
-
-  function render() {
-    let columns: TableColumn[] = options.columns as any
-
-    if (typeof columns[0] === 'string') {
-      columns = (columns as any).map((key: any) => ({key}))
+    // filter columns
+    if (options.columns) {
+      let keys = options.columns!.split(',').map(k => k.replace(/\s/g, '_'))
+      this.columns = this.columns.filter(c => keys.includes(c.key))
+    } else if (!options.additional) {
+      // show extented columns/properties
+      this.columns = this.columns.filter(c => !c.additional)
     }
 
-    for (let row of data) {
-      row.height = 1
+    const printLine = (s: any) => process.stdout.write(s + '\n')
+    const sort = 'name'
+    this.options = {
+      printLine,
+      sort,
+      ...options
+    }
+  }
+
+  display() {
+    // tslint:disable-next-line:no-this-assignment
+    const {data, columns, options} = this
+
+    // build table rows from input array data
+    let rows = data.map(d => {
+      let row: any = {}
       for (let col of columns) {
-        let cell = col.get(row)
-
-        col.width = Math.max((_.result(col, 'label') as string).length, col.width || 0, calcWidth(cell))
-
-        row.height = Math.max(row.height || 0, cell.split(/[\r\n]+/).length)
+        let val = col.get(d)
+        if (typeof val !== 'string') val = inspect(val, {breakLength: Infinity})
+        row[col.key] = val
       }
+      return row
+    })
+
+    // filter rows
+    if (options.filter) {
+      let [key, regex] = options.filter!.split('=')
+      let col = columns.find(c => c.header.toLowerCase() === key)
+      if (!col || !regex) throw new Error('Filter flag error')
+      rows = rows.filter((d: any) => {
+        let re = new RegExp(regex)
+        let val = d[col!.key]
+        return val.match(re)
+      })
     }
 
-    if (options.printHeader) {
-      options.printHeader(
-        columns.map(function (col) {
-          let label = _.result(col, 'label') as string
-          return pad(label, col.width || label.length)
-        }),
-      )
-    }
+    // sort rows
+    if (options.sort) {
+      let [sort1, sort2] = options.sort!.split(',')
+      if (!sort1) throw new Error('Sort flag error')
+      let sort1Order = 'asc'
+      let sort2Order = 'asc'
+      let sortKeys = []
+      let sortKeysOrder = []
 
-    function getNthLineOfCell(n: any, row: any, col: any) {
-      // TODO memoize this
-      let lines = col.get(row).split(/[\r\n]+/)
-      return pad(lines[n] || '', col.width)
-    }
-
-    for (let row of data) {
-      for (let i = 0; i < (row.height || 0); i++) {
-        let cells = columns.map(_.partial(getNthLineOfCell, i, row))
-        options.printRow(cells)
+      if (sort1[0] === '-') {
+        sort1Order = 'desc'
+        sort1 = sort1.slice(1, sort1.length)
       }
-      options.after(row, options)
+      sortKeys.push(sort1)
+      sortKeysOrder.push(sort1Order)
+
+      if (sort2) {
+        if (sort2[0] === '-') {
+          sort2Order = 'desc'
+          sort2 = sort2.slice(1, sort2.length)
+        }
+        sortKeys.push(sort2)
+        sortKeysOrder.push(sort2Order)
+      }
+
+      rows = _.orderBy(rows, sortKeys, sortKeysOrder)
     }
+
+    this.data = rows
+
+    if (options.csv) this.outputCSV()
+    else this.outputTable()
   }
 
-  render()
+  private outputCSV() {
+    // tslint:disable-next-line:no-this-assignment
+    const {data, columns, options} = this
+
+    options.printLine(columns.map(c => c.header).join(','))
+    data.forEach((d: any) => {
+      let row: string[] = []
+      columns.forEach(col => row.push(d[col.key] || ''))
+      options.printLine(row.join(','))
+    })
+  }
+
+  private outputTable() {
+    // tslint:disable-next-line:no-this-assignment
+    const {data, columns, options} = this
+
+    // column truncation
+    //
+    // find max width for each column
+    for (let col of columns) {
+      const widths = ['.'.padEnd(col.minWidth!), col.header, ...data.map((row: any) => row[col.key])].map(r => sw(r))
+      col.maxWidth = Math.max(...widths) + 1
+      col.width = col.maxWidth!
+    }
+    // terminal width
+    const maxWidth = stdtermwidth
+    // truncation logic
+    const shouldShorten = () => {
+      // don't shorten if full mode
+      if (options['no-header'] || !process.stdout.isTTY) return
+
+      // don't shorten if there is enough screen width
+      let dataMaxWidth = _.sumBy(columns, c => c.width!)
+      let overWidth = dataMaxWidth - maxWidth
+      if (overWidth <= 0) return
+
+      // not enough room, short all columns to minWidth
+      for (let col of columns) {
+        col.width = col.minWidth
+      }
+
+      // if sum(minWidth's) is greater than term width
+      // nothing can be done so
+      // display all as minWidth
+      let dataMinWidth = _.sumBy(columns, c => c.minWidth!)
+      if (dataMinWidth >= maxWidth) return
+
+      // some wiggle room left, add it back to "needy" columns
+      let wiggleRoom = maxWidth - dataMinWidth
+      let needyCols = _.sortBy(columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})), c => c.needs)
+      for (let {key, needs} of needyCols) {
+        if (!needs) continue
+        let col = _.find(columns, c => (key === c.key))
+        if (!col) continue
+        if (wiggleRoom > needs) {
+          col.width = col.width! + needs
+          wiggleRoom = wiggleRoom - needs
+        } else if (wiggleRoom) {
+          col.width = col.width! + wiggleRoom
+          wiggleRoom = 0
+        }
+      }
+    }
+    shouldShorten()
+
+    // print headers
+    if (!options['no-header']) {
+      let headers = ''
+      for (let col of columns) {
+        let header = col.header!
+        headers += header.padEnd(col.width!)
+      }
+      options.printLine(chalk.bold(headers))
+    }
+
+    // print rows
+    for (let row of data) {
+      let r = ''
+      for (let col of columns) {
+        const width = col.width!
+        let c = (row as any)[col.key].padEnd(width)
+        if (c.length > width) {
+          c = c.slice(0, width - 2) + '… '
+        }
+        r += c
+      }
+      options.printLine(r)
+    }
+  }
+}
+
+function display<T extends object>(data: T[], columns: Table.Columns<T>, options: Table.Options = {}) {
+  new Table(data, columns, options).display()
+}
+const flags = Table.flags
+
+export default {
+  flags,
+  display,
 }

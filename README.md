@@ -103,24 +103,39 @@ await cli.wait()
 await cli.wait(3000)
 ```
 
-# cli.supertable
+# cli.table
 
-Displays a customizable table
+Displays tabular data
 
 ```typescript
-cli.supertable.display(data, columns, options)
+cli.table.display(data, columns, options)
 ```
 
 Where:
 
 - `data`: array of data objects to display
-- `columns`: Supertable.Columns object
-- `options`: Supertable.Options object
+- `columns`: [Table.Columns](./src/styled/table.ts)
+- `options`: [Table.Options](./src/styled/table.ts)
 
-`Supertable.Columns` defines the table columns and their display options. While the key is necessary, all column options are optional.
+`cli.table.flags` is an object containing all the flags to include in your command class.
 
 ```typescript
-const columns = Supertable.Columns = {
+{
+  columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-seperated)'}),
+  sort: Flags.string({description: 'property to sort by (prepend '-' for descending)'}),
+  filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
+  csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
+  extra: Flags.boolean({char: 'x', description: 'show all columns'}),
+  'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
+  'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
+}
+```
+
+`Table.Columns` defines the table columns and their display options.
+
+```typescript
+const columns: Table.Columns = {
+  // where "name" is a property of a data object
   name: {},
   id: {
     header: 'ID', // override column header
@@ -131,11 +146,11 @@ const columns = Supertable.Columns = {
 }
 ```
 
-`Supertable.Options` defines the table options, most of which are the parsed flags from the user for display customization, all of which are optional.
+`Table.Options` defines the table options, most of which are the parsed flags from the user for display customization, all of which are optional.
 
 ```typescript
-const columns = Supertable.Options = {
-  printLine: customeLogger, // (optional) logger for csv displaying
+const options: Table.Options = {
+  printLine: myLogger, // custom logger
   columns: flags.columns,
   sort: flags.sort,
   filter: flags.filter,
@@ -146,38 +161,24 @@ const columns = Supertable.Options = {
 }
 ```
 
-`cli.supertable.flags` is an object containing all the flags to include in your command class.
-
-```typescript
-{
-  columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-seperated)'}),
-  sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
-  filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
-  csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
-  additional: Flags.boolean({description: 'show additional properties'}),
-  'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
-  'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
-}
-```
-
 Example class:
 
 ```typescript
-import {api} from 'my-api-clent'
+import {api} from 'my-api-client'
 import {cli} from 'cli-ux'
 import {Command} from '@oclif/command'
-import {Supertable} from 'cli-ux/lib/styled/supertable'
+import {Table} from 'cli-ux/lib/styled/table'
 
 export default class Users extends Command {
   static flags = {
-    ...cli.supertable.flags
+    ...cli.table.flags
   }
 
   async run() {
     const {flags} = this.parse(User)
     const users = await api.get<any[]>('/users')
 
-    const columns: Supertable.Columns = {
+    ux.table.display(apps, {
       name: {
         minWidth: 7,
       },
@@ -188,14 +189,10 @@ export default class Users extends Command {
         header: "ID",
         additional: true
       }
-    }
-
-    const options: Supertable.Options = {
+    }, {
       printLine: this.log,
       ...flags, // parsed flags
-    }
-
-    ux.supertable.display(apps, columns, options)
+    })
   }
 }
 ```
