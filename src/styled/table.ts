@@ -5,43 +5,12 @@ import * as _ from 'lodash'
 import {inspect} from 'util'
 
 const sw = require('string-width')
-export namespace Table {
-  export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
-
-  export interface Column<T extends object> {
-    header: string
-    extra: boolean
-    minWidth: number
-    get(row: T): any
-  }
-
-  export interface Options {
-    sort?: string,
-    filter?: string,
-    columns?: string,
-    extra?: boolean,
-    'no-truncate'?: boolean,
-    csv?: boolean,
-    'no-header'?: boolean,
-    printLine?(s: any): any,
-  }
-}
 
 class Table<T extends object> {
-  static flags = {
-    columns: Flags.string({exclusive: ['extra'], description: 'only show provided columns (comma-seperated)'}),
-    sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
-    filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
-    csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
-    extra: Flags.boolean({char: 'x', description: 'show all properties'}),
-    'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
-    'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
-  }
+  options: table.Options & { printLine(s: any): any }
+  columns: (table.Column<T> & { key: string, width?: number, maxWidth?: number })[]
 
-  options: Table.Options & { printLine(s: any): any }
-  columns: (Table.Column<T> & { key: string, width?: number, maxWidth?: number })[]
-
-  constructor(private data: T[], columns: Table.Columns<T>, options: Table.Options = {}) {
+  constructor(private data: T[], columns: table.Columns<T>, options: table.Options = {}) {
     // clean up columns array
     this.columns = Object.keys(columns).map((key: string) => {
       const col = columns[key]
@@ -227,9 +196,37 @@ class Table<T extends object> {
   }
 }
 
-export function display<T extends object>(data: T[], columns: Table.Columns<T>, options: Table.Options = {}) {
+export function table<T extends object>(data: T[], columns: table.Columns<T>, options: table.Options = {}) {
   new Table(data, columns, options).display()
 }
-export namespace display {
-  export const flags = Table.flags
+export namespace table {
+  export const flags = {
+    columns: Flags.string({exclusive: ['extra'], description: 'only show provided columns (comma-seperated)'}),
+    sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
+    filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
+    csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
+    extra: Flags.boolean({char: 'x', description: 'show all properties'}),
+    'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
+    'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
+  }
+
+  export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
+
+  export interface Column<T extends object> {
+    header: string
+    extra: boolean
+    minWidth: number
+    get(row: T): any
+  }
+
+  export interface Options {
+    sort?: string,
+    filter?: string,
+    columns?: string,
+    extra?: boolean,
+    'no-truncate'?: boolean,
+    csv?: boolean,
+    'no-header'?: boolean,
+    printLine?(s: any): any,
+  }
 }
