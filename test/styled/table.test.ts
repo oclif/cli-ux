@@ -52,15 +52,15 @@ const apps = [
 let columns = {
   id: {header: 'ID'},
   name: {},
-  web_url: {additional: true},
-  stack: {additional: true, get: (r: any) => r.stack && r.stack.name},
+  web_url: {extra: true},
+  stack: {extra: true, get: (r: any) => r.stack && r.stack.name},
 }
 
 const ws = ' '
 
 // ignore me
 // stored up here for line wrapping reasons
-const additionalHeader = `ID  Name${ws.padEnd(14)
+const extraHeader = `ID  Name${ws.padEnd(14)
   }Web url${ws.padEnd(34)}Stack${ws.padEnd(5)}`
 
 // tests to-do:
@@ -81,7 +81,7 @@ describe('styled/table', () => {
       expect(flags.sort).to.exist
       expect(flags.filter).to.exist
       expect(flags.csv).to.exist
-      expect(flags.additional).to.exist
+      expect(flags.extra).to.exist
       expect(flags['no-truncate']).to.exist
       expect(flags['no-header']).to.exist
     })
@@ -104,9 +104,9 @@ describe('styled/table', () => {
 
     fancy
       .stdout()
-      .end('shows additional columns/uses get() for value', output => {
-        cli.table(apps, columns, {additional: true})
-        expect(output.stdout).to.equal(`${additionalHeader}
+      .end('shows extra columns/uses get() for value', output => {
+        cli.table(apps, columns, {extra: true})
+        expect(output.stdout).to.equal(`${extraHeader}
 123 supertable-test-1 https://supertable-test-1.herokuapp.com/ heroku-16${ws}
 321 supertable-test-2 https://supertable-test-2.herokuapp.com/ heroku-16${ws}\n`)
       })
@@ -115,9 +115,9 @@ describe('styled/table', () => {
   describe('options', () => {
     fancy
       .stdout()
-      .end('shows additional columns', output => {
-        cli.table(apps, columns, {additional: true})
-        expect(output.stdout).to.contain(additionalHeader)
+      .end('shows extra columns', output => {
+        cli.table(apps, columns, {extra: true})
+        expect(output.stdout).to.contain(extraHeader)
       })
 
     fancy
