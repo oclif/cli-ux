@@ -4,22 +4,9 @@ export class Tree {
   nodes: { [key: string]: Tree } = {}
   constructor() { }
 
-  insert(child: string, parent?: string): boolean {
-    // if not parent, at root tree
-    if (!parent) {
-      this.nodes[child] = new Tree()
-      return true
-    }
-    // if already inserted, return
-    if (this.search(child)) return true
-    // find parent
-    let node = this.search(parent)
-    // and insert
-    if (node) {
-      node.insert(child)
-      return true
-    }
-    return false
+  insert(child: string, value: Tree = new Tree()): Tree {
+    this.nodes[child] = value
+    return this
   }
 
   search(key: string): Tree | undefined {
@@ -34,7 +21,7 @@ export class Tree {
   }
 
   // tslint:disable-next-line:no-console
-  display(opts: { logger: any, skipRootPrefix: boolean } = {logger: console.log, skipRootPrefix: false}) {
+  display(opts: {logger: any, skipRootPrefix: boolean} = {logger: console.log, skipRootPrefix: false}) {
     const addNodes = function (nodes: any) {
       let tree: { [key: string]: any } = {}
       for (let p of Object.keys(nodes)) {
