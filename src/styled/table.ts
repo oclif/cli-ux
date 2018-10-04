@@ -37,10 +37,16 @@ class Table<T extends object> {
 
     const printLine = (s: any) => process.stdout.write(s + '\n')
     const sort = 'name'
+    const {columns: cols, filter, csv, extra} = options
     this.options = {
       printLine,
       sort,
-      ...options
+      columns: cols,
+      filter,
+      csv,
+      extra,
+      'no-header': options['no-header'],
+      'no-truncate': options['no-truncate'],
     }
   }
 
@@ -220,6 +226,7 @@ export namespace table {
   }
 
   export interface Options {
+    [key: string]: any,
     sort?: string,
     filter?: string,
     columns?: string,
