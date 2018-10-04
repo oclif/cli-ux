@@ -111,8 +111,10 @@ Generate a tree and display it
 let tree = cli.tree()
 tree.insert('foo')
 tree.insert('bar')
-tree.insert('baz', 'bar')
-tree.insert('qux', 'baz')
+
+let subtree = cli.tree()
+subtree.insert('qux')
+tree.nodes.bar.insert('baz', subtree)
 
 tree.display()
 ```
