@@ -102,3 +102,25 @@ Waits for 1 second or given milliseconds
 await cli.wait()
 await cli.wait(3000)
 ```
+
+# cli.tree
+
+Generate a tree and display it
+
+```typescript
+let tree = cli.tree()
+tree.insert('foo')
+tree.insert('bar')
+tree.insert('baz', 'bar')
+tree.insert('qux', 'baz')
+
+tree.display()
+```
+
+Outputs:
+```shell
+├─ foo
+└─ bar
+   └─ baz
+      └─ qux
+```

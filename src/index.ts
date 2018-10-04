@@ -26,6 +26,7 @@ export const ux = {
   get styledHeader() { return deps.styledHeader },
   get styledJSON() { return deps.styledJSON },
   get table() { return deps.table },
+  get tree() { return deps.tree },
   get open() { return deps.open },
   get wait() { return deps.wait },
 
