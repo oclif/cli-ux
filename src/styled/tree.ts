@@ -21,7 +21,7 @@ export class Tree {
   }
 
   // tslint:disable-next-line:no-console
-  display(opts: {logger: any, skipRootPrefix: boolean} = {logger: console.log, skipRootPrefix: false}) {
+  display(logger: any= console.log) {
     const addNodes = function (nodes: any) {
       let tree: { [key: string]: any } = {}
       for (let p of Object.keys(nodes)) {
@@ -31,7 +31,7 @@ export class Tree {
     }
 
     let tree = addNodes(this.nodes)
-    opts.logger(treeify.asTree(tree, true, true, opts.skipRootPrefix))
+    logger(treeify.asTree(tree))
   }
 }
 
