@@ -1,3 +1,10 @@
+# [4.9.0](https://github.com/oclif/cli-ux/compare/v4.8.2...v4.9.0) (2018-10-10)
+
+
+### Features
+
+* add tree ([#57](https://github.com/oclif/cli-ux/issues/57)) ([8d742a7](https://github.com/oclif/cli-ux/commit/8d742a7))
+
 ## [4.8.2](https://github.com/oclif/cli-ux/compare/v4.8.1...v4.8.2) (2018-09-13)
 
 
