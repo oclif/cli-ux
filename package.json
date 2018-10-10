@@ -23,7 +23,8 @@
     "semver": "^5.5.1",
     "strip-ansi": "^4.0.0",
     "supports-color": "^5.5.0",
-    "supports-hyperlinks": "^1.0.1"
+    "supports-hyperlinks": "^1.0.1",
+    "treeify": "^1.1.0"
   },
   "devDependencies": {
     "@oclif/tslint": "^3.1.0",

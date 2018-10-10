@@ -11,6 +11,7 @@ export const deps = {
   get styledHeader(): typeof import ('./styled/header').default { return fetch('./styled/header').default },
   get styledJSON(): typeof import ('./styled/json').default { return fetch('./styled/json').default },
   get table(): typeof import ('./styled/table').default { return fetch('./styled/table').default },
+  get tree(): typeof import ('./styled/tree').default { return fetch('./styled/tree').default },
   get wait(): typeof import ('./wait').default { return fetch('./wait').default },
 }
 
