@@ -21,11 +21,10 @@ import cli from 'cli-ux'
 cli.prompt('What is your name?')
 ```
 
-Javascript variant:
+JavaScript:
 
 ```javascript
-const cliUx = require('cli-ux')
-const cli = cliUx.cli
+const {cli} = require('cli-ux')
 
 cli.prompt('What is your name?')
 ```
