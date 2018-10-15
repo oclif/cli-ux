@@ -108,7 +108,7 @@ await cli.wait(3000)
 Displays tabular data
 
 ```typescript
-cli.table.display(data, columns, options)
+cli.table(data, columns, options)
 ```
 
 Where:
@@ -182,7 +182,7 @@ export default class Users extends Command {
         minWidth: 7,
       },
       company: {
-        get: (row: any) => row.company && row.company.name
+        get: row => row.company && row.company.name
       },
       id: {
         header: 'ID',
@@ -204,7 +204,7 @@ Name   Team
 Jordan Sales
 Jamie  Engineering
 
-$ example-cli users --additional
+$ example-cli users --extra
 Name   Team        ID
 Jordan Sales       100
 Jamie  Engineering 200

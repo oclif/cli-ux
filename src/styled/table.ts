@@ -36,8 +36,7 @@ class Table<T extends object> {
     }
 
     const printLine = (s: any) => process.stdout.write(s + '\n')
-    const sort = 'name'
-    const {columns: cols, filter, csv, extra} = options
+    const {columns: cols, filter, csv, extra, sort} = options
     this.options = {
       printLine,
       sort,
@@ -79,29 +78,9 @@ class Table<T extends object> {
 
     // sort rows
     if (options.sort) {
-      let [sort1, sort2] = options.sort!.split(',')
-      if (!sort1) throw new Error('Sort flag error')
-      let sort1Order = 'asc'
-      let sort2Order = 'asc'
-      let sortKeys = []
-      let sortKeysOrder = []
-
-      if (sort1[0] === '-') {
-        sort1Order = 'desc'
-        sort1 = sort1.slice(1, sort1.length)
-      }
-      sortKeys.push(sort1)
-      sortKeysOrder.push(sort1Order)
-
-      if (sort2) {
-        if (sort2[0] === '-') {
-          sort2Order = 'desc'
-          sort2 = sort2.slice(1, sort2.length)
-        }
-        sortKeys.push(sort2)
-        sortKeysOrder.push(sort2Order)
-      }
-
+      let sorters = options.sort!.split(',')
+      let sortKeys = sorters.map(k => k[0] === '-' ? k.substr(1) : k)
+      let sortKeysOrder = sorters.map(k => k[0] === '-' ? 'desc' : 'asc')
       rows = _.orderBy(rows, sortKeys, sortKeysOrder)
     }
 

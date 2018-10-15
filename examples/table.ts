@@ -12,21 +12,24 @@ export default class Users extends Command {
     const {flags} = this.parse(Users)
     const {data: users} = await axios.get('https://jsonplaceholder.typicode.com/users')
 
-    cli.table(users, {
-      name: {
-        minWidth: 7,
+    cli.table(users,
+      {
+        name: {
+          minWidth: 7,
+        },
+        company: {
+          get: (row: any) => row.company && row.company.name
+        },
+        id: {
+          header: 'ID',
+          extra: true
+        }
       },
-      company: {
-        get: (row: any) => row.company && row.company.name
-      },
-      id: {
-        header: 'ID',
-        extra: true
+      {
+        printLine: this.log,
+        ...flags, // parsed flags
       }
-    }, {
-      printLine: this.log,
-      ...flags, // parsed flags
-    })
+    )
   }
 }
 
