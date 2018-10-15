@@ -17,7 +17,7 @@ function color(s: string): string {
 export default class SpinnerAction extends ActionBase {
   public type: ActionType = 'spinner'
 
-  spinner?: number
+  spinner?: NodeJS.Timeout
   frames: any
   frameIndex: number
 
