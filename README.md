@@ -143,7 +143,7 @@ Where:
 ```typescript
 const columns: Table.Columns = {
   // where `.name` is a property of a data object
-  name: {}, // "Name" will be the column header
+  name: {}, // "Name" inferred as the column header
   id: {
     header: 'ID', // override column header
     minWidth: '10', // column must display at this width or greater
