@@ -30,8 +30,8 @@ class Table<T extends object> {
 
     // and filter columns
     if (options.columns) {
-      let headers = options.columns!.split(',').map(k => k.replace(/\s/g, '_'))
-      this.columns = this.filterColumnsFromHeaders(headers)
+      let filters = options.columns!.split(',')
+      this.columns = this.filterColumnsFromHeaders(filters)
     } else if (!options.extra) {
       // show extented columns/properties
       this.columns = this.columns.filter(c => !c.extra)
@@ -100,8 +100,9 @@ class Table<T extends object> {
     return this.columns.find(c => c.header.toLowerCase() === header)
   }
 
-  private filterColumnsFromHeaders(headers: string[]): (table.Column<T> & { key: string, width?: number, maxWidth?: number })[] {
-    return this.columns.filter(c => headers.includes(c.header.toLowerCase()))
+  private filterColumnsFromHeaders(filters: string[]): (table.Column<T> & { key: string, width?: number, maxWidth?: number })[] {
+    filters = filters.map(k => k.toLowerCase())
+    return this.columns.filter(c => filters.includes(c.header.toLowerCase()))
   }
 
   private outputCSV() {
