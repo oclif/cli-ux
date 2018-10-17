@@ -35,17 +35,16 @@ class Table<T extends object> {
       this.columns = this.columns.filter(c => !c.extra)
     }
 
-    const printLine = (s: any) => process.stdout.write(s + '\n')
-    const {columns: cols, filter, csv, extra, sort} = options
+    const {columns: cols, filter, csv, extra, sort, printLine} = options
     this.options = {
-      printLine,
-      sort,
       columns: cols,
-      filter,
       csv,
       extra,
+      filter,
       'no-header': options['no-header'],
       'no-truncate': options['no-truncate'],
+      printLine: printLine || ((s: any) => process.stdout.write(s + '\n')),
+      sort,
     }
   }
 
