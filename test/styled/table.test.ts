@@ -60,8 +60,7 @@ const ws = ' '
 
 // ignore me
 // stored up here for line wrapping reasons
-const extraHeader = `ID  Name${ws.padEnd(14)
-  }Web url${ws.padEnd(34)}Stack${ws.padEnd(5)}`
+const extraHeader = `ID  Name${ws.padEnd(14)}Web url${ws.padEnd(34)}Stack${ws.padEnd(5)}`
 
 // tests to-do:
 // no-truncate
@@ -85,6 +84,7 @@ describe('styled/table', () => {
       expect(flags['no-truncate']).to.exist
       expect(flags['no-header']).to.exist
     })
+
   fancy
     .stdout()
     .end('displays table', output => {

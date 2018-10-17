@@ -11,30 +11,33 @@ class Table<T extends object> {
   columns: (table.Column<T> & { key: string, width?: number, maxWidth?: number })[]
 
   constructor(private data: T[], columns: table.Columns<T>, options: table.Options = {}) {
-    // clean up columns array
+    // assign columns
     this.columns = Object.keys(columns).map((key: string) => {
       const col = columns[key]
+      const extra = col.extra || false
+      const get = col.get || ((row: any) => row[key])
       const header = col.header || _.capitalize(key.replace(/\_/g, ' '))
       const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
+
       return {
-        key,
-        extra: false,
-        get: (row: any) => row[key],
-        ...col,
+        extra,
+        get,
         header,
+        key,
         minWidth,
       }
     })
 
-    // filter columns
+    // and filter columns
     if (options.columns) {
-      let keys = options.columns!.split(',').map(k => k.replace(/\s/g, '_'))
-      this.columns = this.columns.filter(c => keys.includes(c.key))
+      let headers = options.columns!.split(',').map(k => k.replace(/\s/g, '_'))
+      this.columns = this.filterColumnsFromHeaders(headers)
     } else if (!options.extra) {
       // show extented columns/properties
       this.columns = this.columns.filter(c => !c.extra)
     }
 
+    // assign options
     const {columns: cols, filter, csv, extra, sort, printLine} = options
     this.options = {
       columns: cols,
@@ -65,12 +68,16 @@ class Table<T extends object> {
 
     // filter rows
     if (options.filter) {
-      let [key, regex] = options.filter!.split('=')
-      let col = columns.find(c => c.header.toLowerCase() === key)
-      if (!col || !regex) throw new Error('Filter flag error')
+      let [header, regex] = options.filter!.split('=')
+      // to-do: add inverse filter
+      // const isInverse = header[header.length - 1] === '!'
+      // if (isInverse) header = header.slice(0, header.length - 1)
+      let col = this.findColumnFromHeader(header)
+      if (!col || !regex) throw new Error('Filter flag has an invalid value')
       rows = rows.filter((d: any) => {
         let re = new RegExp(regex)
         let val = d[col!.key]
+        // return isInverse ? !val.match(re) : val.match(re)
         return val.match(re)
       })
     }
@@ -87,6 +94,14 @@ class Table<T extends object> {
 
     if (options.csv) this.outputCSV()
     else this.outputTable()
+  }
+
+  private findColumnFromHeader(header: string): (table.Column<T> & { key: string, width?: number, maxWidth?: number }) | undefined {
+    return this.columns.find(c => c.header.toLowerCase() === header)
+  }
+
+  private filterColumnsFromHeaders(headers: string[]): (table.Column<T> & { key: string, width?: number, maxWidth?: number })[] {
+    return this.columns.filter(c => headers.includes(c.header.toLowerCase()))
   }
 
   private outputCSV() {
