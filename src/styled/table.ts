@@ -5,6 +5,7 @@ import * as _ from 'lodash'
 import {inspect} from 'util'
 
 const sw = require('string-width')
+const {orderBy} = require('natural-orderby')
 
 class Table<T extends object> {
   options: table.Options & { printLine(s: any): any }
@@ -52,13 +53,10 @@ class Table<T extends object> {
   }
 
   display() {
-    // tslint:disable-next-line:no-this-assignment
-    const {data, columns, options} = this
-
     // build table rows from input array data
-    let rows = data.map(d => {
+    let rows = this.data.map(d => {
       let row: any = {}
-      for (let col of columns) {
+      for (let col of this.columns) {
         let val = col.get(d)
         if (typeof val !== 'string') val = inspect(val, {breakLength: Infinity})
         row[col.key] = val
@@ -67,32 +65,34 @@ class Table<T extends object> {
     })
 
     // filter rows
-    if (options.filter) {
-      let [header, regex] = options.filter!.split('=')
-      // to-do: add inverse filter
-      // const isInverse = header[header.length - 1] === '!'
-      // if (isInverse) header = header.slice(0, header.length - 1)
+    if (this.options.filter) {
+      let [header, regex] = this.options.filter!.split('=')
+      const isNot = header[0] === '-'
+      if (isNot) header = header.substr(1)
       let col = this.findColumnFromHeader(header)
       if (!col || !regex) throw new Error('Filter flag has an invalid value')
       rows = rows.filter((d: any) => {
         let re = new RegExp(regex)
         let val = d[col!.key]
-        // return isInverse ? !val.match(re) : val.match(re)
-        return val.match(re)
+        let match = val.match(re)
+        return isNot ? !match : match
       })
     }
 
     // sort rows
-    if (options.sort) {
-      let sorters = options.sort!.split(',')
-      let sortKeys = sorters.map(k => k[0] === '-' ? k.substr(1) : k)
+    if (this.options.sort) {
+      let sorters = this.options.sort!.split(',')
+      let sortHeaders = sorters.map(k => k[0] === '-' ? k.substr(1) : k)
+      let sortKeys = this.filterColumnsFromHeaders(sortHeaders).map(c => {
+        return ((v: any) => v[c.key])
+      })
       let sortKeysOrder = sorters.map(k => k[0] === '-' ? 'desc' : 'asc')
-      rows = _.orderBy(rows, sortKeys, sortKeysOrder)
+      rows = orderBy(rows, sortKeys, sortKeysOrder)
     }
 
     this.data = rows
 
-    if (options.csv) this.outputCSV()
+    if (this.options.csv) this.outputCSV()
     else this.outputTable()
   }
 
