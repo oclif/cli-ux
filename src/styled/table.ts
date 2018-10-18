@@ -205,7 +205,7 @@ export namespace table {
     sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
     csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
-    extra: Flags.boolean({char: 'x', description: 'show all properties'}),
+    extra: Flags.boolean({description: 'show extra columns'}),
     'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
     'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
   }
