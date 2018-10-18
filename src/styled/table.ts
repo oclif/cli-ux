@@ -125,7 +125,7 @@ class Table<T extends object> {
     //
     // find max width for each column
     for (let col of columns) {
-      const widths = ['.'.padEnd(col.minWidth!), col.header, ...data.map((row: any) => row[col.key])].map(r => sw(r))
+      const widths = ['.'.padEnd(col.minWidth! - 1), col.header, ...data.map((row: any) => row[col.key])].map(r => sw(r))
       col.maxWidth = Math.max(...widths) + 1
       col.width = col.maxWidth!
     }
