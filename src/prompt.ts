@@ -102,10 +102,19 @@ async function single(options: IPromptConfig): Promise<string> {
 function normal(options: IPromptConfig, retries = 100): Promise<string> {
   if (retries < 0) throw new Error('no input')
   return new Promise((resolve, reject) => {
+    let to: NodeJS.Timer
+    if (options.timeout) {
+      to = setTimeout(() => {
+        process.stdin.pause()
+        reject(new Error('Prompt timeout'))
+      }, options.timeout)
+      to.unref()
+    }
     process.stdin.setEncoding('utf8')
     process.stderr.write(options.prompt)
     process.stdin.resume()
     process.stdin.once('data', data => {
+      if (to) clearTimeout(to)
       process.stdin.pause()
       data = data.trim()
       if (!options.default && options.required && data === '') {
@@ -114,11 +123,5 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
         resolve(data || options.default)
       }
     })
-    if (options.timeout) {
-      setTimeout(() => {
-        process.stdin.pause()
-        reject(new Error('Prompt timeout'))
-      }, options.timeout).unref()
-    }
   })
 }
