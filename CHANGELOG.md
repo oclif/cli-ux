@@ -1,3 +1,10 @@
+## [4.9.2](https://github.com/oclif/cli-ux/compare/v4.9.1...v4.9.2) (2018-10-29)
+
+
+### Bug Fixes
+
+* add tslib ([#61](https://github.com/oclif/cli-ux/issues/61)) ([abce813](https://github.com/oclif/cli-ux/commit/abce813))
+
 ## [4.9.1](https://github.com/oclif/cli-ux/compare/v4.9.0...v4.9.1) (2018-10-13)
 
 
