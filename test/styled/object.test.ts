@@ -2,7 +2,7 @@ import {expect, fancy} from 'fancy-test'
 
 import cli from '../../src'
 
-describe('styled/table', () => {
+describe('styled/object', () => {
   fancy
     .stdout()
     .end('shows a table', output => {

@@ -163,5 +163,14 @@ describe('styled/table', () => {
 123 supertable-test-1${ws}\n`)
       })
 
+    fancy
+      .stdout()
+      .end('does not truncate', output => {
+        apps[0].id = '0'.repeat(80)
+        cli.table(apps, columns, {filter: 'id=0', 'no-truncate': true})
+        expect(output.stdout).to.equal(`ID${ws.padEnd(78)} Name${ws.padEnd(14)}
+${apps[0].id} supertable-test-1${ws}\n`)
+      })
+
   })
 })

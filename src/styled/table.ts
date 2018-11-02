@@ -45,8 +45,8 @@ class Table<T extends object> {
       csv,
       extra,
       filter,
-      'no-header': options['no-header'],
-      'no-truncate': options['no-truncate'],
+      'no-header': options['no-header'] || false,
+      'no-truncate': options['no-truncate'] || false,
       printLine: printLine || ((s: any) => process.stdout.write(s + '\n')),
       sort,
     }
@@ -134,7 +134,7 @@ class Table<T extends object> {
     // truncation logic
     const shouldShorten = () => {
       // don't shorten if full mode
-      if (options['no-header'] || !process.stdout.isTTY) return
+      if (options['no-truncate'] || !process.stdout.isTTY) return
 
       // don't shorten if there is enough screen width
       let dataMaxWidth = _.sumBy(columns, c => c.width!)
@@ -182,16 +182,17 @@ class Table<T extends object> {
 
     // print rows
     for (let row of data) {
-      let r = ''
+      let l = ''
       for (let col of columns) {
         const width = col.width!
-        let c = (row as any)[col.key].padEnd(width)
-        if (c.length > width) {
-          c = c.slice(0, width - 2) + '… '
+        const d = (row as any)[col.key]
+        let cell = d.padEnd(width)
+        if (cell.length > width || d.length === width) {
+          cell = cell.slice(0, width - 2) + '… '
         }
-        r += c
+        l += cell
       }
-      options.printLine(r)
+      options.printLine(l)
     }
   }
 }
