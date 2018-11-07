@@ -15,13 +15,13 @@ class Table<T extends object> {
     // assign columns
     this.columns = Object.keys(columns).map((key: string) => {
       const col = columns[key]
-      const extra = col.extra || false
+      const verbose = col.verbose || false
       const get = col.get || ((row: any) => row[key])
       const header = col.header || _.capitalize(key.replace(/\_/g, ' '))
       const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
 
       return {
-        extra,
+        verbose,
         get,
         header,
         key,
@@ -33,17 +33,17 @@ class Table<T extends object> {
     if (options.columns) {
       let filters = options.columns!.split(',')
       this.columns = this.filterColumnsFromHeaders(filters)
-    } else if (!options.extra) {
+    } else if (!options.verbose) {
       // show extented columns/properties
-      this.columns = this.columns.filter(c => !c.extra)
+      this.columns = this.columns.filter(c => !c.verbose)
     }
 
     // assign options
-    const {columns: cols, filter, csv, extra, sort, printLine} = options
+    const {columns: cols, filter, csv, verbose, sort, printLine} = options
     this.options = {
       columns: cols,
       csv,
-      extra,
+      verbose,
       filter,
       'no-header': options['no-header'] || false,
       'no-truncate': options['no-truncate'] || false,
@@ -202,11 +202,11 @@ export function table<T extends object>(data: T[], columns: table.Columns<T>, op
 }
 export namespace table {
   export const flags = {
-    columns: Flags.string({exclusive: ['extra'], description: 'only show provided columns (comma-seperated)'}),
+    columns: Flags.string({exclusive: ['verbose'], description: 'only show provided columns (comma-seperated)'}),
     sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
     csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
-    extra: Flags.boolean({description: 'show extra columns'}),
+    verbose: Flags.boolean({description: 'show extra columns'}),
     'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
     'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
   }
@@ -235,7 +235,7 @@ export namespace table {
 
   export interface Column<T extends object> {
     header: string
-    extra: boolean
+    verbose: boolean
     minWidth: number
     get(row: T): any
   }
@@ -245,7 +245,7 @@ export namespace table {
     sort?: string,
     filter?: string,
     columns?: string,
-    extra?: boolean,
+    verbose?: boolean,
     'no-truncate'?: boolean,
     csv?: boolean,
     'no-header'?: boolean,
