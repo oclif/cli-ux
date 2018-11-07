@@ -97,16 +97,15 @@ class Table<T extends object> {
   }
 
   private findColumnFromHeader(header: string): (table.Column<T> & { key: string, width?: number, maxWidth?: number }) | undefined {
-    return this.columns.find(c => c.header.toLowerCase() === header)
+    return this.columns.find(c => c.header.toLowerCase() === header.toLowerCase())
   }
 
   private filterColumnsFromHeaders(filters: string[]): (table.Column<T> & { key: string, width?: number, maxWidth?: number })[] {
     // unique
     filters = [...(new Set(filters))]
-    filters = filters.map(k => k.toLowerCase())
     let cols: (table.Column<T> & {key: string, width?: number, maxWidth?: number})[] = []
     filters.forEach(f => {
-      let c = this.columns.find(c => c.header.toLowerCase() === f)
+      let c = this.columns.find(c => c.header.toLowerCase() === f.toLowerCase())
       if (c) cols.push(c)
     })
     return cols
