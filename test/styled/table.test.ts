@@ -166,10 +166,10 @@ describe('styled/table', () => {
     fancy
       .stdout()
       .end('does not truncate', output => {
-        apps[0].id = '0'.repeat(80)
-        cli.table(apps, columns, {filter: 'id=0', 'no-truncate': true})
+        let three = {...apps[0], id: '0'.repeat(80), name: 'supertable-test-3'}
+        cli.table(apps.concat(three), columns, {filter: 'id=0', 'no-truncate': true})
         expect(output.stdout).to.equal(`ID${ws.padEnd(78)} Name${ws.padEnd(14)}
-${apps[0].id} supertable-test-1${ws}\n`)
+${three.id} supertable-test-3${ws}\n`)
       })
 
   })
@@ -196,6 +196,17 @@ ${apps[0].id} supertable-test-1${ws}\n`)
         expect(flags.filter).to.be.undefined
         expect(flags.columns).to.be.undefined
         expect(flags.sort).to.be.a('object')
+      })
+  })
+
+  describe('edge cases', () => {
+    fancy
+      .stdout()
+      .end('ignores header case', output => {
+        cli.table(apps, columns, {columns: 'iD,Name', filter: 'nAMe=supertable-test', sort: '-ID'})
+        expect(output.stdout).to.equal(`ID  Name${ws.padEnd(14)}
+321 supertable-test-2${ws}
+123 supertable-test-1${ws}\n`)
       })
   })
 })
