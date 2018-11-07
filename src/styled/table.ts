@@ -101,8 +101,15 @@ class Table<T extends object> {
   }
 
   private filterColumnsFromHeaders(filters: string[]): (table.Column<T> & { key: string, width?: number, maxWidth?: number })[] {
+    // unique
+    filters = [...(new Set(filters))]
     filters = filters.map(k => k.toLowerCase())
-    return this.columns.filter(c => filters.includes(c.header.toLowerCase()))
+    let cols: (table.Column<T> & {key: string, width?: number, maxWidth?: number})[] = []
+    filters.forEach(f => {
+      let c = this.columns.find(c => c.header.toLowerCase() === f)
+      if (c) cols.push(c)
+    })
+    return cols
   }
 
   private outputCSV() {
