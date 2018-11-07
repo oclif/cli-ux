@@ -52,15 +52,15 @@ const apps = [
 let columns = {
   id: {header: 'ID'},
   name: {},
-  web_url: {verbose: true},
-  stack: {verbose: true, get: (r: any) => r.stack && r.stack.name},
+  web_url: {extended: true},
+  stack: {extended: true, get: (r: any) => r.stack && r.stack.name},
 }
 
 const ws = ' '
 
 // ignore me
 // stored up here for line wrapping reasons
-const verboseHeader = `ID  Name${ws.padEnd(14)}Web url${ws.padEnd(34)}Stack${ws.padEnd(5)}`
+const extendedHeader = `ID  Name${ws.padEnd(14)}Web url${ws.padEnd(34)}Stack${ws.padEnd(5)}`
 
 // tests to-do:
 // no-truncate
@@ -80,7 +80,7 @@ describe('styled/table', () => {
       expect(flags.sort).to.exist
       expect(flags.filter).to.exist
       expect(flags.csv).to.exist
-      expect(flags.verbose).to.exist
+      expect(flags.extended).to.exist
       expect(flags['no-truncate']).to.exist
       expect(flags['no-header']).to.exist
     })
@@ -104,9 +104,9 @@ describe('styled/table', () => {
 
     fancy
       .stdout()
-      .end('shows verbose columns/uses get() for value', output => {
-        cli.table(apps, columns, {verbose: true})
-        expect(output.stdout).to.equal(`${verboseHeader}
+      .end('shows extended columns/uses get() for value', output => {
+        cli.table(apps, columns, {extended: true})
+        expect(output.stdout).to.equal(`${extendedHeader}
 123 supertable-test-1 https://supertable-test-1.herokuapp.com/ heroku-16${ws}
 321 supertable-test-2 https://supertable-test-2.herokuapp.com/ heroku-16${ws}\n`)
       })
@@ -115,9 +115,9 @@ describe('styled/table', () => {
   describe('options', () => {
     fancy
       .stdout()
-      .end('shows verbose columns', output => {
-        cli.table(apps, columns, {verbose: true})
-        expect(output.stdout).to.contain(verboseHeader)
+      .end('shows extended columns', output => {
+        cli.table(apps, columns, {extended: true})
+        expect(output.stdout).to.contain(extendedHeader)
       })
 
     fancy
