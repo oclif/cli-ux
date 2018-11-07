@@ -173,29 +173,29 @@ ${apps[0].id} supertable-test-1${ws}\n`)
       })
 
   })
-})
 
-describe('#flagsBuilder', () => {
-  fancy
-    .end('includes only flags', _ => {
-      let flags = cli.table.flagsBuilder({only: 'columns'})
-      expect(flags.columns).to.be.a('object')
-      expect(flags.sort).to.be.undefined
-    })
+  describe('#flagsBuilder', () => {
+    fancy
+      .end('includes only flags', _ => {
+        let flags = cli.table.flagsBuilder({only: 'columns'})
+        expect(flags.columns).to.be.a('object')
+        expect(flags.sort).to.be.undefined
+      })
 
-  fancy
-    .end('excludes except flags', _ => {
-      let flags = cli.table.flagsBuilder({except: 'columns'})
-      expect(flags.columns).to.be.undefined
-      expect(flags.sort).to.be.a('object')
-    })
+    fancy
+      .end('excludes except flags', _ => {
+        let flags = cli.table.flagsBuilder({except: 'columns'})
+        expect(flags.columns).to.be.undefined
+        expect(flags.sort).to.be.a('object')
+      })
 
-  fancy
-    .end('only and except flags', _ => {
-      // if someone uses both only & except for some crazy reason
-      let flags = cli.table.flagsBuilder({only: ['columns', 'sort'], except: 'columns'})
-      expect(flags.filter).to.be.undefined
-      expect(flags.columns).to.be.undefined
-      expect(flags.sort).to.be.a('object')
-    })
+    fancy
+      .end('only and except flags', _ => {
+        // if someone uses both only & except for some crazy reason
+        let flags = cli.table.flagsBuilder({only: ['columns', 'sort'], except: 'columns'})
+        expect(flags.filter).to.be.undefined
+        expect(flags.columns).to.be.undefined
+        expect(flags.sort).to.be.a('object')
+      })
+  })
 })
