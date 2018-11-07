@@ -211,6 +211,26 @@ export namespace table {
     'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
   }
 
+  export const flagsBuilder = (opts: { only?: string | string[], except?: string | string[] }): { [key: string]: any } => {
+    let f: { [key: string]: any } = flags
+    if (opts.only) {
+      f = {}
+      let o = opts.only
+      if (typeof o === 'string') o = [o]
+      o.forEach((key: string) => {
+        f[key] = (flags as { [key: string]: any })[key]
+      })
+    }
+    if (opts.except) {
+      let e = opts.except
+      if (typeof e === 'string') e = [e]
+      e.forEach((key: string) => {
+        delete f[key]
+      })
+    }
+    return f
+  }
+
   export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
 
   export interface Column<T extends object> {
