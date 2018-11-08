@@ -69,13 +69,13 @@ const extendedHeader = `ID  Name${ws.padEnd(14)}Web url${ws.padEnd(34)}Stack${ws
 describe('styled/table', () => {
   fancy
     .end('export flags and display()', () => {
-      expect(typeof (cli.table.flags)).to.eq('object')
+      expect(typeof (cli.table.flags())).to.eq('object')
       expect(typeof (cli.table)).to.eq('function')
     })
 
   fancy
     .end('has optional flags', _ => {
-      const flags = cli.table.flags
+      const flags = cli.table.flags()
       expect(flags.columns).to.exist
       expect(flags.sort).to.exist
       expect(flags.filter).to.exist
@@ -174,17 +174,17 @@ ${three.id} supertable-test-3${ws}\n`)
 
   })
 
-  describe('#flagsBuilder', () => {
+  describe('#flags', () => {
     fancy
       .end('includes only flags', _ => {
-        let flags = cli.table.flagsBuilder({only: 'columns'})
+        let flags = cli.table.flags({only: 'columns'})
         expect(flags.columns).to.be.a('object')
         expect(flags.sort).to.be.undefined
       })
 
     fancy
       .end('excludes except flags', _ => {
-        let flags = cli.table.flagsBuilder({except: 'columns'})
+        let flags = cli.table.flags({except: 'columns'})
         expect(flags.columns).to.be.undefined
         expect(flags.sort).to.be.a('object')
       })
@@ -192,7 +192,7 @@ ${three.id} supertable-test-3${ws}\n`)
     fancy
       .end('only and except flags', _ => {
         // if someone uses both only & except for some crazy reason
-        let flags = cli.table.flagsBuilder({only: ['columns', 'sort'], except: 'columns'})
+        let flags = cli.table.flags({only: ['columns', 'sort'], except: 'columns'})
         expect(flags.filter).to.be.undefined
         expect(flags.columns).to.be.undefined
         expect(flags.sort).to.be.a('object')

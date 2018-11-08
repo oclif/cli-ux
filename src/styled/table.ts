@@ -1,4 +1,6 @@
-import {flags as Flags} from '@oclif/command'
+import {flags as F} from '@oclif/command'
+import {IOptionFlag} from '@oclif/command/lib/flags'
+import {IBooleanFlag} from '@oclif/parser/lib/flags'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
 import * as _ from 'lodash'
@@ -207,34 +209,41 @@ export function table<T extends object>(data: T[], columns: table.Columns<T>, op
   new Table(data, columns, options).display()
 }
 export namespace table {
-  export const flags = {
-    columns: Flags.string({exclusive: ['extended'], description: 'only show provided columns (comma-seperated)'}),
-    sort: Flags.string({description: 'property to sort by (prepend \'-\' for descending)'}),
-    filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
-    csv: Flags.boolean({exclusive: ['no-truncate', 'no-header'], description: 'output is csv format'}),
-    extended: Flags.boolean({exclusive: ['columns'], char: 'x', description: 'show extra columns'}),
-    'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
-    'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
+  export const Flags: {
+    columns?: IOptionFlag<string | undefined>
+    sort?: IOptionFlag<string | undefined>
+    filter?: IOptionFlag<string | undefined>
+    csv?: IBooleanFlag<boolean>
+    extended?: IBooleanFlag<boolean>
+    'no-header'?: IBooleanFlag<boolean>
+    'no-truncate'?: IBooleanFlag<boolean>
+  } = {
+    columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-seperated)'}),
+    sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
+    filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
+    csv: F.boolean({exclusive: ['no-truncate', 'no-header'], description: 'output is csv format'}),
+    extended: F.boolean({exclusive: ['columns'], char: 'x', description: 'show extra columns'}),
+    'no-truncate': F.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
+    'no-header': F.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
   }
 
-  export const flagsBuilder = (opts: { only?: string | string[], except?: string | string[] }): { [key: string]: any } => {
-    let f: { [key: string]: any } = flags
-    if (opts.only) {
-      f = {}
+  export const flags = (opts?: { only?: string | string[], except?: string | string[] }): typeof Flags => {
+    let flags = Flags
+    if (opts) {
+      let f = {}
       let o = opts.only
       if (typeof o === 'string') o = [o]
-      o.forEach((key: string) => {
-        f[key] = (flags as { [key: string]: any })[key]
-      })
-    }
-    if (opts.except) {
       let e = opts.except
       if (typeof e === 'string') e = [e]
-      e.forEach((key: string) => {
-        delete f[key]
+      Object.keys(Flags).forEach((key: string) => {
+        if (e && e.includes(key)) return
+        if (!o || (o && o.includes(key))) {
+          (f as { [key: string]: any })[key] = (flags as { [key: string]: any })[key]
+        }
       })
+      return f
     }
-    return f
+    return flags
   }
 
   export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
