@@ -179,22 +179,13 @@ ${three.id} supertable-test-3${ws}\n`)
       .end('includes only flags', _ => {
         let flags = cli.table.flags({only: 'columns'})
         expect(flags.columns).to.be.a('object')
-        expect(flags.sort).to.be.undefined
+        expect((flags as any).sort).to.be.undefined
       })
 
     fancy
       .end('excludes except flags', _ => {
         let flags = cli.table.flags({except: 'columns'})
-        expect(flags.columns).to.be.undefined
-        expect(flags.sort).to.be.a('object')
-      })
-
-    fancy
-      .end('only and except flags', _ => {
-        // if someone uses both only & except for some crazy reason
-        let flags = cli.table.flags({only: ['columns', 'sort'], except: 'columns'})
-        expect(flags.filter).to.be.undefined
-        expect(flags.columns).to.be.undefined
+        expect((flags as any).columns).to.be.undefined
         expect(flags.sort).to.be.a('object')
       })
   })

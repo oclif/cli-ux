@@ -217,21 +217,23 @@ export namespace table {
     'no-header': F.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
   }
 
-  export const flags = (opts?: { only?: string | string[], except?: string | string[] }): typeof Flags => {
+  type IFlags = typeof Flags
+  type ExcludeFlags<T, Z> = Pick<T, Exclude<keyof T, Z>>
+  type IncludeFlags<T, K extends keyof T> = Pick<T, K>
+
+  export function flags(): IFlags
+  export function flags<Z extends keyof IFlags = keyof IFlags>(opts: { except: Z | Z[] }): ExcludeFlags<IFlags, Z>
+  export function flags<K extends keyof IFlags = keyof IFlags>(opts: { only: K | K[] }): IncludeFlags<IFlags, K>
+  export function flags(opts?: any): any {
     if (opts) {
-      let f: { [key: string]: any } = {}
-      let o = opts.only
-      if (typeof o === 'string') o = [o]
-      let e = opts.except
-      if (typeof e === 'string') e = [e]
-      Object.keys(Flags).forEach((key: string) => {
-        if (e && e.includes(key)) return
-        if (!o || (o && o.includes(key))) {
-          f[key] = (Flags as { [key: string]: any })[key]
-        }
+      let f = {}
+      let o = (opts.only && typeof opts.only === 'string' ? [opts.only] : opts.only) || Object.keys(Flags)
+      let e = (opts.except && typeof opts.except === 'string' ? [opts.except] : opts.except) || []
+      o.forEach((key: string) => {
+        if ((e as any[]).includes(key)) return
+        (f as any)[key] = (Flags as any)[key]
       })
-      // to-do: fix this type
-      return f as typeof Flags
+      return f
     }
     return Flags
   }
