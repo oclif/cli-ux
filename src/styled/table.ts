@@ -1,6 +1,4 @@
 import {flags as F} from '@oclif/command'
-import {IOptionFlag} from '@oclif/command/lib/flags'
-import {IBooleanFlag} from '@oclif/parser/lib/flags'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
 import * as _ from 'lodash'
@@ -209,15 +207,7 @@ export function table<T extends object>(data: T[], columns: table.Columns<T>, op
   new Table(data, columns, options).display()
 }
 export namespace table {
-  export const Flags: {
-    columns?: IOptionFlag<string | undefined>
-    sort?: IOptionFlag<string | undefined>
-    filter?: IOptionFlag<string | undefined>
-    csv?: IBooleanFlag<boolean>
-    extended?: IBooleanFlag<boolean>
-    'no-header'?: IBooleanFlag<boolean>
-    'no-truncate'?: IBooleanFlag<boolean>
-  } = {
+  export const Flags = {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-seperated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
@@ -228,9 +218,8 @@ export namespace table {
   }
 
   export const flags = (opts?: { only?: string | string[], except?: string | string[] }): typeof Flags => {
-    let flags = Flags
     if (opts) {
-      let f = {}
+      let f: { [key: string]: any } = {}
       let o = opts.only
       if (typeof o === 'string') o = [o]
       let e = opts.except
@@ -238,12 +227,13 @@ export namespace table {
       Object.keys(Flags).forEach((key: string) => {
         if (e && e.includes(key)) return
         if (!o || (o && o.includes(key))) {
-          (f as { [key: string]: any })[key] = (flags as { [key: string]: any })[key]
+          f[key] = (Flags as { [key: string]: any })[key]
         }
       })
-      return f
+      // to-do: fix this type
+      return f as typeof Flags
     }
-    return flags
+    return Flags
   }
 
   export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
