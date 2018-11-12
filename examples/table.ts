@@ -5,7 +5,7 @@ import {cli} from '../src'
 
 export default class Users extends Command {
   static flags = {
-    ...cli.table.flags
+    ...cli.table.flags()
   }
 
   async run() {
@@ -22,7 +22,7 @@ export default class Users extends Command {
         },
         id: {
           header: 'ID',
-          extra: true
+          extended: true,
         }
       },
       {

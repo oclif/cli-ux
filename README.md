@@ -124,7 +124,7 @@ Where:
 - `columns`: [Table.Columns](./src/styled/table.ts)
 - `options`: [Table.Options](./src/styled/table.ts)
 
-`cli.table.flags` is an object containing all the flags to include in your command class.
+`cli.table.flags()` is an function returning an object containing all the table flags to include in your command.
 
 ```typescript
 {
@@ -132,11 +132,13 @@ Where:
   sort: Flags.string({description: 'property to sort by (prepend '-' for descending)'}),
   filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
   csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
-  extra: Flags.boolean({char: 'x', description: 'show all columns'}),
+  extended: Flags.boolean({char: 'x', description: 'show extra columns'}),
   'no-truncate': Flags.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
   'no-header': Flags.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
 }
 ```
+
+Passing `{only: ['columns']}` or `{except: ['columns']}` as an argument into `cli.table.flags()` will whitelist/blacklist those flags from the returned object.
 
 `Table.Columns` defines the table columns and their display options.
 
@@ -147,7 +149,7 @@ const columns: Table.Columns = {
   id: {
     header: 'ID', // override column header
     minWidth: '10', // column must display at this width or greater
-    extra: true, // only display this column when the --extra flag is present
+    extended: true, // only display this column when the --extended flag is present
     get: row => `US-O1-${row.id}`, // custom getter for data row object 
   },
 }
@@ -162,7 +164,7 @@ const options: Table.Options = {
   sort: flags.sort,
   filter: flags.filter,
   csv: flags.csv,
-  extra: flags.extra,
+  extended: flags.extended,
   'no-truncate': flags['no-truncate]',
   'no-header': flags['no-header]',
 }
@@ -177,7 +179,7 @@ import axios from 'axios'
 
 export default class Users extends Command {
   static flags = {
-    ...cli.table.flags
+    ...cli.table.flags()
   }
 
   async run() {
@@ -193,7 +195,7 @@ export default class Users extends Command {
       },
       id: {
         header: 'ID',
-        extra: true
+        extended: true
       }
     }, {
       printLine: this.log,
@@ -211,7 +213,7 @@ Name   Team
 Jordan Sales
 Jamie  Engineering
 
-$ example-cli users --extra
+$ example-cli users --extended
 Name   Team        ID
 Jordan Sales       100
 Jamie  Engineering 200
