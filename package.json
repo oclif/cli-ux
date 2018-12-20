@@ -5,7 +5,8 @@
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/oclif/cli-ux/issues",
   "dependencies": {
-    "@oclif/errors": "^1.2.2",
+    "@oclif/command": "^1.5.1",
+    "@oclif/errors": "^1.2.1",
     "@oclif/linewrap": "^1.0.0",
     "@oclif/screen": "^1.0.3",
     "ansi-escapes": "^3.1.0",
@@ -19,8 +20,10 @@
     "indent-string": "^3.2.0",
     "is-wsl": "^1.1.0",
     "lodash": "^4.17.11",
+    "natural-orderby": "^1.0.2",
     "password-prompt": "^1.0.7",
     "semver": "^5.6.0",
+    "string-width": "^2.1.1",
     "strip-ansi": "^5.0.0",
     "supports-color": "^5.5.0",
     "supports-hyperlinks": "^1.0.1",
@@ -28,6 +31,8 @@
     "tslib": "^1.9.3"
   },
   "devDependencies": {
+    "@oclif/config": "^1.7.4",
+    "@oclif/parser": "^3.7.0",
     "@oclif/tslint": "^3.1.1",
     "@types/ansi-styles": "^3.2.1",
     "@types/chai": "^4.1.7",
@@ -42,6 +47,7 @@
     "@types/semver": "^5.5.0",
     "@types/strip-ansi": "^3.0.0",
     "@types/supports-color": "^5.3.0",
+    "axios": "^0.18.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "eslint": "^5.8.0",
