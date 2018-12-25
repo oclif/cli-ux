@@ -165,8 +165,8 @@ const options: Table.Options = {
   filter: flags.filter,
   csv: flags.csv,
   extended: flags.extended,
-  'no-truncate': flags['no-truncate]',
-  'no-header': flags['no-header]',
+  'no-truncate': flags['no-truncate'],
+  'no-header': flags['no-header'],
 }
 ```
 
