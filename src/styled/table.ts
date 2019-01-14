@@ -208,7 +208,7 @@ export function table<T extends object>(data: T[], columns: table.Columns<T>, op
 }
 export namespace table {
   export const Flags = {
-    columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-seperated)'}),
+    columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
     csv: F.boolean({exclusive: ['no-truncate', 'no-header'], description: 'output is csv format'}),
