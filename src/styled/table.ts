@@ -6,6 +6,7 @@ import {inspect} from 'util'
 
 const sw = require('string-width')
 const {orderBy} = require('natural-orderby')
+const stripAnsi = require('strip-ansi')
 
 class Table<T extends object> {
   options: table.Options & { printLine(s: any): any }
@@ -132,7 +133,7 @@ class Table<T extends object> {
     // find max width for each column
     for (let col of columns) {
       // convert multi-line cell to single longest line
-      // for width calcuations
+      // for width calculations
       let widthData = data.map((row: any) => {
         let d = row[col.key]
         let manyLines = d.split('\n')
@@ -217,8 +218,10 @@ class Table<T extends object> {
           const width = col.width!
           let d = (row as any)[col.key]
           d = d.split('\n')[i] || ''
-          let cell = d.padEnd(width)
-          if (cell.length > width || d.length === width) {
+          const visualWidth = sw(d)
+          const colorWidth = (d.length - visualWidth)
+          let cell = d.padEnd(width + colorWidth)
+          if ((cell.length - colorWidth) > width || visualWidth === width) {
             cell = cell.slice(0, width - 2) + '… '
           }
           l += cell
