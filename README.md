@@ -128,7 +128,7 @@ Where:
 
 ```typescript
 {
-  columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-seperated)'}),
+  columns: Flags.string({exclusive: ['additional'], description: 'only show provided columns (comma-separated)'}),
   sort: Flags.string({description: 'property to sort by (prepend '-' for descending)'}),
   filter: Flags.string({description: 'filter property by partial string matching, ex: name=foo'}),
   csv: Flags.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
@@ -150,7 +150,7 @@ const columns: Table.Columns = {
     header: 'ID', // override column header
     minWidth: '10', // column must display at this width or greater
     extended: true, // only display this column when the --extended flag is present
-    get: row => `US-O1-${row.id}`, // custom getter for data row object 
+    get: row => `US-O1-${row.id}`, // custom getter for data row object
   },
 }
 ```
