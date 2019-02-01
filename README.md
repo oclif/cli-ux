@@ -209,28 +209,61 @@ Displays:
 
 ```shell
 $ example-cli users
-Name   Team
-Jordan Sales
-Jamie  Engineering
+Name                     Company
+Leanne Graham            Romaguera-Crona
+Ervin Howell             Deckow-Crist
+Clementine Bauch         Romaguera-Jacobson
+Patricia Lebsack         Robel-Corkery
+Chelsey Dietrich         Keebler LLC
+Mrs. Dennis Schulist     Considine-Lockman
+Kurtis Weissnat          Johns Group
+Nicholas Runolfsdottir V Abernathy Group
+Glenna Reichert          Yost and Sons
+Clementina DuBuque       Hoeger LLC
 
 $ example-cli users --extended
-Name   Team        ID
-Jordan Sales       100
-Jamie  Engineering 200
+Name                     Company            ID
+Leanne Graham            Romaguera-Crona    1
+Ervin Howell             Deckow-Crist       2
+Clementine Bauch         Romaguera-Jacobson 3
+Patricia Lebsack         Robel-Corkery      4
+Chelsey Dietrich         Keebler LLC        5
+Mrs. Dennis Schulist     Considine-Lockman  6
+Kurtis Weissnat          Johns Group        7
+Nicholas Runolfsdottir V Abernathy Group    8
+Glenna Reichert          Yost and Sons      9
+Clementina DuBuque       Hoeger LLC         10
 
 $ example-cli users --columns=name
 Name
-Jordan
-Jamie
+Leanne Graham
+Ervin Howell
+Clementine Bauch
+Patricia Lebsack
+Chelsey Dietrich
+Mrs. Dennis Schulist
+Kurtis Weissnat
+Nicholas Runolfsdottir V
+Glenna Reichert
+Clementina DuBuque
 
-$ example-cli users --filter="team=sales"
-Name   Team        ID
-Jordan Sales       100
+$ example-cli users --filter="company=Group"
+Name                     Company
+Kurtis Weissnat          Johns Group
+Nicholas Runolfsdottir V Abernathy Group
 
-$ example-cli users --sort=team
-Name   Team        ID
-Jamie  Engineering 200
-Jordan Sales       100
+$ example-cli users --sort=company
+Name                     Company
+Nicholas Runolfsdottir V Abernathy Group
+Mrs. Dennis Schulist     Considine-Lockman
+Ervin Howell             Deckow-Crist
+Clementina DuBuque       Hoeger LLC
+Kurtis Weissnat          Johns Group
+Chelsey Dietrich         Keebler LLC
+Patricia Lebsack         Robel-Corkery
+Leanne Graham            Romaguera-Crona
+Clementine Bauch         Romaguera-Jacobson
+Glenna Reichert          Yost and Sons
 ```
 
 # cli.tree

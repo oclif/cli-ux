@@ -33,4 +33,4 @@ export default class Users extends Command {
   }
 }
 
-Users.run().catch(err => cli.error(err))
+Users.run().then(null, err => cli.error(err))
