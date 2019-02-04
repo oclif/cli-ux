@@ -17,7 +17,7 @@ class Table<T extends object> {
       const col = columns[key]
       const extended = col.extended || false
       const get = col.get || ((row: any) => row[key])
-      const header = col.header || _.capitalize(key.replace(/\_/g, ' '))
+      const header = typeof col.header === 'string' ? col.header : _.capitalize(key.replace(/\_/g, ' '))
       const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
 
       return {
