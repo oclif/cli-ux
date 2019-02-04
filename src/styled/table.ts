@@ -6,7 +6,6 @@ import {inspect} from 'util'
 
 const sw = require('string-width')
 const {orderBy} = require('natural-orderby')
-const stripAnsi = require('strip-ansi')
 
 class Table<T extends object> {
   options: table.Options & { printLine(s: any): any }
