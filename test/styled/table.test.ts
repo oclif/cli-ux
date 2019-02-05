@@ -199,5 +199,25 @@ ${three.id} supertable-test-3${ws}\n`)
 321 supertable-test-2${ws}
 123 supertable-test-1${ws}\n`)
       })
+
+    fancy
+      .stdout()
+      .end('displays multiline cell', output => {
+        const app3 = {
+          build_stack: {
+            name: 'heroku-16'
+          },
+          id: '456',
+          name: 'supertable-test\n3',
+          web_url: 'https://supertable-test-1.herokuapp.com/'
+        }
+
+        cli.table(apps.concat(app3 as any), columns, {sort: '-ID'})
+        expect(output.stdout).to.equal(`ID  Name${ws.padEnd(14)}
+456 supertable-test${ws.padEnd(3)}
+    3${ws.padEnd(17)}
+321 supertable-test-2${ws}
+123 supertable-test-1${ws}\n`)
+      })
   })
 })
