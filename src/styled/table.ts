@@ -17,7 +17,7 @@ class Table<T extends object> {
       const col = columns[key]
       const extended = col.extended || false
       const get = col.get || ((row: any) => row[key])
-      const header = col.header || _.capitalize(key.replace(/\_/g, ' '))
+      const header = typeof col.header === 'string' ? col.header : _.capitalize(key.replace(/\_/g, ' '))
       const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
 
       return {
@@ -131,7 +131,17 @@ class Table<T extends object> {
     //
     // find max width for each column
     for (let col of columns) {
-      const widths = ['.'.padEnd(col.minWidth! - 1), col.header, ...data.map((row: any) => row[col.key])].map(r => sw(r))
+      // convert multi-line cell to single longest line
+      // for width calculations
+      let widthData = data.map((row: any) => {
+        let d = row[col.key]
+        let manyLines = d.split('\n')
+        if (manyLines.length > 1) {
+          return '*'.repeat(Math.max(...manyLines.map((r: string) => sw(r))))
+        }
+        return d
+      })
+      const widths = ['.'.padEnd(col.minWidth! - 1), col.header, ...widthData.map((row: any) => row)].map(r => sw(r))
       col.maxWidth = Math.max(...widths) + 1
       col.width = col.maxWidth!
     }
@@ -188,17 +198,35 @@ class Table<T extends object> {
 
     // print rows
     for (let row of data) {
-      let l = ''
+      // find max number of lines
+      // for all cells in a row
+      // with multi-line strings
+      let numOfLines = 1
       for (let col of columns) {
-        const width = col.width!
         const d = (row as any)[col.key]
-        let cell = d.padEnd(width)
-        if (cell.length > width || d.length === width) {
-          cell = cell.slice(0, width - 2) + '… '
-        }
-        l += cell
+        let lines = d.split('\n').length
+        if (lines > numOfLines) numOfLines = lines
       }
-      options.printLine(l)
+      let linesIndexess = [...Array(numOfLines).keys()]
+
+      // print row
+      // including multi-lines
+      linesIndexess.forEach((i: number) => {
+        let l = ''
+        for (let col of columns) {
+          const width = col.width!
+          let d = (row as any)[col.key]
+          d = d.split('\n')[i] || ''
+          const visualWidth = sw(d)
+          const colorWidth = (d.length - visualWidth)
+          let cell = d.padEnd(width + colorWidth)
+          if ((cell.length - colorWidth) > width || visualWidth === width) {
+            cell = cell.slice(0, width - 2) + '… '
+          }
+          l += cell
+        }
+        options.printLine(l)
+      })
     }
   }
 }
