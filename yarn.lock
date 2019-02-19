@@ -1212,10 +1212,10 @@ os-tmpdir@~1.0.2:
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
   integrity sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
 
-password-prompt@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/password-prompt/-/password-prompt-1.0.7.tgz#8e27748d3400bc9c9140d5ade705dfb7aeb7d91a"
-  integrity sha1-jid0jTQAvJyRQNWt5wXft6632Ro=
+password-prompt@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/password-prompt/-/password-prompt-1.1.0.tgz#6aca8ba62a5c0c4dfe5957b2760db1fc1d0fe7ac"
+  integrity sha512-dTjuMS9bDxeLBbkX7C3GzuzooEFXrKdAmLcuWwuS0H6BVicfM5J2OVTaseS6nf+T92jJLXenDj0r6U79Chs7EA==
   dependencies:
     ansi-escapes "^3.1.0"
     cross-spawn "^6.0.5"
