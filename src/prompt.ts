@@ -83,6 +83,14 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
   case 'single':
     return single(options)
   case 'mask':
+    return deps.passwordPrompt(options.prompt, {
+      method: options.type,
+      required: options.required,
+      default: options.default
+    }).then((value: string) => {
+      replacePrompt(getPrompt(name, 'hide', inputOptions.default))
+      return value
+    })
   case 'hide':
     return deps.passwordPrompt(options.prompt, {
       method: options.type,
@@ -132,7 +140,7 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
 function getPrompt(name: string, type?: string, defaultValue?: string) {
   let prompt = '> '
 
-  if (defaultValue && (type && type === 'mask' || type === 'hide')) {
+  if (defaultValue && type === 'hide') {
     defaultValue = '*'.repeat(defaultValue.length)
   }
 
@@ -140,4 +148,9 @@ function getPrompt(name: string, type?: string, defaultValue?: string) {
   else if (name) prompt = `${name}: `
 
   return prompt
+}
+
+function replacePrompt(prompt: string) {
+  process.stderr.write(deps.ansiEscapes.cursorHide + deps.ansiEscapes.cursorUp(1) + deps.ansiEscapes.cursorLeft + prompt
+    + deps.ansiEscapes.cursorDown(1) + deps.ansiEscapes.cursorLeft + deps.ansiEscapes.cursorShow)
 }
