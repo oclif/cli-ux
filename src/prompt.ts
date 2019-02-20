@@ -67,15 +67,14 @@ export async function anykey(message?: string): Promise<void> {
 }
 
 function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
-  let prompt = '> '
-  if (name && inputOptions.default) prompt = name + ' ' + chalk.yellow('[' + inputOptions.default + ']') + ': '
-  else if (name) prompt = `${name}: `
+  const prompt = getPrompt(name, inputOptions.type, inputOptions.default)
   const options: IPromptConfig = {
     isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY),
     name,
     prompt,
     type: 'normal',
     required: true,
+    default: '',
     ...inputOptions,
   }
   switch (options.type) {
@@ -85,7 +84,11 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
     return single(options)
   case 'mask':
   case 'hide':
-    return deps.passwordPrompt(options.prompt, {method: options.type})
+    return deps.passwordPrompt(options.prompt, {
+      method: options.type,
+      required: options.required,
+      default: options.default
+    })
   default:
     throw new Error(`unexpected type ${options.type}`)
   }
@@ -124,4 +127,17 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
       }
     })
   })
+}
+
+function getPrompt(name: string, type?: string, defaultValue?: string) {
+  let prompt = '> '
+
+  if (defaultValue && (type && type === 'mask' || type === 'hide')) {
+    defaultValue = '*'.repeat(defaultValue.length)
+  }
+
+  if (name && defaultValue) prompt = name + ' ' + chalk.yellow('[' + defaultValue + ']') + ': '
+  else if (name) prompt = `${name}: `
+
+  return prompt
 }
