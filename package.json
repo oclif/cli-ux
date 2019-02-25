@@ -21,7 +21,7 @@
     "is-wsl": "^1.1.0",
     "lodash": "^4.17.11",
     "natural-orderby": "^1.0.2",
-    "password-prompt": "^1.1.0",
+    "password-prompt": "^1.1.2",
     "semver": "^5.6.0",
     "string-width": "^2.1.1",
     "strip-ansi": "^5.0.0",
