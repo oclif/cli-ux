@@ -29,15 +29,6 @@ class Table<T extends object> {
       }
     })
 
-    // and filter columns
-    if (options.columns) {
-      let filters = options.columns!.split(',')
-      this.columns = this.filterColumnsFromHeaders(filters)
-    } else if (!options.extended) {
-      // show extented columns/properties
-      this.columns = this.columns.filter(c => !c.extended)
-    }
-
     // assign options
     const {columns: cols, filter, csv, extended, sort, printLine} = options
     this.options = {
@@ -88,6 +79,15 @@ class Table<T extends object> {
       })
       let sortKeysOrder = sorters.map(k => k[0] === '-' ? 'desc' : 'asc')
       rows = orderBy(rows, sortKeys, sortKeysOrder)
+    }
+
+    // and filter columns
+    if (this.options.columns) {
+      let filters = this.options.columns!.split(',')
+      this.columns = this.filterColumnsFromHeaders(filters)
+    } else if (!this.options.extended) {
+      // show extented columns/properties
+      this.columns = this.columns.filter(c => !c.extended)
     }
 
     this.data = rows
