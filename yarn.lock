@@ -1161,10 +1161,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-natural-orderby@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/natural-orderby/-/natural-orderby-1.0.2.tgz#287a4778217fbf6af0d704129d55ae90450f7a88"
-  integrity sha512-V2CMcGpkL078lsYpUUjuZrFsYzdvL0eETYvw9N4dwQsz2gV8QMbKyJBgGdF6Xwg9OuZBzCvfbKu8ex2JXp8Cbw==
+natural-orderby@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/natural-orderby/-/natural-orderby-2.0.1.tgz#b9b06f72b3c7292975d87a5d507045bd1090f38b"
+  integrity sha512-TbzN58QCKHD9cfKO1QaAoLC/KiVfEcCHl/5RIlh7A7pfG6xFJVxHEZIqt1LmwEh0N4dY8y/7QYgwWpDcu/PLOA==
 
 nice-try@^1.0.4:
   version "1.0.5"
