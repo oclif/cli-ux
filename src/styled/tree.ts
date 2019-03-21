@@ -1,4 +1,4 @@
-const treeify = require('treeify')
+const treeify = require('object-treeify')
 
 export class Tree {
   nodes: { [key: string]: Tree } = {}
@@ -31,7 +31,7 @@ export class Tree {
     }
 
     let tree = addNodes(this.nodes)
-    logger(treeify.asTree(tree))
+    logger(treeify(tree))
   }
 }
 
