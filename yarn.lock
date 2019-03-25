@@ -1186,10 +1186,10 @@ object-assign@^4.0.1:
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
 
-object-treeify@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/object-treeify/-/object-treeify-1.1.3.tgz#b8df0398a242bde6fcb6f8afe03f15ded87fb5a4"
-  integrity sha512-wUB3DZmwK0P+NGkW9w2GK1RC+d4T8p7oRhEWYJ38MQDCxPXQoC5d1my08cUAzi7xznAyEAZcE0uAX9L4lg2D5g==
+object-treeify@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/object-treeify/-/object-treeify-1.1.4.tgz#a225e3620188f88a4c709793aacc42d2c4fad6d2"
+  integrity sha512-ouE/RlDNGTSERblQU7vx5RJk6L9+XW8vpA8Y5w4GJZWJ9bh0Nk32/GQ/vXZCXZYPPWAznfa9dGvMWTasIjC9RQ==
 
 once@^1.3.0:
   version "1.4.0"

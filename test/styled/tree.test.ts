@@ -15,10 +15,10 @@ describe('styled/tree', () => {
       tree.nodes.bar.insert('baz', subtree)
 
       tree.display()
-      expect(output.stdout).to.equal(`├─ bar
-│  └─ baz
-│     └─ qux
-└─ foo
+      expect(output.stdout).to.equal(`├─ foo
+└─ bar
+   └─ baz
+      └─ qux
 `)
     })
 })
