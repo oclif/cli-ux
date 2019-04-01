@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@oclif/config": "^1.12.9",
-    "@oclif/parser": "^3.7.0",
+    "@oclif/parser": "^3.7.3",
     "@oclif/tslint": "^3.1.1",
     "@types/ansi-styles": "^3.2.1",
     "@types/chai": "^4.1.7",
