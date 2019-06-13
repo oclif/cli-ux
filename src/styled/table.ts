@@ -1,7 +1,8 @@
 import {flags as F} from '@oclif/command'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
-import * as _ from 'lodash'
+import capitalize from 'lodash/capitalize'
+import sumBy from 'lodash/sumBy'
 import {inspect} from 'util'
 
 const sw = require('string-width')
@@ -17,7 +18,7 @@ class Table<T extends object> {
       const col = columns[key]
       const extended = col.extended || false
       const get = col.get || ((row: any) => row[key])
-      const header = typeof col.header === 'string' ? col.header : _.capitalize(key.replace(/\_/g, ' '))
+      const header = typeof col.header === 'string' ? col.header : capitalize(key.replace(/\_/g, ' '))
       const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
 
       return {
@@ -153,7 +154,7 @@ class Table<T extends object> {
       if (options['no-truncate'] || !process.stdout.isTTY) return
 
       // don't shorten if there is enough screen width
-      let dataMaxWidth = _.sumBy(columns, c => c.width!)
+      let dataMaxWidth = sumBy(columns, c => c.width!)
       let overWidth = dataMaxWidth - maxWidth
       if (overWidth <= 0) return
 
@@ -165,15 +166,15 @@ class Table<T extends object> {
       // if sum(minWidth's) is greater than term width
       // nothing can be done so
       // display all as minWidth
-      let dataMinWidth = _.sumBy(columns, c => c.minWidth!)
+      let dataMinWidth = sumBy(columns, c => c.minWidth!)
       if (dataMinWidth >= maxWidth) return
 
       // some wiggle room left, add it back to "needy" columns
       let wiggleRoom = maxWidth - dataMinWidth
-      let needyCols = _.sortBy(columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})), c => c.needs)
+      let needyCols = columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})).sort((a, b) => a.needs - b.needs)
       for (let {key, needs} of needyCols) {
         if (!needs) continue
-        let col = _.find(columns, c => (key === c.key))
+        let col = columns.find(c => key === c.key)
         if (!col) continue
         if (wiggleRoom > needs) {
           col.width = col.width! + needs

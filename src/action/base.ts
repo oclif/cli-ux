@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+import castArray from 'lodash/castArray'
 import {inspect} from 'util'
 
 export interface ITask {
@@ -182,6 +182,9 @@ export class ActionBase {
    * write to the real stdout/stderr
    */
   protected _write(std: 'stdout' | 'stderr', s: string | string[]) {
-    this.stdmockOrigs[std].apply(process[std], _.castArray(s))
+    let args = castArray(s)
+    if (0 in args) {
+      this.stdmockOrigs[std].apply(process[std], args as any)
+    }
   }
 }
