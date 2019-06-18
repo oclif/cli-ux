@@ -119,7 +119,7 @@ const cliuxProcessExitHandler = async () => {
 }
 // to avoid MaxListenersExceededWarning
 // only attach named listener once
-let cliuxListeners = process.listeners('exit').filter(fn => fn.name === cliuxProcessExitHandler.name)
-if (!cliuxListeners.length) {
+let cliuxListener = process.listeners('exit').find(fn => fn.name === cliuxProcessExitHandler.name)
+if (!cliuxListener) {
   process.once('exit', cliuxProcessExitHandler)
 }
