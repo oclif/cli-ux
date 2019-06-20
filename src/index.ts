@@ -108,7 +108,7 @@ export {
   Table,
 }
 
-process.once('exit', async () => {
+const cliuxProcessExitHandler = async () => {
   try {
     await ux.done()
   } catch (err) {
@@ -116,4 +116,10 @@ process.once('exit', async () => {
     console.error(err)
     process.exitCode = 1
   }
-})
+}
+// to avoid MaxListenersExceededWarning
+// only attach named listener once
+let cliuxListener = process.listeners('exit').find(fn => fn.name === cliuxProcessExitHandler.name)
+if (!cliuxListener) {
+  process.once('exit', cliuxProcessExitHandler)
+}
