@@ -22,6 +22,7 @@ export const ux = {
   get anykey() { return deps.prompt.anykey },
   get confirm() { return deps.prompt.confirm },
   get action() { return config.action },
+  get prideAction() { return config.prideAction },
   styledObject(obj: any, keys?: string[]) { ux.info(deps.styledObject(obj, keys)) },
   get styledHeader() { return deps.styledHeader },
   get styledJSON() { return deps.styledJSON },
