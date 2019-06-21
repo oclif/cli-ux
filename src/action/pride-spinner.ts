@@ -6,7 +6,6 @@ import * as supportsColor from 'supports-color'
 import SpinnerAction from './spinner'
 
 function colorLookup(s: string, frameIndex: number): string {
-  // console.log(frameIndex)
   const colors = [
     chalk.red,
     chalk.keyword('orange'),
@@ -17,7 +16,7 @@ function colorLookup(s: string, frameIndex: number): string {
     chalk.magenta,
     chalk.keyword('pink'),
   ]
-  return color(s, colors[frameIndex])
+  return color(s, (colors[frameIndex] || 0))
 }
 function color(s: string, colorFn: (s: string) => string): string {
   if (!supportsColor) return s
