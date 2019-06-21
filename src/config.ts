@@ -24,10 +24,12 @@ const actionType = (
 ) || 'simple'
 
 const Action = actionType === 'spinner' ? require('./action/spinner').default : require('./action/simple').default
+const PrideAction = actionType === 'spinner' ? require('./action/pride-spinner').default : require('./action/simple').default
 
 export class Config {
   outputLevel: Levels = 'info'
   action: ActionBase = new Action()
+  prideAction: ActionBase = new PrideAction()
   errorsHandled = false
   showStackTrace = true
 

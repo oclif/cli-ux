@@ -53,6 +53,12 @@ export default class SpinnerAction extends ActionBase {
     this.output = undefined
   }
 
+  protected _frame(): string {
+    let frame = this.frames[this.frameIndex]
+    this.frameIndex = ++this.frameIndex % this.frames.length
+    return color(frame)
+  }
+
   private _render(icon?: string) {
     const task = this.task
     if (!task) return
@@ -69,12 +75,6 @@ export default class SpinnerAction extends ActionBase {
     let lines = this._lines(this.output)
     this._write(this.std, deps.ansiEscapes.cursorLeft + deps.ansiEscapes.cursorUp(lines) + deps.ansiEscapes.eraseDown)
     this.output = undefined
-  }
-
-  private _frame(): string {
-    let frame = this.frames[this.frameIndex]
-    this.frameIndex = ++this.frameIndex % this.frames.length
-    return color(frame)
   }
 
   private _lines(s: string): number {
