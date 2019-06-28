@@ -12,7 +12,7 @@
     "ansi-escapes": "^3.1.0",
     "ansi-styles": "^3.2.1",
     "cardinal": "^2.1.1",
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.2",
     "clean-stack": "^2.0.0",
     "extract-stack": "^1.0.0",
     "fs-extra": "^7.0.1",
