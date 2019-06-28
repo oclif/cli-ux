@@ -18,7 +18,7 @@
     "fs-extra": "^7.0.1",
     "hyperlinker": "^1.0.0",
     "indent-string": "^3.2.0",
-    "is-wsl": "^1.1.0",
+    "is-wsl": "^2.1.0",
     "lodash": "^4.17.11",
     "natural-orderby": "^2.0.1",
     "password-prompt": "^1.1.2",
