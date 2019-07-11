@@ -182,6 +182,6 @@ export class ActionBase {
    * write to the real stdout/stderr
    */
   protected _write(std: 'stdout' | 'stderr', s: string | string[]) {
-    this.stdmockOrigs[std].apply(process[std], _.castArray(s))
+    this.stdmockOrigs[std].apply(process[std], _.castArray(s) as [string])
   }
 }

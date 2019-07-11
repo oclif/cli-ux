@@ -31,8 +31,8 @@ export default class SpinnerAction extends ActionBase {
     this._reset()
     if (this.spinner) clearInterval(this.spinner)
     this._render()
-    let interval: any = (this.spinner = setInterval(
-      this._render.bind(this),
+    let interval: any = (this.spinner = setInterval(icon =>
+      this._render.bind(this)(icon),
       process.platform === 'win32' ? 500 : 100,
       'spinner',
     ))
