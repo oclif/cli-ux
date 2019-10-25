@@ -79,7 +79,7 @@ describe('styled/table', () => {
       expect(flags.columns).to.exist
       expect(flags.sort).to.exist
       expect(flags.filter).to.exist
-      expect(flags.csv).to.exist
+      expect(flags.output).to.exist
       expect(flags.extended).to.exist
       expect(flags['no-truncate']).to.exist
       expect(flags['no-header']).to.exist
@@ -140,7 +140,7 @@ describe('styled/table', () => {
     fancy
       .stdout()
       .end('outputs in csv', output => {
-        cli.table(apps, columns, {csv: true})
+        cli.table(apps, columns, {output: 'csv'})
         expect(output.stdout).to.equal(`ID,Name
 123,supertable-test-1
 321,supertable-test-2\n`)
@@ -180,6 +180,35 @@ describe('styled/table', () => {
         cli.table(apps, columns, {csv: true, 'no-header': true})
         expect(output.stdout).to.equal(`123,supertable-test-1
 321,supertable-test-2\n`)
+      })
+
+    fancy
+      .stdout()
+      .end('outputs in json', output => {
+        cli.table(apps, columns, {output: 'json'})
+        expect(output.stdout).to.equal(`[
+  {
+    "id": "123",
+    "name": "supertable-test-1"
+  },
+  {
+    "id": "321",
+    "name": "supertable-test-2"
+  }
+]
+`)
+      })
+
+    fancy
+      .stdout()
+      .end('outputs in yaml', output => {
+        cli.table(apps, columns, {output: 'yaml'})
+        expect(output.stdout).to.equal(`- id: '123'
+  name: supertable-test-1
+- id: '321'
+  name: supertable-test-2
+
+`)
       })
 
     fancy

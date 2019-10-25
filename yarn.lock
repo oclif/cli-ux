@@ -145,6 +145,11 @@
   resolved "https://registry.yarnpkg.com/@types/indent-string/-/indent-string-3.2.0.tgz#ce0016b6527a582e98122d593000772a965db665"
   integrity sha512-9iJXKl51MSjBOO8AWJyDtegBy4PkcgwIQCNYmHA63qtYlaISD6sEcB4jZ8APOdBacZJ8fZwxZpN7iwYlyE6eGw==
 
+"@types/js-yaml@^3.12.1":
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-3.12.1.tgz#5c6f4a1eabca84792fbd916f0cb40847f123c656"
+  integrity sha1-XG9KHqvKhHkvvZFvDLQIR/EjxlY=
+
 "@types/lodash@*", "@types/lodash@^4.14.117":
   version "4.14.136"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.136.tgz#413e85089046b865d960c9ff1d400e04c31ab60f"
