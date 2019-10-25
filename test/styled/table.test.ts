@@ -148,6 +148,14 @@ describe('styled/table', () => {
 
     fancy
       .stdout()
+      .end('outputs in csv without headers', output => {
+        cli.table(apps, columns, {csv: true, 'no-header': true})
+        expect(output.stdout).to.equal(`123,supertable-test-1
+321,supertable-test-2\n`)
+      })
+
+    fancy
+      .stdout()
       .end('sorts by property', output => {
         cli.table(apps, columns, {sort: '-name'})
         expect(output.stdout).to.equal(`ID  Name${ws.padEnd(14)}
