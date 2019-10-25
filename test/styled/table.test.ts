@@ -172,7 +172,8 @@ describe('styled/table', () => {
 "12""3","supertable-test-2"
 "123","supertable-test-3,comma"
 123,supertable-test-4\n`)
-    
+      })
+
     fancy
       .stdout()
       .end('outputs in csv without headers', output => {
