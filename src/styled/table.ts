@@ -128,7 +128,9 @@ class Table<T extends object> {
     // tslint:disable-next-line:no-this-assignment
     const {data, columns, options} = this
 
-    options.printLine(columns.map(c => c.header).join(','))
+    if (!options['no-header']) {
+      options.printLine(columns.map(c => c.header).join(','))
+    }
     data.forEach((d: any) => {
       const row = this.getCSVRow(d)
       options.printLine(row.join(','))
@@ -251,7 +253,7 @@ export namespace table {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
-    csv: F.boolean({exclusive: ['no-truncate', 'no-header'], description: 'output is csv format'}),
+    csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
     extended: F.boolean({exclusive: ['columns'], char: 'x', description: 'show extra columns'}),
     'no-truncate': F.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
     'no-header': F.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
