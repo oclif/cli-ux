@@ -31,10 +31,10 @@ class Table<T extends object> {
     })
 
     // assign options
-    const {columns: cols, filter, output, extended, sort, printLine} = options
+    const {columns: cols, filter, csv, output, extended, sort, printLine} = options
     this.options = {
       columns: cols,
-      output,
+      output: csv ? 'csv' : output,
       extended,
       filter,
       'no-header': options['no-header'] || false,
@@ -286,7 +286,12 @@ export namespace table {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
-    output: F.string({exclusive: ['no-truncate'], description: 'output is csv/json/yaml format', options: ['csv', 'json', 'yaml']}),
+    csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format [DEPRECATED, use --output=csv]'}),
+    output: F.string({
+      exclusive: ['no-truncate', 'csv'],
+      description: 'output in a more machine friendly format',
+      options: ['csv', 'json', 'yaml']
+    }),
     extended: F.boolean({exclusive: ['columns'], char: 'x', description: 'show extra columns'}),
     'no-truncate': F.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
     'no-header': F.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
