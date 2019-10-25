@@ -148,6 +148,34 @@ describe('styled/table', () => {
 
     fancy
       .stdout()
+      .end('outputs in csv with escaped values', output => {
+        cli.table([
+          {
+            id: '123\n2',
+            name: 'supertable-test-1',
+          },
+          {
+            id: '12"3',
+            name: 'supertable-test-2',
+          },
+          {
+            id: '123',
+            name: 'supertable-test-3,comma',
+          },
+          {
+            id: '123',
+            name: 'supertable-test-4',
+          },
+        ], columns, {csv: true})
+        expect(output.stdout).to.equal(`ID,Name
+"123\n2","supertable-test-1"
+"12""3","supertable-test-2"
+"123","supertable-test-3,comma"
+123,supertable-test-4\n`)
+      })
+
+    fancy
+      .stdout()
       .end('sorts by property', output => {
         cli.table(apps, columns, {sort: '-name'})
         expect(output.stdout).to.equal(`ID  Name${ws.padEnd(14)}

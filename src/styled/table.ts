@@ -111,14 +111,26 @@ class Table<T extends object> {
     return cols
   }
 
+  private getCSVRow(d: any): string[] {
+    const values = this.columns.map(col => d[col.key] || '')
+
+    const needToBeEscapedForCsv = (e: string) => {
+      // CSV entries containing line breaks, comma or double quotes
+      // as specified in https://tools.ietf.org/html/rfc4180#section-2
+      return e.includes('"') || e.includes('\n') || e.includes('\r\n') || e.includes('\r') || e.includes(',')
+    }
+
+    const lineToBeEscaped = values.find(needToBeEscapedForCsv)
+    return values.map(e => lineToBeEscaped ? `"${e.replace('"', '""')}"` : e)
+  }
+
   private outputCSV() {
     // tslint:disable-next-line:no-this-assignment
     const {data, columns, options} = this
 
     options.printLine(columns.map(c => c.header).join(','))
     data.forEach((d: any) => {
-      let row: string[] = []
-      columns.forEach(col => row.push(d[col.key] || ''))
+      const row = this.getCSVRow(d)
       options.printLine(row.join(','))
     })
   }
