@@ -286,7 +286,7 @@ export namespace table {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
-    csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format [DEPRECATED, use --output=csv]'}),
+    csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format [alias: --output=csv]'}),
     output: F.string({
       exclusive: ['no-truncate', 'csv'],
       description: 'output in a more machine friendly format',
