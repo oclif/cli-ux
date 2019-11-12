@@ -185,7 +185,7 @@ describe('styled/table', () => {
 
     fancy
       .stdout()
-      .end('outputs in csv with deprecated flag', output => {
+      .end('outputs in csv with alias flag', output => {
         cli.table(apps, columns, {csv: true})
         expect(output.stdout).to.equal(`ID,Name
 123,supertable-test-1
