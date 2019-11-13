@@ -1,6 +1,7 @@
 import {flags as F} from '@oclif/command'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
+import {safeDump} from 'js-yaml'
 import * as _ from 'lodash'
 import {inspect} from 'util'
 
@@ -30,10 +31,10 @@ class Table<T extends object> {
     })
 
     // assign options
-    const {columns: cols, filter, csv, extended, sort, printLine} = options
+    const {columns: cols, filter, csv, output, extended, sort, printLine} = options
     this.options = {
       columns: cols,
-      csv,
+      output: csv ? 'csv' : output,
       extended,
       filter,
       'no-header': options['no-header'] || false,
@@ -92,8 +93,19 @@ class Table<T extends object> {
 
     this.data = rows
 
-    if (this.options.csv) this.outputCSV()
-    else this.outputTable()
+    switch (this.options.output) {
+    case 'csv':
+      this.outputCSV()
+      break
+    case 'json':
+      this.outputJSON()
+      break
+    case 'yaml':
+      this.outputYAML()
+      break
+    default:
+      this.outputTable()
+    }
   }
 
   private findColumnFromHeader(header: string): (table.Column<T> & { key: string, width?: number, maxWidth?: number }) | undefined {
@@ -122,6 +134,27 @@ class Table<T extends object> {
 
     const lineToBeEscaped = values.find(needToBeEscapedForCsv)
     return values.map(e => lineToBeEscaped ? `"${e.replace('"', '""')}"` : e)
+  }
+
+  private resolveColumnsToObjectArray() {
+    // tslint:disable-next-line:no-this-assignment
+    const {data, columns} = this
+    return data.map((d: any) => {
+      return columns.reduce((obj, col) => {
+        return {
+          ...obj,
+          [col.key]: d[col.key] || ''
+        }
+      }, {})
+    })
+  }
+
+  private outputJSON() {
+    this.options.printLine(JSON.stringify(this.resolveColumnsToObjectArray(), undefined, 2))
+  }
+
+  private outputYAML() {
+    this.options.printLine(safeDump(this.resolveColumnsToObjectArray()))
   }
 
   private outputCSV() {
@@ -253,7 +286,12 @@ export namespace table {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
-    csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format'}),
+    csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format [alias: --output=csv]'}),
+    output: F.string({
+      exclusive: ['no-truncate', 'csv'],
+      description: 'output in a more machine friendly format',
+      options: ['csv', 'json', 'yaml']
+    }),
     extended: F.boolean({exclusive: ['columns'], char: 'x', description: 'show extra columns'}),
     'no-truncate': F.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
     'no-header': F.boolean({exclusive: ['csv'], description: 'hide table header from output'}),
@@ -289,6 +327,8 @@ export namespace table {
     get(row: T): any
   }
 
+  export type OutputType = 'csv' | 'json' | 'yaml'
+
   export interface Options {
     [key: string]: any,
     sort?: string,
@@ -296,7 +336,7 @@ export namespace table {
     columns?: string,
     extended?: boolean,
     'no-truncate'?: boolean,
-    csv?: boolean,
+    output?: OutputType,
     'no-header'?: boolean,
     printLine?(s: any): any,
   }
