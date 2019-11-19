@@ -6,7 +6,7 @@ Example1(() => {}) // to get all examples running sequentially
 function Example1(onComplete: any) {
   // EXAMPLE 1 ---------------------------------------------
   // create new progress bar using default values
-  let b1 = new cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'}).getProgressBar()
+  let b1 = cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
   b1.start(100, 0)
 
   // the bar value - will be linear incremented
@@ -38,7 +38,7 @@ function Example2(onComplete: any) {
   //console.log('\nExample 2 - Custom configuration')
 
   // create new progress bar using default values
-  const b2 = new cli.progress('SingleBar', {
+  const b2 = cli.progress('SingleBar', {
     barCompleteChar: '#',
     barIncompleteChar: '_',
     format: 'Example 2: Current Upload Progress: {percentage}%' + ' - ' + '||{bar}||',
@@ -46,19 +46,19 @@ function Example2(onComplete: any) {
     stream: process.stdout,
     barsize: 30
   })
-  b2.getProgressBar().start(100, 0)
+  b2.start(100, 0)
 
   // 50ms update rate
   const timer = setInterval(function () {
     // increment value
-    b2.getProgressBar().increment()
+    b2.increment()
 
     // set limit
-    if (b2.getProgressBar().value >= b2.getProgressBar().getTotal()) {
+    if (b2.value >= b2.getTotal()) {
       // stop timer
       clearInterval(timer)
 
-      b2.getProgressBar().stop()
+      b2.stop()
 
       // run complete callback
       // @ts-ignore
@@ -71,12 +71,12 @@ function Example3(onComplete: any) {
   // EXAMPLE 5 ---------------------------------------------
   //console.log('\nExample 5 - Custom Payload')
   // create new progress bar
-  const b4 = new cli.progress('SingleBar', {
+  const b4 = cli.progress('SingleBar', {
     format: 'Example 4: progress [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | Speed: {speed}'
   })
 
   // initialize the bar -  defining payload token "speed" with the default value "N/A"
-  b4.getProgressBar().start(200, 0, {
+  b4.start(200, 0, {
     speed: 'N/A'
   })
 
@@ -95,16 +95,16 @@ function Example3(onComplete: any) {
     const currentSpeedData = speedData.splice(-10)
 
     // update the bar value
-    b4.getProgressBar().update(value, {
+    b4.update(value, {
       speed: (currentSpeedData.reduce(function (a: any, b: any) { return a + b }, 0) / currentSpeedData.length).toFixed(2) + 'mb/s'
     })
 
     // set limit
-    if (value >= b4.getProgressBar().getTotal()) {
+    if (value >= b4.getTotal()) {
       // stop timer
       clearInterval(timer)
 
-      b4.getProgressBar().stop()
+      b4.stop()
 
       // run complete callback
       //@ts-ignore
@@ -125,13 +125,13 @@ function Example4(onComplete: any) {
   const bars: any = []
 
 // create new container
-  const multibar = new cli.progress('MultiBar', {
+  const multibar = cli.progress('MultiBar', {
     format: 'Example 5: {bar} | "{file}" | {value}/{total}',
     hideCursor: true,
     barCompleteChar: '\u2588',
     barIncompleteChar: '\u2591',
     stopOnComplete: true
-  }).getProgressBar()
+  })
 // add bars
   // tslint:disable-next-line:forin no-for-in
   for (const filename in files) {

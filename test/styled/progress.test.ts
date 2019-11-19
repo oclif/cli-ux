@@ -6,15 +6,15 @@ import cli from '../../src'
 describe('progress', () => {
   // single bar
   fancy
-    .end('single bar', _ => {
-      let b1 = new cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
-      expect(b1.getProgressBar().options.format).to.contain('Example 1: Progress')
-      expect(b1.getProgressBar().bars).to.not.have
+    .end('single bar has default settings', _ => {
+      let b1 = cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
+      expect(b1.options.format).to.contain('Example 1: Progress')
+      expect(b1.bars).to.not.have
     })
 
   // multi-bar
   fancy
-    .end('has multibar', _ => {
+    .end('has multibar bars array', _ => {
       const files = {
         'eta.js        ': 187,
         'generic-bar.js': 589,
@@ -25,36 +25,34 @@ describe('progress', () => {
       }
       const bars: any = []
       // create new container
-      const multibar = new cli.progress('MultiBar', {
+      const multibar = cli.progress('MultiBar', {
         format: 'Example 5: {bar} | "{file}" | {value}/{total}',
         hideCursor: true,
         barCompleteChar: '\u2588',
         barIncompleteChar: '\u2591',
         stopOnComplete: true
-      }).getProgressBar()
+      })
       // add bars
-      let filesLength = 0
       // tslint:disable-next-line:forin no-for-in
       for (const filename in files) {
         // @ts-ignore
         const size = files[filename]
         bars.push(multibar.create(size, 0, {file: filename}))
-        filesLength++
       }
       expect(multibar.options.format).to.contain('Example 5: ')
-      expect(filesLength).length.to.equal(6)
+      expect(Object.keys(files).length).length.to.equal(6)
     })
   // testing no settings passed, default settings created
   fancy
-    .end('single bar', _ => {
-      let b1 = new cli.progress('SingleBar', {}).getProgressBar()
+    .end('single bar, no bars array', _ => {
+      let b1 = cli.progress('SingleBar', {})
       expect(b1.options.format).to.contain('progress')
       expect(b1.bars).to.not.have
     })
   //testing getProgressBar returns correct type
   fancy
-    .end('typeof getProgressBar', _ => {
-      let b1 = new cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
-      expect(typeof(b1.getProgressBar())).to.equal('object')
+    .end('typeof progress bar is object', _ => {
+      let b1 = cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
+      expect(typeof(b1)).to.equal('object')
     })
 })
