@@ -10,7 +10,7 @@ const spinners = require('./spinners')
 
 function color(s: string): string {
   if (!supportsColor) return s
-  let has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
+  const has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
   return has256 ? `\u001b[38;5;104m${s}${deps.ansiStyles.reset.open}` : chalk.magenta(s)
 }
 
@@ -31,7 +31,7 @@ export default class SpinnerAction extends ActionBase {
     this._reset()
     if (this.spinner) clearInterval(this.spinner)
     this._render()
-    let interval: any = (this.spinner = setInterval(icon =>
+    const interval: any = (this.spinner = setInterval(icon =>
       this._render.bind(this)(icon),
       process.platform === 'win32' ? 500 : 100,
       'spinner',
@@ -54,7 +54,7 @@ export default class SpinnerAction extends ActionBase {
   }
 
   protected _frame(): string {
-    let frame = this.frames[this.frameIndex]
+    const frame = this.frames[this.frameIndex]
     this.frameIndex = ++this.frameIndex % this.frames.length
     return color(frame)
   }
@@ -64,15 +64,15 @@ export default class SpinnerAction extends ActionBase {
     if (!task) return
     this._reset()
     this._flushStdout()
-    let frame = icon === 'spinner' ? ` ${this._frame()}` : icon || ''
-    let status = task.status ? ` ${task.status}` : ''
+    const frame = icon === 'spinner' ? ` ${this._frame()}` : icon || ''
+    const status = task.status ? ` ${task.status}` : ''
     this.output = `${task.action}...${frame}${status}\n`
     this._write(this.std, this.output)
   }
 
   private _reset() {
     if (!this.output) return
-    let lines = this._lines(this.output)
+    const lines = this._lines(this.output)
     this._write(this.std, deps.ansiEscapes.cursorLeft + deps.ansiEscapes.cursorUp(lines) + deps.ansiEscapes.eraseDown)
     this.output = undefined
   }

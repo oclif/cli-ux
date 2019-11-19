@@ -80,7 +80,7 @@ export const ux = {
     function timeout(p: Promise<any>, ms: number) {
       function wait(ms: number, unref = false) {
         return new Promise(resolve => {
-          let t: any = setTimeout(() => resolve(), ms)
+          const t: any = setTimeout(() => resolve(), ms)
           if (unref) t.unref()
         })
       }
@@ -89,7 +89,7 @@ export const ux = {
     }
 
     async function flush() {
-      let p = new Promise(resolve => process.stdout.once('drain', () => resolve()))
+      const p = new Promise(resolve => process.stdout.once('drain', () => resolve()))
       process.stdout.write('')
       return p
     }
@@ -120,7 +120,7 @@ const cliuxProcessExitHandler = async () => {
 }
 // to avoid MaxListenersExceededWarning
 // only attach named listener once
-let cliuxListener = process.listeners('exit').find(fn => fn.name === cliuxProcessExitHandler.name)
+const cliuxListener = process.listeners('exit').find(fn => fn.name === cliuxProcessExitHandler.name)
 if (!cliuxListener) {
   process.once('exit', cliuxProcessExitHandler)
 }

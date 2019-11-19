@@ -40,7 +40,7 @@ export function prompt(name: string, options: IPromptOptions = {}) {
 export function confirm(message: string): Promise<boolean> {
   return config.action.pauseAsync(async () => {
     const confirm = async (): Promise<boolean> => {
-      let response = (await _prompt(message)).toLowerCase()
+      const response = (await _prompt(message)).toLowerCase()
       if (['n', 'no'].includes(response)) return false
       if (['y', 'yes'].includes(response)) return true
       return confirm()

@@ -139,7 +139,7 @@ export class ActionBase {
         }
 
         this.stdmocks = []
-        for (let std of outputs) {
+        for (const std of outputs) {
           (process[std] as any).write = (...args: any[]) => {
             this.stdmocks!.push([std, args] as ['stdout' | 'stderr', string[]])
           }
@@ -148,7 +148,7 @@ export class ActionBase {
         if (!this.stdmocks) return
         // this._write('stderr', '\nresetstdmock\n\n\n')
         delete this.stdmocks
-        for (let std of outputs) process[std].write = this.stdmockOrigs[std] as any
+        for (const std of outputs) process[std].write = this.stdmockOrigs[std] as any
       }
     } catch (err) {
       this._write('stderr', inspect(err))
@@ -163,7 +163,7 @@ export class ActionBase {
       let output = ''
       let std: 'stdout' | 'stderr' | undefined
       while (this.stdmocks && this.stdmocks.length) {
-        let cur = this.stdmocks.shift() as ['stdout' | 'stderr', string[]]
+        const cur = this.stdmocks.shift() as ['stdout' | 'stderr', string[]]
         std = cur[0]
         this._write(std, cur[1])
         output += (cur[1][0] as any).toString('utf8')
