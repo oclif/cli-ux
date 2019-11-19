@@ -309,7 +309,7 @@ Progress =====================================--- | 76%
 
 To see a more detailed example, run 
 ```shell script
-$ tsc examples/progress.ts && ts-node examples/progress.ts
+$ ts-node examples/progress.ts
 ```
 
 This serves as a wrapper for cli-progress ( https://www.npmjs.com/package/cli-progress )
