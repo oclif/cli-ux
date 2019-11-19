@@ -144,7 +144,7 @@ class Table<T extends object> {
       return columns.reduce((obj, col) => {
         return {
           ...obj,
-          [col.key]: d[col.key] || ''
+          [col.key]: d[col.key] || '',
         }
       }, {})
     })
@@ -291,7 +291,7 @@ export namespace table {
     output: F.string({
       exclusive: ['no-truncate', 'csv'],
       description: 'output in a more machine friendly format',
-      options: ['csv', 'json', 'yaml']
+      options: ['csv', 'json', 'yaml'],
     }),
     extended: F.boolean({exclusive: ['columns'], char: 'x', description: 'show extra columns'}),
     'no-truncate': F.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),

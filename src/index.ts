@@ -119,7 +119,7 @@ export const ux = {
     }
 
     await timeout(flush(), 10000)
-  }
+  },
 }
 export default ux
 export const cli = ux

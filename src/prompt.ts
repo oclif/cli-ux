@@ -86,7 +86,7 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
     return deps.passwordPrompt(options.prompt, {
       method: options.type,
       required: options.required,
-      default: options.default
+      default: options.default,
     }).then((value: string) => {
       replacePrompt(getPrompt(name, 'hide', inputOptions.default))
       return value
@@ -95,7 +95,7 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
     return deps.passwordPrompt(options.prompt, {
       method: options.type,
       required: options.required,
-      default: options.default
+      default: options.default,
     })
   default:
     throw new Error(`unexpected type ${options.type}`)
