@@ -27,7 +27,9 @@ export class ActionBase {
 
   public start(action: string, status?: string, opts: Options = {}) {
     this.std = opts.stdout ? 'stdout' : 'stderr'
-    const task = (this.task = {action, status, active: Boolean(this.task && this.task.active)})
+    const task = {action, status, active: Boolean(this.task && this.task.active)}
+    this.task = task
+
     this._start()
     task.active = true
     this._stdout(true)
@@ -45,7 +47,8 @@ export class ActionBase {
   }
 
   private get globals(): { action: { task?: ITask }; output: string | undefined } {
-    const globals = ((global as any)['cli-ux'] = (global as any)['cli-ux'] || {})
+    (global as any)['cli-ux'] = (global as any)['cli-ux'] || {}
+    const globals = (global as any)['cli-ux']
     globals.action = globals.action || {}
     return globals
   }
