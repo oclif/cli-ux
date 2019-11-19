@@ -14,10 +14,10 @@ export class Tree {
     for (const child of Object.keys(this.nodes)) {
       if (child === key) {
         return this.nodes[child]
-      } else {
+      } 
         const c = this.nodes[child].search(key)
         if (c) return c
-      }
+      
     }
   }
 
