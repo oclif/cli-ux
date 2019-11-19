@@ -55,7 +55,8 @@ export class Config {
 
 function fetch() {
   if (globals[version.major]) return globals[version.major]
-  return globals[version.major] = new Config()
+  globals[version.major] = new Config()
+  return globals[version.major]
 }
 
 export const config: Config = fetch()
