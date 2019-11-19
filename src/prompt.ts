@@ -4,6 +4,7 @@ import chalk from 'chalk'
 import config from './config'
 import deps from './deps'
 
+/* eslint-disable-next-line @typescript-eslint/interface-name-prefix */
 export interface IPromptOptions {
   prompt?: string;
   type?: 'normal' | 'mask' | 'hide' | 'single';
@@ -15,6 +16,7 @@ export interface IPromptOptions {
   default?: string;
 }
 
+/* eslint-disable-next-line @typescript-eslint/interface-name-prefix */
 interface IPromptConfig {
   name: string;
   prompt: string;

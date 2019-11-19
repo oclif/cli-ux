@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import {inspect} from 'util'
 
+/* eslint-disable-next-line @typescript-eslint/interface-name-prefix */
 export interface ITask {
   action: string;
   status: string | undefined;
