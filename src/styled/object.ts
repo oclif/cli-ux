@@ -13,9 +13,9 @@ export default function styledObject(obj: any, keys?: string[]): string {
       return Object.keys(obj)
       .map(k => k + ': ' + util.inspect(obj[k]))
       .join(', ')
-    } 
+    }
     return util.inspect(obj)
-    
+
   }
   const logKeyValue = (key: string, value: any): string => {
     return `${chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value)
