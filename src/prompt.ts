@@ -55,9 +55,9 @@ export function confirm(message: string): Promise<boolean> {
 export async function anykey(message?: string): Promise<void> {
   const tty = Boolean(process.stdin.setRawMode)
   if (!message) {
-    message = tty
-      ? `Press any key to continue or ${chalk.yellow('q')} to exit`
-      : `Press enter to continue or ${chalk.yellow('q')} to exit`
+    message = tty ?
+      `Press any key to continue or ${chalk.yellow('q')} to exit` :
+      `Press enter to continue or ${chalk.yellow('q')} to exit`
   }
   const char = await prompt(message, {type: 'single', required: false})
   if (tty) process.stderr.write('\n')
@@ -151,6 +151,6 @@ function getPrompt(name: string, type?: string, defaultValue?: string) {
 }
 
 function replacePrompt(prompt: string) {
-  process.stderr.write(deps.ansiEscapes.cursorHide + deps.ansiEscapes.cursorUp(1) + deps.ansiEscapes.cursorLeft + prompt
-    + deps.ansiEscapes.cursorDown(1) + deps.ansiEscapes.cursorLeft + deps.ansiEscapes.cursorShow)
+  process.stderr.write(deps.ansiEscapes.cursorHide + deps.ansiEscapes.cursorUp(1) + deps.ansiEscapes.cursorLeft + prompt +
+    deps.ansiEscapes.cursorDown(1) + deps.ansiEscapes.cursorLeft + deps.ansiEscapes.cursorShow)
 }
