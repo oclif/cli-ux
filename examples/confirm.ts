@@ -9,4 +9,4 @@ async function run() {
   await wait()
   cli.log(`you entered: ${input}`)
 }
-run().catch(err => cli.error(err))
+run().catch(error => cli.error(error))
