@@ -295,7 +295,7 @@ Outputs:
 Generate a customizable progress bar and display it
 
 ```typescript
-const bar = new cli.progress(BarType.SingleBar, {
+const bar = new cli.progress('SingleBar', {
     format: 'CLI Progress | {bar} | {percentage}% || {value}/{total} Chunks || Speed: {speed}',
     barCompleteChar: '\u2588',
     barIncompleteChar: '\u2591'
