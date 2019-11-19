@@ -313,5 +313,6 @@ $ ts-node examples/progress.ts
 ```
 
 This serves as a wrapper for cli-progress ( https://www.npmjs.com/package/cli-progress )
+see all of the options and customizations there
 
 
