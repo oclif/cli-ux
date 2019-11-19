@@ -5,24 +5,24 @@ import config from './config'
 import deps from './deps'
 
 export interface IPromptOptions {
-  prompt?: string
-  type?: 'normal' | 'mask' | 'hide' | 'single'
-  timeout?: number
+  prompt?: string;
+  type?: 'normal' | 'mask' | 'hide' | 'single';
+  timeout?: number;
   /**
    * Requires user input if true, otherwise allows empty input
    */
-  required?: boolean
-  default?: string
+  required?: boolean;
+  default?: string;
 }
 
 interface IPromptConfig {
-  name: string
-  prompt: string
-  type: 'normal' | 'mask' | 'hide' | 'single'
-  isTTY: boolean
-  required: boolean
-  default?: string
-  timeout?: number
+  name: string;
+  prompt: string;
+  type: 'normal' | 'mask' | 'hide' | 'single';
+  isTTY: boolean;
+  required: boolean;
+  default?: string;
+  timeout?: number;
 }
 
 /**

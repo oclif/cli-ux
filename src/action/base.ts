@@ -2,15 +2,15 @@ import * as _ from 'lodash'
 import {inspect} from 'util'
 
 export interface ITask {
-  action: string
-  status: string | undefined
-  active: boolean
+  action: string;
+  status: string | undefined;
+  active: boolean;
 }
 
 export type ActionType = 'spinner' | 'simple' | 'debug'
 
 export interface Options {
-  stdout?: boolean
+  stdout?: boolean;
 }
 
 export class ActionBase {

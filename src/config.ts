@@ -7,9 +7,9 @@ const version = semver.parse(require('../package.json').version)!
 export type Levels = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace'
 
 export interface ConfigMessage {
-  type: 'config'
-  prop: string
-  value: any
+  type: 'config';
+  prop: string;
+  value: any;
 }
 
 const g: any = global

@@ -1,6 +1,6 @@
 export class ExitError extends Error {
   public 'cli-ux': {
-    exit: number
+    exit: number;
   }
   public code: 'EEXIT'
   public error?: Error

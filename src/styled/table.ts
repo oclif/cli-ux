@@ -10,7 +10,7 @@ const {orderBy} = require('natural-orderby')
 
 class Table<T extends object> {
   options: table.Options & { printLine(s: any): any }
-  columns: (table.Column<T> & { key: string, width?: number, maxWidth?: number })[]
+  columns: (table.Column<T> & { key: string; width?: number; maxWidth?: number })[]
 
   constructor(private data: T[], columns: table.Columns<T>, options: table.Options = {}) {
     // assign columns
@@ -108,14 +108,14 @@ class Table<T extends object> {
     }
   }
 
-  private findColumnFromHeader(header: string): (table.Column<T> & { key: string, width?: number, maxWidth?: number }) | undefined {
+  private findColumnFromHeader(header: string): (table.Column<T> & { key: string; width?: number; maxWidth?: number }) | undefined {
     return this.columns.find(c => c.header.toLowerCase() === header.toLowerCase())
   }
 
-  private filterColumnsFromHeaders(filters: string[]): (table.Column<T> & { key: string, width?: number, maxWidth?: number })[] {
+  private filterColumnsFromHeaders(filters: string[]): (table.Column<T> & { key: string; width?: number; maxWidth?: number })[] {
     // unique
     filters = [...(new Set(filters))]
-    let cols: (table.Column<T> & {key: string, width?: number, maxWidth?: number})[] = []
+    let cols: (table.Column<T> & {key: string; width?: number; maxWidth?: number})[] = []
     filters.forEach(f => {
       let c = this.columns.find(c => c.header.toLowerCase() === f.toLowerCase())
       if (c) cols.push(c)
@@ -321,23 +321,23 @@ export namespace table {
   export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
 
   export interface Column<T extends object> {
-    header: string
-    extended: boolean
-    minWidth: number
-    get(row: T): any
+    header: string;
+    extended: boolean;
+    minWidth: number;
+    get(row: T): any;
   }
 
   export type OutputType = 'csv' | 'json' | 'yaml'
 
   export interface Options {
-    [key: string]: any,
-    sort?: string,
-    filter?: string,
-    columns?: string,
-    extended?: boolean,
-    'no-truncate'?: boolean,
-    output?: OutputType,
-    'no-header'?: boolean,
-    printLine?(s: any): any,
+    [key: string]: any;
+    sort?: string;
+    filter?: string;
+    columns?: string;
+    extended?: boolean;
+    'no-truncate'?: boolean;
+    output?: OutputType;
+    'no-header'?: boolean;
+    printLine?(s: any): any;
   }
 }
