@@ -306,6 +306,7 @@ export namespace table {
   export function flags(): IFlags
   export function flags<Z extends keyof IFlags = keyof IFlags>(opts: { except: Z | Z[] }): ExcludeFlags<IFlags, Z>
   export function flags<K extends keyof IFlags = keyof IFlags>(opts: { only: K | K[] }): IncludeFlags<IFlags, K>
+  // eslint-disable-next-line no-inner-declarations
   export function flags(opts?: any): any {
     if (opts) {
       const f = {}
