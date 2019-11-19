@@ -30,6 +30,7 @@ export const ux = {
   get tree() { return deps.tree },
   get open() { return deps.open },
   get wait() { return deps.wait },
+  get progress() { return deps.progress },
 
   async done() {
     config.action.stop()

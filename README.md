@@ -289,3 +289,29 @@ Outputs:
    └─ baz
       └─ qux
 ```
+
+# cli.progress
+
+Generate a customizable progress bar and display it
+
+```typescript
+const bar = new cli.progress(BarType.SingleBar, {
+    format: 'CLI Progress | {bar} | {percentage}% || {value}/{total} Chunks || Speed: {speed}',
+    barCompleteChar: '\u2588',
+    barIncompleteChar: '\u2591'
+});
+```
+
+Outputs:
+```shell
+Progress =====================================--- | 76%
+```
+
+To see a more detailed example, run 
+```shell script
+$ tsc examples/progress.ts && ts-node examples/progress.ts
+```
+
+This serves as a wrapper for cli-progress ( https://www.npmjs.com/package/cli-progress )
+
+

@@ -13,6 +13,7 @@ export const deps = {
   get table(): typeof import('./styled/table').table { return fetch('./styled/table').table },
   get tree(): typeof import('./styled/tree').default { return fetch('./styled/tree').default },
   get wait(): typeof import('./wait').default { return fetch('./wait').default },
+  get progress(): typeof import('./progress').default { return fetch('./progress').default },
 }
 
 const cache: any = {}
