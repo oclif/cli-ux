@@ -74,10 +74,11 @@
   "repository": "oclif/cli-ux",
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "lint": "tsc -p test --noEmit && tslint -p test -t stylish",
-    "posttest": "yarn run lint",
-    "prepublishOnly": "yarn run build",
-    "test": "mocha --forbid-only \"test/**/*.test.ts\""
+    "lint": "eslint . --ext .ts --config .eslintrc",
+    "pretest": "tsc -p test --noEmit",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "posttest": "yarn lint",
+    "prepublishOnly": "yarn run build"
   },
   "types": "lib/index.d.ts"
 }
