@@ -6,6 +6,7 @@ import * as supportsColor from 'supports-color'
 import deps from '../deps'
 
 import {ActionBase, ActionType} from './base'
+/* eslint-disable-next-line node/no-missing-require */
 const spinners = require('./spinners')
 
 function color(s: string): string {

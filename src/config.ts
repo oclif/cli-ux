@@ -22,8 +22,10 @@ const actionType = (
   'spinner'
 ) || 'simple'
 
+/* eslint-disable node/no-missing-require */
 const Action = actionType === 'spinner' ? require('./action/spinner').default : require('./action/simple').default
 const PrideAction = actionType === 'spinner' ? require('./action/pride-spinner').default : require('./action/simple').default
+/* eslint-enable node/no-missing-require */
 
 export class Config {
   outputLevel: Levels = 'info'
