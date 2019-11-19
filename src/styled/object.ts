@@ -11,8 +11,8 @@ export default function styledObject(obj: any, keys?: string[]): string {
     if (typeof obj === 'string' || typeof obj === 'number') return obj
     if (typeof obj === 'object') {
       return Object.keys(obj)
-        .map(k => k + ': ' + util.inspect(obj[k]))
-        .join(', ')
+      .map(k => k + ': ' + util.inspect(obj[k]))
+      .join(', ')
     } else {
       return util.inspect(obj)
     }

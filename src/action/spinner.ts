@@ -33,8 +33,8 @@ export default class SpinnerAction extends ActionBase {
     this._render()
     const interval: any = (this.spinner = setInterval(icon =>
       this._render.bind(this)(icon),
-      process.platform === 'win32' ? 500 : 100,
-      'spinner',
+    process.platform === 'win32' ? 500 : 100,
+    'spinner',
     ))
     interval.unref()
   }
@@ -79,9 +79,9 @@ export default class SpinnerAction extends ActionBase {
 
   private _lines(s: string): number {
     return deps
-      .stripAnsi(s)
-      .split('\n')
-      .map(l => Math.ceil(l.length / deps.screen.errtermwidth))
-      .reduce((c, i) => c + i, 0)
+    .stripAnsi(s)
+    .split('\n')
+    .map(l => Math.ceil(l.length / deps.screen.errtermwidth))
+    .reduce((c, i) => c + i, 0)
   }
 }

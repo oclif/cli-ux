@@ -16,44 +16,44 @@ export const ux = {
   exit: Errors.exit,
 
   get prompt() {
- return deps.prompt.prompt 
-},
+    return deps.prompt.prompt 
+  },
   /**
    * "press anykey to continue"
    */
   get anykey() {
- return deps.prompt.anykey 
-},
+    return deps.prompt.anykey 
+  },
   get confirm() {
- return deps.prompt.confirm 
-},
+    return deps.prompt.confirm 
+  },
   get action() {
- return config.action 
-},
+    return config.action 
+  },
   get prideAction() {
- return config.prideAction 
-},
+    return config.prideAction 
+  },
   styledObject(obj: any, keys?: string[]) {
- ux.info(deps.styledObject(obj, keys)) 
-},
+    ux.info(deps.styledObject(obj, keys)) 
+  },
   get styledHeader() {
- return deps.styledHeader 
-},
+    return deps.styledHeader 
+  },
   get styledJSON() {
- return deps.styledJSON 
-},
+    return deps.styledJSON 
+  },
   get table() {
- return deps.table 
-},
+    return deps.table 
+  },
   get tree() {
- return deps.tree 
-},
+    return deps.tree 
+  },
   get open() {
- return deps.open 
-},
+    return deps.open 
+  },
   get wait() {
- return deps.wait 
-},
+    return deps.wait 
+  },
 
   async done() {
     config.action.stop()

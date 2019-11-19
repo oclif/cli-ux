@@ -33,17 +33,17 @@ export class Config {
   showStackTrace = true
 
   get debug(): boolean {
- return globals.debug || process.env.DEBUG === '*' 
-}
+    return globals.debug || process.env.DEBUG === '*' 
+  }
   set debug(v: boolean) {
- globals.debug = v 
-}
+    globals.debug = v 
+  }
   get context(): any {
- return globals.context || {} 
-}
+    return globals.context || {} 
+  }
   set context(v: any) {
- globals.context = v 
-}
+    globals.context = v 
+  }
 }
 
 function fetch() {
