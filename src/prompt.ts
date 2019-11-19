@@ -116,7 +116,6 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
   }
 }
 
-
 /**
  * prompt for input
  */
