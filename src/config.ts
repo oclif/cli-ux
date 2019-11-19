@@ -32,10 +32,18 @@ export class Config {
   errorsHandled = false
   showStackTrace = true
 
-  get debug(): boolean { return globals.debug || process.env.DEBUG === '*' }
-  set debug(v: boolean) { globals.debug = v }
-  get context(): any { return globals.context || {} }
-  set context(v: any) { globals.context = v }
+  get debug(): boolean {
+ return globals.debug || process.env.DEBUG === '*' 
+}
+  set debug(v: boolean) {
+ globals.debug = v 
+}
+  get context(): any {
+ return globals.context || {} 
+}
+  set context(v: any) {
+ globals.context = v 
+}
 }
 
 function fetch() {

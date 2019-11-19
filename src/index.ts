@@ -15,21 +15,45 @@ export const ux = {
   error: Errors.error,
   exit: Errors.exit,
 
-  get prompt() { return deps.prompt.prompt },
+  get prompt() {
+ return deps.prompt.prompt 
+},
   /**
    * "press anykey to continue"
    */
-  get anykey() { return deps.prompt.anykey },
-  get confirm() { return deps.prompt.confirm },
-  get action() { return config.action },
-  get prideAction() { return config.prideAction },
-  styledObject(obj: any, keys?: string[]) { ux.info(deps.styledObject(obj, keys)) },
-  get styledHeader() { return deps.styledHeader },
-  get styledJSON() { return deps.styledJSON },
-  get table() { return deps.table },
-  get tree() { return deps.tree },
-  get open() { return deps.open },
-  get wait() { return deps.wait },
+  get anykey() {
+ return deps.prompt.anykey 
+},
+  get confirm() {
+ return deps.prompt.confirm 
+},
+  get action() {
+ return config.action 
+},
+  get prideAction() {
+ return config.prideAction 
+},
+  styledObject(obj: any, keys?: string[]) {
+ ux.info(deps.styledObject(obj, keys)) 
+},
+  get styledHeader() {
+ return deps.styledHeader 
+},
+  get styledJSON() {
+ return deps.styledJSON 
+},
+  get table() {
+ return deps.table 
+},
+  get tree() {
+ return deps.tree 
+},
+  get open() {
+ return deps.open 
+},
+  get wait() {
+ return deps.wait 
+},
 
   async done() {
     config.action.stop()
