@@ -1,3 +1,8 @@
 {
-  "extends": "oclif"
+  "extends": [
+    "oclif",
+    "oclif-typescript"
+  ],
+  "rules": {
+  }
 }
