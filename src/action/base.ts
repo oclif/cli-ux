@@ -159,8 +159,8 @@ export class ActionBase {
         delete this.stdmocks
         for (const std of outputs) process[std].write = this.stdmockOrigs[std] as any
       }
-    } catch (err) {
-      this._write('stderr', inspect(err))
+    } catch (error) {
+      this._write('stderr', inspect(error))
     }
   }
 
@@ -182,8 +182,8 @@ export class ActionBase {
       if (output && std && output[output.length - 1] !== '\n') {
         this._write(std, '\n')
       }
-    } catch (err) {
-      this._write('stderr', inspect(err))
+    } catch (error) {
+      this._write('stderr', inspect(error))
     }
   }
 

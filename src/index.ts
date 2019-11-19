@@ -136,9 +136,9 @@ export {
 const cliuxProcessExitHandler = async () => {
   try {
     await ux.done()
-  } catch (err) {
+  } catch (error) {
     // tslint:disable no-console
-    console.error(err)
+    console.error(error)
     process.exitCode = 1
   }
 }
