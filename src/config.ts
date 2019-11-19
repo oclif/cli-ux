@@ -16,7 +16,7 @@ const g: any = global
 const globals = g['cli-ux'] || (g['cli-ux'] = {})
 
 const actionType = (
-  !!process.stderr.isTTY &&
+  Boolean(process.stderr.isTTY) &&
   !process.env.CI &&
   !['dumb', 'emacs-color'].includes(process.env.TERM!) &&
   'spinner'

@@ -53,7 +53,7 @@ export function confirm(message: string): Promise<boolean> {
  * "press anykey to continue"
  */
 export async function anykey(message?: string): Promise<void> {
-  const tty = !!process.stdin.setRawMode
+  const tty = Boolean(process.stdin.setRawMode)
   if (!message) {
     message = tty
       ? `Press any key to continue or ${chalk.yellow('q')} to exit`
@@ -69,7 +69,7 @@ export async function anykey(message?: string): Promise<void> {
 function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Promise<string> {
   const prompt = getPrompt(name, inputOptions.type, inputOptions.default)
   const options: IPromptConfig = {
-    isTTY: !!(process.env.TERM !== 'dumb' && process.stdin.isTTY),
+    isTTY: Boolean(process.env.TERM !== 'dumb' && process.stdin.isTTY),
     name,
     prompt,
     type: 'normal',
@@ -106,7 +106,7 @@ async function single(options: IPromptConfig): Promise<string> {
   const raw = process.stdin.isRaw
   if (process.stdin.setRawMode) process.stdin.setRawMode(true)
   const response = await normal({required: false, ...options})
-  if (process.stdin.setRawMode) process.stdin.setRawMode(!!raw)
+  if (process.stdin.setRawMode) process.stdin.setRawMode(Boolean(raw))
   return response
 }
 
