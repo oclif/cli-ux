@@ -136,6 +136,7 @@ export class ActionBase {
     throw new Error('not implemented')
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected _updateStatus(_: string | undefined, __?: string) {}
 
   /**
