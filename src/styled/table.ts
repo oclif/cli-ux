@@ -59,6 +59,7 @@ class Table<T extends object> {
 
     // filter rows
     if (this.options.filter) {
+      /* eslint-disable-next-line prefer-const */
       let [header, regex] = this.options.filter!.split('=')
       const isNot = header[0] === '-'
       if (isNot) header = header.substr(1)
