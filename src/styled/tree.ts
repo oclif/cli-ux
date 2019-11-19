@@ -15,8 +15,8 @@ export class Tree {
       if (child === key) {
         return this.nodes[child]
       } 
-        const c = this.nodes[child].search(key)
-        if (c) return c
+      const c = this.nodes[child].search(key)
+      if (c) return c
       
     }
   }

@@ -14,7 +14,7 @@ export default function styledObject(obj: any, keys?: string[]): string {
       .map(k => k + ': ' + util.inspect(obj[k]))
       .join(', ')
     } 
-      return util.inspect(obj)
+    return util.inspect(obj)
     
   }
   const logKeyValue = (key: string, value: any): string => {
