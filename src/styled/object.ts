@@ -6,7 +6,7 @@ import * as util from 'util'
 export default function styledObject(obj: any, keys?: string[]): string {
   const output: string[] = []
   const keyLengths = Object.keys(obj).map(key => key.toString().length)
-  const maxKeyLength = Math.max.apply(Math, keyLengths) + 2
+  const maxKeyLength = Math.max(...keyLengths) + 2
   function pp(obj: any) {
     if (typeof obj === 'string' || typeof obj === 'number') return obj
     if (typeof obj === 'object') {
