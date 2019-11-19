@@ -1,10 +1,19 @@
 {
-  "extends": "../tsconfig",
   "compilerOptions": {
-    "sourceMap": true
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "module": "commonjs",
+    "outDir": "./lib",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "rootDirs": [
+      "./src"
+    ],
+    "strict": true,
+    "target": "es2017"
   },
   "include": [
-    "./**/*",
-    "../src/**/*"
+    "./src/**/*"
   ]
 }
