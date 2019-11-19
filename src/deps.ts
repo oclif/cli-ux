@@ -1,3 +1,12 @@
+const cache: any = {}
+
+function fetch(s: string) {
+  if (!cache[s]) {
+    cache[s] = require(s)
+  }
+  return cache[s]
+}
+
 export const deps = {
   get stripAnsi(): (string: string) => string {
     return fetch('strip-ansi')
@@ -39,15 +48,6 @@ export const deps = {
   get wait(): typeof import('./wait').default {
     return fetch('./wait').default
   },
-}
-
-const cache: any = {}
-
-function fetch(s: string) {
-  if (!cache[s]) {
-    cache[s] = require(s)
-  }
-  return cache[s]
 }
 
 export default deps
