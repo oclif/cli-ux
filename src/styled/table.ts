@@ -225,7 +225,7 @@ class Table<T extends object> {
         if (!col) continue
         if (wiggleRoom > needs) {
           col.width = col.width! + needs
-          wiggleRoom = wiggleRoom - needs
+          wiggleRoom -= needs
         } else if (wiggleRoom) {
           col.width = col.width! + wiggleRoom
           wiggleRoom = 0
