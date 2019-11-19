@@ -255,7 +255,7 @@ class Table<T extends object> {
         const lines = d.split('\n').length
         if (lines > numOfLines) numOfLines = lines
       }
-      const linesIndexess = [...Array(numOfLines).keys()]
+      const linesIndexess = [...new Array(numOfLines).keys()]
 
       // print row
       // including multi-lines
