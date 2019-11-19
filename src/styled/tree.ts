@@ -17,7 +17,6 @@ export class Tree {
       }
       const c = this.nodes[child].search(key)
       if (c) return c
-
     }
   }
 
