@@ -15,8 +15,11 @@ export interface Options {
 
 export class ActionBase {
   type!: ActionType
+
   std: 'stdout' | 'stderr' = 'stderr'
+
   protected stdmocks?: ['stdout' | 'stderr', string[]][]
+
   private stdmockOrigs = {
     stdout: process.stdout.write,
     stderr: process.stderr.write,
@@ -58,6 +61,7 @@ export class ActionBase {
   protected get output(): string | undefined {
     return this.globals.output
   }
+
   protected set output(output: string | undefined) {
     this.globals.output = output
   }
@@ -69,6 +73,7 @@ export class ActionBase {
   get status(): string | undefined {
     return this.task ? this.task.status : undefined
   }
+
   set status(status: string | undefined) {
     const task = this.task
     if (!task) {
@@ -114,15 +119,19 @@ export class ActionBase {
   protected _start() {
     throw new Error('not implemented')
   }
+
   protected _stop(_: string) {
     throw new Error('not implemented')
   }
+
   protected _resume() {
     if (this.task) this.start(this.task.action, this.task.status)
   }
+
   protected _pause(_?: string) {
     throw new Error('not implemented')
   }
+
   protected _updateStatus(_: string | undefined, __?: string) {}
 
   /**

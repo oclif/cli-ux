@@ -27,20 +27,27 @@ const PrideAction = actionType === 'spinner' ? require('./action/pride-spinner')
 
 export class Config {
   outputLevel: Levels = 'info'
+
   action: ActionBase = new Action()
+
   prideAction: ActionBase = new PrideAction()
+
   errorsHandled = false
+
   showStackTrace = true
 
   get debug(): boolean {
     return globals.debug || process.env.DEBUG === '*'
   }
+
   set debug(v: boolean) {
     globals.debug = v
   }
+
   get context(): any {
     return globals.context || {}
   }
+
   set context(v: any) {
     globals.context = v
   }

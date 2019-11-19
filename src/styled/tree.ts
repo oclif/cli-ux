@@ -2,6 +2,7 @@ const treeify = require('treeify')
 
 export class Tree {
   nodes: { [key: string]: Tree } = {}
+
   constructor() { }
 
   insert(child: string, value: Tree = new Tree()): Tree {

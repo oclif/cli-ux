@@ -10,6 +10,7 @@ const {orderBy} = require('natural-orderby')
 
 class Table<T extends object> {
   options: table.Options & { printLine(s: any): any }
+
   columns: (table.Column<T> & { key: string; width?: number; maxWidth?: number })[]
 
   constructor(private data: T[], columns: table.Columns<T>, options: table.Options = {}) {

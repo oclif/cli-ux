@@ -2,7 +2,9 @@ export class ExitError extends Error {
   public 'cli-ux': {
     exit: number;
   }
+
   public code: 'EEXIT'
+
   public error?: Error
 
   constructor(status: number, error?: Error) {

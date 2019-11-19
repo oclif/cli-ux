@@ -18,7 +18,9 @@ export default class SpinnerAction extends ActionBase {
   public type: ActionType = 'spinner'
 
   spinner?: NodeJS.Timeout
+
   frames: any
+
   frameIndex: number
 
   constructor() {
