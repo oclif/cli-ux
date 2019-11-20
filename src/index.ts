@@ -15,21 +15,45 @@ export const ux = {
   error: Errors.error,
   exit: Errors.exit,
 
-  get prompt() { return deps.prompt.prompt },
+  get prompt() {
+    return deps.prompt.prompt
+  },
   /**
    * "press anykey to continue"
    */
-  get anykey() { return deps.prompt.anykey },
-  get confirm() { return deps.prompt.confirm },
-  get action() { return config.action },
-  get prideAction() { return config.prideAction },
-  styledObject(obj: any, keys?: string[]) { ux.info(deps.styledObject(obj, keys)) },
-  get styledHeader() { return deps.styledHeader },
-  get styledJSON() { return deps.styledJSON },
-  get table() { return deps.table },
-  get tree() { return deps.tree },
-  get open() { return deps.open },
-  get wait() { return deps.wait },
+  get anykey() {
+    return deps.prompt.anykey
+  },
+  get confirm() {
+    return deps.prompt.confirm
+  },
+  get action() {
+    return config.action
+  },
+  get prideAction() {
+    return config.prideAction
+  },
+  styledObject(obj: any, keys?: string[]) {
+    ux.info(deps.styledObject(obj, keys))
+  },
+  get styledHeader() {
+    return deps.styledHeader
+  },
+  get styledJSON() {
+    return deps.styledJSON
+  },
+  get table() {
+    return deps.table
+  },
+  get tree() {
+    return deps.tree
+  },
+  get open() {
+    return deps.open
+  },
+  get wait() {
+    return deps.wait
+  },
 
   async done() {
     config.action.stop()
@@ -69,8 +93,8 @@ export const ux = {
   annotation(text: string, annotation: string) {
     const supports = require('supports-hyperlinks')
     if (supports.stdout) {
-      //\u001b]8;;https://google.com\u0007sometext\u001b]8;;\u0007
-      this.log(`\u001b]1337;AddAnnotation=${text.length}|${annotation}\u0007${text}`)
+      // \u001b]8;;https://google.com\u0007sometext\u001b]8;;\u0007
+      this.log(`\u001B]1337;AddAnnotation=${text.length}|${annotation}\u0007${text}`)
     } else {
       this.log(text)
     }
@@ -80,7 +104,7 @@ export const ux = {
     function timeout(p: Promise<any>, ms: number) {
       function wait(ms: number, unref = false) {
         return new Promise(resolve => {
-          let t: any = setTimeout(() => resolve(), ms)
+          const t: any = setTimeout(() => resolve(), ms)
           if (unref) t.unref()
         })
       }
@@ -89,13 +113,13 @@ export const ux = {
     }
 
     async function flush() {
-      let p = new Promise(resolve => process.stdout.once('drain', () => resolve()))
+      const p = new Promise(resolve => process.stdout.once('drain', () => resolve()))
       process.stdout.write('')
       return p
     }
 
     await timeout(flush(), 10000)
-  }
+  },
 }
 export default ux
 export const cli = ux
@@ -112,15 +136,15 @@ export {
 const cliuxProcessExitHandler = async () => {
   try {
     await ux.done()
-  } catch (err) {
+  } catch (error) {
     // tslint:disable no-console
-    console.error(err)
+    console.error(error)
     process.exitCode = 1
   }
 }
 // to avoid MaxListenersExceededWarning
 // only attach named listener once
-let cliuxListener = process.listeners('exit').find(fn => fn.name === cliuxProcessExitHandler.name)
+const cliuxListener = process.listeners('exit').find(fn => fn.name === cliuxProcessExitHandler.name)
 if (!cliuxListener) {
   process.once('exit', cliuxProcessExitHandler)
 }

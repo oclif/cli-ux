@@ -6,7 +6,7 @@ const isWsl = require('is-wsl')
 export namespace open {
   export type Options = {
     // wait: boolean
-    app?: string | string[]
+    app?: string | string[];
   }
 }
 

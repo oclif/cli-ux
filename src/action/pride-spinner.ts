@@ -18,14 +18,14 @@ function color(s: string, frameIndex: number): string {
   ]
 
   if (!supportsColor) return s
-  let has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
+  const has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
   const prideColor = prideColors[frameIndex] || prideColors[0]
   return has256 ? prideColor(s) : chalk.magenta(s)
 }
 
 export default class PrideSpinnerAction extends SpinnerAction {
   protected _frame(): string {
-    let frame = this.frames[this.frameIndex]
+    const frame = this.frames[this.frameIndex]
     this.frameIndex = ++this.frameIndex % this.frames.length
     return color(frame, this.frameIndex)
   }

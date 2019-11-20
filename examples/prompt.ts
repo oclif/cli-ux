@@ -25,4 +25,4 @@ async function run() {
   cli.action.stop()
   cli.log(`you entered: ${input}`)
 }
-run().catch(err => cli.error(err))
+run().catch(error => cli.error(error))
