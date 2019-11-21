@@ -48,6 +48,9 @@ export const deps = {
   get wait(): typeof import('./wait').default {
     return fetch('./wait').default
   },
+  get progress(): typeof import ('./styled/progress').default {
+    return fetch('./styled/progress').default
+  },
 }
 
 export default deps
