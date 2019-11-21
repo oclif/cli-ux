@@ -1,13 +1,13 @@
-name: Node CI
+name: CI
 
 on: [push]
 
 jobs:
-  build:
+  ubuntu:
     strategy:
       matrix:
         node-version: [10.x, 12.x]
-        platform: [ubuntu-latest, windows-latest]
+        platform: [ubuntu-latest]
     runs-on: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v1
@@ -15,7 +15,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - name: yarn test
       run: |
         yarn
         yarn add -D nyc@13 @oclif/nyc-config@1
@@ -25,3 +25,22 @@ jobs:
       env:
         CI: true
         NYC: "yarn exec nyc -- --nycrc-path node_modules/@oclif/nyc-config/.nycrc"
+  windows:
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+        platform: [windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: yarn test
+      run: |
+        yarn
+        yarn add -D nyc@13 @oclif/nyc-config@1
+        .\node_modules\.bin\nyc --nycrc-path node_modules/@oclif/nyc-config/.nycrc yarn test
+      env:
+        CI: true
