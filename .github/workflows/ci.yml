@@ -15,7 +15,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn test
+    - name: yarn install & test
       run: |
         yarn
         yarn add -D nyc@13 @oclif/nyc-config@1
@@ -37,10 +37,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn test
+    - name: yarn install & test
       run: |
         yarn
-        yarn add -D nyc@13 @oclif/nyc-config@1
-        .\node_modules\.bin\nyc --nycrc-path node_modules/@oclif/nyc-config/.nycrc yarn test
+        yarn test
       env:
         CI: true
