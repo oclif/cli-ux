@@ -1,47 +1,38 @@
 import {cli} from '../src'
 
 // run the example sequentially! otherwise both will write to stdout/stderr simultaneous !
-Example1(() => {}) // to get all examples running sequentially
+Example1()
 
-function Example1(onComplete: any) {
-  // EXAMPLE 1 ---------------------------------------------
+function Example1() {
   // create new progress bar using default values
   let b1 = cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
   b1.start(100, 0)
 
-  // the bar value - will be linear incremented
+  // the bar value
   let value = 0
 
   // 20ms update rate
   const timer = setInterval(function () {
-    // increment value
     value++
 
     // update the bar value
     b1.update(value)
-
-    // set limit
     if (value >= b1.getTotal()) {
       // stop timer
       clearInterval(timer)
 
       b1.stop()
       // run complete callback
-      //@ts-ignore
-      Example2(this)
+      Example2()
     }
   }, 10)
 }
 
-function Example2(onComplete: any) {
-  // EXAMPLE 2 ---------------------------------------------
-  //console.log('\nExample 2 - Custom configuration')
-
-  // create new progress bar using default values
+function Example2() {
   const b2 = cli.progress('SingleBar', {
     barCompleteChar: '#',
     barIncompleteChar: '_',
-    format: 'Example 2: Current Upload Progress: {percentage}%' + ' - ' + '||{bar}||',
+    format: 'Example 2: Progress: {percentage}%' + ' - ' + '||{bar}||',
     fps: 5,
     stream: process.stdout,
     barsize: 30
@@ -55,24 +46,18 @@ function Example2(onComplete: any) {
 
     // set limit
     if (b2.value >= b2.getTotal()) {
-      // stop timer
       clearInterval(timer)
 
       b2.stop()
 
-      // run complete callback
-      // @ts-ignore
-      Example3(this)
+      Example3()
     }
   }, 50)
 }
 
-function Example3(onComplete: any) {
-  // EXAMPLE 5 ---------------------------------------------
-  //console.log('\nExample 5 - Custom Payload')
-  // create new progress bar
+function Example3() {
   const b4 = cli.progress('SingleBar', {
-    format: 'Example 4: progress [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | Speed: {speed}'
+    format: 'Example 3: progress [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | Speed: {speed}'
   })
 
   // initialize the bar -  defining payload token "speed" with the default value "N/A"
@@ -99,21 +84,18 @@ function Example3(onComplete: any) {
       speed: (currentSpeedData.reduce(function (a: any, b: any) { return a + b }, 0) / currentSpeedData.length).toFixed(2) + 'mb/s'
     })
 
-    // set limit
     if (value >= b4.getTotal()) {
       // stop timer
       clearInterval(timer)
 
       b4.stop()
 
-      // run complete callback
-      //@ts-ignore
-      Example4(this)
+      Example4()
     }
   }, 20)
 }
 
-function Example4(onComplete: any) {
+function Example4() {
   const files = {
     'eta.js        ': 187,
     'generic-bar.js': 589,
@@ -126,7 +108,7 @@ function Example4(onComplete: any) {
 
 // create new container
   const multibar = cli.progress('MultiBar', {
-    format: 'Example 5: {bar} | "{file}" | {value}/{total}',
+    format: 'Example 4: {bar} | "{file}" | {value}/{total}',
     hideCursor: true,
     barCompleteChar: '\u2588',
     barIncompleteChar: '\u2591',
@@ -152,8 +134,6 @@ function Example4(onComplete: any) {
       }
     }
 
-    // progress bar running ?
-    // check "isActive" property in case you've enabled "stopOnComplete" !
     if (multibar.isActive === false) {
       clearInterval(timer)
       multibar.stop()
