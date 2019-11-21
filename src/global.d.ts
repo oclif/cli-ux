@@ -2,6 +2,6 @@
 
 declare namespace NodeJS {
   interface Global {
-    'cli-ux': any
+    'cli-ux': any;
   }
 }

@@ -10,7 +10,8 @@ const {orderBy} = require('natural-orderby')
 
 class Table<T extends object> {
   options: table.Options & { printLine(s: any): any }
-  columns: (table.Column<T> & { key: string, width?: number, maxWidth?: number })[]
+
+  columns: (table.Column<T> & { key: string; width?: number; maxWidth?: number })[]
 
   constructor(private data: T[], columns: table.Columns<T>, options: table.Options = {}) {
     // assign columns
@@ -18,7 +19,7 @@ class Table<T extends object> {
       const col = columns[key]
       const extended = col.extended || false
       const get = col.get || ((row: any) => row[key])
-      const header = typeof col.header === 'string' ? col.header : _.capitalize(key.replace(/\_/g, ' '))
+      const header = typeof col.header === 'string' ? col.header : _.capitalize(key.replace(/_/g, ' '))
       const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
 
       return {
@@ -47,8 +48,8 @@ class Table<T extends object> {
   display() {
     // build table rows from input array data
     let rows = this.data.map(d => {
-      let row: any = {}
-      for (let col of this.columns) {
+      const row: any = {}
+      for (const col of this.columns) {
         let val = col.get(d)
         if (typeof val !== 'string') val = inspect(val, {breakLength: Infinity})
         row[col.key] = val
@@ -58,33 +59,34 @@ class Table<T extends object> {
 
     // filter rows
     if (this.options.filter) {
+      /* eslint-disable-next-line prefer-const */
       let [header, regex] = this.options.filter!.split('=')
       const isNot = header[0] === '-'
       if (isNot) header = header.substr(1)
-      let col = this.findColumnFromHeader(header)
+      const col = this.findColumnFromHeader(header)
       if (!col || !regex) throw new Error('Filter flag has an invalid value')
       rows = rows.filter((d: any) => {
-        let re = new RegExp(regex)
-        let val = d[col!.key]
-        let match = val.match(re)
+        const re = new RegExp(regex)
+        const val = d[col!.key]
+        const match = val.match(re)
         return isNot ? !match : match
       })
     }
 
     // sort rows
     if (this.options.sort) {
-      let sorters = this.options.sort!.split(',')
-      let sortHeaders = sorters.map(k => k[0] === '-' ? k.substr(1) : k)
-      let sortKeys = this.filterColumnsFromHeaders(sortHeaders).map(c => {
+      const sorters = this.options.sort!.split(',')
+      const sortHeaders = sorters.map(k => k[0] === '-' ? k.substr(1) : k)
+      const sortKeys = this.filterColumnsFromHeaders(sortHeaders).map(c => {
         return ((v: any) => v[c.key])
       })
-      let sortKeysOrder = sorters.map(k => k[0] === '-' ? 'desc' : 'asc')
+      const sortKeysOrder = sorters.map(k => k[0] === '-' ? 'desc' : 'asc')
       rows = orderBy(rows, sortKeys, sortKeysOrder)
     }
 
     // and filter columns
     if (this.options.columns) {
-      let filters = this.options.columns!.split(',')
+      const filters = this.options.columns!.split(',')
       this.columns = this.filterColumnsFromHeaders(filters)
     } else if (!this.options.extended) {
       // show extented columns/properties
@@ -108,16 +110,16 @@ class Table<T extends object> {
     }
   }
 
-  private findColumnFromHeader(header: string): (table.Column<T> & { key: string, width?: number, maxWidth?: number }) | undefined {
+  private findColumnFromHeader(header: string): (table.Column<T> & { key: string; width?: number; maxWidth?: number }) | undefined {
     return this.columns.find(c => c.header.toLowerCase() === header.toLowerCase())
   }
 
-  private filterColumnsFromHeaders(filters: string[]): (table.Column<T> & { key: string, width?: number, maxWidth?: number })[] {
+  private filterColumnsFromHeaders(filters: string[]): (table.Column<T> & { key: string; width?: number; maxWidth?: number })[] {
     // unique
     filters = [...(new Set(filters))]
-    let cols: (table.Column<T> & {key: string, width?: number, maxWidth?: number})[] = []
+    const cols: (table.Column<T> & {key: string; width?: number; maxWidth?: number})[] = []
     filters.forEach(f => {
-      let c = this.columns.find(c => c.header.toLowerCase() === f.toLowerCase())
+      const c = this.columns.find(c => c.header.toLowerCase() === f.toLowerCase())
       if (c) cols.push(c)
     })
     return cols
@@ -143,7 +145,7 @@ class Table<T extends object> {
       return columns.reduce((obj, col) => {
         return {
           ...obj,
-          [col.key]: d[col.key] || ''
+          [col.key]: d[col.key] || '',
         }
       }, {})
     })
@@ -177,12 +179,12 @@ class Table<T extends object> {
     // column truncation
     //
     // find max width for each column
-    for (let col of columns) {
+    for (const col of columns) {
       // convert multi-line cell to single longest line
       // for width calculations
-      let widthData = data.map((row: any) => {
-        let d = row[col.key]
-        let manyLines = d.split('\n')
+      const widthData = data.map((row: any) => {
+        const d = row[col.key]
+        const manyLines = d.split('\n')
         if (manyLines.length > 1) {
           return '*'.repeat(Math.max(...manyLines.map((r: string) => sw(r))))
         }
@@ -200,31 +202,31 @@ class Table<T extends object> {
       if (options['no-truncate'] || !process.stdout.isTTY) return
 
       // don't shorten if there is enough screen width
-      let dataMaxWidth = _.sumBy(columns, c => c.width!)
-      let overWidth = dataMaxWidth - maxWidth
+      const dataMaxWidth = _.sumBy(columns, c => c.width!)
+      const overWidth = dataMaxWidth - maxWidth
       if (overWidth <= 0) return
 
       // not enough room, short all columns to minWidth
-      for (let col of columns) {
+      for (const col of columns) {
         col.width = col.minWidth
       }
 
       // if sum(minWidth's) is greater than term width
       // nothing can be done so
       // display all as minWidth
-      let dataMinWidth = _.sumBy(columns, c => c.minWidth!)
+      const dataMinWidth = _.sumBy(columns, c => c.minWidth!)
       if (dataMinWidth >= maxWidth) return
 
       // some wiggle room left, add it back to "needy" columns
       let wiggleRoom = maxWidth - dataMinWidth
-      let needyCols = _.sortBy(columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})), c => c.needs)
-      for (let {key, needs} of needyCols) {
+      const needyCols = _.sortBy(columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})), c => c.needs)
+      for (const {key, needs} of needyCols) {
         if (!needs) continue
-        let col = _.find(columns, c => (key === c.key))
+        const col = _.find(columns, c => (key === c.key))
         if (!col) continue
         if (wiggleRoom > needs) {
           col.width = col.width! + needs
-          wiggleRoom = wiggleRoom - needs
+          wiggleRoom -= needs
         } else if (wiggleRoom) {
           col.width = col.width! + wiggleRoom
           wiggleRoom = 0
@@ -236,31 +238,31 @@ class Table<T extends object> {
     // print headers
     if (!options['no-header']) {
       let headers = ''
-      for (let col of columns) {
-        let header = col.header!
+      for (const col of columns) {
+        const header = col.header!
         headers += header.padEnd(col.width!)
       }
       options.printLine(chalk.bold(headers))
     }
 
     // print rows
-    for (let row of data) {
+    for (const row of data) {
       // find max number of lines
       // for all cells in a row
       // with multi-line strings
       let numOfLines = 1
-      for (let col of columns) {
+      for (const col of columns) {
         const d = (row as any)[col.key]
-        let lines = d.split('\n').length
+        const lines = d.split('\n').length
         if (lines > numOfLines) numOfLines = lines
       }
-      let linesIndexess = [...Array(numOfLines).keys()]
+      const linesIndexess = [...new Array(numOfLines).keys()]
 
       // print row
       // including multi-lines
       linesIndexess.forEach((i: number) => {
         let l = ''
-        for (let col of columns) {
+        for (const col of columns) {
           const width = col.width!
           let d = (row as any)[col.key]
           d = d.split('\n')[i] || ''
@@ -290,7 +292,7 @@ export namespace table {
     output: F.string({
       exclusive: ['no-truncate', 'csv'],
       description: 'output in a more machine friendly format',
-      options: ['csv', 'json', 'yaml']
+      options: ['csv', 'json', 'yaml'],
     }),
     extended: F.boolean({exclusive: ['columns'], char: 'x', description: 'show extra columns'}),
     'no-truncate': F.boolean({exclusive: ['csv'], description: 'do not truncate output to fit screen'}),
@@ -304,11 +306,12 @@ export namespace table {
   export function flags(): IFlags
   export function flags<Z extends keyof IFlags = keyof IFlags>(opts: { except: Z | Z[] }): ExcludeFlags<IFlags, Z>
   export function flags<K extends keyof IFlags = keyof IFlags>(opts: { only: K | K[] }): IncludeFlags<IFlags, K>
+  // eslint-disable-next-line no-inner-declarations
   export function flags(opts?: any): any {
     if (opts) {
-      let f = {}
-      let o = (opts.only && typeof opts.only === 'string' ? [opts.only] : opts.only) || Object.keys(Flags)
-      let e = (opts.except && typeof opts.except === 'string' ? [opts.except] : opts.except) || []
+      const f = {}
+      const o = (opts.only && typeof opts.only === 'string' ? [opts.only] : opts.only) || Object.keys(Flags)
+      const e = (opts.except && typeof opts.except === 'string' ? [opts.except] : opts.except) || []
       o.forEach((key: string) => {
         if ((e as any[]).includes(key)) return
         (f as any)[key] = (Flags as any)[key]
@@ -321,23 +324,23 @@ export namespace table {
   export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
 
   export interface Column<T extends object> {
-    header: string
-    extended: boolean
-    minWidth: number
-    get(row: T): any
+    header: string;
+    extended: boolean;
+    minWidth: number;
+    get(row: T): any;
   }
 
   export type OutputType = 'csv' | 'json' | 'yaml'
 
   export interface Options {
-    [key: string]: any,
-    sort?: string,
-    filter?: string,
-    columns?: string,
-    extended?: boolean,
-    'no-truncate'?: boolean,
-    output?: OutputType,
-    'no-header'?: boolean,
-    printLine?(s: any): any,
+    [key: string]: any;
+    sort?: string;
+    filter?: string;
+    columns?: string;
+    extended?: boolean;
+    'no-truncate'?: boolean;
+    output?: OutputType;
+    'no-header'?: boolean;
+    printLine?(s: any): any;
   }
 }

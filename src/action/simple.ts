@@ -14,6 +14,7 @@ export default class SimpleAction extends ActionBase {
     else this._flush()
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected _resume() {}
 
   protected _updateStatus(status: string, prevStatus?: string, newline = false) {
