@@ -44,10 +44,6 @@ describe('progress', () => {
       bars.push(multibar.create(entry[1], 0, {file: entry[0]}))
     })
 
-    // for (const filename in files) {
-    //   const size = Object.k
-    //   bars.push(multibar.create(size, 0, {file: filename}))
-    // }
     expect(multibar.options.format).to.contain('Example 5: ')
     expect(Object.keys(files).length).length.to.equal(6)
   })
