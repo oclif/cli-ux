@@ -1,6 +1,7 @@
 import {cli} from '../src'
 
 function example4() {
+  console.log('Example 4: Multibar')
   const files = {
     'eta.js        ': 187,
     'generic-bar.js': 589,
@@ -12,8 +13,9 @@ function example4() {
   const bars: any = []
 
   // create new container
-  const multibar = cli.progress('MultiBar', {
-    format: 'Example 4: {bar} | "{file}" | {value}/{total}',
+  const multibar = cli.progress({
+    multi: true,
+    format: '{bar} | "{file}" | {value}/{total}',
     hideCursor: true,
     barCompleteChar: '\u2588',
     barIncompleteChar: '\u2591',
@@ -42,8 +44,9 @@ function example4() {
 }
 
 function example3() {
-  const b4 = cli.progress('SingleBar', {
-    format: 'Example 3: progress [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | Speed: {speed}',
+  console.log('Example 3: Single bar with payload values')
+  const b4 = cli.progress({
+    format: 'progress [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | Speed: {speed}',
   })
 
   // initialize the bar -  defining payload token "speed" with the default value "N/A"
@@ -84,10 +87,11 @@ function example3() {
 }
 
 function example2() {
-  const b2 = cli.progress('SingleBar', {
+  console.log('Example 2: Single bar with custom settings')
+  const b2 = cli.progress({
     barCompleteChar: '#',
     barIncompleteChar: '_',
-    format: 'Example 2: Progress: {percentage}%  - ||{bar}||',
+    format: 'Progress: {percentage}%  - ||{bar}||',
     fps: 5,
     stream: process.stdout,
     barsize: 30,
@@ -112,7 +116,8 @@ function example2() {
 
 function example1() {
   // create new progress bar using default values
-  const b1 = cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
+  console.log('Example 1: Single bar with default values')
+  const b1 = cli.progress({})
   b1.start(100, 0)
 
   // the bar value

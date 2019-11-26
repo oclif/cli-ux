@@ -4,17 +4,10 @@ import {expect, fancy} from 'fancy-test'
 import cli from '../../src'
 
 describe('progress', () => {
-  fancy
-  .end('instantiation with the wrong progress bar type', _ => {
-    expect(() => {
-      cli.progress('notSingleBar', {})
-    }).to.throw('notSingleBar')
-  })
-
   // single bar
   fancy
   .end('single bar has default settings', _ => {
-    const b1 = cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
+    const b1 = cli.progress({format: 'Example 1: Progress {bar} | {percentage}%'})
     expect(b1.options.format).to.contain('Example 1: Progress')
     expect(b1.bars).to.not.have
   })
@@ -32,7 +25,8 @@ describe('progress', () => {
     }
     const bars: any = []
     // create new container
-    const multibar = cli.progress('MultiBar', {
+    const multibar = cli.progress({
+      multi: true,
       format: 'Example 5: {bar} | "{file}" | {value}/{total}',
       hideCursor: true,
       barCompleteChar: '\u2588',
@@ -50,14 +44,14 @@ describe('progress', () => {
   // testing no settings passed, default settings created
   fancy
   .end('single bar, no bars array', _ => {
-    const b1 = cli.progress('SingleBar', {})
+    const b1 = cli.progress({})
     expect(b1.options.format).to.contain('progress')
     expect(b1.bars).to.not.have
   })
   // testing getProgressBar returns correct type
   fancy
   .end('typeof progress bar is object', _ => {
-    const b1 = cli.progress('SingleBar', {format: 'Example 1: Progress {bar} | {percentage}%'})
+    const b1 = cli.progress({format: 'Example 1: Progress {bar} | {percentage}%'})
     expect(typeof (b1)).to.equal('object')
   })
 })
