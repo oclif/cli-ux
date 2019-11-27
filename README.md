@@ -295,16 +295,21 @@ Outputs:
 Generate a customizable progress bar and display it
 
 ```typescript
-const bar = new cli.progress({
-                 format: 'Progress | {bar} | {percentage}%',
-                 barCompleteChar: '=',
-                 barIncompleteChar: '-'
-             });
+const bar 1 = cli.progress()
+
+const bar2 = cli.progress({
+                   format: 'PROGRESS | {bar} | {value}/{total} Files',
+                   barCompleteChar: '\u2588',
+                   barIncompleteChar: '\u2591',
+                 })
 ```
 
 Outputs:
 ```shell
-Progress | =====================================--- | 93%
+bar1:
+progress [=====================-------------------] 53% | ETA: 1s | 53/100
+bar2:
+PROGRESS | █████████████████████████████░░░░░░░░░░░ | 146/204 Files
 ```
 
 To see a more detailed example, run 
@@ -312,7 +317,7 @@ To see a more detailed example, run
 $ ts-node examples/progress.ts
 ```
 
-This extends cli-progress ( https://www.npmjs.com/package/cli-progress )
+This extends [cli-progress](https://www.npmjs.com/package/cli-progress)
 see all of the options and customizations there, which can be passed in with the options object.
 Only the single bar variant of cli-progress is currently supported.
 

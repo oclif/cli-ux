@@ -18,6 +18,7 @@ describe('progress', () => {
     const b1 = cli.progress({})
     expect(b1.options.format).to.contain('progress')
     expect(b1.bars).to.not.have
+    expect(b1.options.noTTYOutput).to.not.be.null
   })
   // testing getProgressBar returns correct type
   fancy
