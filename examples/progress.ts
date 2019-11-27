@@ -46,7 +46,7 @@ function example4() {
 function example3() {
   console.log('Example 3: Single bar with payload values')
   const b4 = cli.progress({
-    format: 'progress [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | Speed: {speed}',
+    format: '[{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | Speed: {speed}',
   })
 
   // initialize the bar -  defining payload token "speed" with the default value "N/A"
@@ -91,7 +91,7 @@ function example2() {
   const b2 = cli.progress({
     barCompleteChar: '#',
     barIncompleteChar: '_',
-    format: 'Progress: {percentage}%  - ||{bar}||',
+    format: '||{bar} || {percentage}% ',
     fps: 5,
     stream: process.stdout,
     barsize: 30,
@@ -117,8 +117,8 @@ function example2() {
 function example1() {
   // create new progress bar using default values
   console.log('Example 1: Single bar with default values')
-  const b1 = cli.progress({})
-  b1.start(100, 0)
+  const b1 = cli.progress()
+  b1.start()
 
   // the bar value
   let value = 0
