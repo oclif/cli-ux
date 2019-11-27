@@ -1,9 +1,6 @@
 // 3pp
 const cliProgress = require('cli-progress')
 
-export default function progress(settings?: any) {
-  if (settings && (settings.multi && settings.multi === true)) {
-    return new cliProgress.MultiBar(settings)
-  }
+export default function progress(settings?: any): any {
   return new cliProgress.SingleBar(settings)
 }

@@ -12,35 +12,6 @@ describe('progress', () => {
     expect(b1.bars).to.not.have
   })
 
-  // multi-bar
-  fancy
-  .end('has multibar bars array', _ => {
-    const files = {
-      'eta.js        ': 187,
-      'generic-bar.js': 589,
-      'multi-bar.js  ': 1897,
-      'options.js    ': 42,
-      'single-bar.js ': 2123,
-      'terminal.js   ': 500,
-    }
-    const bars: any = []
-    // create new container
-    const multibar = cli.progress({
-      multi: true,
-      format: 'Example 5: {bar} | "{file}" | {value}/{total}',
-      hideCursor: true,
-      barCompleteChar: '\u2588',
-      barIncompleteChar: '\u2591',
-      stopOnComplete: true,
-    })
-    // add bars
-    Object.entries(files).forEach(entry => {
-      bars.push(multibar.create(entry[1], 0, {file: entry[0]}))
-    })
-
-    expect(multibar.options.format).to.contain('Example 5: ')
-    expect(Object.keys(files).length).length.to.equal(6)
-  })
   // testing no settings passed, default settings created
   fancy
   .end('single bar, no bars array', _ => {

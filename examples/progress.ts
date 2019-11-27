@@ -1,50 +1,7 @@
 import {cli} from '../src'
 
-function example4() {
-  console.log('Example 4: Multibar')
-  const files = {
-    'eta.js        ': 187,
-    'generic-bar.js': 589,
-    'multi-bar.js  ': 1897,
-    'options.js    ': 42,
-    'single-bar.js ': 2123,
-    'terminal.js   ': 500,
-  }
-  const bars: any = []
-
-  // create new container
-  const multibar = cli.progress({
-    multi: true,
-    format: '{bar} | "{file}" | {value}/{total}',
-    hideCursor: true,
-    barCompleteChar: '\u2588',
-    barIncompleteChar: '\u2591',
-    stopOnComplete: true,
-  })
-  // add bars
-  Object.entries(files).forEach(entry => {
-    bars.push(multibar.create(entry[1], 0, {file: entry[0]}))
-  })
-
-  const timer = setInterval(() => {
-    // increment
-    for (let i = 0; i < bars.length; i++) {
-      const bar = bars[i]
-
-      // download complete ?
-      if (bar.value < bar.total) {
-        bar.increment()
-      }
-    }
-    if (multibar.isActive === false) {
-      clearInterval(timer)
-      multibar.stop()
-    }
-  }, 3)
-}
-
 function example3() {
-  console.log('Example 3: Single bar with payload values')
+  console.log('Example 3: bar with payload values')
   const b4 = cli.progress({
     format: '[{bar}] {percentage}% | ETA: {eta}s | {value}/{total} | Speed: {speed}',
   })
@@ -80,19 +37,17 @@ function example3() {
       clearInterval(timer)
 
       b4.stop()
-
-      example4()
     }
   }, 20)
 }
 
 function example2() {
-  console.log('Example 2: Single bar with custom settings')
+  console.log('Example 2: bar with custom settings')
   const b2 = cli.progress({
     barCompleteChar: '#',
     barIncompleteChar: '_',
     format: '||{bar} || {percentage}% ',
-    fps: 5,
+    fps: 100,
     stream: process.stdout,
     barsize: 30,
   })
@@ -116,7 +71,7 @@ function example2() {
 
 function example1() {
   // create new progress bar using default values
-  console.log('Example 1: Single bar with default values')
+  console.log('Example 1: bar with default values')
   const b1 = cli.progress()
   b1.start()
 
