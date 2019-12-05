@@ -295,13 +295,15 @@ Outputs:
 Generate a customizable progress bar and display it
 
 ```typescript
-const bar 1 = cli.progress()
+const simpleBar = cli.progress()
+simpleBar.start()
 
-const bar2 = cli.progress({
+const customBar = cli.progress({
                    format: 'PROGRESS | {bar} | {value}/{total} Files',
                    barCompleteChar: '\u2588',
                    barIncompleteChar: '\u2591',
                  })
+customBar.start()
 ```
 
 Outputs:
