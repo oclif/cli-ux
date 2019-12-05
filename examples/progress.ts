@@ -1,9 +1,5 @@
 import {cli} from '../src'
 
-async function delay(ms: number): Promise<any> {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
 async function payloadValueExample() {
   console.log('Example 3: bar with payload values')
   const bar = cli.progress({
@@ -14,92 +10,91 @@ async function payloadValueExample() {
   bar.start(200, 0, {
     speed: 'N/A',
   })
-
   // the bar value - will be linear incremented
   let value = 0
-
   const speedData: any = []
+  return new Promise((resolve => {
+    const timer = setInterval(function () {
+      // increment value
+      value++
 
-  // 20ms update rate
-  const timer = await setInterval(function () {
-    // increment value
-    value++
+      // example speed data
+      speedData.push((Math.random() * 2) + 5)
+      const currentSpeedData = speedData.splice(-10)
 
-    // example speed data
-    speedData.push((Math.random() * 2) + 5)
-    const currentSpeedData = speedData.splice(-10)
+      // update the bar value
+      bar.update(value, {
+        speed: (currentSpeedData.reduce((a: any, b: any) => {
+          return a + b
+        }, 0) / currentSpeedData.length).toFixed(2) + 'mb/s',
+      })
 
-    // update the bar value
-    bar.update(value, {
-      speed: (currentSpeedData.reduce((a: any, b: any) => {
-        return a + b
-      }, 0) / currentSpeedData.length).toFixed(2) + 'mb/s',
-    })
+      if (value >= bar.getTotal()) {
+        // stop timer
+        clearInterval(timer)
 
-    if (value >= bar.getTotal()) {
-      // stop timer
-      clearInterval(timer)
-
-      bar.stop()
-    }
-  }, 20)
+        bar.stop()
+        resolve()
+      }
+    }, 20)
+  }))
 }
 
 async function customSettingExample() {
   console.log('Example 2: bar with custom settings')
   const bar = cli.progress({
-    barCompleteChar: '#',
-    barIncompleteChar: '_',
+    barCompleteChar: '\u2588',
+    barIncompleteChar: '\u2591',
     format: '||{bar} || {percentage}% ',
     fps: 100,
     stream: process.stdout,
     barsize: 30,
   })
   bar.start(100, 0)
+  let value = 0
+  return new Promise((resolve => {
+    const timer = setInterval(() => {
+      value++
 
-  // 50ms update rate
-  const timer = await setInterval(() => {
-    // increment value
-    bar.increment()
+      // update the bar value
+      bar.update(value)
+      if (value >= bar.getTotal()) {
+        // stop timer
+        clearInterval(timer)
 
-    // set limit
-    if (bar.value >= bar.getTotal()) {
-      clearInterval(timer)
-
-      bar.stop()
-    }
-  }, 50)
+        bar.stop()
+        resolve()
+      }
+    }, 50)
+  }))
 }
 
 async function defaultSettingExample() {
   // create new progress bar using default values
   console.log('Example 1: bar with default values')
-  const bar = cli.progress()
-  bar.start()
+  return new Promise((resolve => {
+    const bar = cli.progress()
+    bar.start()
+    let value = 0
+    const timer = setInterval(() => {
+      value++
 
-  // the bar value
-  let value = 0
+      // update the bar value
+      bar.update(value)
+      if (value >= bar.getTotal()) {
+        // stop timer
+        clearInterval(timer)
 
-  // 20ms update rate
-  const timer = setInterval(() => {
-    value++
-
-    // update the bar value
-    bar.update(value)
-    if (value >= bar.getTotal()) {
-      // stop timer
-      clearInterval(timer)
-
-      bar.stop()
-    }
-  }, 10)
+        bar.stop()
+        resolve()
+      }
+    }, 20)
+  }))
 }
 
 const main = async () => {
   await defaultSettingExample()
-  await delay(1200)
   await customSettingExample()
-  await delay(5100)
   await payloadValueExample()
 }
 main()
