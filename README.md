@@ -289,3 +289,38 @@ Outputs:
    └─ baz
       └─ qux
 ```
+
+# cli.progress
+
+Generate a customizable progress bar and display it
+
+```typescript
+const simpleBar = cli.progress()
+simpleBar.start()
+
+const customBar = cli.progress({
+                   format: 'PROGRESS | {bar} | {value}/{total} Files',
+                   barCompleteChar: '\u2588',
+                   barIncompleteChar: '\u2591',
+                 })
+customBar.start()
+```
+
+Outputs:
+```shell
+bar1:
+progress [=====================-------------------] 53% | ETA: 1s | 53/100
+bar2:
+PROGRESS | █████████████████████████████░░░░░░░░░░░ | 146/204 Files
+```
+
+To see a more detailed example, run 
+```shell script
+$ ts-node examples/progress.ts
+```
+
+This extends [cli-progress](https://www.npmjs.com/package/cli-progress)
+see all of the options and customizations there, which can be passed in with the options object.
+Only the single bar variant of cli-progress is currently supported.
+
+

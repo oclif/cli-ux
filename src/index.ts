@@ -54,6 +54,9 @@ export const ux = {
   get wait() {
     return deps.wait
   },
+  get progress() {
+    return deps.progress
+  },
 
   async done() {
     config.action.stop()
