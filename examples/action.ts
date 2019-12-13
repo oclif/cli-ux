@@ -9,6 +9,7 @@ async function run() {
   await wait()
   cli.log('1 log')
   await wait()
+  // eslint-disable-next-line require-atomic-updates
   cli.action.status = 'a wild status appeared!'
   await wait()
   cli.log('2 log')
@@ -53,4 +54,4 @@ async function main() {
   cli.error('oh no')
 }
 main()
-.catch(require('@oclif/errors/handle'))
+.catch(error => require('@oclif/errors/handle')(error))
