@@ -339,7 +339,7 @@ export namespace table {
     columns?: string;
     extended?: boolean;
     'no-truncate'?: boolean;
-    output?: OutputType;
+    output?: OutputType | string;
     'no-header'?: boolean;
     printLine?(s: any): any;
   }
