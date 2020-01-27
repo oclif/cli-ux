@@ -330,7 +330,7 @@ export namespace table {
     get(row: T): any;
   }
 
-  export type OutputType = 'csv' | 'json' | 'yaml'
+  // export type OutputType = 'csv' | 'json' | 'yaml'
 
   export interface Options {
     [key: string]: any;
@@ -339,7 +339,7 @@ export namespace table {
     columns?: string;
     extended?: boolean;
     'no-truncate'?: boolean;
-    output?: OutputType;
+    output?: string;
     'no-header'?: boolean;
     printLine?(s: any): any;
   }
