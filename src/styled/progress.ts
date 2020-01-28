@@ -7,7 +7,8 @@ export default function progress(options?: any): any {
     options = {}
   }
   // set noTTYOutput for options
-  options.noTTYOutput = Boolean(process.env.TERM !== 'dumb' && process.stdin.isTTY)
+  const isTTY = Boolean(process.env.TERM !== 'dumb' && process.stdin.isTTY)
+  options.noTTYOutput = !isTTY
 
   return new cliProgress.SingleBar(options)
 }
