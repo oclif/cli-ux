@@ -1,22 +1,26 @@
 import * as _ from 'lodash'
 import {inspect} from 'util'
 
+/* eslint-disable-next-line @typescript-eslint/interface-name-prefix */
 export interface ITask {
-  action: string
-  status: string | undefined
-  active: boolean
+  action: string;
+  status: string | undefined;
+  active: boolean;
 }
 
 export type ActionType = 'spinner' | 'simple' | 'debug'
 
 export interface Options {
-  stdout?: boolean
+  stdout?: boolean;
 }
 
 export class ActionBase {
   type!: ActionType
+
   std: 'stdout' | 'stderr' = 'stderr'
+
   protected stdmocks?: ['stdout' | 'stderr', string[]][]
+
   private stdmockOrigs = {
     stdout: process.stdout.write,
     stderr: process.stderr.write,
@@ -24,7 +28,9 @@ export class ActionBase {
 
   public start(action: string, status?: string, opts: Options = {}) {
     this.std = opts.stdout ? 'stdout' : 'stderr'
-    const task = (this.task = {action, status, active: !!(this.task && this.task.active)})
+    const task = {action, status, active: Boolean(this.task && this.task.active)}
+    this.task = task
+
     this._start()
     task.active = true
     this._stdout(true)
@@ -42,7 +48,8 @@ export class ActionBase {
   }
 
   private get globals(): { action: { task?: ITask }; output: string | undefined } {
-    const globals = ((global as any)['cli-ux'] = (global as any)['cli-ux'] || {})
+    (global as any)['cli-ux'] = (global as any)['cli-ux'] || {}
+    const globals = (global as any)['cli-ux']
     globals.action = globals.action || {}
     return globals
   }
@@ -58,17 +65,19 @@ export class ActionBase {
   protected get output(): string | undefined {
     return this.globals.output
   }
+
   protected set output(output: string | undefined) {
     this.globals.output = output
   }
 
   get running(): boolean {
-    return !!this.task
+    return Boolean(this.task)
   }
 
   get status(): string | undefined {
     return this.task ? this.task.status : undefined
   }
+
   set status(status: string | undefined) {
     const task = this.task
     if (!task) {
@@ -114,15 +123,20 @@ export class ActionBase {
   protected _start() {
     throw new Error('not implemented')
   }
+
   protected _stop(_: string) {
     throw new Error('not implemented')
   }
+
   protected _resume() {
     if (this.task) this.start(this.task.action, this.task.status)
   }
+
   protected _pause(_?: string) {
     throw new Error('not implemented')
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected _updateStatus(_: string | undefined, __?: string) {}
 
   /**
@@ -139,7 +153,7 @@ export class ActionBase {
         }
 
         this.stdmocks = []
-        for (let std of outputs) {
+        for (const std of outputs) {
           (process[std] as any).write = (...args: any[]) => {
             this.stdmocks!.push([std, args] as ['stdout' | 'stderr', string[]])
           }
@@ -148,10 +162,10 @@ export class ActionBase {
         if (!this.stdmocks) return
         // this._write('stderr', '\nresetstdmock\n\n\n')
         delete this.stdmocks
-        for (let std of outputs) process[std].write = this.stdmockOrigs[std] as any
+        for (const std of outputs) process[std].write = this.stdmockOrigs[std] as any
       }
-    } catch (err) {
-      this._write('stderr', inspect(err))
+    } catch (error) {
+      this._write('stderr', inspect(error))
     }
   }
 
@@ -163,7 +177,7 @@ export class ActionBase {
       let output = ''
       let std: 'stdout' | 'stderr' | undefined
       while (this.stdmocks && this.stdmocks.length) {
-        let cur = this.stdmocks.shift() as ['stdout' | 'stderr', string[]]
+        const cur = this.stdmocks.shift() as ['stdout' | 'stderr', string[]]
         std = cur[0]
         this._write(std, cur[1])
         output += (cur[1][0] as any).toString('utf8')
@@ -173,8 +187,8 @@ export class ActionBase {
       if (output && std && output[output.length - 1] !== '\n') {
         this._write(std, '\n')
       }
-    } catch (err) {
-      this._write('stderr', inspect(err))
+    } catch (error) {
+      this._write('stderr', inspect(error))
     }
   }
 
@@ -182,6 +196,6 @@ export class ActionBase {
    * write to the real stdout/stderr
    */
   protected _write(std: 'stdout' | 'stderr', s: string | string[]) {
-    this.stdmockOrigs[std].apply(process[std], _.castArray(s))
+    this.stdmockOrigs[std].apply(process[std], _.castArray(s) as [string])
   }
 }

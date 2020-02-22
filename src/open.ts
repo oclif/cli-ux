@@ -1,12 +1,11 @@
 // this code is largely taken from opn
 import * as childProcess from 'child_process'
-import * as path from 'path'
 const isWsl = require('is-wsl')
 
 export namespace open {
   export type Options = {
     // wait: boolean
-    app?: string | string[]
+    app?: string | string[];
   }
 }
 
@@ -53,7 +52,8 @@ export default function open(target: string, opts: open.Options = {}) {
     if (opts.app) {
       cmd = opts.app
     } else {
-      cmd = process.platform === 'android' ? 'xdg-open' : path.join(__dirname, 'xdg-open')
+      // try local xdg-open
+      cmd = 'xdg-open'
     }
 
     if (appArgs.length > 0) {

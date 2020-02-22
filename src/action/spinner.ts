@@ -6,19 +6,22 @@ import * as supportsColor from 'supports-color'
 import deps from '../deps'
 
 import {ActionBase, ActionType} from './base'
+/* eslint-disable-next-line node/no-missing-require */
 const spinners = require('./spinners')
 
 function color(s: string): string {
   if (!supportsColor) return s
-  let has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
-  return has256 ? `\u001b[38;5;104m${s}${deps.ansiStyles.reset.open}` : chalk.magenta(s)
+  const has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
+  return has256 ? `\u001B[38;5;104m${s}${deps.ansiStyles.reset.open}` : chalk.magenta(s)
 }
 
 export default class SpinnerAction extends ActionBase {
   public type: ActionType = 'spinner'
 
   spinner?: NodeJS.Timeout
+
   frames: any
+
   frameIndex: number
 
   constructor() {
@@ -31,11 +34,12 @@ export default class SpinnerAction extends ActionBase {
     this._reset()
     if (this.spinner) clearInterval(this.spinner)
     this._render()
-    let interval: any = (this.spinner = setInterval(
-      this._render.bind(this),
-      process.platform === 'win32' ? 500 : 100,
-      'spinner',
-    ))
+    this.spinner = setInterval(icon =>
+      this._render.bind(this)(icon),
+    process.platform === 'win32' ? 500 : 100,
+    'spinner',
+    )
+    const interval = this.spinner
     interval.unref()
   }
 
@@ -53,35 +57,35 @@ export default class SpinnerAction extends ActionBase {
     this.output = undefined
   }
 
+  protected _frame(): string {
+    const frame = this.frames[this.frameIndex]
+    this.frameIndex = ++this.frameIndex % this.frames.length
+    return color(frame)
+  }
+
   private _render(icon?: string) {
     const task = this.task
     if (!task) return
     this._reset()
     this._flushStdout()
-    let frame = icon === 'spinner' ? ` ${this._frame()}` : icon || ''
-    let status = task.status ? ` ${task.status}` : ''
+    const frame = icon === 'spinner' ? ` ${this._frame()}` : icon || ''
+    const status = task.status ? ` ${task.status}` : ''
     this.output = `${task.action}...${frame}${status}\n`
     this._write(this.std, this.output)
   }
 
   private _reset() {
     if (!this.output) return
-    let lines = this._lines(this.output)
+    const lines = this._lines(this.output)
     this._write(this.std, deps.ansiEscapes.cursorLeft + deps.ansiEscapes.cursorUp(lines) + deps.ansiEscapes.eraseDown)
     this.output = undefined
   }
 
-  private _frame(): string {
-    let frame = this.frames[this.frameIndex]
-    this.frameIndex = ++this.frameIndex % this.frames.length
-    return color(frame)
-  }
-
   private _lines(s: string): number {
     return deps
-      .stripAnsi(s)
-      .split('\n')
-      .map(l => Math.ceil(l.length / deps.screen.errtermwidth))
-      .reduce((c, i) => c + i, 0)
+    .stripAnsi(s)
+    .split('\n')
+    .map(l => Math.ceil(l.length / deps.screen.errtermwidth))
+    .reduce((c, i) => c + i, 0)
   }
 }

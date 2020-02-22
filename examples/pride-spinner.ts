@@ -5,7 +5,7 @@ function wait() {
 }
 
 async function run() {
-  cli.action.start('running')
+  cli.prideAction.start('running')
   await wait()
   cli.action.stop()
 }
