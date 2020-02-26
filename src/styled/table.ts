@@ -58,18 +58,20 @@ class Table<T extends object> {
     })
 
     // filter rows
-    if (this.options.filter) {
+    if (this.options.filter && !_.isEmpty(this.options.filter)) {
       /* eslint-disable-next-line prefer-const */
-      let [header, regex] = this.options.filter!.split('=')
-      const isNot = header[0] === '-'
-      if (isNot) header = header.substr(1)
-      const col = this.findColumnFromHeader(header)
-      if (!col || !regex) throw new Error('Filter flag has an invalid value')
-      rows = rows.filter((d: any) => {
-        const re = new RegExp(regex)
-        const val = d[col!.key]
-        const match = val.match(re)
-        return isNot ? !match : match
+      this.options.filter.forEach(filter => {
+        let [header, regex] = filter.split('=')
+        const isNot = header[0] === '-'
+        if (isNot) header = header.substr(1)
+        const col = this.findColumnFromHeader(header)
+        if (!col || !regex) throw new Error(`Filter flag "${header}" has an invalid value`)
+        rows = rows.filter((d: any) => {
+          const re = new RegExp(regex)
+          const val = d[col!.key]
+          const match = val.match(re)
+          return isNot ? !match : match
+        })
       })
     }
 
@@ -287,7 +289,7 @@ export namespace table {
   export const Flags = {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
-    filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
+    filter: F.string({description: 'filter property by partial string matching, ex: name=foo', multiple: true}),
     csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format [alias: --output=csv]'}),
     output: F.string({
       exclusive: ['no-truncate', 'csv'],
@@ -335,7 +337,7 @@ export namespace table {
   export interface Options {
     [key: string]: any;
     sort?: string;
-    filter?: string;
+    filter?: string[];
     columns?: string;
     extended?: boolean;
     'no-truncate'?: boolean;
