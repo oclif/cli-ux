@@ -59,8 +59,8 @@ class Table<T extends object> {
 
     // filter rows
     if (this.options.filter && !_.isEmpty(this.options.filter)) {
-      /* eslint-disable-next-line prefer-const */
       this.options.filter.forEach(filter => {
+        /* eslint-disable-next-line prefer-const */
         let [header, regex] = filter.split('=')
         const isNot = header[0] === '-'
         if (isNot) header = header.substr(1)
