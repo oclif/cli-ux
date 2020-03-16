@@ -95,7 +95,6 @@ This degrades gracefully when not connected to a TTY. It queues up any writes to
 Shows an iterm annotation
 
 ```typescript
-// start the spinner
 cli.annotation('sometest', 'annotated with this text')
 ```
 
