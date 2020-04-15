@@ -19,7 +19,6 @@ describe('styled/tree', () => {
 └─ bar
    └─ baz
       └─ qux
-
 `)
   })
 })

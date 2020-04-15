@@ -95,8 +95,7 @@ This degrades gracefully when not connected to a TTY. It queues up any writes to
 Shows an iterm annotation
 
 ```typescript
-// start the spinner
-cli.annotation('sometest', 'annotated with this text')
+cli.annotation('sometext', 'annotated with this text')
 ```
 
 ![annotation demo](assets/annotation.png)
@@ -322,5 +321,4 @@ $ ts-node examples/progress.ts
 This extends [cli-progress](https://www.npmjs.com/package/cli-progress)
 see all of the options and customizations there, which can be passed in with the options object.
 Only the single bar variant of cli-progress is currently supported.
-
 

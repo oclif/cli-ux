@@ -199,7 +199,7 @@ class Table<T extends object> {
     // truncation logic
     const shouldShorten = () => {
       // don't shorten if full mode
-      if (options['no-truncate'] || !process.stdout.isTTY) return
+      if (options['no-truncate'] || (!process.stdout.isTTY && !process.env.CLI_UX_SKIP_TTY_CHECK)) return
 
       // don't shorten if there is enough screen width
       const dataMaxWidth = _.sumBy(columns, c => c.width!)
