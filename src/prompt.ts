@@ -70,7 +70,8 @@ function getPrompt(name: string, type?: string, defaultValue?: string) {
 async function single(options: IPromptConfig): Promise<string> {
   const raw = process.stdin.isRaw
   if (process.stdin.setRawMode) process.stdin.setRawMode(true)
-  const response = await normal({required: false, ...options})
+  options.required = options.required ?? false
+  const response = await normal(options)
   if (process.stdin.setRawMode) process.stdin.setRawMode(Boolean(raw))
   return response
 }
