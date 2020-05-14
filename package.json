@@ -57,7 +57,7 @@
     "fancy-test": "^1.4.1",
     "mocha": "^5.2.0",
     "ts-node": "^8.0.3",
-    "typescript": "^3.1.4"
+    "typescript": "^3.8.3"
   },
   "engines": {
     "node": ">=8.0.0"
