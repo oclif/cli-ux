@@ -283,8 +283,18 @@ class Table<T extends object> {
 export function table<T extends object>(data: T[], columns: table.Columns<T>, options: table.Options = {}) {
   new Table(data, columns, options).display()
 }
+
 export namespace table {
-  export const Flags = {
+  export const Flags: {
+    columns: F.IOptionFlag<string | undefined>;
+    sort: F.IOptionFlag<string | undefined>;
+    filter: F.IOptionFlag<string | undefined>;
+    csv: F.IFlag<boolean>;
+    output: F.IOptionFlag<string | undefined>;
+    extended: F.IFlag<boolean>;
+    'no-truncate': F.IFlag<boolean>;
+    'no-header': F.IFlag<boolean>;
+  } = {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
     filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
