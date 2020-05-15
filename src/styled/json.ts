@@ -6,7 +6,7 @@ import cli from '..'
 
 export default function styledJSON(obj: any) {
   const json = JSON.stringify(obj, null, 2)
-  if (!chalk.enabled) {
+  if (!chalk.level) {
     cli.info(json)
     return
   }
