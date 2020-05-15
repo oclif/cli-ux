@@ -220,7 +220,7 @@ class Table<T extends object> {
 
       // some wiggle room left, add it back to "needy" columns
       let wiggleRoom = maxWidth - dataMinWidth
-      let needyCols = columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})).sort((a, b) => a.needs - b.needs)
+      const needyCols = columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})).sort((a, b) => a.needs - b.needs)
       for (let {key, needs} of needyCols) {
         if (!needs) continue
         let col = columns.find(c => key === c.key)
