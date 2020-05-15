@@ -203,8 +203,8 @@ class Table<T extends object> {
       if (options['no-truncate'] || (!process.stdout.isTTY && !process.env.CLI_UX_SKIP_TTY_CHECK)) return
 
       // don't shorten if there is enough screen width
-      let dataMaxWidth = sumBy(columns, c => c.width!)
-      let overWidth = dataMaxWidth - maxWidth
+      const dataMaxWidth = sumBy(columns, c => c.width!)
+      const overWidth = dataMaxWidth - maxWidth
       if (overWidth <= 0) return
 
       // not enough room, short all columns to minWidth
