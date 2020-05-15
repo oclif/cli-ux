@@ -13,11 +13,11 @@ export {
 let count = 0
 
 export const fancy = base
-.do(async (ctx: {count: number, base: string}) => {
+.do(async (ctx: {count: number; base: string}) => {
   ctx.count = count++
   ctx.base = path.join(__dirname, '../tmp', `test-${ctx.count}`)
   await fs.remove(ctx.base)
-  chalk.enabled = false
+  chalk.level = 0
 })
 .finally(async () => {
   await cli.done()
