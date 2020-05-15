@@ -1,11 +1,11 @@
 {
   "name": "cli-ux",
   "description": "cli IO utilities",
-  "version": "5.4.5",
+  "version": "5.4.6",
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/oclif/cli-ux/issues",
   "dependencies": {
-    "@oclif/command": "^1.5.1",
+    "@oclif/command": "^1.6.0",
     "@oclif/errors": "^1.2.1",
     "@oclif/linewrap": "^1.0.0",
     "@oclif/screen": "^1.0.3",
@@ -23,13 +23,13 @@
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "natural-orderby": "^2.0.1",
+    "object-treeify": "^1.1.4",
     "password-prompt": "^1.1.2",
     "semver": "^5.6.0",
     "string-width": "^3.1.0",
     "strip-ansi": "^5.1.0",
     "supports-color": "^5.5.0",
     "supports-hyperlinks": "^1.0.1",
-    "treeify": "^1.1.0",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
@@ -57,7 +57,7 @@
     "fancy-test": "^1.4.1",
     "mocha": "^5.2.0",
     "ts-node": "^8.0.3",
-    "typescript": "^3.1.4"
+    "typescript": "^3.8.3"
   },
   "engines": {
     "node": ">=8.0.0"
