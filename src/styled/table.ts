@@ -1,8 +1,9 @@
 import {flags as F} from '@oclif/command'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
+import capitalize from 'lodash/capitalize'
+import sumBy from 'lodash/sumBy'
 import {safeDump} from 'js-yaml'
-import * as _ from 'lodash'
 import {inspect} from 'util'
 
 const sw = require('string-width')
@@ -19,7 +20,7 @@ class Table<T extends object> {
       const col = columns[key]
       const extended = col.extended || false
       const get = col.get || ((row: any) => row[key])
-      const header = typeof col.header === 'string' ? col.header : _.capitalize(key.replace(/_/g, ' '))
+      const header = typeof col.header === 'string' ? col.header : capitalize(key.replace(/_/g, ' '))
       const minWidth = Math.max(col.minWidth || 0, sw(header) + 1)
 
       return {
@@ -202,7 +203,7 @@ class Table<T extends object> {
       if (options['no-truncate'] || (!process.stdout.isTTY && !process.env.CLI_UX_SKIP_TTY_CHECK)) return
 
       // don't shorten if there is enough screen width
-      const dataMaxWidth = _.sumBy(columns, c => c.width!)
+      const dataMaxWidth = sumBy(columns, c => c.width!)
       const overWidth = dataMaxWidth - maxWidth
       if (overWidth <= 0) return
 
@@ -214,15 +215,15 @@ class Table<T extends object> {
       // if sum(minWidth's) is greater than term width
       // nothing can be done so
       // display all as minWidth
-      const dataMinWidth = _.sumBy(columns, c => c.minWidth!)
+      const dataMinWidth = sumBy(columns, c => c.minWidth!)
       if (dataMinWidth >= maxWidth) return
 
       // some wiggle room left, add it back to "needy" columns
       let wiggleRoom = maxWidth - dataMinWidth
-      const needyCols = _.sortBy(columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})), c => c.needs)
+      const needyCols = columns.map(c => ({key: c.key, needs: c.maxWidth! - c.width!})).sort((a, b) => a.needs - b.needs)
       for (const {key, needs} of needyCols) {
         if (!needs) continue
-        const col = _.find(columns, c => (key === c.key))
+        const col = columns.find(c => key === c.key)
         if (!col) continue
         if (wiggleRoom > needs) {
           col.width = col.width! + needs
