@@ -1,9 +1,9 @@
 import {flags as F} from '@oclif/command'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
-import {safeDump} from 'js-yaml'
 import capitalize from 'lodash/capitalize'
 import sumBy from 'lodash/sumBy'
+import {safeDump} from 'js-yaml'
 import {inspect} from 'util'
 
 const sw = require('string-width')
