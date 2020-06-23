@@ -160,9 +160,9 @@
     "@types/node" "*"
 
 "@types/js-yaml@^3.12.1":
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-3.12.1.tgz#5c6f4a1eabca84792fbd916f0cb40847f123c656"
-  integrity sha1-XG9KHqvKhHkvvZFvDLQIR/EjxlY=
+  version "3.12.4"
+  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-3.12.4.tgz#7d3b534ec35a0585128e2d332db1403ebe057e25"
+  integrity sha512-fYMgzN+9e28R81weVN49inn/u798ruU91En1ZnGvSZzCRc5jXx9B2EDhlRaWmcO1RIxFHL8AajRXzxDuJu93+A==
 
 "@types/json-schema@^7.0.3":
   version "7.0.3"
