@@ -50,7 +50,7 @@ jobs:
 
 workflows:
   version: 2
-  "@oclif/cli-ux":
+  "cli-ux":
     jobs:
       - node-latest
       - node-12
