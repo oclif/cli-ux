@@ -142,10 +142,12 @@
   resolved "https://registry.yarnpkg.com/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
 
-"@types/extract-stack@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@types/extract-stack/-/extract-stack-1.0.0.tgz#f71838de5f647832d0ece7a6c54d738752db3972"
-  integrity sha512-qznixUDMCQswb8fgEvKjVJdHCjfgxp3qodHHnX+WGx17VZHp7xpwevTkouVCuUMJS5wKuPc74qczNHQ70h/Q/A==
+"@types/extract-stack@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/extract-stack/-/extract-stack-2.0.0.tgz#01c678acfd9a3dee33cb56c4f0371ada0e8a2045"
+  integrity sha512-VMZSPp7hacd0wcs6TOnlQVoQDcJwuK95zJjotEk5wnP/ne3RIG+bq7/dje1KC1dhOrWZWwYPa9W4gA9tJH8ApA==
+  dependencies:
+    extract-stack "*"
 
 "@types/fs-extra@^5.0.4":
   version "5.1.0"
@@ -816,7 +818,7 @@ external-editor@^3.0.3:
     iconv-lite "^0.4.24"
     tmp "^0.0.33"
 
-extract-stack@^2.0.0:
+extract-stack@*, extract-stack@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/extract-stack/-/extract-stack-2.0.0.tgz#11367bc865bfcd9bc0db3123e5edb57786f11f9b"
   integrity sha512-AEo4zm+TenK7zQorGK1f9mJ8L14hnTDi2ZQPR+Mub1NX8zimka1mXpV5LpH8x9HoUmFSHZCfLHqWvp0Y4FxxzQ==
