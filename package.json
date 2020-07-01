@@ -30,7 +30,7 @@
     "strip-ansi": "^5.1.0",
     "supports-color": "^7.1.0",
     "supports-hyperlinks": "^1.0.1",
-    "tslib": "^1.9.3"
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@oclif/config": "^1.12.9",
