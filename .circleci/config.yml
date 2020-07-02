@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Install release dependencies
           command: |
-            yarn global add @oclif/semantic-release@3 semantic-release@17
+            yarn global add @oclif/semantic-release@3 semantic-release@15
             yarn --frozen-lockfile
       - run:
           name: Cut release
