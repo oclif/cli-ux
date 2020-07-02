@@ -122,10 +122,12 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.11.tgz#d3614d6c5f500142358e6ed24e1bf16657536c50"
   integrity sha512-t7uW6eFafjO+qJ3BIV2gGUyZs27egcNRkUdalkud+Qa3+kg//f129iuOFivHDXQ+vnU3fDXuwgv0cqMCbcE8sw==
 
-"@types/clean-stack@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@types/clean-stack/-/clean-stack-1.3.0.tgz#f8e4f4fd858cb9005300eaf30af418ff1a30f566"
-  integrity sha512-OaOoeDh7hQIvXnpYbFG/R6HPA95xW9mVZo2EC/Iu1qhO6YQB4YkAdFOXIEwe0JCgJ04Ud86hQnm5kKv7BQUD3g==
+"@types/clean-stack@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@types/clean-stack/-/clean-stack-2.1.1.tgz#7dd5430b733d088263b01653ea0ec39af9fe67f1"
+  integrity sha512-J5uaZmvDUsqeT7Vct/oHQuAGUzJBWmN9x33TlvTfvIMmCZ2Ep6v/09wKsK5cLtOTJJe6tGcMTg8TwP/h6e1svw==
+  dependencies:
+    clean-stack "*"
 
 "@types/color-name@*":
   version "1.1.0"
@@ -473,7 +475,7 @@ clean-regexp@^1.0.0:
   dependencies:
     escape-string-regexp "^1.0.5"
 
-clean-stack@^3.0.0:
+clean-stack@*, clean-stack@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-3.0.0.tgz#a7c249369fcf0f33c7888c20ea3f3dc79620211f"
   integrity sha512-RHxtgFvXsRQ+1AM7dlozLDY7ssmvUUh0XEnfnyhYgJTO6beNZHBogiaCwGM9Q3rFrUkYxOtsZRC0zAturg5bjg==
