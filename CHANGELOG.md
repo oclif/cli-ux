@@ -1,3 +1,10 @@
+## [5.4.9](https://github.com/oclif/cli-ux/compare/v5.4.8...v5.4.9) (2020-07-02)
+
+
+### Reverts
+
+* Revert "build: downgrade to semantic-release@15" ([dfeab27](https://github.com/oclif/cli-ux/commit/dfeab27ff9aa6d969a4c39fe6c431bcdae2746be))
+
 ## [5.4.7](https://github.com/oclif/cli-ux/compare/v5.4.6...v5.4.7) (2020-07-02)
 
 
