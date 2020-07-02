@@ -137,7 +137,7 @@ Where:
 }
 ```
 
-Passing `{only: ['columns']}` or `{except: ['columns']}` as an argument into `cli.table.flags()` will whitelist/blacklist those flags from the returned object.
+Passing `{only: ['columns']}` or `{except: ['columns']}` as an argument into `cli.table.flags()` will allow/block those flags from the returned object.
 
 `Table.Columns` defines the table columns and their display options.
 
