@@ -14,6 +14,14 @@
 * smaller bundle size, cut lodash imports ([#107](https://github.com/oclif/cli-ux/issues/107)) ([41cdbc7](https://github.com/oclif/cli-ux/commit/41cdbc7839cf97e2a051bd72871371282b3bb4d6))
 * use inclusive terms ([#178](https://github.com/oclif/cli-ux/issues/178)) ([b151545](https://github.com/oclif/cli-ux/commit/b151545b0a5a014b7632650afa49bf3718274397))
 
+## [5.4.7](https://github.com/oclif/cli-ux/compare/v5.4.6...v5.4.7) (2020-07-02)
+
+
+### Bug Fixes
+
+* smaller bundle size, cut lodash imports ([#107](https://github.com/oclif/cli-ux/issues/107)) ([41cdbc7](https://github.com/oclif/cli-ux/commit/41cdbc7839cf97e2a051bd72871371282b3bb4d6))
+* use inclusive terms ([#178](https://github.com/oclif/cli-ux/issues/178)) ([b151545](https://github.com/oclif/cli-ux/commit/b151545b0a5a014b7632650afa49bf3718274397))
+
 ## [5.4.7](https://github.com/oclif/cli-ux/compare/v5.4.6...v5.4.7) (2020-07-01)
 
 
