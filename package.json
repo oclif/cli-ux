@@ -29,7 +29,7 @@
     "string-width": "^4.2.0",
     "strip-ansi": "^5.1.0",
     "supports-color": "^7.1.0",
-    "supports-hyperlinks": "^1.0.1",
+    "supports-hyperlinks": "^2.1.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
