@@ -1,3 +1,4 @@
+/* eslint-disable node/no-missing-require */
 export default {
   get stripAnsi(): (string: string) => string {
     return require('strip-ansi')
