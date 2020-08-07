@@ -1,3 +1,10 @@
+## [5.4.10](https://github.com/oclif/cli-ux/compare/v5.4.9...v5.4.10) (2020-08-07)
+
+
+### Bug Fixes
+
+* do not cache require, require is already cached in NodeJS by design ([#194](https://github.com/oclif/cli-ux/issues/194)) ([99b9466](https://github.com/oclif/cli-ux/commit/99b9466d8e4abc9efaf3282eac080af17137a047))
+
 ## [5.4.9](https://github.com/oclif/cli-ux/compare/v5.4.8...v5.4.9) (2020-07-02)
 
 

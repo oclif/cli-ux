@@ -1,7 +1,7 @@
 {
   "name": "cli-ux",
   "description": "cli IO utilities",
-  "version": "5.4.9",
+  "version": "5.4.10",
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/oclif/cli-ux/issues",
   "dependencies": {
