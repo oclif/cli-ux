@@ -233,24 +233,16 @@ describe('styled/table', () => {
     fancy
     .stdout()
     .end('filters by property & value (partial string match)', output => {
-      cli.table(apps, columns, {filter: ['id=123']})
+      cli.table(apps, columns, {filter: 'id=123'})
       expect(output.stdout).to.equal(`ID  Name${ws.padEnd(14)}
 123 supertable-test-1${ws}\n`)
     })
 
     fancy
     .stdout()
-    .end('filters by multiple properties & values', output => {
-      cli.table(apps, {...columns, sid: {header: 'SID', get: (r: any) => r.stack && r.stack.id}}, {filter: ['id=\\d2\\d', '-sid=321']})
-      expect(output.stdout).to.equal(`ID  Name${ws.padEnd(12)}  SID${ws}
-123 supertable-test-1 123${ws}\n`)
-    })
-
-    fancy
-    .stdout()
     .end('does not truncate', output => {
       const three = {...apps[0], id: '0'.repeat(80), name: 'supertable-test-3'}
-      cli.table(apps.concat(three), columns, {filter: ['id=0'], 'no-truncate': true})
+      cli.table(apps.concat(three), columns, {filter: 'id=0', 'no-truncate': true})
       expect(output.stdout).to.equal(`ID${ws.padEnd(78)} Name${ws.padEnd(14)}
 ${three.id} supertable-test-3${ws}\n`)
     })
@@ -276,7 +268,7 @@ ${three.id} supertable-test-3${ws}\n`)
     fancy
     .stdout()
     .end('ignores header case', output => {
-      cli.table(apps, columns, {columns: 'iD,Name', filter: ['nAMe=supertable-test'], sort: '-ID'})
+      cli.table(apps, columns, {columns: 'iD,Name', filter: 'nAMe=supertable-test', sort: '-ID'})
       expect(output.stdout).to.equal(`ID  Name${ws.padEnd(14)}
 321 supertable-test-2${ws}
 123 supertable-test-1${ws}\n`)
