@@ -1,3 +1,15 @@
+# [5.5.0](https://github.com/oclif/cli-ux/compare/v5.4.10...v5.5.0) (2020-08-28)
+
+
+### Features
+
+* support multiple filter flags for table ([#156](https://github.com/oclif/cli-ux/issues/156)) ([057c852](https://github.com/oclif/cli-ux/commit/057c8520f0ce89cc640358b12c36e53be170d6db))
+
+
+### Reverts
+
+* Revert "feat: support multiple filter flags for table (#156)" (#231) ([c008a42](https://github.com/oclif/cli-ux/commit/c008a4216a870ba6a1195e164ae129f83e3133b1)), closes [#156](https://github.com/oclif/cli-ux/issues/156) [#231](https://github.com/oclif/cli-ux/issues/231)
+
 ## [5.4.10](https://github.com/oclif/cli-ux/compare/v5.4.9...v5.4.10) (2020-08-07)
 
 
