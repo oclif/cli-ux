@@ -179,17 +179,10 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.159.tgz#61089719dc6fdd9c5cb46efc827f2571d1517065"
   integrity sha512-gF7A72f7WQN33DpqOWw9geApQPh4M3PxluMtaHxWHXEGSN12/WbcEk/eNSqWNQcQhF66VSZ06vCF94CrHwXJDg==
 
-"@types/mocha@*", "@types/mocha@^8.0.0":
+"@types/mocha@^8.0.0":
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-8.0.3.tgz#51b21b6acb6d1b923bbdc7725c38f9f455166402"
   integrity sha512-vyxR57nv8NfcU0GZu8EUXZLTbCMupIUwy95LJ6lllN+JRPG25CwMHoB1q5xKh8YKhQnHYRAn4yW2yuHbf/5xgg==
-
-"@types/nock@*":
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/@types/nock/-/nock-10.0.3.tgz#dab1d18ffbccfbf2db811dab9584304eeb6e1c4c"
-  integrity sha512-OthuN+2FuzfZO3yONJ/QVjKmLEuRagS9TV9lEId+WHL9KhftYG+/2z+pxlr0UgVVXSpVD8woie/3fzQn8ft/Ow==
-  dependencies:
-    "@types/node" "*"
 
 "@types/node@*":
   version "12.6.2"
@@ -827,18 +820,16 @@ extract-stack@*, extract-stack@^2.0.0:
   integrity sha512-AEo4zm+TenK7zQorGK1f9mJ8L14hnTDi2ZQPR+Mub1NX8zimka1mXpV5LpH8x9HoUmFSHZCfLHqWvp0Y4FxxzQ==
 
 fancy-test@^1.4.1:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/fancy-test/-/fancy-test-1.4.3.tgz#c08123504cc48a6dce15ac08a916d6f3e91209af"
-  integrity sha512-Lt3mcQ0jn9Kg9JDmobVb4ZANiyT4e2VC5qbQvuzJVNYXyKjSgFWKn7bZN4BKei33v5jYWx28KlbDgsxuqnBRvg==
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/fancy-test/-/fancy-test-1.4.9.tgz#13dd99dee9872043763bee4ff3e9d84bab6191c6"
+  integrity sha512-Tro3lkXPX438G3t2N9BDgD3ac5iUhNnxIE8tg/KL6z7eZ5GOCexs7fDEMacduqvJWPvsRlmyQ69V1jiTVcqkXQ==
   dependencies:
     "@types/chai" "*"
     "@types/lodash" "*"
-    "@types/mocha" "*"
-    "@types/nock" "*"
     "@types/node" "*"
     "@types/sinon" "*"
-    lodash "^4.17.11"
-    mock-stdin "^0.3.1"
+    lodash "^4.17.13"
+    mock-stdin "^1.0.0"
     stdout-stderr "^0.1.9"
 
 fast-deep-equal@^2.0.1:
@@ -1210,7 +1201,7 @@ lodash.zip@^4.2.0:
   resolved "https://registry.yarnpkg.com/lodash.zip/-/lodash.zip-4.2.0.tgz#ec6662e4896408ed4ab6c542a3990b72cc080020"
   integrity sha1-7GZi5IlkCO1KtsVCo5kLcswIACA=
 
-lodash@^4.17.11, lodash@^4.17.19:
+lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.19:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
@@ -1269,10 +1260,10 @@ mocha@^5.2.0:
     mkdirp "0.5.1"
     supports-color "5.4.0"
 
-mock-stdin@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/mock-stdin/-/mock-stdin-0.3.1.tgz#c657d9642d90786435c64ca5e99bbd4d09bd7dd3"
-  integrity sha1-xlfZZC2QeGQ1xkyl6Zu9TQm9fdM=
+mock-stdin@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mock-stdin/-/mock-stdin-1.0.0.tgz#efcfaf4b18077e14541742fd758b9cae4e5365ea"
+  integrity sha512-tukRdb9Beu27t6dN+XztSRHq9J0B/CoAOySGzHfn8UTfmqipA5yNT/sDUEyYdAV3Hpka6Wx6kOMxuObdOex60Q==
 
 ms@2.0.0:
   version "2.0.0"
