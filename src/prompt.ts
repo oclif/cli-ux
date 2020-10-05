@@ -2,7 +2,7 @@ import {error} from '@oclif/errors'
 import chalk from 'chalk'
 
 import config from './config'
-import deps from './deps'
+import deps from './deps-external'
 
 /* eslint-disable-next-line @typescript-eslint/interface-name-prefix */
 export interface IPromptOptions {

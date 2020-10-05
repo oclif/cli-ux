@@ -1,4 +1,4 @@
-import {flags as F} from '@oclif/command'
+import * as F from '@oclif/command/lib/flags'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
 import capitalize from 'lodash/capitalize'

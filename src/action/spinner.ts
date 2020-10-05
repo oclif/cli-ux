@@ -3,7 +3,7 @@
 import chalk from 'chalk'
 import * as supportsColor from 'supports-color'
 
-import deps from '../deps'
+import deps from '../deps-external'
 
 import {ActionBase, ActionType} from './base'
 /* eslint-disable-next-line node/no-missing-require */
