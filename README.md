@@ -56,7 +56,7 @@ await cli.anykey()
 Create a hyperlink (if supported in the terminal)
 
 ```typescript
-await cli.url('sometext', 'https://google.com')
+cli.url('sometext', 'https://google.com')
 // shows sometext as a hyperlink in supported terminals
 // shows https://google.com in unsupported terminals
 ```
