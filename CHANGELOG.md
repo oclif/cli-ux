@@ -1,3 +1,10 @@
+## [5.5.1](https://github.com/oclif/cli-ux/compare/v5.5.0...v5.5.1) (2020-11-12)
+
+
+### Bug Fixes
+
+* Downgrade fs-extra to support Node.js 8 ([#275](https://github.com/oclif/cli-ux/issues/275)) ([5b92e86](https://github.com/oclif/cli-ux/commit/5b92e86f9e01dcc242cb799a3a864ae4e0372afd))
+
 # [5.5.0](https://github.com/oclif/cli-ux/compare/v5.4.10...v5.5.0) (2020-08-28)
 
 
