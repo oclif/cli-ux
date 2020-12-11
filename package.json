@@ -16,7 +16,7 @@
     "clean-stack": "^3.0.0",
     "cli-progress": "^3.4.0",
     "extract-stack": "^2.0.0",
-    "fs-extra": "^8.1",
+    "fs-extra": "^9.0",
     "hyperlinker": "^1.0.0",
     "indent-string": "^4.0.0",
     "is-wsl": "^2.2.0",
