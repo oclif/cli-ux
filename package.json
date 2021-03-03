@@ -10,7 +10,7 @@
     "@oclif/linewrap": "^1.0.0",
     "@oclif/screen": "^1.0.3",
     "ansi-escapes": "^4.3.0",
-    "ansi-styles": "^4.2.0",
+    "ansi-styles": "^5.1.0",
     "cardinal": "^2.1.1",
     "chalk": "^4.1.0",
     "clean-stack": "^3.0.0",
