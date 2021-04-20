@@ -23,7 +23,7 @@
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "natural-orderby": "^2.0.1",
-    "object-treeify": "^1.1.4",
+    "object-treeify": "^2.0.0",
     "password-prompt": "^1.1.2",
     "semver": "^7.3.2",
     "string-width": "^4.2.0",
