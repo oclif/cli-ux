@@ -895,10 +895,10 @@ esutils@^2.0.2:
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
   integrity sha1-Cr9PHKpbyx96nYrMbepPqqBLrJs=
 
-extract-stack@*, extract-stack@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/extract-stack/-/extract-stack-2.0.0.tgz#11367bc865bfcd9bc0db3123e5edb57786f11f9b"
-  integrity sha512-AEo4zm+TenK7zQorGK1f9mJ8L14hnTDi2ZQPR+Mub1NX8zimka1mXpV5LpH8x9HoUmFSHZCfLHqWvp0Y4FxxzQ==
+extract-stack@*, extract-stack@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/extract-stack/-/extract-stack-3.0.0.tgz#65e4aa7be30350558437f3818eba1cce39e364e6"
+  integrity sha512-rtGtWp57VXNB2N3Xty4+vt7d30z3RpbNyG/kLd2Rf3dNmq/evhX+OGL9sJV/neNfH89C2TIFWz/oHfm/26eBhg==
 
 fancy-test@^1.4.1:
   version "1.4.10"
