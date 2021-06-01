@@ -56,7 +56,7 @@
     "eslint-config-oclif-typescript": "^0.2.0",
     "fancy-test": "^1.4.1",
     "mocha": "^8.2.1",
-    "ts-node": "^9.0.0",
+    "ts-node": "^10.0.0",
     "typescript": "3.8.3"
   },
   "engines": {
