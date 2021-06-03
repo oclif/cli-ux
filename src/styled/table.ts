@@ -42,6 +42,7 @@ class Table<T extends object> {
       'no-header': options['no-header'] || false,
       'no-truncate': options['no-truncate'] || false,
       printLine: printLine || ((s: any) => process.stdout.write(s + '\n')),
+      rowStart: ' ',
       sort,
       title,
     }
@@ -242,11 +243,13 @@ class Table<T extends object> {
       options.printLine(options.title)
       // print title divider
       options.printLine(''.padEnd(columns.reduce((sum, col) => sum + col.width!, 1), '='))
+
+      options.rowStart = '| '
     }
 
     // print headers
     if (!options['no-header']) {
-      let headers = '| '
+      let headers = options.rowStart
       for (const col of columns) {
         const header = col.header!
         headers += header.padEnd(col.width!)
@@ -254,9 +257,9 @@ class Table<T extends object> {
       options.printLine(chalk.bold(headers))
 
       // print header dividers
-      let dividers = '| '
+      let dividers = options.rowStart
       for (const col of columns) {
-        const divider = ''.padEnd(col.maxWidth! - 1, '-') + ' '
+        const divider = ''.padEnd(col.maxWidth! - 1, '─') + ' '
         dividers += divider.padEnd(col.width!)
       }
       options.printLine(chalk.bold(dividers))
@@ -278,7 +281,7 @@ class Table<T extends object> {
       // print row
       // including multi-lines
       linesIndexess.forEach((i: number) => {
-        let l = '| '
+        let l = options.rowStart
         for (const col of columns) {
           const width = col.width!
           let d = (row as any)[col.key]
