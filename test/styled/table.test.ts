@@ -90,10 +90,10 @@ describe('styled/table', () => {
   .stdout()
   .end('displays table', output => {
     cli.table(apps, columns)
-    expect(output.stdout).to.equal(`| ID  Name${ws.padEnd(14)}
-| --- -----------------${ws}
-| 123 supertable-test-1${ws}
-| 321 supertable-test-2${ws}\n`)
+    expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
+ ─── ─────────────────${ws}
+ 123 supertable-test-1${ws}
+ 321 supertable-test-2${ws}\n`)
   })
 
   describe('columns', () => {
@@ -101,17 +101,17 @@ describe('styled/table', () => {
     .stdout()
     .end('use header value for id', output => {
       cli.table(apps, columns)
-      expect(output.stdout.slice(2, 4)).to.equal('ID')
+      expect(output.stdout.slice(1, 3)).to.equal('ID')
     })
 
     fancy
     .stdout()
     .end('shows extended columns/uses get() for value', output => {
       cli.table(apps, columns, {extended: true})
-      expect(output.stdout).to.equal(`|${ws}${extendedHeader}
-| --- ----------------- ---------------------------------------- ---------${ws}
-| 123 supertable-test-1 https://supertable-test-1.herokuapp.com/ heroku-16${ws}
-| 321 supertable-test-2 https://supertable-test-2.herokuapp.com/ heroku-16${ws}\n`)
+      expect(output.stdout).to.equal(`${ws}${extendedHeader}
+ ─── ───────────────── ──────────────────────────────────────── ─────────${ws}
+ 123 supertable-test-1 https://supertable-test-1.herokuapp.com/ heroku-16${ws}
+ 321 supertable-test-2 https://supertable-test-2.herokuapp.com/ heroku-16${ws}\n`)
     })
   })
 
@@ -125,20 +125,32 @@ describe('styled/table', () => {
 
     fancy
     .stdout()
+    .end('shows title with divider', output => {
+      cli.table(apps, columns, {title: 'testing'})
+      expect(output.stdout).to.equal(`testing
+=======================
+| ID  Name${ws.padEnd(14)}
+| ─── ─────────────────${ws}
+| 123 supertable-test-1${ws}
+| 321 supertable-test-2${ws}\n`)
+    })
+
+    fancy
+    .stdout()
     .end('skips header', output => {
       cli.table(apps, columns, {'no-header': true})
-      expect(output.stdout).to.equal(`| 123 supertable-test-1${ws}
-| 321 supertable-test-2${ws}\n`)
+      expect(output.stdout).to.equal(` 123 supertable-test-1${ws}
+ 321 supertable-test-2${ws}\n`)
     })
 
     fancy
     .stdout()
     .end('only displays given columns', output => {
       cli.table(apps, columns, {columns: 'id'})
-      expect(output.stdout).to.equal(`| ID${ws}${ws}
-| ---${ws}
-| 123${ws}
-| 321${ws}\n`)
+      expect(output.stdout).to.equal(` ID${ws}${ws}
+ ───${ws}
+ 123${ws}
+ 321${ws}\n`)
     })
 
     fancy
@@ -228,19 +240,19 @@ describe('styled/table', () => {
     .stdout()
     .end('sorts by property', output => {
       cli.table(apps, columns, {sort: '-name'})
-      expect(output.stdout).to.equal(`| ID  Name${ws.padEnd(14)}
-| --- -----------------${ws}
-| 321 supertable-test-2${ws}
-| 123 supertable-test-1${ws}\n`)
+      expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
+ ─── ─────────────────${ws}
+ 321 supertable-test-2${ws}
+ 123 supertable-test-1${ws}\n`)
     })
 
     fancy
     .stdout()
     .end('filters by property & value (partial string match)', output => {
       cli.table(apps, columns, {filter: 'id=123'})
-      expect(output.stdout).to.equal(`| ID  Name${ws.padEnd(14)}
-| --- -----------------${ws}
-| 123 supertable-test-1${ws}\n`)
+      expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
+ ─── ─────────────────${ws}
+ 123 supertable-test-1${ws}\n`)
     })
 
     fancy
@@ -248,9 +260,9 @@ describe('styled/table', () => {
     .end('does not truncate', output => {
       const three = {...apps[0], id: '0'.repeat(80), name: 'supertable-test-3'}
       cli.table(apps.concat(three), columns, {filter: 'id=0', 'no-truncate': true})
-      expect(output.stdout).to.equal(`| ID${ws.padEnd(78)} Name${ws.padEnd(14)}
-| ${''.padEnd(three.id.length, '-')} -----------------${ws}
-| ${three.id} supertable-test-3${ws}\n`)
+      expect(output.stdout).to.equal(` ID${ws.padEnd(78)} Name${ws.padEnd(14)}
+ ${''.padEnd(three.id.length, '─')} ─────────────────${ws}
+ ${three.id} supertable-test-3${ws}\n`)
     })
   })
 
@@ -275,10 +287,10 @@ describe('styled/table', () => {
     .stdout()
     .end('ignores header case', output => {
       cli.table(apps, columns, {columns: 'iD,Name', filter: 'nAMe=supertable-test', sort: '-ID'})
-      expect(output.stdout).to.equal(`| ID  Name${ws.padEnd(14)}
-| --- -----------------${ws}
-| 321 supertable-test-2${ws}
-| 123 supertable-test-1${ws}\n`)
+      expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
+ ─── ─────────────────${ws}
+ 321 supertable-test-2${ws}
+ 123 supertable-test-1${ws}\n`)
     })
 
     fancy
@@ -294,12 +306,12 @@ describe('styled/table', () => {
       }
 
       cli.table(apps.concat(app3 as any), columns, {sort: '-ID'})
-      expect(output.stdout).to.equal(`| ID  Name${ws.padEnd(14)}
-| --- -----------------${ws}
-| 456 supertable-test${ws.padEnd(3)}
-|     3${ws.padEnd(17)}
-| 321 supertable-test-2${ws}
-| 123 supertable-test-1${ws}\n`)
+      expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
+ ─── ─────────────────${ws}
+ 456 supertable-test${ws.padEnd(3)}
+     3${ws.padEnd(17)}
+ 321 supertable-test-2${ws}
+ 123 supertable-test-1${ws}\n`)
     })
   })
 })
