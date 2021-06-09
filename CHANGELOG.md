@@ -1,3 +1,19 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [5.6.0](https://github.com/oclif/cli-ux/compare/v5.5.1...v5.6.0) (2021-06-09)
+
+
+### Features
+
+* add title to tables and improve output structure ([#364](https://github.com/oclif/cli-ux/issues/364)) ([46f1c18](https://github.com/oclif/cli-ux/commit/46f1c18ef21d005b00f16b82aa4c7e622724ff1c))
+
+
+### Bug Fixes
+
+* use npm-release-management-orb for CI ([#379](https://github.com/oclif/cli-ux/issues/379)) ([1d01a18](https://github.com/oclif/cli-ux/commit/1d01a188b55ef989e48634ad1ec38dfa3377a272))
+
 ## [5.5.1](https://github.com/oclif/cli-ux/compare/v5.5.0...v5.5.1) (2020-11-12)
 
 
