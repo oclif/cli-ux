@@ -33,7 +33,7 @@ class Table<T extends object> {
     })
 
     // assign options
-    const {columns: cols, filter, csv, output, extended, sort, printLine} = options
+    const {columns: cols, filter, csv, output, extended, sort, title, printLine} = options
     this.options = {
       columns: cols,
       output: csv ? 'csv' : output,
@@ -42,7 +42,9 @@ class Table<T extends object> {
       'no-header': options['no-header'] || false,
       'no-truncate': options['no-truncate'] || false,
       printLine: printLine || ((s: any) => process.stdout.write(s + '\n')),
+      rowStart: ' ',
       sort,
+      title,
     }
   }
 
@@ -236,14 +238,31 @@ class Table<T extends object> {
     }
     shouldShorten()
 
+    // print table title
+    if (options.title) {
+      options.printLine(options.title)
+      // print title divider
+      options.printLine(''.padEnd(columns.reduce((sum, col) => sum + col.width!, 1), '='))
+
+      options.rowStart = '| '
+    }
+
     // print headers
     if (!options['no-header']) {
-      let headers = ''
+      let headers = options.rowStart
       for (const col of columns) {
         const header = col.header!
         headers += header.padEnd(col.width!)
       }
       options.printLine(chalk.bold(headers))
+
+      // print header dividers
+      let dividers = options.rowStart
+      for (const col of columns) {
+        const divider = ''.padEnd(col.maxWidth! - 1, '─') + ' '
+        dividers += divider.padEnd(col.width!)
+      }
+      options.printLine(chalk.bold(dividers))
     }
 
     // print rows
@@ -262,7 +281,7 @@ class Table<T extends object> {
       // print row
       // including multi-lines
       linesIndexess.forEach((i: number) => {
-        let l = ''
+        let l = options.rowStart
         for (const col of columns) {
           const width = col.width!
           let d = (row as any)[col.key]
