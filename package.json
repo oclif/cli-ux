@@ -44,7 +44,7 @@
     "@types/js-yaml": "^3.12.1",
     "@types/lodash": "^4.14.117",
     "@types/mocha": "^8.0.0",
-    "@types/node": "^11.11.2",
+    "@types/node": "^15.12.5",
     "@types/semver": "^7.3.1",
     "@types/strip-ansi": "^5.2.1",
     "@types/supports-color": "^7.2.0",
