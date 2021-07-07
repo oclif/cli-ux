@@ -198,7 +198,7 @@ class Table<T extends object> {
       col.width = col.maxWidth!
     }
     // terminal width
-    const maxWidth = stdtermwidth
+    const maxWidth = stdtermwidth - 2
     // truncation logic
     const shouldShorten = () => {
       // don't shorten if full mode
@@ -259,7 +259,7 @@ class Table<T extends object> {
       // print header dividers
       let dividers = options.rowStart
       for (const col of columns) {
-        const divider = ''.padEnd(col.maxWidth! - 1, '─') + ' '
+        const divider = ''.padEnd(col.width! - 1, '─') + ' '
         dividers += divider.padEnd(col.width!)
       }
       options.printLine(chalk.bold(dividers))
