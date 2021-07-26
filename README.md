@@ -62,6 +62,16 @@ await cli.url('sometext', 'https://google.com')
 
 ![url demo](assets/url.gif)
 
+# cli.formatUrl(text, uri)
+
+Format a hyperlink (if supported in the terminal). Useful when you want to make part of a line clickable.
+
+```typescript
+await cli.formatUrl('sometext', 'https://google.com')
+// returns sometext with hyperlink escape characters in supported terminals
+// returns https://google.com in unsupported terminals
+```
+
 # cli.open
 
 Open a url in the browser
