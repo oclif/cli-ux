@@ -88,13 +88,17 @@ export const ux = {
   },
 
   formatUrl(text: string, uri: string, params = {}) {
-    const supports = require('supports-hyperlinks')
-    if (supports.stdout) {
+    if (this.supportsUrls()) {
       const hyperlinker = require('hyperlinker')
       return hyperlinker(text, uri, params)
     }
 
     return uri
+  },
+
+  supportsUrls(): boolean {
+    const supports = require('supports-hyperlinks')
+    return supports.stdout
   },
 
   annotation(text: string, annotation: string) {

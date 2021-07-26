@@ -72,6 +72,10 @@ await cli.formatUrl('sometext', 'https://google.com')
 // returns https://google.com in unsupported terminals
 ```
 
+# cli.supportsUrls()
+
+Check to see if the terminal supports URLs.
+
 # cli.open
 
 Open a url in the browser
