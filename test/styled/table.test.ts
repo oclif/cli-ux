@@ -2,6 +2,7 @@ import {expect, fancy} from 'fancy-test'
 
 import cli from '../../src'
 
+/* eslint-disable camelcase */
 const apps = [
   {
     build_stack: {
@@ -55,6 +56,7 @@ const columns = {
   web_url: {extended: true},
   stack: {extended: true, get: (r: any) => r.stack && r.stack.name},
 }
+/* eslint-enable camelcase */
 
 const ws = ' '
 
@@ -296,6 +298,7 @@ describe('styled/table', () => {
     fancy
     .stdout()
     .end('displays multiline cell', output => {
+      /* eslint-disable camelcase */
       const app3 = {
         build_stack: {
           name: 'heroku-16',
@@ -304,6 +307,7 @@ describe('styled/table', () => {
         name: 'supertable-test\n3',
         web_url: 'https://supertable-test-1.herokuapp.com/',
       }
+      /* eslint-enable camelcase */
 
       cli.table(apps.concat(app3 as any), columns, {sort: '-ID'})
       expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
