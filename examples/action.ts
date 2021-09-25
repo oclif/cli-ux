@@ -54,4 +54,4 @@ async function main() {
   cli.error('oh no')
 }
 main()
-.catch(error => require('@oclif/errors/handle')(error))
+.catch(error => require('@oclif/core/handle')(error))
