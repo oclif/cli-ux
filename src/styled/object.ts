@@ -1,6 +1,6 @@
 // tslint:disable
 
-import chalk from 'chalk'
+import {blue} from 'nanocolors'
 import * as util from 'util'
 
 export default function styledObject(obj: any, keys?: string[]): string {
@@ -17,7 +17,7 @@ export default function styledObject(obj: any, keys?: string[]): string {
     return util.inspect(obj)
   }
   const logKeyValue = (key: string, value: any): string => {
-    return `${chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value)
+    return `${blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value)
   }
   for (const key of keys || Object.keys(obj).sort()) {
     const value = obj[key]

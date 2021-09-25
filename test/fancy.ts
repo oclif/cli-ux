@@ -1,4 +1,3 @@
-import chalk from 'chalk'
 import {expect, fancy as base, FancyTypes} from 'fancy-test'
 import * as fs from 'fs-extra'
 import * as path from 'path'
@@ -17,8 +16,8 @@ export const fancy = base
   ctx.count = count++
   ctx.base = path.join(__dirname, '../tmp', `test-${ctx.count}`)
   await fs.remove(ctx.base)
-  chalk.level = 0
 })
+.env({NO_COLOR: '1'})
 .finally(async () => {
   await cli.done()
 })

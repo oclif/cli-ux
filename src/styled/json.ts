@@ -1,12 +1,12 @@
 // tslint:disable restrict-plus-operands
 
-import chalk from 'chalk'
+import {isColorSupported} from 'nanocolors'
 
 import cli from '..'
 
 export default function styledJSON(obj: any) {
   const json = JSON.stringify(obj, null, 2)
-  if (!chalk.level) {
+  if (!isColorSupported) {
     cli.info(json)
     return
   }
