@@ -1,6 +1,6 @@
 // tslint:disable restrict-plus-operands
 
-import {magenta} from 'nanocolors'
+import {magenta} from 'colorette'
 import * as supportsColor from 'supports-color'
 
 import deps from '../deps'

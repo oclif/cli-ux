@@ -1,6 +1,6 @@
 // tslint:disable restrict-plus-operands
 
-import {isColorSupported} from 'nanocolors'
+import {isColorSupported} from 'colorette'
 
 import cli from '..'
 
