@@ -9,7 +9,7 @@ import {inspect} from 'util'
 const sw = require('string-width')
 const {orderBy} = require('natural-orderby')
 
-class Table<T extends object> {
+class Table<T extends Record<string, unknown>> {
   options: table.Options & { printLine(s: any): any }
 
   columns: (table.Column<T> & { key: string; width?: number; maxWidth?: number })[]
@@ -300,7 +300,7 @@ class Table<T extends object> {
   }
 }
 
-export function table<T extends object>(data: T[], columns: table.Columns<T>, options: table.Options = {}) {
+export function table<T extends Record<string, unknown>>(data: T[], columns: table.Columns<T>, options: table.Options = {}) {
   new Table(data, columns, options).display()
 }
 
@@ -351,14 +351,14 @@ export namespace table {
     return Flags
   }
 
-  export type Columns<T extends object> = { [key: string]: Partial<Column<T>> }
-
-  export interface Column<T extends object> {
+  export interface Column<T extends Record<string, unknown>> {
     header: string;
     extended: boolean;
     minWidth: number;
     get(row: T): any;
   }
+
+  export type Columns<T extends Record<string, unknown>> = { [key: string]: Partial<Column<T>> }
 
   // export type OutputType = 'csv' | 'json' | 'yaml'
 

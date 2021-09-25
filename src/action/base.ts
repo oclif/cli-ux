@@ -1,7 +1,6 @@
 import castArray from 'lodash/castArray'
 import {inspect} from 'util'
 
-/* eslint-disable-next-line @typescript-eslint/interface-name-prefix */
 export interface ITask {
   action: string;
   status: string | undefined;

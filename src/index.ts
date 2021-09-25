@@ -107,7 +107,7 @@ export const ux = {
     function timeout(p: Promise<any>, ms: number) {
       function wait(ms: number, unref = false) {
         return new Promise(resolve => {
-          const t: any = setTimeout(() => resolve(), ms)
+          const t: any = setTimeout(() => resolve(null), ms)
           if (unref) t.unref()
         })
       }
@@ -116,7 +116,7 @@ export const ux = {
     }
 
     async function flush() {
-      const p = new Promise(resolve => process.stdout.once('drain', () => resolve()))
+      const p = new Promise(resolve => process.stdout.once('drain', () => resolve(null)))
       process.stdout.write('')
       return p
     }
