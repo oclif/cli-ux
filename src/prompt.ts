@@ -1,4 +1,4 @@
-import {error} from '@oclif/errors'
+import {Errors} from '@oclif/core'
 import chalk from 'chalk'
 
 import config from './config'
@@ -151,7 +151,7 @@ export async function anykey(message?: string): Promise<void> {
   }
   const char = await prompt(message, {type: 'single', required: false})
   if (tty) process.stderr.write('\n')
-  if (char === 'q') error('quit')
-  if (char === '\u0003') error('ctrl-c')
+  if (char === 'q') Errors.error('quit')
+  if (char === '\u0003') Errors.error('ctrl-c')
   return char
 }

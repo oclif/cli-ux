@@ -1,4 +1,4 @@
-import * as Errors from '@oclif/errors'
+import {Errors} from '@oclif/core'
 import * as util from 'util'
 
 import {ActionBase} from './action/base'

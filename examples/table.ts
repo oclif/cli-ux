@@ -1,4 +1,4 @@
-import {Command} from '@oclif/command'
+import {Command} from '@oclif/core'
 import axios from 'axios'
 
 import {cli} from '../src'
@@ -9,7 +9,7 @@ export default class Users extends Command {
   }
 
   async run() {
-    const {flags} = this.parse(Users)
+    const {flags} = await this.parse(Users)
     const {data: users} = await axios.get('https://jsonplaceholder.typicode.com/users')
 
     cli.table(users,

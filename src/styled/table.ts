@@ -1,4 +1,4 @@
-import {flags as F} from '@oclif/command'
+import {Flags as F, Interfaces} from '@oclif/core'
 import {stdtermwidth} from '@oclif/screen'
 import chalk from 'chalk'
 import capitalize from 'lodash/capitalize'
@@ -306,14 +306,14 @@ export function table<T extends Record<string, unknown>>(data: T[], columns: tab
 
 export namespace table {
   export const Flags: {
-    columns: F.IOptionFlag<string | undefined>;
-    sort: F.IOptionFlag<string | undefined>;
-    filter: F.IOptionFlag<string | undefined>;
-    csv: F.IFlag<boolean>;
-    output: F.IOptionFlag<string | undefined>;
-    extended: F.IFlag<boolean>;
-    'no-truncate': F.IFlag<boolean>;
-    'no-header': F.IFlag<boolean>;
+    columns: Interfaces.OptionFlag<string | undefined>;
+    sort: Interfaces.OptionFlag<string | undefined>;
+    filter: Interfaces.OptionFlag<string | undefined>;
+    csv: Interfaces.Flag<boolean>;
+    output: Interfaces.OptionFlag<string | undefined>;
+    extended: Interfaces.Flag<boolean>;
+    'no-truncate': Interfaces.Flag<boolean>;
+    'no-header': Interfaces.Flag<boolean>;
   } = {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),

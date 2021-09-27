@@ -171,7 +171,7 @@ const options: Table.Options = {
 Example class:
 
 ```typescript
-import {Command} from '@oclif/command'
+import {Command} from '@oclif/core'
 import {cli} from 'cli-ux'
 import axios from 'axios'
 
