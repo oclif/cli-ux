@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/oclif/cli-ux/compare/v5.6.3...v6.0.0) (2021-10-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* require node 12+ (#413)
+
+### Features
+
+* use oclif/core ([#416](https://github.com/oclif/cli-ux/issues/416)) ([d9c5619](https://github.com/oclif/cli-ux/commit/d9c56192741a121593217f81781fa2c7ab2f234e))
+
+
+### build
+
+* require node 12+ ([#413](https://github.com/oclif/cli-ux/issues/413)) ([19f01a9](https://github.com/oclif/cli-ux/commit/19f01a9ce9bb699eb97a49b420c811a66a8f71c2))
+
 ### [5.6.3](https://github.com/oclif/cli-ux/compare/v5.6.2...v5.6.3) (2021-07-07)
 
 
