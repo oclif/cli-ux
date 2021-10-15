@@ -18,6 +18,7 @@ function color(s: string, frameIndex: number): string {
   ]
 
   if (!supportsColor) return s
+  if(typeof supportsColor.stdout === "boolean") return s
   const has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
   const prideColor = prideColors[frameIndex] || prideColors[0]
   return has256 ? prideColor(s) : chalk.magenta(s)
