@@ -6,6 +6,7 @@ import sumBy from 'lodash/sumBy'
 import {safeDump} from 'js-yaml'
 import {inspect} from 'util'
 
+const jmespath = require('jmespath')
 const sw = require('string-width')
 const {orderBy} = require('natural-orderby')
 
@@ -62,18 +63,7 @@ class Table<T extends object> {
 
     // filter rows
     if (this.options.filter) {
-      /* eslint-disable-next-line prefer-const */
-      let [header, regex] = this.options.filter!.split('=')
-      const isNot = header[0] === '-'
-      if (isNot) header = header.substr(1)
-      const col = this.findColumnFromHeader(header)
-      if (!col || !regex) throw new Error('Filter flag has an invalid value')
-      rows = rows.filter((d: any) => {
-        const re = new RegExp(regex)
-        const val = d[col!.key]
-        const match = val.match(re)
-        return isNot ? !match : match
-      })
+      rows = jmespath.search(rows,this.options.filter)
     }
 
     // sort rows
@@ -317,7 +307,7 @@ export namespace table {
   } = {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
-    filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
+    filter: F.string({description: 'filter property using the JMESPath spec, read more in https://jmespath.org/specification.html'}),
     csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format [alias: --output=csv]'}),
     output: F.string({
       exclusive: ['no-truncate', 'csv'],
