@@ -266,6 +266,24 @@ describe('styled/table', () => {
     })
   })
 
+  fancy
+  .stdout()
+  .end('filters starting with plus filter normally', output => {
+    cli.table(apps, columns, {filter: '+id=123'})
+    expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
+ ─── ─────────────────${ws}
+ 123 supertable-test-1${ws}\n`)
+  })
+
+  fancy
+  .stdout()
+  .end('filters starting with plus filter normally', output => {
+    cli.table(apps, columns, {filter: '+id=123'})
+    expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
+ ─── ─────────────────${ws}
+ 123 supertable-test-1${ws}\n`)
+  })
+
   describe('#flags', () => {
     fancy
     .end('includes only flags', _ => {
@@ -286,7 +304,7 @@ describe('styled/table', () => {
     fancy
     .stdout()
     .end('ignores header case', output => {
-      cli.table(apps, columns, {columns: 'iD,Name', filter: 'nAMe=supertable-test', sort: '-ID'})
+      cli.table(apps, columns, {columns: 'iD,Name', filter: 'nAMe=supertable', sort: '-ID'})
       expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
  ─── ─────────────────${ws}
  321 supertable-test-2${ws}

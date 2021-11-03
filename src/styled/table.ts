@@ -62,18 +62,39 @@ class Table<T extends object> {
 
     // filter rows
     if (this.options.filter) {
-      /* eslint-disable-next-line prefer-const */
-      let [header, regex] = this.options.filter!.split('=')
-      const isNot = header[0] === '-'
-      if (isNot) header = header.substr(1)
-      const col = this.findColumnFromHeader(header)
-      if (!col || !regex) throw new Error('Filter flag has an invalid value')
-      rows = rows.filter((d: any) => {
-        const re = new RegExp(regex)
-        const val = d[col!.key]
-        const match = val.match(re)
-        return isNot ? !match : match
-      })
+      const filterCommands = this.options.filter!.split(/[+-]/)
+      const seperatorLocations = [...this.options.filter!.matchAll(/[+-]/g)]
+      const query = []
+      if (filterCommands[0] === '') {
+        filterCommands.splice(0, 1)
+        query.push({action: seperatorLocations[0][0], command: filterCommands[0]})
+        filterCommands.splice(0, 1)
+        seperatorLocations.splice(0, 1)
+      }
+      if (filterCommands.includes('')) {
+        throw new Error('Filter flag cannot have dangling seperators ["+", "-"]')
+      }
+      while (filterCommands.length > 0) {
+        let action = '+'
+        try {
+          action = seperatorLocations[0][0]
+        } catch (error) {}
+        query.push({action, command: filterCommands[0]})
+        filterCommands.splice(0, 1)
+        seperatorLocations.splice(0, 1)
+      }
+      for (const element of query) {
+        const [header, regex] = element.command!.split('=')
+        const isNot = element.action === '-'
+        const col = this.findColumnFromHeader(header)
+        if (!col || !regex) throw new Error('Filter flag has an invalid value')
+        rows = rows.filter((d: any) => {
+          const re = new RegExp(regex)
+          const val = d[col!.key]
+          const match = val.match(re)
+          return isNot ? !match : match
+        })
+      }
     }
 
     // sort rows
@@ -317,7 +338,7 @@ export namespace table {
   } = {
     columns: F.string({exclusive: ['extended'], description: 'only show provided columns (comma-separated)'}),
     sort: F.string({description: 'property to sort by (prepend \'-\' for descending)'}),
-    filter: F.string({description: 'filter property by partial string matching, ex: name=foo'}),
+    filter: F.string({description: 'filter property by partial string matching, ex: name=foo, -name=foo, name=foo+age=21'}),
     csv: F.boolean({exclusive: ['no-truncate'], description: 'output is csv format [alias: --output=csv]'}),
     output: F.string({
       exclusive: ['no-truncate', 'csv'],
