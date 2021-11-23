@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.4](https://github.com/oclif/cli-ux/compare/v5.6.3...v5.6.4) (2021-11-23)
+
+
+### Bug Fixes
+
+* remove transitive dep on lodash.template ([#448](https://github.com/oclif/cli-ux/issues/448)) ([e12005e](https://github.com/oclif/cli-ux/commit/e12005eb7ec70eb9d82298b71ca5ec16d918b285))
+
 ### [5.6.3](https://github.com/oclif/cli-ux/compare/v5.6.2...v5.6.3) (2021-07-07)
 
 
