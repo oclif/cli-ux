@@ -17,6 +17,7 @@ export function renderList(items: IListItem[]): string {
   if (items.length === 0) {
     return ''
   }
+
   const maxLength = (maxBy(items, '[0].length') as any)[0].length
   const lines = items.map(i => {
     let left = i[0]
@@ -24,6 +25,7 @@ export function renderList(items: IListItem[]): string {
     if (!right) {
       return left
     }
+
     left = left.padEnd(maxLength)
     right = linewrap(maxLength + 2, right)
     return `${left}  ${right}`

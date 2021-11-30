@@ -36,6 +36,7 @@ function normal(options: IPromptConfig, retries = 100): Promise<string> {
       }, options.timeout)
       timer.unref()
     }
+
     process.stdin.setEncoding('utf8')
     process.stderr.write(options.prompt)
     process.stdin.resume()
@@ -135,6 +136,7 @@ export function confirm(message: string): Promise<boolean> {
       if (['y', 'yes'].includes(response)) return true
       return confirm()
     }
+
     return confirm()
   }, chalk.cyan('?'))
 }
@@ -149,6 +151,7 @@ export async function anykey(message?: string): Promise<void> {
       `Press any key to continue or ${chalk.yellow('q')} to exit` :
       `Press enter to continue or ${chalk.yellow('q')} to exit`
   }
+
   const char = await prompt(message, {type: 'single', required: false})
   if (tty) process.stderr.write('\n')
   if (char === 'q') Errors.error('quit')

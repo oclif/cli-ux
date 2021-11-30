@@ -54,9 +54,10 @@ class Table<T extends Record<string, unknown>> {
       const row: any = {}
       for (const col of this.columns) {
         let val = col.get(d)
-        if (typeof val !== 'string') val = inspect(val, {breakLength: Infinity})
+        if (typeof val !== 'string') val = inspect(val, {breakLength: Number.POSITIVE_INFINITY})
         row[col.key] = val
       }
+
       return row
     })
 
@@ -65,7 +66,7 @@ class Table<T extends Record<string, unknown>> {
       /* eslint-disable-next-line prefer-const */
       let [header, regex] = this.options.filter!.split('=')
       const isNot = header[0] === '-'
-      if (isNot) header = header.substr(1)
+      if (isNot) header = header.slice(1)
       const col = this.findColumnFromHeader(header)
       if (!col || !regex) throw new Error('Filter flag has an invalid value')
       rows = rows.filter((d: any) => {
@@ -79,7 +80,7 @@ class Table<T extends Record<string, unknown>> {
     // sort rows
     if (this.options.sort) {
       const sorters = this.options.sort!.split(',')
-      const sortHeaders = sorters.map(k => k[0] === '-' ? k.substr(1) : k)
+      const sortHeaders = sorters.map(k => k[0] === '-' ? k.slice(1) : k)
       const sortKeys = this.filterColumnsFromHeaders(sortHeaders).map(c => {
         return ((v: any) => v[c.key])
       })
@@ -121,23 +122,17 @@ class Table<T extends Record<string, unknown>> {
     // unique
     filters = [...(new Set(filters))]
     const cols: (table.Column<T> & {key: string; width?: number; maxWidth?: number})[] = []
-    filters.forEach(f => {
+    for (const f of filters) {
       const c = this.columns.find(c => c.header.toLowerCase() === f.toLowerCase())
       if (c) cols.push(c)
-    })
+    }
+
     return cols
   }
 
   private getCSVRow(d: any): string[] {
     const values = this.columns.map(col => d[col.key] || '')
-
-    const needToBeEscapedForCsv = (e: string) => {
-      // CSV entries containing line breaks, comma or double quotes
-      // as specified in https://tools.ietf.org/html/rfc4180#section-2
-      return e.includes('"') || e.includes('\n') || e.includes('\r\n') || e.includes('\r') || e.includes(',')
-    }
-
-    const lineToBeEscaped = values.find(needToBeEscapedForCsv)
+    const lineToBeEscaped = values.find((e: string) => e.includes('"') || e.includes('\n') || e.includes('\r\n') || e.includes('\r') || e.includes(','))
     return values.map(e => lineToBeEscaped ? `"${e.replace('"', '""')}"` : e)
   }
 
@@ -145,6 +140,7 @@ class Table<T extends Record<string, unknown>> {
     // tslint:disable-next-line:no-this-assignment
     const {data, columns} = this
     return data.map((d: any) => {
+      // eslint-disable-next-line unicorn/prefer-object-from-entries
       return columns.reduce((obj, col) => {
         return {
           ...obj,
@@ -169,10 +165,11 @@ class Table<T extends Record<string, unknown>> {
     if (!options['no-header']) {
       options.printLine(columns.map(c => c.header).join(','))
     }
-    data.forEach((d: any) => {
+
+    for (const d of data) {
       const row = this.getCSVRow(d)
       options.printLine(row.join(','))
-    })
+    }
   }
 
   private outputTable() {
@@ -191,12 +188,14 @@ class Table<T extends Record<string, unknown>> {
         if (manyLines.length > 1) {
           return '*'.repeat(Math.max(...manyLines.map((r: string) => sw(r))))
         }
+
         return d
       })
       const widths = ['.'.padEnd(col.minWidth! - 1), col.header, ...widthData.map((row: any) => row)].map(r => sw(r))
       col.maxWidth = Math.max(...widths) + 1
       col.width = col.maxWidth!
     }
+
     // terminal width
     const maxWidth = stdtermwidth - 2
     // truncation logic
@@ -236,6 +235,7 @@ class Table<T extends Record<string, unknown>> {
         }
       }
     }
+
     shouldShorten()
 
     // print table title
@@ -254,6 +254,7 @@ class Table<T extends Record<string, unknown>> {
         const header = col.header!
         headers += header.padEnd(col.width!)
       }
+
       options.printLine(chalk.bold(headers))
 
       // print header dividers
@@ -262,6 +263,7 @@ class Table<T extends Record<string, unknown>> {
         const divider = ''.padEnd(col.width! - 1, '─') + ' '
         dividers += divider.padEnd(col.width!)
       }
+
       options.printLine(chalk.bold(dividers))
     }
 
@@ -276,11 +278,13 @@ class Table<T extends Record<string, unknown>> {
         const lines = d.split('\n').length
         if (lines > numOfLines) numOfLines = lines
       }
+
+      // eslint-disable-next-line unicorn/no-new-array
       const linesIndexess = [...new Array(numOfLines).keys()]
 
       // print row
       // including multi-lines
-      linesIndexess.forEach((i: number) => {
+      for (const i of linesIndexess) {
         let l = options.rowStart
         for (const col of columns) {
           const width = col.width!
@@ -292,10 +296,12 @@ class Table<T extends Record<string, unknown>> {
           if ((cell.length - colorWidth) > width || visualWidth === width) {
             cell = cell.slice(0, width - 2) + '… '
           }
+
           l += cell
         }
+
         options.printLine(l)
-      })
+      }
     }
   }
 }
@@ -342,12 +348,15 @@ export namespace table {
       const f = {}
       const o = (opts.only && typeof opts.only === 'string' ? [opts.only] : opts.only) || Object.keys(Flags)
       const e = (opts.except && typeof opts.except === 'string' ? [opts.except] : opts.except) || []
-      o.forEach((key: string) => {
-        if ((e as any[]).includes(key)) return
-        (f as any)[key] = (Flags as any)[key]
-      })
+      for (const key of o) {
+        if (!(e as any[]).includes(key)) {
+          (f as any)[key] = (Flags as any)[key]
+        }
+      }
+
       return f
     }
+
     return Flags
   }
 

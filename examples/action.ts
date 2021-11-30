@@ -2,14 +2,15 @@
 import cli from '../src'
 import SimpleAction from '../src/action/simple'
 
-const wait = (ms = 400) => new Promise(resolve => setTimeout(resolve, ms))
+const wait = (ms = 400) => new Promise(resolve => {
+  setTimeout(resolve, ms)
+})
 
 async function run() {
   cli.action.start('x foo')
   await wait()
   cli.log('1 log')
   await wait()
-  // eslint-disable-next-line require-atomic-updates
   cli.action.status = 'a wild status appeared!'
   await wait()
   cli.log('2 log')
@@ -53,5 +54,6 @@ async function main() {
   await wait()
   cli.error('oh no')
 }
+
 main()
 .catch(error => require('@oclif/core/handle')(error))

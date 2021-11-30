@@ -6,6 +6,7 @@ export default function progress(options?: any): any {
   if (!options) {
     options = {}
   }
+
   // set noTTYOutput for options
   options.noTTYOutput = Boolean(process.env.TERM === 'dumb' || !process.stdin.isTTY)
 

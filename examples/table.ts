@@ -8,7 +8,7 @@ export default class Users extends Command {
     ...cli.table.flags(),
   }
 
-  async run() {
+  async run(): Promise<void> {
     const {flags} = await this.parse(Users)
     const {data: users} = await axios.get('https://jsonplaceholder.typicode.com/users')
 
@@ -33,4 +33,4 @@ export default class Users extends Command {
   }
 }
 
-Users.run().then(null, err => cli.error(err))
+Users.run().then(null, error => cli.error(error))

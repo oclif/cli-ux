@@ -13,6 +13,7 @@ export class Tree {
       if (child === key) {
         return this.nodes[child]
       }
+
       const c = this.nodes[child].search(key)
       if (c) return c
     }
@@ -25,6 +26,7 @@ export class Tree {
       for (const p of Object.keys(nodes)) {
         tree[p] = addNodes(nodes[p].nodes)
       }
+
       return tree
     }
 

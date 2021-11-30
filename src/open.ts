@@ -46,18 +46,12 @@ export default function open(target: string, opts: open.Options = {}) {
     }
 
     if (appArgs.length > 0) {
-      args = args.concat(appArgs)
+      args = [...args, ...appArgs]
     }
   } else {
-    if (opts.app) {
-      cmd = opts.app
-    } else {
-      // try local xdg-open
-      cmd = 'xdg-open'
-    }
-
+    cmd = opts.app ? opts.app : 'xdg-open'
     if (appArgs.length > 0) {
-      args = args.concat(appArgs)
+      args = [...args, ...appArgs]
     }
 
     // if (!opts.wait) {
@@ -73,7 +67,7 @@ export default function open(target: string, opts: open.Options = {}) {
 
   if (process.platform === 'darwin' && appArgs.length > 0) {
     args.push('--args')
-    args = args.concat(appArgs)
+    args = [...args, ...appArgs]
   }
 
   const cp = childProcess.spawn(cmd, args, cpOpts)
