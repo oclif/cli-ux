@@ -261,7 +261,7 @@ describe('styled/table', () => {
     .stdout()
     .end('does not truncate', output => {
       const three = {...apps[0], id: '0'.repeat(80), name: 'supertable-test-3'}
-      cli.table(apps.concat(three), columns, {filter: 'id=0', 'no-truncate': true})
+      cli.table([...apps, three], columns, {filter: 'id=0', 'no-truncate': true})
       expect(output.stdout).to.equal(` ID${ws.padEnd(78)} Name${ws.padEnd(14)}
  ${''.padEnd(three.id.length, '─')} ─────────────────${ws}
  ${three.id} supertable-test-3${ws}\n`)
@@ -309,7 +309,7 @@ describe('styled/table', () => {
       }
       /* eslint-enable camelcase */
 
-      cli.table(apps.concat(app3 as any), columns, {sort: '-ID'})
+      cli.table([...apps, app3 as any], columns, {sort: '-ID'})
       expect(output.stdout).to.equal(` ID  Name${ws.padEnd(14)}
  ─── ─────────────────${ws}
  456 supertable-test${ws.padEnd(3)}

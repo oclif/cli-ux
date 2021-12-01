@@ -1,7 +1,9 @@
 import cli from '../src'
 
 function wait() {
-  return new Promise(resolve => setTimeout(resolve, 1000))
+  return new Promise(resolve => {
+    setTimeout(resolve, 1000)
+  })
 }
 
 async function run() {
@@ -9,4 +11,5 @@ async function run() {
   await wait()
   cli.action.stop()
 }
+
 run().catch(error => cli.error(error))

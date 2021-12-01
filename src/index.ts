@@ -8,6 +8,25 @@ import {ExitError} from './exit'
 import {IPromptOptions} from './prompt'
 import * as Table from './styled/table'
 
+function timeout(p: Promise<any>, ms: number) {
+  function wait(ms: number, unref = false) {
+    return new Promise(resolve => {
+      const t: any = setTimeout(() => resolve(null), ms)
+      if (unref) t.unref()
+    })
+  }
+
+  return Promise.race([p, wait(ms, true).then(() => ux.error('timed out'))])
+}
+
+async function flush() {
+  const p = new Promise(resolve => {
+    process.stdout.once('drain', () => resolve(null))
+  })
+  process.stdout.write('')
+  return p
+}
+
 export const ux = {
   config,
 
@@ -104,24 +123,7 @@ export const ux = {
   },
 
   async flush() {
-    function timeout(p: Promise<any>, ms: number) {
-      function wait(ms: number, unref = false) {
-        return new Promise(resolve => {
-          const t: any = setTimeout(() => resolve(null), ms)
-          if (unref) t.unref()
-        })
-      }
-
-      return Promise.race([p, wait(ms, true).then(() => ux.error('timed out'))])
-    }
-
-    async function flush() {
-      const p = new Promise(resolve => process.stdout.once('drain', () => resolve(null)))
-      process.stdout.write('')
-      return p
-    }
-
-    await timeout(flush(), 10000)
+    await timeout(flush(), 10_000)
   },
 }
 export default ux
@@ -145,6 +147,7 @@ const cliuxProcessExitHandler = async () => {
     process.exitCode = 1
   }
 }
+
 // to avoid MaxListenersExceededWarning
 // only attach named listener once
 const cliuxListener = process.listeners('exit').find(fn => fn.name === cliuxProcessExitHandler.name)

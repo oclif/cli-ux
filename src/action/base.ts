@@ -40,6 +40,7 @@ export class ActionBase {
     if (!task) {
       return
     }
+
     this._stop(msg)
     task.active = false
     this.task = undefined
@@ -82,9 +83,11 @@ export class ActionBase {
     if (!task) {
       return
     }
+
     if (task.status === status) {
       return
     }
+
     this._updateStatus(status, task.status)
     task.status = status
   }
@@ -97,10 +100,12 @@ export class ActionBase {
       this._stdout(false)
       task.active = false
     }
+
     const ret = await fn()
     if (task && active) {
       this._resume()
     }
+
     return ret
   }
 
@@ -112,10 +117,12 @@ export class ActionBase {
       this._stdout(false)
       task.active = false
     }
+
     const ret = fn()
     if (task && active) {
       this._resume()
     }
+
     return ret
   }
 
@@ -175,7 +182,7 @@ export class ActionBase {
     try {
       let output = ''
       let std: 'stdout' | 'stderr' | undefined
-      while (this.stdmocks && this.stdmocks.length) {
+      while (this.stdmocks && this.stdmocks.length > 0) {
         const cur = this.stdmocks.shift() as ['stdout' | 'stderr', string[]]
         std = cur[0]
         this._write(std, cur[1])
@@ -183,6 +190,7 @@ export class ActionBase {
       }
       // add newline if there isn't one already
       // otherwise we'll just overwrite it when we render
+
       if (output && std && output[output.length - 1] !== '\n') {
         this._write(std, '\n')
       }

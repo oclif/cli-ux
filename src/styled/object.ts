@@ -14,11 +14,14 @@ export default function styledObject(obj: any, keys?: string[]): string {
       .map(k => k + ': ' + util.inspect(obj[k]))
       .join(', ')
     }
+
     return util.inspect(obj)
   }
+
   const logKeyValue = (key: string, value: any): string => {
     return `${chalk.blue(key)}:` + ' '.repeat(maxKeyLength - key.length - 1) + pp(value)
   }
+
   for (const key of keys || Object.keys(obj).sort()) {
     const value = obj[key]
     if (Array.isArray(value)) {
@@ -32,5 +35,6 @@ export default function styledObject(obj: any, keys?: string[]): string {
       output.push(logKeyValue(key, value))
     }
   }
+
   return output.join('\n')
 }
