@@ -35,7 +35,7 @@
   "devDependencies": {
     "@oclif/config": "^1.18.1",
     "@oclif/parser": "^3.8.6",
-    "@types/ansi-styles": "^3.2.1",
+    "@types/ansi-styles": "^4.2.0",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
     "@types/clean-stack": "^2.1.1",

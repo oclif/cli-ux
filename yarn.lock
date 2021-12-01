@@ -175,12 +175,12 @@
   resolved "https://registry.yarnpkg.com/@oclif/screen/-/screen-1.0.4.tgz#b740f68609dfae8aa71c3a6cab15d816407ba493"
   integrity sha512-60CHpq+eqnTxLZQ4PGHYNwUX572hgpMHGPtTWMjdTMsAvlm69lZV/4ly6O3sAYkomo4NggGcomrDpBe34rxUqw==
 
-"@types/ansi-styles@^3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@types/ansi-styles/-/ansi-styles-3.2.1.tgz#49e996bb6e0b7957ca831205df31eb9a0702492c"
-  integrity sha512-UFa7mfKgSutXdT+elzJo8Ulr7FHgLNAyglVIOZYXFNJVQERm8DPrcwPret5BYk66LBE7fwm1XoVGi76MJkQ6ow==
+"@types/ansi-styles@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@types/ansi-styles/-/ansi-styles-4.2.0.tgz#2cd4a1224228906ba109538818db1655ab81e15d"
+  integrity sha512-GOFgxL1bG0rsuUTqBYzETHLV3kiYK/dVFeMxl/NjsM2NBe2kE+oHOL16aLHrZ32oCvzh0Iyop6TNcKaLnlMuRw==
   dependencies:
-    "@types/color-name" "*"
+    ansi-styles "*"
 
 "@types/chai-as-promised@^7.1.0":
   version "7.1.4"
@@ -200,11 +200,6 @@
   integrity sha512-J5uaZmvDUsqeT7Vct/oHQuAGUzJBWmN9x33TlvTfvIMmCZ2Ep6v/09wKsK5cLtOTJJe6tGcMTg8TwP/h6e1svw==
   dependencies:
     clean-stack "*"
-
-"@types/color-name@*":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.0.tgz#926f76f7e66f49cc59ad880bb15b030abbf0b66d"
-  integrity sha512-gZ/Rb+MFXF0pXSEQxdRoPMm5jeO3TycjOdvbpbcpHX/B+n9AqaHFe5q6Ga9CsZ7ir/UgIWPfrBzUzn3F19VH/w==
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
@@ -391,6 +386,11 @@ ansi-regex@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
   integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
+
+ansi-styles@*:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-6.1.0.tgz#87313c102b8118abd57371afab34618bf7350ed3"
+  integrity sha512-VbqNsoz55SYGczauuup0MFUyXNQviSpFTj1RQtFzmQLk18qbVSpTFFGMT293rmDaQuKCT6InmbuEyUne4mTuxQ==
 
 ansi-styles@^3.2.1:
   version "3.2.1"
