@@ -27,7 +27,7 @@
     "password-prompt": "^1.1.2",
     "semver": "^7.3.2",
     "string-width": "^4.2.0",
-    "strip-ansi": "^6.0.0",
+    "strip-ansi": "^7.0.1",
     "supports-color": "^8.1.0",
     "supports-hyperlinks": "^2.1.0",
     "tslib": "^2.0.0"
