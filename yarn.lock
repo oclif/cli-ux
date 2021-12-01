@@ -201,12 +201,7 @@
   dependencies:
     clean-stack "*"
 
-"@types/color-name@*":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.0.tgz#926f76f7e66f49cc59ad880bb15b030abbf0b66d"
-  integrity sha512-gZ/Rb+MFXF0pXSEQxdRoPMm5jeO3TycjOdvbpbcpHX/B+n9AqaHFe5q6Ga9CsZ7ir/UgIWPfrBzUzn3F19VH/w==
-
-"@types/color-name@^1.1.1":
+"@types/color-name@*", "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
@@ -399,13 +394,18 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ansi-styles@^4.0.0, ansi-styles@^4.1.0, ansi-styles@^4.2.0:
+ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-4.2.1.tgz#90ae75c424d008d2624c5bf29ead3177ebfcf359"
   integrity sha512-9VGjrMsG1vePxcSweQsN20KY/c4zN0h9fLjqAbwbPfahM3t+NL+M9HC8xeXG2I8pX5NoamTGNuomEUFI7fcUjA==
   dependencies:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
+
+ansi-styles@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-6.1.0.tgz#87313c102b8118abd57371afab34618bf7350ed3"
+  integrity sha512-VbqNsoz55SYGczauuup0MFUyXNQviSpFTj1RQtFzmQLk18qbVSpTFFGMT293rmDaQuKCT6InmbuEyUne4mTuxQ==
 
 ansicolors@~0.3.2:
   version "0.3.2"
