@@ -1,4 +1,4 @@
-import {Errors} from '@oclif/core'
+import * as Errors from '@oclif/core/lib/errors'
 import chalk from 'chalk'
 
 import config from './config'
