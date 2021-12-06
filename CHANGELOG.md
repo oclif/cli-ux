@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.4](https://github.com/oclif/cli-ux/compare/v6.0.3...v6.0.4) (2021-12-06)
+
+
+### Bug Fixes
+
+* bump deps ([#459](https://github.com/oclif/cli-ux/issues/459)) ([d1cf5f5](https://github.com/oclif/cli-ux/commit/d1cf5f55d9089c52b80396bb782fbd806e42fb64))
+
 ### [6.0.3](https://github.com/oclif/cli-ux/compare/v6.0.2...v6.0.3) (2021-12-02)
 
 
