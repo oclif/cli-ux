@@ -5,9 +5,9 @@
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/oclif/cli-ux/issues",
   "dependencies": {
-    "@oclif/core": "^1.0.7",
+    "@oclif/core": "^1.0.8",
     "@oclif/linewrap": "^1.0.0",
-    "@oclif/screen": "^1.0.3",
+    "@oclif/screen": "^1.0.4 ",
     "ansi-escapes": "^4.3.0",
     "ansi-styles": "^4.2.0",
     "cardinal": "^2.1.1",
