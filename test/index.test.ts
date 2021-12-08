@@ -4,7 +4,7 @@ import {expect, fancy} from './fancy'
 
 process.env.FORCE_HYPERLINK = '1'
 
-describe('prompt', () => {
+describe.skip('prompt', () => {
   fancy
   .stdout()
   .do(() => ux.url('sometext', 'https://google.com'))

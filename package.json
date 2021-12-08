@@ -5,7 +5,7 @@
   "author": "Jeff Dickey @jdxcode",
   "bugs": "https://github.com/oclif/cli-ux/issues",
   "dependencies": {
-    "@oclif/core": "^1.0.8",
+    "@oclif/core": "1.0.10",
     "@oclif/linewrap": "^1.0.0",
     "@oclif/screen": "^1.0.4 ",
     "ansi-escapes": "^4.3.0",
@@ -44,7 +44,7 @@
     "@types/node": "^11.11.2",
     "@types/semver": "^7.3.1",
     "@types/strip-ansi": "^5.2.1",
-    "@types/supports-color": "^7.2.0",
+    "@types/supports-color": "^8.1.1",
     "axios": "^0.21.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
