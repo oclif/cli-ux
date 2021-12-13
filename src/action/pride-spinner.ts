@@ -1,7 +1,6 @@
 // tslint:disable restrict-plus-operands
 
-import {blue, cyan, green, magenta, red, yellow} from 'picocolors'
-import * as supportsColor from 'supports-color'
+import {blue, cyan, green, magenta, red, yellow, isColorSupported} from 'picocolors'
 
 import SpinnerAction from './spinner'
 
@@ -15,10 +14,9 @@ function color(s: string, frameIndex: number): string {
     magenta,
   ]
 
-  if (!supportsColor) return s
-  const has256 = supportsColor.stdout.has256 || (process.env.TERM || '').indexOf('256') !== -1
+  if (!isColorSupported) return s
   const prideColor = prideColors[frameIndex] || prideColors[0]
-  return has256 ? prideColor(s) : magenta(s)
+  return prideColor(s)
 }
 
 export default class PrideSpinnerAction extends SpinnerAction {
