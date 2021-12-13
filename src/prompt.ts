@@ -1,5 +1,5 @@
 import {error} from '@oclif/errors'
-import {cyan, yellow} from 'colorette'
+import {cyan, yellow} from 'picocolors'
 
 import config from './config'
 import deps from './deps'

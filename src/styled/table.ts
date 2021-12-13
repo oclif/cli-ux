@@ -1,6 +1,6 @@
 import {flags as F} from '@oclif/command'
 import {stdtermwidth} from '@oclif/screen'
-import {bold} from 'colorette'
+import {bold} from 'picocolors'
 import capitalize from 'lodash/capitalize'
 import sumBy from 'lodash/sumBy'
 import {safeDump} from 'js-yaml'

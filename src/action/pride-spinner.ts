@@ -1,6 +1,6 @@
 // tslint:disable restrict-plus-operands
 
-import {blue, cyan, green, magenta, red, yellow} from 'colorette'
+import {blue, cyan, green, magenta, red, yellow} from 'picocolors'
 import * as supportsColor from 'supports-color'
 
 import SpinnerAction from './spinner'

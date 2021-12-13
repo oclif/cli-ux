@@ -1,6 +1,6 @@
 // tslint:disable restrict-plus-operands
 
-import {isColorSupported} from 'colorette'
+import {isColorSupported} from 'picocolors'
 
 import cli from '..'
 

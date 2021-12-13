@@ -1,6 +1,6 @@
 // tslint:disable
 
-import {blue} from 'colorette'
+import {blue} from 'picocolors'
 import * as util from 'util'
 
 export default function styledObject(obj: any, keys?: string[]): string {
