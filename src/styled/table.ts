@@ -252,7 +252,8 @@ class Table<T extends object> {
       let headers = options.rowStart
       for (const col of columns) {
         const header = col.header!
-        headers += header.padEnd(col.width!)
+        const colWidth = col.width! - sw(header) + header.length
+        headers += header.padEnd(colWidth)
       }
       options.printLine(chalk.bold(headers))
 
