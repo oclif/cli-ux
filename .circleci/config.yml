@@ -18,6 +18,7 @@ workflows:
                 - maintenance
       - release-management/release-package:
           github-release: true
+          tag: oclif-v1
           requires:
             - release-management/test-package
           filters:
