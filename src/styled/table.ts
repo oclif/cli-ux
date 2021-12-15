@@ -1,6 +1,6 @@
 import {flags as F} from '@oclif/command'
 import {stdtermwidth} from '@oclif/screen'
-import chalk from 'chalk'
+import {bold} from 'picocolors'
 import capitalize from 'lodash/capitalize'
 import sumBy from 'lodash/sumBy'
 import {safeDump} from 'js-yaml'
@@ -254,7 +254,7 @@ class Table<T extends object> {
         const header = col.header!
         headers += header.padEnd(col.width!)
       }
-      options.printLine(chalk.bold(headers))
+      options.printLine(bold(headers))
 
       // print header dividers
       let dividers = options.rowStart
@@ -262,7 +262,7 @@ class Table<T extends object> {
         const divider = ''.padEnd(col.width! - 1, '─') + ' '
         dividers += divider.padEnd(col.width!)
       }
-      options.printLine(chalk.bold(dividers))
+      options.printLine(bold(dividers))
     }
 
     // print rows

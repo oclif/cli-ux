@@ -1,5 +1,5 @@
 import {error} from '@oclif/errors'
-import chalk from 'chalk'
+import {cyan, yellow} from 'picocolors'
 
 import config from './config'
 import deps from './deps'
@@ -61,7 +61,7 @@ function getPrompt(name: string, type?: string, defaultValue?: string) {
     defaultValue = '*'.repeat(defaultValue.length)
   }
 
-  if (name && defaultValue) prompt = name + ' ' + chalk.yellow('[' + defaultValue + ']') + ': '
+  if (name && defaultValue) prompt = name + ' ' + yellow('[' + defaultValue + ']') + ': '
   else if (name) prompt = `${name}: `
 
   return prompt
@@ -123,7 +123,7 @@ function _prompt(name: string, inputOptions: Partial<IPromptOptions> = {}): Prom
 export function prompt(name: string, options: IPromptOptions = {}) {
   return config.action.pauseAsync(() => {
     return _prompt(name, options)
-  }, chalk.cyan('?'))
+  }, cyan('?'))
 }
 
 /**
@@ -138,7 +138,7 @@ export function confirm(message: string): Promise<boolean> {
       return confirm()
     }
     return confirm()
-  }, chalk.cyan('?'))
+  }, cyan('?'))
 }
 
 /**
@@ -148,8 +148,8 @@ export async function anykey(message?: string): Promise<void> {
   const tty = Boolean(process.stdin.setRawMode)
   if (!message) {
     message = tty ?
-      `Press any key to continue or ${chalk.yellow('q')} to exit` :
-      `Press enter to continue or ${chalk.yellow('q')} to exit`
+      `Press any key to continue or ${yellow('q')} to exit` :
+      `Press enter to continue or ${yellow('q')} to exit`
   }
   const char = await prompt(message, {type: 'single', required: false})
   if (tty) process.stderr.write('\n')

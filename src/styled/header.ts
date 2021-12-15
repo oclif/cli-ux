@@ -1,7 +1,7 @@
 // tslint:disable restrict-plus-operands
 
-import chalk from 'chalk'
+import {bold, dim} from 'picocolors'
 
 export default function styledHeader(header: string) {
-  process.stdout.write(chalk.dim('=== ') + chalk.bold(header) + '\n')
+  process.stdout.write(dim('=== ') + bold(header) + '\n')
 }
