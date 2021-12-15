@@ -41,6 +41,9 @@ await cli.prompt('What is your two-factor token?', {type: 'mask'})
 // mask input on keypress (before enter is pressed)
 await cli.prompt('What is your password?', {type: 'hide'})
 
+// prompt that isn't required, user can press enter and move onto the next prompt 
+await cli.prompt('(Optional) What is your email address?', {required: false})
+
 // yes/no confirmation
 await cli.confirm('Continue?')
 
