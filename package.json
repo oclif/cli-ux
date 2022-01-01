@@ -39,7 +39,7 @@
     "@types/extract-stack": "^2.0.0",
     "@types/fs-extra": "^8.1",
     "@types/js-yaml": "^3.12.1",
-    "@types/lodash": "^4.14.117",
+    "@types/lodash": "^4.14.178",
     "@types/mocha": "^8.0.0",
     "@types/node": "^11.11.2",
     "@types/semver": "^7.3.1",
