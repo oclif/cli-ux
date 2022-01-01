@@ -267,38 +267,15 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oclif/core@1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.0.10.tgz#5fd01d572e44d372b7279ee0f49b4860e14b6e4e"
-  integrity sha512-L+IcNU3NoYxwz5hmHfcUlOJ3dpgHRsIj1kAmI9CKEJHq5gBVKlP44Ot179Jke1jKRKX2g9N42izbmlh0SNpkkw==
+"@oclif/core@1.0.11", "@oclif/core@^1.0.8":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.0.11.tgz#5ad1258c0c756073744ac8b9403e9314757d949f"
+  integrity sha512-CQw9dbzh+BTF73cp53mnDZnTJF4hth7oab761Si4pEW18PDYDLyOv7TnEtJkvPu4rlTaGBh2jge9BDXgwye4vQ==
   dependencies:
     "@oclif/linewrap" "^1.0.0"
     chalk "^4.1.2"
     clean-stack "^3.0.1"
     cli-ux "6.0.5"
-    debug "^4.3.3"
-    fs-extra "^9.1.0"
-    get-package-type "^0.1.0"
-    globby "^11.0.4"
-    indent-string "^4.0.0"
-    is-wsl "^2.2.0"
-    lodash "^4.17.21"
-    semver "^7.3.5"
-    string-width "^4.2.3"
-    strip-ansi "^6.0.1"
-    tslib "^2.3.1"
-    widest-line "^3.1.0"
-    wrap-ansi "^7.0.0"
-
-"@oclif/core@^1.0.8":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.0.9.tgz#5b9db438f5f1f458f9b54114983d73c1f52c9ef0"
-  integrity sha512-1YQLYWlMdpxHE2W70WrUSgBkWyEsyI8SNST4FAq7kJ+wQCym/XSQeZ1TF+jInHl9aq6DZkG0MAA19hXn4sIIqw==
-  dependencies:
-    "@oclif/linewrap" "^1.0.0"
-    chalk "^4.1.2"
-    clean-stack "^3.0.1"
-    cli-ux "^6.0.4"
     debug "^4.3.3"
     fs-extra "^9.1.0"
     get-package-type "^0.1.0"
@@ -808,7 +785,7 @@ cli-progress@^3.9.1:
     colors "^1.1.2"
     string-width "^4.2.0"
 
-cli-ux@6.0.5, cli-ux@^6.0.4:
+cli-ux@6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cli-ux/-/cli-ux-6.0.5.tgz#5461dffb6c29e4a727e071f8b74bbebcc6b7be08"
   integrity sha512-q2pvzDiXMNISMqCBh0P2dkofQ/8OiWlEAjl6MDNk5oUZ6p54Fnk1rOaXxohYm+YkLX5YNUonGOrwkvuiwVreIg==
