@@ -5,7 +5,7 @@
   "author": "Salesforce",
   "bugs": "https://github.com/oclif/cli-ux/issues",
   "dependencies": {
-    "@oclif/core": "1.0.10",
+    "@oclif/core": "^1.1.1",
     "@oclif/linewrap": "^1.0.0",
     "@oclif/screen": "^1.0.4 ",
     "ansi-escapes": "^4.3.0",
