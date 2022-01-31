@@ -18,6 +18,9 @@ workflows:
                 - latest
                 - lts
                 - maintenance
+            exclude:
+              - os: windows
+                node_version: latest
       - release-management/release-package:
           context: SF-CLI-RELEASE-PROCESS
           filters:
