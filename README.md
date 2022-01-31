@@ -1,6 +1,8 @@
 cli-ux
 ======
 
+# ========= This module has been deprecated in favor of [oclif/core](https://github.com/oclif/core) and will no longer be maintained. =========
+
 cli IO utilities
 
 [![Version](https://img.shields.io/npm/v/cli-ux.svg)](https://npmjs.org/package/cli-ux)
